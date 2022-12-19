@@ -48,7 +48,7 @@ public class Importer {
 					 continue;
 				 }
 
-				 System.out.println("INSERT INTO SERIES_DATA(SERIES_ID, DATESTAMP, VALUE) VALUES(100, '" + date + "', " + value + ")");
+				 System.out.println("INSERT INTO SERIES_DATA(SERIES_ID, DATESTAMP, VALUE) VALUES(100, '" + date + "', " + value + ");");
 			 }
 		} catch(IOException e) {
 			
