@@ -5,17 +5,17 @@ if [ `whoami` != 'postgres' ]; then
   exit 1
 fi
 
-if [ "$ECON_DATABASE" = $"" ]; then
+if [ "$ECON_DATABASE" = "" ]; then
   echo $0: ECON_DATABASE not defined
   exit 1
 fi
 
-if [ "$ECON_USER" = $"" ]; then
+if [ "$ECON_USER" = "" ]; then
   echo $0: ECON_USER not defined
   exit 1
 fi
 
-if [ "$ECON_PASSWORD" = $"" ]; then
+if [ "$ECON_PASSWORD" = "" ]; then
   echo $0: ECON_PASSWORD not defined
   exit 1
 fi
