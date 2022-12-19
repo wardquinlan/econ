@@ -10,6 +10,16 @@ if [ "$ECON_USER" = "" ]; then
   exit 1
 fi
 
+echo ------------------- WARNING!!! ------------------
+echo THIS WILL DELETE ALL ECON DATA!!!
+echo Are you sure you want to continue?
+echo ""
+read tt
+if [ "$tt" != "y" ]; then
+  echo $0: aborting
+  exit 1
+fi
+
 psql --username=$ECON_USER $ECON_DATABASE << EOF
 
 DROP TABLE IF EXISTS SERIES_DATA;
