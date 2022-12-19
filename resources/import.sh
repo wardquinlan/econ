@@ -5,11 +5,6 @@ if [ "$ECON_HOME" == "" ]; then
   exit 1
 fi
 
-if [ "$QUOTE_HOME" == "" ]; then
-  echo QUOTE_HOME not defined
-  exit 1
-fi
-
 CLASSPATH=$ECON_HOME/econ.d
 CLASSPATH=$CLASSPATH:$ECON_HOME/econ.d/econ.jar
 CLASSPATH=$CLASSPATH:$ECON_HOME/econ.d/log4j-1.2.14.jar
