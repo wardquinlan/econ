@@ -13,7 +13,7 @@
 
   <path id="buildpath">
     <pathelement location="${lib}/log4j-1.2.14.jar"/>
-  	<pathelement location="${lib}/commons-logging-1.1.jar"/>
+  <pathelement location="${lib}/commons-logging-1.1.jar"/>
   </path>
 
   <target name="init">
@@ -35,6 +35,8 @@
     <mkdir dir="${output}/${appname}.d"/>
     <jar jarfile="${output}/${appname}.d/${appname}.jar" basedir="${classes}"/>
     <copy todir="${output}" file="${resources}/${appname}"/>
+    <copy todir="${output}" file="${resources}/createdb.sh"/>
+    <copy todir="${output}" file="${resources}/ddl.sh"/>
     <copy todir="${output}/${appname}.d">
       <fileset dir="${lib}" includes="*.jar"/>
     </copy>
@@ -42,6 +44,8 @@
       <fileset dir="${resources}" includes="*.properties"/>
     </copy>
     <chmod file="${output}/econ" perm="755"/>
+    <chmod file="${output}/createdb.sh" perm="755"/>
+    <chmod file="${output}/ddl.sh" perm="755"/>
   </target>
 
   <target name="rebuild" depends="clean,jar">
