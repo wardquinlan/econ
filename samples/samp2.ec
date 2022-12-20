@@ -2,6 +2,8 @@ const RED = #ff0000;
 const GREEN = #00ff00;
 const BLUE = #0000ff;
 
+-- this is a comment
+
 println("loading series...");
 
 TBOND2 = loadSeriesByName("TBOND2");

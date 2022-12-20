@@ -1,6 +1,6 @@
 <econ script="samp2.ec">
     <global-properties>
-      <background-color>#ff00ff</background-color>
+      <background-color>0xff00ff</background-color>
       <padding-top>5</padding-top>
       <padding-left>5</padding-left>
       <padding-bottom>5</padding-bottom>
