@@ -21,8 +21,8 @@ public class Main {
 			System.exit(1);
 		}
 		try {
-		XMLParser parser = new XMLParser();
-		parser.parse(args[0]);
+			XMLParser parser = new XMLParser();
+			Econ econ = parser.parse(args[0]);
 		} catch(Exception e) {
 			log.error("Unable to parse profile", e);
 			System.exit(1);

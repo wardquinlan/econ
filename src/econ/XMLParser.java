@@ -17,14 +17,23 @@ public class XMLParser {
 		Document doc = builder.parse(new File(filename));
 		doc.getDocumentElement().normalize();
 		Element root = doc.getDocumentElement();
-		System.out.println(root.getNodeName());
+		if (root.getNodeName() != "econ") {
+			throw new Exception("Unexpected root node: " + root.getNodeName());
+		}
 		
+		Econ econ = new Econ();
 		NamedNodeMap map = doc.getDocumentElement().getAttributes();
 		for (int i = 0; i < map.getLength(); i++) {
 			Node attribute = map.item(i);
-			System.out.println(attribute.getNodeName());
-			System.out.println(attribute.getNodeValue());
+			if (attribute.getNodeName().equals("script")) {
+				econ.setScript(attribute.getNodeValue());
+			} else {
+				throw new Exception("Unexpected econ attribute: " + attribute.getNodeName());
+			}
 		}
-		return new Econ();
+		if (econ.getScript() == null) {
+			throw new Exception("Missing econ script attribute");
+		}
+		return econ;
 	}
 }
