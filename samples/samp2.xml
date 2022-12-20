@@ -16,28 +16,28 @@
     <chart id="chart1" title="My Chart">
         <gridlines>-2, -1, 0, 1, 2</gridlines>
         <serieslist>
-            <series name="TBOND2" color="RED"/>
-            <series name="TBOND10" color="GREEN"/>
-            <series  name="INVERTED" color="#0000ff"/>
+            <series ref="TBOND2" color="RED"/> <!-- accesses TBOND2 from the symbol table -->
+            <series ref="TBOND10" color="GREEN"/> <!-- accesses GREEN from the symbol table -->
+            <series ref="INVERTED" color="#0000ff"/> <!-- hard-coded color -->
         </serieslist>
     </chart>
     <chart id="chart2" title="My Chart">
         <gridlines>-2, -1, 0, 1, 2</gridlines>
         <serieslist>
-            <series name="TBOND2" color="RED"/>
-            <series name="TBOND10" color="GREEN"/>
-            <series name="INVERTED" color="#0000ff"/>
+            <series ref="TBOND2" color="RED"/>
+            <series ref="TBOND10" color="GREEN"/>
+            <series ref="INVERTED" color="#0000ff"/>
         </serieslist>
     </chart>
     <grid id="grid1">
         <serieslist>
-          <series name="TBOND2"/>
-          <series name="TBON10"/>
-          <series name="INVERTED"/>
+          <series ref="TBOND2"/>
+          <series ref="TBON10"/>
+          <series ref="INVERTED"/>
         </serieslist>
     </grid>
     
-    <panel label="My Label" orientation="horizontal" background-color="#ff00ff">
+    <panel label="My Label" orientation="horizontal">
         <component ref="grid1" span="40"/>
         <panel orientation="vertical" span="60">
           <component ref="chart1" span="70"/>
