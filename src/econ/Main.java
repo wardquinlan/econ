@@ -22,14 +22,16 @@ public class Main {
     }
     
     try {
-      XMLParser parser = new XMLParser();
-      Econ econ = parser.parse(args[0]);
+      XMLParser xmlParser = new XMLParser();
+      Econ econ = xmlParser.parse(args[0]);
       Tokenizer tokenizer = new Tokenizer(econ.getScript());
       TokenIterator itr = tokenizer.tokenize();
       if (!itr.hasNext()) {
         throw new Exception("empty script file");
       }
-      Token tk = itr.next();      
+      Parser parser = new Parser();
+      Token tk = itr.next();
+      parser.parse(tk, itr);
     } catch(Exception e) {
       log.error("Unable to parse profile", e);
       System.exit(1);
