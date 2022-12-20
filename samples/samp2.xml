@@ -1,9 +1,4 @@
-<econ>
-    <scripts>
-        <script>constants.ec</script>
-        <script>samp2.ec</script>
-    </scripts>
-    
+<econ script="samp2.ec">
     <global-properties>
       <background-color>#ff00ff</background-color>
       <padding-top>5</padding-top>

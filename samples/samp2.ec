@@ -9,6 +9,6 @@ TBOND10 = loadSeriesByName("TBOND10");
 DIFFERENTIAL = TBOND10 - TBOND2;
 INVERTED = DIFFERENTIAL < 0; -- a boolean
 
-setSeriesNote(TBOND2, "This is a note");
+setSeriesNote(DIFFERENTIAL, "This is a note");
 println(getSeriesNote(TBOND2));
 

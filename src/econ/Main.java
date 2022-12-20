@@ -15,7 +15,20 @@ import org.apache.commons.logging.LogFactory;
 public class Main {
 	private static Log log = LogFactory.getFactory().getInstance(Main.class);
 	public static void main(String[] args) {
-		log.info("Application starting");
+		log.info("Application starting...");
+		if (args.length != 1) {
+			log.error("Usage: Main <profile>.xml");
+			System.exit(1);
+		}
+		try {
+		XMLParser parser = new XMLParser();
+		parser.parse(args[0]);
+		} catch(Exception e) {
+			log.error("Unable to parse profile", e);
+			System.exit(1);
+		}
+		
+		/*
 		JFrame frame = new JFrame("Econ");
 		frame.setSize(Toolkit.getDefaultToolkit().getScreenSize());
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -33,5 +46,6 @@ public class Main {
         	}
         });
         frame.setVisible(true);
+        */
 	}
 }
