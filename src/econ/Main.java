@@ -15,25 +15,49 @@ import org.apache.commons.logging.LogFactory;
 public class Main {
   private static Log log = LogFactory.getFactory().getInstance(Main.class);
   public static void main(String[] args) {
-    log.info("Application starting...");
+    log.info("Econ: application starting");
+    
+    if (System.getenv("ECON_HOST") == null) {
+      log.error("Econ: ECON_HOST not set");
+      System.exit(1);
+    }
+    if (System.getenv("ECON_DATABASE") == null) {
+      log.error("Econ: ECON_DATABASE not set");
+      System.exit(1);
+    }
+    if (System.getenv("ECON_USERNAME") == null) {
+      log.error("Econ: ECON_USERNAME not set");
+      System.exit(1);
+    }
+    if (System.getenv("ECON_PASSWORD") == null) {
+      log.error("Econ: ECON_PASSWORD not set");
+      System.exit(1);
+    }
     if (args.length != 1) {
-      log.error("Usage: Main <profile>.xml");
+      log.error("Econ: usage: Econ <profile>.xml");
       System.exit(1);
     }
     
+    SeriesDAO dao = null;
     try {
+      dao = new SeriesDAO();
       XMLParser xmlParser = new XMLParser();
       Econ econ = xmlParser.parse(args[0]);
       Tokenizer tokenizer = new Tokenizer(econ.getScript());
       TokenIterator itr = tokenizer.tokenize();
       if (!itr.hasNext()) {
-        throw new Exception("empty script file");
+        log.error("Econ: empty script file");
+        System.exit(1);
       }
       Parser parser = new Parser();
       Token tk = itr.next();
       parser.parse(tk, itr);
+      dao.close();
     } catch(Exception e) {
-      log.error("Unable to parse profile", e);
+      log.error("Econ: fatal error", e);
+      if (dao != null) {
+        dao.close();
+      }
       System.exit(1);
     }
     
