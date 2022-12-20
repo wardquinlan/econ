@@ -1,0 +1,47 @@
+<econ>
+    <scripts>
+        <script>constants.ec</script>
+        <script>samp2.ec</script>
+    </scripts>
+    
+    <global-properties>
+      <background-color>#ff00ff</background-color>
+      <padding-top>5</padding-top>
+      <padding-left>5</padding-left>
+      <padding-bottom>5</padding-bottom>
+      <padding-right>5</padding-right>
+    </global-properties>
+    
+    <!-- all objects are now visible -->
+    <chart id="chart1" title="My Chart">
+        <gridlines>-2, -1, 0, 1, 2</gridlines>
+        <serieslist>
+            <series name="TBOND2" color="RED"/>
+            <series name="TBOND10" color="GREEN"/>
+            <series  name="INVERTED" color="#0000ff"/>
+        </serieslist>
+    </chart>
+    <chart id="chart2" title="My Chart">
+        <gridlines>-2, -1, 0, 1, 2</gridlines>
+        <serieslist>
+            <series name="TBOND2" color="RED"/>
+            <series name="TBOND10" color="GREEN"/>
+            <series name="INVERTED" color="#0000ff"/>
+        </serieslist>
+    </chart>
+    <grid id="grid1">
+        <serieslist>
+          <series name="TBOND2"/>
+          <series name="TBON10"/>
+          <series name="INVERTED"/>
+        </serieslist>
+    </grid>
+    
+    <panel label="My Label" orientation="horizontal" background-color="#ff00ff">
+        <component ref="grid1" span="40"/>
+        <panel orientation="vertical" span="60">
+          <component ref="chart1" span="70"/>
+          <component ref="chart2" span="30"/>
+        </panel>
+    </panel>
+</econ>
