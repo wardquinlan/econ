@@ -1,42 +1,42 @@
 <econ script="samp2.ec">
-    <global-properties>
-      <background-color>0xff00ff</background-color>
-      <padding-top>5</padding-top>
-      <padding-left>5</padding-left>
-      <padding-bottom>5</padding-bottom>
-      <padding-right>5</padding-right>
-    </global-properties>
-    
-    <!-- all objects are now visible -->
-    <chart id="chart1" title="My Chart">
-        <gridlines>-2, -1, 0, 1, 2</gridlines>
-        <serieslist>
-            <series ref="TBOND2" color="RED"/> <!-- accesses TBOND2 from the symbol table -->
-            <series ref="TBOND10" color="GREEN"/> <!-- accesses GREEN from the symbol table -->
-            <series ref="INVERTED" color="#0000ff"/> <!-- hard-coded color -->
-        </serieslist>
-    </chart>
-    <chart id="chart2" title="My Chart">
-        <gridlines>-2, -1, 0, 1, 2</gridlines>
-        <serieslist>
-            <series ref="TBOND2" color="RED"/>
-            <series ref="TBOND10" color="GREEN"/>
-            <series ref="INVERTED" color="#0000ff"/>
-        </serieslist>
-    </chart>
-    <grid id="grid1">
-        <serieslist>
-          <series ref="TBOND2"/>
-          <series ref="TBON10"/>
-          <series ref="INVERTED"/>
-        </serieslist>
-    </grid>
-    
-    <panel label="My Label" orientation="horizontal">
-        <component ref="grid1" span="40"/>
-        <panel orientation="vertical" span="60">
-          <component ref="chart1" span="70"/>
-          <component ref="chart2" span="30"/>
-        </panel>
+  <global-properties>
+    <background-color>0xff00ff</background-color>
+    <padding-top>5</padding-top>
+    <padding-left>5</padding-left>
+    <padding-bottom>5</padding-bottom>
+    <padding-right>5</padding-right>
+  </global-properties>
+  
+  <!-- all objects are now visible -->
+  <chart id="chart1" title="My Chart">
+    <gridlines>-2, -1, 0, 1, 2</gridlines>
+    <serieslist>
+      <series ref="TBOND2" color="RED"/> <!-- accesses TBOND2 from the symbol table -->
+      <series ref="TBOND10" color="GREEN"/> <!-- accesses GREEN from the symbol table -->
+      <series ref="INVERTED" color="#0000ff"/> <!-- hard-coded color -->
+    </serieslist>
+  </chart>
+  <chart id="chart2" title="My Chart">
+    <gridlines>-2, -1, 0, 1, 2</gridlines>
+    <serieslist>
+      <series ref="TBOND2" color="RED"/>
+      <series ref="TBOND10" color="GREEN"/>
+      <series ref="INVERTED" color="#0000ff"/>
+    </serieslist>
+  </chart>
+  <grid id="grid1">
+    <serieslist>
+      <series ref="TBOND2"/>
+      <series ref="TBON10"/>
+      <series ref="INVERTED"/>
+    </serieslist>
+  </grid>
+  
+  <panel label="My Label" orientation="horizontal">
+    <component ref="grid1" span="40"/>
+    <panel orientation="vertical" span="60">
+      <component ref="chart1" span="70"/>
+      <component ref="chart2" span="30"/>
     </panel>
+  </panel>
 </econ>
