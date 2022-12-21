@@ -38,10 +38,10 @@ public class SeriesDAO {
     PreparedStatement ps = conn.prepareStatement("select id, datestamp, value from series_data order by datestamp");
     ResultSet resultSet = ps.executeQuery();
     while (resultSet.next()) {
-      System.out.println(resultSet.getInt(1));
+      //System.out.println(resultSet.getInt(1));
       cal.setTime(resultSet.getDate(2));
-      System.out.println(cal.get(Calendar.YEAR) + "/" + cal.get(Calendar.MONTH) + "/" + cal.get(Calendar.DAY_OF_MONTH));
-      System.out.println(resultSet.getDouble(3));
+      //System.out.println(cal.get(Calendar.YEAR) + "/" + cal.get(Calendar.MONTH) + "/" + cal.get(Calendar.DAY_OF_MONTH));
+      //System.out.println(resultSet.getDouble(3));
     }
   }
 

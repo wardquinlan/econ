@@ -9,6 +9,7 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 
 public class XMLParser {
 	public Econ parse(String filename) throws Exception {
@@ -33,6 +34,13 @@ public class XMLParser {
 		}
 		if (econ.getScript() == null) {
 			throw new Exception("Missing econ script attribute");
+		}
+		NodeList nodeList = doc.getDocumentElement().getChildNodes();
+		for (int i = 0; i < nodeList.getLength(); i++) {
+		  Node node = nodeList.item(i);
+		  if (node.getNodeType() == Node.ELEMENT_NODE) {
+		    System.out.println(node.getNodeName());
+		  }
 		}
 		return econ;
 	}

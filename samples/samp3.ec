@@ -8,6 +8,8 @@ println("Hello world!");
 
 TBOND2 = loadSeriesByName("TBOND2");
 println("TBOND2: " + TBOND2);
+CC = TBOND2;
+println("CC: " + CC);
 
 -- TBOND10 = loadSeriesByName("TBOND10");
 -- DIFFERENTIAL = TBOND10 - TBOND2;
