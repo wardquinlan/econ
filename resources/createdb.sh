@@ -11,7 +11,7 @@ if [ "$ECON_DATABASE" = "" ]; then
 fi
 
 if [ "$ECON_USERNAME" = "" ]; then
-  echo $0: ECON_USER not defined
+  echo $0: ECON_USERNAME not defined
   exit 1
 fi
 
@@ -33,10 +33,10 @@ if [ $? != 0 ]; then
   exit 1
 fi
 
-echo $0: attempting to create user \'$ECON_USER\'
+echo $0: attempting to create user \'$ECON_USERNAME\'
 psql << EOF
-  DROP USER IF EXISTS $ECON_USER;
-  CREATE USER $ECON_USER WITH PASSWORD '$ECON_PASSWORD';
+  DROP USER IF EXISTS $ECON_USERNAME;
+  CREATE USER $ECON_USERNAME WITH PASSWORD '$ECON_PASSWORD';
 EOF
 
 echo $0: database $ECON_DATABASE created
