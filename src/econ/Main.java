@@ -15,26 +15,26 @@ import org.apache.commons.logging.LogFactory;
 public class Main {
   private static Log log = LogFactory.getFactory().getInstance(Main.class);
   public static void main(String[] args) {
-    log.info("Econ: application starting");
+    log.info("application starting");
     
     if (System.getenv("ECON_HOST") == null) {
-      log.error("Econ: ECON_HOST not set");
+      log.error("ECON_HOST not set");
       System.exit(1);
     }
     if (System.getenv("ECON_DATABASE") == null) {
-      log.error("Econ: ECON_DATABASE not set");
+      log.error("ECON_DATABASE not set");
       System.exit(1);
     }
     if (System.getenv("ECON_USERNAME") == null) {
-      log.error("Econ: ECON_USERNAME not set");
+      log.error("ECON_USERNAME not set");
       System.exit(1);
     }
     if (System.getenv("ECON_PASSWORD") == null) {
-      log.error("Econ: ECON_PASSWORD not set");
+      log.error("ECON_PASSWORD not set");
       System.exit(1);
     }
     if (args.length != 1) {
-      log.error("Econ: usage: Econ <profile>.xml");
+      log.error("usage: econ.Main <profile>.xml");
       System.exit(1);
     }
     
@@ -46,7 +46,7 @@ public class Main {
       Tokenizer tokenizer = new Tokenizer(econ.getScript());
       TokenIterator itr = tokenizer.tokenize();
       if (!itr.hasNext()) {
-        log.error("Econ: empty script file");
+        log.error("empty script file");
         System.exit(1);
       }
       Parser parser = new Parser();
@@ -54,13 +54,13 @@ public class Main {
       parser.parse(tk, itr);
       TimeSeriesDAO.getInstance().close();
     } catch(Exception e) {
-      log.error("Econ: fatal error", e);
+      log.error(e);
       try {
         if (TimeSeriesDAO.getInstance() != null) {
           TimeSeriesDAO.getInstance().close();
         }
       } catch(Exception e2) {
-        log.warn("Econ: unable to close DAO", e2);
+        log.warn("unable to close DAO", e2);
       }
       System.exit(1);
     }

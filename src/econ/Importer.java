@@ -12,7 +12,7 @@ public class Importer {
 	private static Log log = LogFactory.getFactory().getInstance(Importer.class);
 	public static void main(String[] args) {
 		if (args.length != 2) {
-			log.error("Importer: usage: Importer NAME ID");
+			log.error("usage: Importer NAME ID");
 			System.exit(1);
 		}
 		String name = args[0];
@@ -20,7 +20,7 @@ public class Importer {
 		try {
 			id = Integer.parseInt(args[1]);
 		} catch(NumberFormatException e) {
-			log.error("Importer: usage: Importer NAME ID");
+			log.error("usage: Importer NAME ID");
 			System.exit(1);
 		}
 		BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
@@ -68,7 +68,8 @@ public class Importer {
 				 System.out.println("INSERT INTO TIME_SERIES_DATA(ID, DATESTAMP, VALUE) VALUES(" + id + ", '" + date + "', " + value + ");");
 			 }
 		} catch(IOException e) {
-			
+			log.error(e);
+			System.exit(1);
 		}
 	}
 }
