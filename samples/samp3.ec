@@ -9,9 +9,9 @@ println("Hello world!");
 CC = 3 + BLUE;
 println("Value of CC = " + CC);
 
-TBOND2 = loadSeriesByName("TBOND2");
-println("TBOND2: " + TBOND2);
-CC = TBOND2;
+TBOND10 = loadSeriesByName("TBOND10");
+println("TBOND10: " + TBOND10);
+CC = TBOND10;
 println("CC: " + CC);
 
 -- TBOND10 = loadSeriesByName("TBOND10");
