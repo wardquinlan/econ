@@ -16,8 +16,16 @@ public class SeriesDAO {
   private static Log log = LogFactory.getFactory().getInstance(SeriesDAO.class);
   private Connection conn;
   private Calendar cal = new GregorianCalendar();
+  private static SeriesDAO instance;
   
-  public SeriesDAO() throws Exception {
+  public static SeriesDAO getInstance() throws Exception {
+    if (instance == null) {
+      instance = new SeriesDAO();
+    }
+    return instance;
+  }
+  
+  private SeriesDAO() throws Exception {
     Class.forName("org.postgresql.Driver");
     log.info("attempting to connect to database with host=" + System.getenv("ECON_HOST") + 
              ", name=" + System.getenv("ECON_DATABASE") +
