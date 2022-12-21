@@ -50,8 +50,14 @@ public class SeriesDAO {
     ps.setString(1, name);
     ResultSet resultSet = ps.executeQuery();
     resultSet.next();
-    System.out.println(resultSet.getString(2));
-    return null;
+    Series series = new Series();
+    series.setId(resultSet.getInt(1));
+    series.setName(resultSet.getString(2));
+    series.setTitle(resultSet.getString(3));
+    series.setSourceOrg(resultSet.getString(4));
+    series.setSourceName(resultSet.getString(5));
+    series.setNotes(resultSet.getString(6));
+    return series;
   }
   
   public void close() {
