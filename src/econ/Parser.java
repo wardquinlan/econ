@@ -280,6 +280,9 @@ public class Parser {
         }
         tk = itr.next();
         Object val = expression(tk, itr);
+        if (val == null) {
+          throw new Exception("cannot assign null value to " + symbolName);
+        }
         Symbol symbol = symbolTable.get(symbolName);
         if (symbol != null && symbol.isConstant()) {
           throw new Exception("cannot write to a const: " + symbolName);

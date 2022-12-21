@@ -12,20 +12,20 @@ import java.util.GregorianCalendar;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-public class SeriesDAO {
-  private static Log log = LogFactory.getFactory().getInstance(SeriesDAO.class);
+public class TimeSeriesDAO {
+  private static Log log = LogFactory.getFactory().getInstance(TimeSeriesDAO.class);
   private Connection conn;
   private Calendar cal = new GregorianCalendar();
-  private static SeriesDAO instance;
+  private static TimeSeriesDAO instance;
   
-  public static SeriesDAO getInstance() throws Exception {
+  public static TimeSeriesDAO getInstance() throws Exception {
     if (instance == null) {
-      instance = new SeriesDAO();
+      instance = new TimeSeriesDAO();
     }
     return instance;
   }
   
-  private SeriesDAO() throws Exception {
+  private TimeSeriesDAO() throws Exception {
     Class.forName("org.postgresql.Driver");
     log.info("attempting to connect to database with host=" + System.getenv("ECON_HOST") + 
              ", name=" + System.getenv("ECON_DATABASE") +
@@ -49,8 +49,11 @@ public class SeriesDAO {
     PreparedStatement ps = conn.prepareStatement("select id, name, title, source_org, source_name, notes from time_series where name = ?");
     ps.setString(1, name);
     ResultSet resultSet = ps.executeQuery();
-    resultSet.next();
-    Series series = new Series();
+    if (!resultSet.next()) {
+      // not found
+      return null;
+    }
+    TimeSeries series = new TimeSeries();
     series.setId(resultSet.getInt(1));
     series.setName(resultSet.getString(2));
     series.setTitle(resultSet.getString(3));

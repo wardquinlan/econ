@@ -39,7 +39,8 @@ public class Main {
     }
     
     try {
-      SeriesDAO.getInstance();
+      // Initialize the instance before we get too far
+      TimeSeriesDAO.getInstance();
       XMLParser xmlParser = new XMLParser();
       Econ econ = xmlParser.parse(args[0]);
       Tokenizer tokenizer = new Tokenizer(econ.getScript());
@@ -51,12 +52,12 @@ public class Main {
       Parser parser = new Parser();
       Token tk = itr.next();
       parser.parse(tk, itr);
-      SeriesDAO.getInstance().close();
+      TimeSeriesDAO.getInstance().close();
     } catch(Exception e) {
       log.error("Econ: fatal error", e);
       try {
-        if (SeriesDAO.getInstance() != null) {
-          SeriesDAO.getInstance().close();
+        if (TimeSeriesDAO.getInstance() != null) {
+          TimeSeriesDAO.getInstance().close();
         }
       } catch(Exception e2) {
         log.warn("Econ: unable to close DAO", e2);

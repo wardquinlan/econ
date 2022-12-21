@@ -1,6 +1,6 @@
 package econ;
 
-public class Series {
+public class TimeSeries {
   private int id;
   private String name;
   private String title;

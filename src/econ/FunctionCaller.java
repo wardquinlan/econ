@@ -29,7 +29,7 @@ public class FunctionCaller {
     if (params.size() == 0) {
       throw new Exception("loadSeriesByName: missing argument");
     }
-    return SeriesDAO.getInstance().loadSeriesByName(params.get(0).toString());
+    return TimeSeriesDAO.getInstance().loadSeriesByName(params.get(0).toString());
   }
   
   private Object println(List<Object> params) throws Exception {

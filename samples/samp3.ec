@@ -6,6 +6,9 @@ const BLUE = #0000ff;
 
 println("Hello world!");
 
+CC = 3 + BLUE;
+println("Value of CC = " + CC);
+
 TBOND2 = loadSeriesByName("TBOND2");
 println("TBOND2: " + TBOND2);
 CC = TBOND2;
