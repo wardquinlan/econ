@@ -45,6 +45,15 @@ public class SeriesDAO {
     }
   }
 
+  public Object loadSeriesByName(String name) throws Exception {
+    PreparedStatement ps = conn.prepareStatement("select id, name, title, source_org, source_name, notes from series where name = ?");
+    ps.setString(1, name);
+    ResultSet resultSet = ps.executeQuery();
+    resultSet.next();
+    System.out.println(resultSet.getString(2));
+    return null;
+  }
+  
   public void close() {
     try {
       conn.close();

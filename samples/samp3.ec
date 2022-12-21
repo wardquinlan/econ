@@ -6,7 +6,7 @@ const BLUE = #0000ff;
 
 println("Hello world!");
 
--- TBOND2 = loadSeriesByName("TBOND2");
+TBOND2 = loadSeriesByName("TBOND2");
 -- TBOND10 = loadSeriesByName("TBOND10");
 -- DIFFERENTIAL = TBOND10 - TBOND2;
 -- INVERTED = DIFFERENTIAL < 0; -- a boolean
