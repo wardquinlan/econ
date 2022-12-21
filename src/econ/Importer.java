@@ -65,7 +65,7 @@ public class Importer {
 					 continue;
 				 }
 
-				 System.out.println("INSERT INTO SERIES_DATA(ID, DATESTAMP, VALUE) VALUES(" + id + ", '" + date + "', " + value + ");");
+				 System.out.println("INSERT INTO TIME_SERIES_DATA(ID, DATESTAMP, VALUE) VALUES(" + id + ", '" + date + "', " + value + ");");
 			 }
 		} catch(IOException e) {
 			

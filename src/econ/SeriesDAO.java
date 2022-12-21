@@ -35,7 +35,7 @@ public class SeriesDAO {
                  "?user=" + System.getenv("ECON_USERNAME") +
                  "&password=" + System.getenv("ECON_PASSWORD");
     conn = DriverManager.getConnection(url);  
-    PreparedStatement ps = conn.prepareStatement("select id, datestamp, value from series_data order by datestamp");
+    PreparedStatement ps = conn.prepareStatement("select id, datestamp, value from time_series_data order by datestamp");
     ResultSet resultSet = ps.executeQuery();
     while (resultSet.next()) {
       //System.out.println(resultSet.getInt(1));
@@ -46,7 +46,7 @@ public class SeriesDAO {
   }
 
   public Object loadSeriesByName(String name) throws Exception {
-    PreparedStatement ps = conn.prepareStatement("select id, name, title, source_org, source_name, notes from series where name = ?");
+    PreparedStatement ps = conn.prepareStatement("select id, name, title, source_org, source_name, notes from time_series where name = ?");
     ps.setString(1, name);
     ResultSet resultSet = ps.executeQuery();
     resultSet.next();

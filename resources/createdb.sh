@@ -10,7 +10,7 @@ if [ "$ECON_DATABASE" = "" ]; then
   exit 1
 fi
 
-if [ "$ECON_USER" = "" ]; then
+if [ "$ECON_USERNAME" = "" ]; then
   echo $0: ECON_USER not defined
   exit 1
 fi
