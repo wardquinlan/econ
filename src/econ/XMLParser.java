@@ -35,13 +35,32 @@ public class XMLParser {
 		if (econ.getScript() == null) {
 			throw new Exception("Missing econ script attribute");
 		}
+		
 		NodeList nodeList = doc.getDocumentElement().getChildNodes();
 		for (int i = 0; i < nodeList.getLength(); i++) {
 		  Node node = nodeList.item(i);
 		  if (node.getNodeType() == Node.ELEMENT_NODE) {
-		    System.out.println(node.getNodeName());
+		    if (node.getNodeName().equals("chart")) {
+		      econ.getCharts().add(parseChart(node));
+		    }
 		  }
 		}
 		return econ;
+	}
+	
+	private Chart parseChart(Node node) throws Exception {
+	  Chart chart = new Chart();
+	  NamedNodeMap map = node.getAttributes();
+	  for (int i = 0; i < map.getLength(); i++) {
+	    Node attribute = map.item(i);
+	    if (attribute.getNodeName().equals("id")) {
+	      chart.setId(attribute.getNodeValue());
+	    } else if (attribute.getNodeName().equals("title")) {
+	      chart.setTitle(attribute.getNodeValue());
+	    } else {
+	      throw new Exception("Unexpected chart attribute: " + attribute.getNodeName());
+	    }
+	  }
+	  return chart;
 	}
 }
