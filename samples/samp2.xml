@@ -1,4 +1,4 @@
-<econ script="samp3.ec">
+<econ-context script="samp3.ec">
   <global-properties>
     <background-color>0xff00ff</background-color>
     <padding-top>5</padding-top>
@@ -39,4 +39,4 @@
       <component ref="chart2" span="30"/>
     </panel>
   </panel>
-</econ>
+</econ-context>

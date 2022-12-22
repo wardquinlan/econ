@@ -18,7 +18,7 @@ public class XMLParser {
 		Document doc = builder.parse(new File(filename));
 		doc.getDocumentElement().normalize();
 		Element root = doc.getDocumentElement();
-		if (root.getNodeName() != "econ") {
+		if (root.getNodeName() != "econ-context") {
 			throw new Exception("Unexpected root node: " + root.getNodeName());
 		}
 		
@@ -60,6 +60,9 @@ public class XMLParser {
 	    } else {
 	      throw new Exception("Unexpected chart attribute: " + attribute.getNodeName());
 	    }
+	  }
+	  if (chart.getId() == null) {
+	    throw new Exception("missing chart id attribute");
 	  }
 	  return chart;
 	}
