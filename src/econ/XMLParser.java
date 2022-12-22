@@ -2,6 +2,7 @@ package econ;
 
 import java.awt.Color;
 import java.io.File;
+import java.util.HashMap;
 import java.util.Map;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -17,14 +18,14 @@ import org.w3c.dom.NodeList;
 
 public class XMLParser {
   public static final int MAX_LEVEL = 2;
-  private static Log log = LogFactory.getFactory().getInstance(XMLParser.class);
   private Map<String, Symbol> symbolTable;
   
 	public EconContext parse(String filename, int level) throws Exception {
 	  if (level == MAX_LEVEL) {
 	    throw new Exception("maximum include level exceeded");
 	  }
-		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+	  
+	  DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 		DocumentBuilder builder = factory.newDocumentBuilder();
 		Document doc = builder.parse(new File(filename));
 		doc.getDocumentElement().normalize();
@@ -32,6 +33,7 @@ public class XMLParser {
 		if (!root.getNodeName().equals("econ-context")) {
 			throw new Exception("unexpected root node: " + root.getNodeName());
 		}
+		
 		EconContext econContext = new EconContext();
 		NamedNodeMap map = doc.getDocumentElement().getAttributes();
 		for (int i = 0; i < map.getLength(); i++) {
@@ -42,22 +44,28 @@ public class XMLParser {
 				throw new Exception("unexpected econ-context attribute: " + attribute.getNodeName());
 			}
 		}
-		if (level == 0 && econContext.getScript() == null) {
-			throw new Exception("missing econ-context script attribute");
+
+		if (level == 0) {
+		  if (econContext.getScript() == null) {
+		    throw new Exception("missing econ-context script attribute");
+		  }
+	    
+		  // invoke the parser so we have access to symbols for the remainder of the file
+	    Tokenizer tokenizer = new Tokenizer(econContext.getScript());
+	    TokenIterator itr = tokenizer.tokenize();
+	    if (itr.hasNext()) {
+  	    Parser parser = new Parser();
+  	    Token tk = itr.next();
+  	    symbolTable = parser.parse(tk, itr);
+	    } else {
+	      symbolTable = new HashMap<String, Symbol>();
+	    }
+		} else {
+		  if (econContext.getScript() != null) {
+		    throw new Exception("unexpected econ-context script attribute: " + econContext.getScript());
+		  }
 		}
-		if (level > 0 && econContext.getScript() != null) {
-		  throw new Exception("unexpected econ-context script attribute: " + econContext.getScript());
-		}
-		// invoke the parser so we have access to symbols for the remainder of the file
-    Tokenizer tokenizer = new Tokenizer(econContext.getScript());
-    TokenIterator itr = tokenizer.tokenize();
-    if (!itr.hasNext()) {
-      log.error("empty script file");
-      System.exit(1);
-    }
-    Parser parser = new Parser();
-    Token tk = itr.next();
-    symbolTable = parser.parse(tk, itr);
+
 		NodeList nodeList = doc.getDocumentElement().getChildNodes();
 		for (int i = 0; i < nodeList.getLength(); i++) {
 		  Node node = nodeList.item(i);
@@ -70,10 +78,11 @@ public class XMLParser {
             econContext.getCharts().add(chart);
           }
 		    } else {
-		      throw new Exception("unexpected econ-context child element:" + node.getNodeName());
+		      throw new Exception("unexpected econ-context element:" + node.getNodeName());
 		    }
 		  }
 		}
+		
 		return econContext;
 	}
 	
@@ -88,16 +97,19 @@ public class XMLParser {
         throw new Exception("unexpected include attribute: " + attribute.getNodeName());
       }
     }
+    
     if (name == null) {
       throw new Exception("missing include name attribute");
     }
+    
     NodeList nodeList = node.getChildNodes();
     for (int i = 0; i < nodeList.getLength(); i++) {
       Node node2 = nodeList.item(i);
       if (node2.getNodeType() == Node.ELEMENT_NODE) {
-        throw new Exception("unexpected series element: " + node2.getNodeName());
+        throw new Exception("unexpected include element: " + node2.getNodeName());
       }
     }
+    
     return parse(name, level + 1);
 	}
 	
@@ -114,9 +126,11 @@ public class XMLParser {
 	      throw new Exception("unexpected chart attribute: " + attribute.getNodeName());
 	    }
 	  }
+	  
 	  if (chart.getId() == null) {
 	    throw new Exception("missing chart id attribute");
 	  }
+	  
 	  NodeList nodeList = node.getChildNodes();
     for (int i = 0; i < nodeList.getLength(); i++) {
       Node node2 = nodeList.item(i);
@@ -128,7 +142,8 @@ public class XMLParser {
         }
       }
     }
-	  return chart;
+	  
+    return chart;
 	}
 	
 	private Series parseSeries(Node node) throws Exception {
@@ -139,39 +154,40 @@ public class XMLParser {
       if (attribute.getNodeName().equals("ref")) {
         String name = attribute.getNodeValue();
         if (name.length() == 0) {
-          throw new Exception("invalid symbol (empty)");
+          throw new Exception("invalid series ref attribute (empty)");
         }
         Symbol symbol = symbolTable.get(name);
         if (symbol == null) {
-          throw new Exception("symbol not found: " + name);
+          throw new Exception("series ref attribute not found: " + name);
         }
         if (!(symbol.getValue() instanceof TimeSeries)) {
-          throw new Exception("symbol not a series: " + name);
+          throw new Exception("series ref attribute not a series: " + name);
         }
         series.setTimeSeries((TimeSeries) symbol.getValue());
       } else if (attribute.getNodeName().equals("color")) {
         String color = attribute.getNodeValue();
         if (color.length() == 0) {
-          throw new Exception("invalid color (empty)");
+          throw new Exception("invalid series color attribute (empty)");
         }
         char ch = color.charAt(0);
         if (ch == '#') {
           if (color.length() == 1) {
-            throw new Exception("invalid color: " + color);
+            throw new Exception("invalid series color attribute: " + color);
           }
           series.setColor(new Color(Utils.parseHex(color.substring(1))));
         } else {
           Symbol symbol = symbolTable.get(color);
           if (symbol == null) {
-            throw new Exception("symbol not found: " + color);
+            throw new Exception("series color attribute not found: " + color);
           }
           if (!(symbol.getValue() instanceof Integer)) {
-            throw new Exception("invalid color: " + color);
+            throw new Exception("invalid series color attribute: " + color);
           }
           series.setColor(new Color((Integer) symbol.getValue()));
         }
       }
     }
+    
     NodeList nodeList = node.getChildNodes();
     for (int i = 0; i < nodeList.getLength(); i++) {
       Node node2 = nodeList.item(i);
