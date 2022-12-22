@@ -64,6 +64,29 @@ public class XMLParser {
 	  if (chart.getId() == null) {
 	    throw new Exception("missing chart id attribute");
 	  }
+	  
+	  NodeList nodeList = node.getChildNodes();
+    for (int i = 0; i < nodeList.getLength(); i++) {
+      Node node2 = nodeList.item(i);
+      if (node2.getNodeType() == Node.ELEMENT_NODE) {
+        if (node2.getNodeName().equals("series")) {
+          parseSeries(node2);
+        }
+      }
+    }
 	  return chart;
+	}
+	
+	private Series parseSeries(Node node) {
+	  Series series = new Series();
+	  NamedNodeMap map = node.getAttributes();
+    for (int i = 0; i < map.getLength(); i++) {
+      Node attribute = map.item(i);
+      if (attribute.getNodeName().equals("ref")) {
+        System.out.println("Symbol = " + attribute.getNodeValue());
+      } else if (attribute.getNodeName().equals("color")) {
+      }
+    }
+    return series;
 	}
 }
