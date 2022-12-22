@@ -2,7 +2,7 @@ package econ;
 
 import java.util.ArrayList;
 
-public class Econ {
+public class EconContext {
   private String script;
   private ArrayList<Chart> charts = new ArrayList<>();
 

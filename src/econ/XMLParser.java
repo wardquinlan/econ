@@ -12,7 +12,7 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 public class XMLParser {
-	public Econ parse(String filename) throws Exception {
+	public EconContext parse(String filename) throws Exception {
 		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 		DocumentBuilder builder = factory.newDocumentBuilder();
 		Document doc = builder.parse(new File(filename));
@@ -22,17 +22,17 @@ public class XMLParser {
 			throw new Exception("Unexpected root node: " + root.getNodeName());
 		}
 		
-		Econ econ = new Econ();
+		EconContext context = new EconContext();
 		NamedNodeMap map = doc.getDocumentElement().getAttributes();
 		for (int i = 0; i < map.getLength(); i++) {
 			Node attribute = map.item(i);
 			if (attribute.getNodeName().equals("script")) {
-				econ.setScript(attribute.getNodeValue());
+				context.setScript(attribute.getNodeValue());
 			} else {
 				throw new Exception("Unexpected econ attribute: " + attribute.getNodeName());
 			}
 		}
-		if (econ.getScript() == null) {
+		if (context.getScript() == null) {
 			throw new Exception("Missing econ script attribute");
 		}
 		
@@ -41,11 +41,11 @@ public class XMLParser {
 		  Node node = nodeList.item(i);
 		  if (node.getNodeType() == Node.ELEMENT_NODE) {
 		    if (node.getNodeName().equals("chart")) {
-		      econ.getCharts().add(parseChart(node));
+		      context.getCharts().add(parseChart(node));
 		    }
 		  }
 		}
-		return econ;
+		return context;
 	}
 	
 	private Chart parseChart(Node node) throws Exception {

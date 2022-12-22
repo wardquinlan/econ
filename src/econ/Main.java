@@ -42,8 +42,8 @@ public class Main {
       // Initialize the instance before we get too far
       TimeSeriesDAO.getInstance();
       XMLParser xmlParser = new XMLParser();
-      Econ econ = xmlParser.parse(args[0]);
-      Tokenizer tokenizer = new Tokenizer(econ.getScript());
+      EconContext context = xmlParser.parse(args[0]);
+      Tokenizer tokenizer = new Tokenizer(context.getScript());
       TokenIterator itr = tokenizer.tokenize();
       if (!itr.hasNext()) {
         log.error("empty script file");
