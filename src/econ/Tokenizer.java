@@ -48,7 +48,7 @@ public class Tokenizer {
           Token tk = null;
           StringBuffer sb = new StringBuffer();
           sb.append((char) val);
-          while (Character.isLetter(rdr.peek()) || Character.isDigit(rdr.peek()) || rdr.peek() == '_') {
+          while (Character.isLetter(rdr.peek()) || Character.isDigit(rdr.peek()) || rdr.peek() == '_' || rdr.peek() == '.') {
             sb.append((char) rdr.read());
           }
           if (sb.toString().equals("include")) {

@@ -15,7 +15,7 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 public class XMLParser {
-  public static final int MAX_LEVEL = 2;
+  public static final int MAX_LEVEL = 8;
   private Map<String, Symbol> symbolTable;
   
 	public EconContext parse(String filename, int level) throws Exception {
