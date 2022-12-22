@@ -14,6 +14,10 @@
     <series ref="TBOND10" color="#c1c1c1"/> <!-- accesses GREEN from the symbol table -->
   </chart>
   
+  <panel label="My Panel">
+    <component ref="chart1"/>
+  </panel>
+  
   <!--
   <chart id="chart2" title="My Chart">
     <gridlines>-2, -1, 0, 1, 2</gridlines>
