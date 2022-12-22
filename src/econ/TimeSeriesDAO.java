@@ -1,13 +1,9 @@
 package econ;
 
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -15,7 +11,6 @@ import org.apache.commons.logging.LogFactory;
 public class TimeSeriesDAO {
   private static Log log = LogFactory.getFactory().getInstance(TimeSeriesDAO.class);
   private Connection conn;
-  private Calendar cal = new GregorianCalendar();
   private static TimeSeriesDAO instance;
   
   public static TimeSeriesDAO getInstance() throws Exception {
@@ -35,14 +30,6 @@ public class TimeSeriesDAO {
                  "?user=" + System.getenv("ECON_USERNAME") +
                  "&password=" + System.getenv("ECON_PASSWORD");
     conn = DriverManager.getConnection(url);  
-    PreparedStatement ps = conn.prepareStatement("select id, datestamp, value from time_series_data order by datestamp");
-    ResultSet resultSet = ps.executeQuery();
-    while (resultSet.next()) {
-      //System.out.println(resultSet.getInt(1));
-      cal.setTime(resultSet.getDate(2));
-      //System.out.println(cal.get(Calendar.YEAR) + "/" + cal.get(Calendar.MONTH) + "/" + cal.get(Calendar.DAY_OF_MONTH));
-      //System.out.println(resultSet.getDouble(3));
-    }
   }
 
   public Object loadSeriesByName(String name) throws Exception {
@@ -60,6 +47,16 @@ public class TimeSeriesDAO {
     series.setSourceOrg(resultSet.getString(4));
     series.setSourceName(resultSet.getString(5));
     series.setNotes(resultSet.getString(6));
+    
+    ps = conn.prepareStatement("select datestamp, value from time_series_data where id = ? order by datestamp");
+    ps.setInt(1, series.getId());
+    resultSet = ps.executeQuery();
+    while (resultSet.next()) {
+      TimeSeriesData timeSeriesData = new TimeSeriesData();
+      timeSeriesData.setDate(resultSet.getDate(1));
+      timeSeriesData.setValue(resultSet.getDouble(2));
+      series.getTimeSeriesData().add(timeSeriesData);
+    }
     return series;
   }
   

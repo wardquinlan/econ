@@ -1,5 +1,7 @@
 package econ;
 
+import java.util.ArrayList;
+
 public class TimeSeries {
   private int id;
   private String name;
@@ -7,6 +9,7 @@ public class TimeSeries {
   private String sourceOrg;
   private String sourceName;
   private String notes;
+  private ArrayList<TimeSeriesData> timeSeriesData = new ArrayList<>();
   
   public int getId() {
     return id;
@@ -56,8 +59,12 @@ public class TimeSeries {
     this.notes = notes;
   }
 
+  public ArrayList<TimeSeriesData> getTimeSeriesData() {
+    return timeSeriesData;
+  }
+  
   @Override
   public String toString() {
-    return "[" + id + ", " + name + ", " + title + ", " + sourceOrg + ", " + sourceName + "]"; 
+    return "[" + id + ", " + name + ", " + title + ", " + sourceOrg + ", " + sourceName + "(count=" + timeSeriesData.size() + ")]"; 
   }
 }
