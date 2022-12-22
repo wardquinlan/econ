@@ -9,7 +9,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 public class Parser {
-  private static Log log = LogFactory.getFactory().getInstance(Parser.class);
+  private static final Log log = LogFactory.getFactory().getInstance(Parser.class);
   private static FunctionCaller funcCaller = new FunctionCaller();
   private Map<String, Symbol> symbolTable;
 

@@ -10,7 +10,9 @@ CC = 3 + BLUE;
 println("Value of CC = " + CC);
 
 TBOND10 = loadSeriesByName("TBOND10");
+TBOND2 = loadSeriesByName("TBOND2");
 println("TBOND10: " + TBOND10);
+println("TBOND2: " + TBOND2);
 CC = TBOND10;
 println("CC: " + CC);
 

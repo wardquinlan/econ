@@ -13,7 +13,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 public class Main {
-  private static Log log = LogFactory.getFactory().getInstance(Main.class);
+  private static final Log log = LogFactory.getFactory().getInstance(Main.class);
   public static void main(String[] args) {
     log.info("application starting");
     
@@ -43,15 +43,6 @@ public class Main {
       TimeSeriesDAO.getInstance();
       XMLParser xmlParser = new XMLParser();
       EconContext context = xmlParser.parse(args[0]);
-      Tokenizer tokenizer = new Tokenizer(context.getScript());
-      TokenIterator itr = tokenizer.tokenize();
-      if (!itr.hasNext()) {
-        log.error("empty script file");
-        System.exit(1);
-      }
-      Parser parser = new Parser();
-      Token tk = itr.next();
-      parser.parse(tk, itr);
       TimeSeriesDAO.getInstance().close();
     } catch(Exception e) {
       log.error(e);

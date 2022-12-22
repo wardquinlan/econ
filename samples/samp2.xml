@@ -11,19 +11,18 @@
   <chart id="chart1" title="My Chart">
     <gridlines>-2, -1, 0, 1, 2</gridlines>
     <series ref="TBOND2" color="RED"/> <!-- accesses TBOND2 from the symbol table -->
-    <series ref="TBOND10" color="GREEN"/> <!-- accesses GREEN from the symbol table -->
-    <series ref="INVERTED" color="#0000ff"/> <!-- hard-coded color -->
+    <series ref="TBOND10" color="#c1c1c1"/> <!-- accesses GREEN from the symbol table -->
   </chart>
+  
+  <!--
   <chart id="chart2" title="My Chart">
     <gridlines>-2, -1, 0, 1, 2</gridlines>
     <series ref="TBOND2" color="RED"/>
     <series ref="TBOND10" color="GREEN"/>
-    <series ref="INVERTED" color="#0000ff"/>
   </chart>
   <grid id="grid1">
     <series ref="TBOND2"/>
     <series ref="TBON10"/>
-    <series ref="INVERTED"/>
   </grid>
   
   <panel label="My Label" orientation="horizontal">
@@ -33,4 +32,5 @@
       <component ref="chart2" span="30"/>
     </panel>
   </panel>
+  -->
 </econ-context>
