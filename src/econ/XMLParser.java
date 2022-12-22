@@ -134,7 +134,7 @@ public class XMLParser {
       Node node2 = nodeList.item(i);
       if (node2.getNodeType() == Node.ELEMENT_NODE) {
         if (node2.getNodeName().equals("series")) {
-          parseSeries(node2);
+          chart.getSeries().add(parseSeries(node2));
         } else {
           throw new Exception("unexpected chart element: " + node2.getNodeName());
         }
