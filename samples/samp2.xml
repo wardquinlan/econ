@@ -1,4 +1,11 @@
 <econ-context script="samp3.ec">
+  <!-- can maybe just use variables like this:
+  
+  settings.background.color=#ffffff;
+  settings.padding.top=5;
+  ...
+  Will need to update the parser to allow '.' character in names
+  -->
   <global-properties>
     <background-color>0xff00ff</background-color>
     <padding-top>5</padding-top>
