@@ -42,7 +42,7 @@ public class Main {
       // Initialize the instance before we get too far
       TimeSeriesDAO.getInstance();
       XMLParser xmlParser = new XMLParser();
-      EconContext context = xmlParser.parse(args[0], 0);
+      EconContext econContext = xmlParser.parse(args[0], 0);
       TimeSeriesDAO.getInstance().close();
     } catch(Exception e) {
       log.error(e);

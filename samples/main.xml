@@ -1,0 +1,4 @@
+<econ-context script="main.ec">
+  <include name="chart1.xml"/>"
+  <include name="chart2.xml"/>"
+</econ-context>

@@ -1,0 +1,6 @@
+<econ-context>
+  <chart id="chart1" title="My Chart">
+    <series ref="TBOND2" color="RED"/> <!-- accesses TBOND2 from the symbol table -->
+    <series ref="TBOND10" color="#c1c1c1"/> <!-- accesses GREEN from the symbol table -->
+  </chart>
+</econ-context>
