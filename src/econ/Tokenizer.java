@@ -205,7 +205,8 @@ public class Tokenizer {
         if (tk.getType() != Token.SEMI) {
           throw new Exception("misformatted include statement");
         }
-        Tokenizer tokenizer = new Tokenizer(file.getParent() + "/" + path);
+        Tokenizer tokenizer = (file.getParent() == null ? 
+            new Tokenizer(path) : new Tokenizer(file.getParent() + File.separator + path));
         TokenIterator itr = tokenizer.tokenize(level + 1);
         while (itr.hasNext()) {
           listNew.add(itr.next());
