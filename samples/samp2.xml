@@ -1,4 +1,9 @@
 <econ-context script="samp3.ec">
+  <!-- can definitely do includes:
+  <include name="chart1.xml"/>
+  <include name="chart2.xml"/>
+  -->
+  
   <!-- can maybe just use variables like this:
   
   settings.background.color=#ffffff;
