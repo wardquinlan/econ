@@ -16,35 +16,40 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 public class XMLParser {
+  public static final int MAX_LEVEL = 2;
   private static Log log = LogFactory.getFactory().getInstance(XMLParser.class);
   private Map<String, Symbol> symbolTable;
   
-	public EconContext parse(String filename) throws Exception {
+	public EconContext parse(String filename, int level) throws Exception {
+	  if (level == MAX_LEVEL) {
+	    throw new Exception("maximum include level exceeded");
+	  }
 		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 		DocumentBuilder builder = factory.newDocumentBuilder();
 		Document doc = builder.parse(new File(filename));
 		doc.getDocumentElement().normalize();
 		Element root = doc.getDocumentElement();
-		if (root.getNodeName() != "econ-context") {
-			throw new Exception("Unexpected root node: " + root.getNodeName());
+		if (!root.getNodeName().equals("econ-context")) {
+			throw new Exception("unexpected root node: " + root.getNodeName());
 		}
-		
-		EconContext context = new EconContext();
+		EconContext econContext = new EconContext();
 		NamedNodeMap map = doc.getDocumentElement().getAttributes();
 		for (int i = 0; i < map.getLength(); i++) {
 			Node attribute = map.item(i);
 			if (attribute.getNodeName().equals("script")) {
-				context.setScript(attribute.getNodeValue());
+				econContext.setScript(attribute.getNodeValue());
 			} else {
-				throw new Exception("Unexpected econ attribute: " + attribute.getNodeName());
+				throw new Exception("unexpected econ-context attribute: " + attribute.getNodeName());
 			}
 		}
-		if (context.getScript() == null) {
-			throw new Exception("Missing econ script attribute");
+		if (level == 0 && econContext.getScript() == null) {
+			throw new Exception("missing econ-context script attribute");
 		}
-
+		if (level > 0 && econContext.getScript() != null) {
+		  throw new Exception("unexpected econ-context script attribute: " + econContext.getScript());
+		}
 		// invoke the parser so we have access to symbols for the remainder of the file
-    Tokenizer tokenizer = new Tokenizer(context.getScript());
+    Tokenizer tokenizer = new Tokenizer(econContext.getScript());
     TokenIterator itr = tokenizer.tokenize();
     if (!itr.hasNext()) {
       log.error("empty script file");
@@ -53,17 +58,47 @@ public class XMLParser {
     Parser parser = new Parser();
     Token tk = itr.next();
     symbolTable = parser.parse(tk, itr);
-		
 		NodeList nodeList = doc.getDocumentElement().getChildNodes();
 		for (int i = 0; i < nodeList.getLength(); i++) {
 		  Node node = nodeList.item(i);
 		  if (node.getNodeType() == Node.ELEMENT_NODE) {
 		    if (node.getNodeName().equals("chart")) {
-		      context.getCharts().add(parseChart(node));
+		      econContext.getCharts().add(parseChart(node));
+		    } else if (node.getNodeName().equals("include")) {
+		      EconContext econContext2 = parseInclude(node, level);
+          for (Chart chart: econContext2.getCharts()) {
+            econContext.getCharts().add(chart);
+          }
+		    } else {
+		      throw new Exception("unexpected econ-context child element:" + node.getNodeName());
 		    }
 		  }
 		}
-		return context;
+		return econContext;
+	}
+	
+	private EconContext parseInclude(Node node, int level) throws Exception {
+	  String name = null;
+	  NamedNodeMap map = node.getAttributes();
+    for (int i = 0; i < map.getLength(); i++) {
+      Node attribute = map.item(i);
+      if (attribute.getNodeName().equals("name")) {
+        name = attribute.getNodeValue();
+      } else {
+        throw new Exception("unexpected include attribute: " + attribute.getNodeName());
+      }
+    }
+    if (name == null) {
+      throw new Exception("missing include name attribute");
+    }
+    NodeList nodeList = node.getChildNodes();
+    for (int i = 0; i < nodeList.getLength(); i++) {
+      Node node2 = nodeList.item(i);
+      if (node2.getNodeType() == Node.ELEMENT_NODE) {
+        throw new Exception("unexpected series element: " + node2.getNodeName());
+      }
+    }
+    return parse(name, level + 1);
 	}
 	
 	private Chart parseChart(Node node) throws Exception {
@@ -76,19 +111,20 @@ public class XMLParser {
 	    } else if (attribute.getNodeName().equals("title")) {
 	      chart.setTitle(attribute.getNodeValue());
 	    } else {
-	      throw new Exception("Unexpected chart attribute: " + attribute.getNodeName());
+	      throw new Exception("unexpected chart attribute: " + attribute.getNodeName());
 	    }
 	  }
 	  if (chart.getId() == null) {
 	    throw new Exception("missing chart id attribute");
 	  }
-	  
 	  NodeList nodeList = node.getChildNodes();
     for (int i = 0; i < nodeList.getLength(); i++) {
       Node node2 = nodeList.item(i);
       if (node2.getNodeType() == Node.ELEMENT_NODE) {
         if (node2.getNodeName().equals("series")) {
           parseSeries(node2);
+        } else {
+          throw new Exception("unexpected chart element: " + node2.getNodeName());
         }
       }
     }
@@ -134,6 +170,13 @@ public class XMLParser {
           }
           series.setColor(new Color((Integer) symbol.getValue()));
         }
+      }
+    }
+    NodeList nodeList = node.getChildNodes();
+    for (int i = 0; i < nodeList.getLength(); i++) {
+      Node node2 = nodeList.item(i);
+      if (node2.getNodeType() == Node.ELEMENT_NODE) {
+        throw new Exception("unexpected series element: " + node2.getNodeName());
       }
     }
     return series;
