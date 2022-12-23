@@ -81,6 +81,7 @@ public class XMLParser {
 		  }
 		}
 		
+		econContext.getSymbolTable().putAll(symbolTable);
 		return econContext;
 	}
 	
