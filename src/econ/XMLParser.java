@@ -50,8 +50,8 @@ public class XMLParser {
 		  }
 	    
 		  // invoke the parser so we have access to symbols for the remainder of the file
-	    Tokenizer tokenizer = new Tokenizer(econContext.getScript());
-	    TokenIterator itr = tokenizer.tokenize();
+	    Tokenizer tokenizer = new Tokenizer();
+	    TokenIterator itr = tokenizer.tokenize(basename, econContext.getScript(), 0);
 	    if (itr.hasNext()) {
   	    Parser parser = new Parser();
   	    Token tk = itr.next();

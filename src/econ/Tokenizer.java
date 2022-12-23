@@ -13,24 +13,15 @@ public class Tokenizer {
   private static Log log = LogFactory.getFactory().getInstance(Tokenizer.class);
   private static FunctionCaller funcCaller = new FunctionCaller();
   private static final int MAX_LEVEL = 8;
-  private File file;
   
-  public Tokenizer(String path) {
-    file = new File(path);
-  }
-  
-  public TokenIterator tokenize() throws Exception {
-    return tokenize(0);
-  }
-  
-  public TokenIterator tokenize(int level) throws Exception {
+  public TokenIterator tokenize(String basename, String filename, int level) throws Exception {
     if (level > MAX_LEVEL) {
       throw new Exception("exceeded maximum include level");
     }
     LookAheadReader rdr = null;
     List<Token> list = new ArrayList<Token>();
     try {
-      log.info("attempting to open " + file.getPath() + " (level " + level + ")");
+      File file = new File(basename + File.separator + filename);
       rdr = new LookAheadReader(new FileInputStream(file));
       while (true) {
         int val = rdr.read();
@@ -180,10 +171,10 @@ public class Tokenizer {
         }
       }
     }
-    return postTokenize(list, level);
+    return postTokenize(basename, list, level);
   }
   
-  private TokenIterator postTokenize(List<Token> list, int level) throws Exception {
+  private TokenIterator postTokenize(String basename, List<Token> list, int level) throws Exception {
     List<Token> listNew = new ArrayList<Token>();
     for (int i = 0; i < list.size(); i++) {
       Token tk = list.get(i);
@@ -196,7 +187,7 @@ public class Tokenizer {
         if (tk.getType() != Token.STRING) {
           throw new Exception("misformatted include statement");
         }
-        String path = (String) tk.getValue();
+        String filename = (String) tk.getValue();
         i++;
         if (i == list.size()) {
           throw new Exception("misformatted include statement");
@@ -205,9 +196,8 @@ public class Tokenizer {
         if (tk.getType() != Token.SEMI) {
           throw new Exception("misformatted include statement");
         }
-        Tokenizer tokenizer = (file.getParent() == null ? 
-            new Tokenizer(path) : new Tokenizer(file.getParent() + File.separator + path));
-        TokenIterator itr = tokenizer.tokenize(level + 1);
+        Tokenizer tokenizer = new Tokenizer();
+        TokenIterator itr = tokenizer.tokenize(basename, filename, level + 1);
         while (itr.hasNext()) {
           listNew.add(itr.next());
         }
