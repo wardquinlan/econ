@@ -129,6 +129,10 @@ public class XMLParser {
       }
     }
     
+    if (panel.getLabel() == null) {
+      throw new Exception("missing panel label attribute");
+    }
+    
     NodeList nodeList = node.getChildNodes();
     for (int i = 0; i < nodeList.getLength(); i++) {
       Node node2 = nodeList.item(i);
@@ -155,6 +159,10 @@ public class XMLParser {
 	      throw new Exception("unexpected chart attribute: " + attribute.getNodeName());
 	    }
 	  }
+
+    if (chart.getLabel() == null) {
+      throw new Exception("missing chart label attribute");
+    }
 	  
 	  NodeList nodeList = node.getChildNodes();
     for (int i = 0; i < nodeList.getLength(); i++) {
