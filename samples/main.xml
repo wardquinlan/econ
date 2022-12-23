@@ -1,6 +1,6 @@
-<econ-context script="main.ec">
-  <include name="chart1.xml"/>"
-  <include name="chart2.xml"/>"
+<econ-context script="samples/main.ec">
+  <include name="samples/chart1.xml"/>"
+  <include name="samples/chart2.xml"/>"
   
   <!-- maybe I could do something like this:
   - you can only have 1 grid in a panel.  If present, it is left-aligned
@@ -9,6 +9,8 @@
   - charts have a span="" attribute which control sizing.  all span elements must sum to 100
   - all this implies that there are 2 JPanels: the LHS panel is for grids, and the RHS panel is for all charts
   -->
+  <!--
   <panel>
   </panel>
+  -->
 </econ-context>
