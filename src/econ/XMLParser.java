@@ -18,14 +18,15 @@ public class XMLParser {
   public static final int MAX_LEVEL = 8;
   private Map<String, Symbol> symbolTable;
   
-	public EconContext parse(String filename, int level) throws Exception {
+	public EconContext parse(String basename, String filename, int level) throws Exception {
 	  if (level == MAX_LEVEL) {
 	    throw new Exception("maximum include level exceeded");
 	  }
 	  
 	  DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 		DocumentBuilder builder = factory.newDocumentBuilder();
-		Document doc = builder.parse(new File(filename));
+		File file = new File(basename + File.separator + filename);
+		Document doc = builder.parse(file);
 		doc.getDocumentElement().normalize();
 		Element root = doc.getDocumentElement();
 		if (!root.getNodeName().equals("econ-context")) {
@@ -71,7 +72,7 @@ public class XMLParser {
 		    if (node.getNodeName().equals("panel")) {
 		      econContext.getPanels().add(parsePanel(node));
 		    } else if (node.getNodeName().equals("include")) {
-		      EconContext econContext2 = parseInclude(node, level);
+		      EconContext econContext2 = parseInclude(basename, node, level);
           for (Panel panel: econContext2.getPanels()) {
             econContext.getPanels().add(panel);
           }
@@ -89,7 +90,7 @@ public class XMLParser {
 		return econContext;
 	}
 	
-	private EconContext parseInclude(Node node, int level) throws Exception {
+	private EconContext parseInclude(String basename, Node node, int level) throws Exception {
 	  String name = null;
 	  NamedNodeMap map = node.getAttributes();
     for (int i = 0; i < map.getLength(); i++) {
@@ -113,7 +114,7 @@ public class XMLParser {
       }
     }
     
-    return parse(name, level + 1);
+    return parse(basename, name, level + 1);
 	}
 	
 	private Panel parsePanel(Node node) throws Exception {

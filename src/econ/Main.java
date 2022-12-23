@@ -1,5 +1,9 @@
 package econ;
 
+import java.io.File;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -33,8 +37,12 @@ public class Main {
       // Initialize the instance before we get too far
       TimeSeriesDAO.getInstance();
       XMLParser xmlParser = new XMLParser();
-      EconContext econContext = xmlParser.parse(args[0], 0);
-      new EconFrame(econContext);
+      File file = new File(args[0]);
+      Path path = Paths.get(file.getAbsolutePath());
+      String basename = path.getParent().toString();
+      String filename = file.getName();
+      EconContext econContext = xmlParser.parse(basename, filename, 0);
+      // new EconFrame(econContext);
       // TimeSeriesDAO.getInstance().close();
     } catch(Exception e) {
       log.error(e);
