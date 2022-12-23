@@ -81,6 +81,10 @@ public class XMLParser {
 		  }
 		}
 		
+		Symbol symbol = symbolTable.get("settings.loaded");
+		if (symbol == null || !symbol.getValue().equals(1)) {
+		  throw new Exception("settings not loaded");
+		}
 		econContext.getSymbolTable().putAll(symbolTable);
 		return econContext;
 	}
