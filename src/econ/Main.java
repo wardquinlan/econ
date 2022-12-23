@@ -42,7 +42,7 @@ public class Main {
       String basename = path.getParent().toString();
       String filename = file.getName();
       EconContext econContext = xmlParser.parse(basename, filename, 0);
-      // new EconFrame(econContext);
+      new EconFrame(econContext);
       // TimeSeriesDAO.getInstance().close();
     } catch(Exception e) {
       log.error(e);
