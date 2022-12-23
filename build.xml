@@ -35,7 +35,7 @@
     <mkdir dir="${output}/${appname}.d"/>
     <jar jarfile="${output}/${appname}.d/${appname}.jar" basedir="${classes}"/>
     <copy todir="${output}" file="${resources}/econ.sh"/>
-  	<copy todir="${output}" file="${resources}/import.sh"/>
+    <copy todir="${output}" file="${resources}/import.sh"/>
     <copy todir="${output}" file="${resources}/createdb.sh"/>
     <copy todir="${output}" file="${resources}/ddl.sh"/>
     <copy todir="${output}/${appname}.d">
