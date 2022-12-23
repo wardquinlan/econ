@@ -24,4 +24,8 @@ public class EconContext {
   public Map<String, Symbol> getSymbolTable() {
     return symbolTable;
   }
+  
+  public Object get(String id) {
+    return symbolTable.get(id).getValue();
+  }
 }
