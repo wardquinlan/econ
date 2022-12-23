@@ -1,5 +1,5 @@
-<econ-context script="samples/main.ec">
-  <include name="samples/panel1.xml"/>"
+<econ-context script="main.ec">
+  <include name="panel1.xml"/>"
     
   <!-- maybe I could do something like this:
   - you can only have 1 grid in a panel.  If present, it is left-aligned
