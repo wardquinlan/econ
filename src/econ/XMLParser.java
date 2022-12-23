@@ -68,12 +68,12 @@ public class XMLParser {
 		for (int i = 0; i < nodeList.getLength(); i++) {
 		  Node node = nodeList.item(i);
 		  if (node.getNodeType() == Node.ELEMENT_NODE) {
-		    if (node.getNodeName().equals("chart")) {
-		      econContext.getCharts().add(parseChart(node));
+		    if (node.getNodeName().equals("panel")) {
+		      econContext.getPanels().add(parsePanel(node));
 		    } else if (node.getNodeName().equals("include")) {
 		      EconContext econContext2 = parseInclude(node, level);
-          for (Chart chart: econContext2.getCharts()) {
-            econContext.getCharts().add(chart);
+          for (Panel panel: econContext2.getPanels()) {
+            econContext.getPanels().add(panel);
           }
 		    } else {
 		      throw new Exception("unexpected econ-context element:" + node.getNodeName());
@@ -116,22 +116,43 @@ public class XMLParser {
     return parse(name, level + 1);
 	}
 	
+	private Panel parsePanel(Node node) throws Exception {
+	  Panel panel = new Panel();
+    NamedNodeMap map = node.getAttributes();
+    for (int i = 0; i < map.getLength(); i++) {
+      Node attribute = map.item(i);
+      if (attribute.getNodeName().equals("label")) {
+        panel.setLabel(attribute.getNodeValue());
+      } else {
+        throw new Exception("unexpected panel attribute: " + attribute.getNodeName());
+      }
+    }
+    
+    NodeList nodeList = node.getChildNodes();
+    for (int i = 0; i < nodeList.getLength(); i++) {
+      Node node2 = nodeList.item(i);
+      if (node2.getNodeType() == Node.ELEMENT_NODE) {
+        if (node2.getNodeName().equals("chart")) {
+          panel.getCharts().add(parseChart(node2));
+        } else {
+          throw new Exception("unexpected panel element: " + node2.getNodeName());
+        }
+      }
+    }
+    
+    return panel;
+	}
+	
 	private Chart parseChart(Node node) throws Exception {
 	  Chart chart = new Chart();
 	  NamedNodeMap map = node.getAttributes();
 	  for (int i = 0; i < map.getLength(); i++) {
 	    Node attribute = map.item(i);
-	    if (attribute.getNodeName().equals("id")) {
-	      chart.setId(attribute.getNodeValue());
-	    } else if (attribute.getNodeName().equals("title")) {
-	      chart.setTitle(attribute.getNodeValue());
+	    if (attribute.getNodeName().equals("label")) {
+	      chart.setLabel(attribute.getNodeValue());
 	    } else {
 	      throw new Exception("unexpected chart attribute: " + attribute.getNodeName());
 	    }
-	  }
-	  
-	  if (chart.getId() == null) {
-	    throw new Exception("missing chart id attribute");
 	  }
 	  
 	  NodeList nodeList = node.getChildNodes();

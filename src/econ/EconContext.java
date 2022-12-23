@@ -6,7 +6,7 @@ import java.util.Map;
 
 public class EconContext {
   private String script;
-  private ArrayList<Chart> charts = new ArrayList<>();
+  private ArrayList<Panel> panels = new ArrayList<>();
   private Map<String, Symbol> symbolTable = new HashMap<>();
 
   public String getScript() {
@@ -17,8 +17,8 @@ public class EconContext {
     this.script = script;
   }
   
-  public ArrayList<Chart> getCharts() {
-    return charts;
+  public ArrayList<Panel> getPanels() {
+    return panels;
   }
 
   public Map<String, Symbol> getSymbolTable() {
