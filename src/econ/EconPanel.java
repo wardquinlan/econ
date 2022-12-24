@@ -28,6 +28,7 @@ public class EconPanel extends JPanel {
     //add(panel, BorderLayout.CENTER);
     //button.setBounds(10, 10, getWidth() / 2, getHeight() / 2);
     //add(button);
+    add(button);
   }
 
   @Override
@@ -40,11 +41,7 @@ public class EconPanel extends JPanel {
     int widthText = m.stringWidth("Chart Title");
     g.drawString("Chart Title", (widthPanel - widthText) / 2, heightFont);
     
-    if (button == null) {
-      button = new JButton("Hi");
-    }
-    button.setBounds(10, 10, getWidth() / 2, getHeight() / 2);
-    add(button);
+    button.setBounds(10, 10, getWidth() / 4, getHeight() / 4);
     
     int x = (int) context.get("settings.panel.padding.left");
     int y = m.getHeight();
