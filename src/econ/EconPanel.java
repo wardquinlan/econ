@@ -12,7 +12,8 @@ import javax.swing.JPanel;
 
 public class EconPanel extends JPanel {
   private EconContext context;
-  private JButton button = new JButton("Hi");
+  private JButton button1 = new JButton("<<");
+  private JButton button2 = new JButton(">>");
   
   public EconPanel(EconContext context) {
     super();
@@ -28,7 +29,8 @@ public class EconPanel extends JPanel {
     //add(panel, BorderLayout.CENTER);
     //button.setBounds(10, 10, getWidth() / 2, getHeight() / 2);
     //add(button);
-    add(button);
+    add(button1);
+    add(button2);
   }
 
   @Override
@@ -41,7 +43,8 @@ public class EconPanel extends JPanel {
     int widthText = m.stringWidth("Chart Title");
     g.drawString("Chart Title", (widthPanel - widthText) / 2, heightFont);
     
-    button.setBounds(10, 10, getWidth() / 4, getHeight() / 4);
+    button1.setBounds(10, 10, 50, 20);
+    button2.setBounds(60, 10, 50, 20);
     
     int x = (int) context.get("settings.panel.padding.left");
     int y = m.getHeight();
