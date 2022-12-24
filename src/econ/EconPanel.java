@@ -57,10 +57,11 @@ public class EconPanel extends JPanel {
     
     int chartHeight = getHeight() / panel.getCharts().size();
     for (int i = 0; i < panel.getCharts().size(); i++) {
+      Chart chart = panel.getCharts().get(i);
       x = 0;
       //y = i * chartHeight + (i + 1) * m.getHeight();
       y = m.getHeight() + i * chartHeight;
-      g.drawString(panel.getLabel(), x, y);
+      g.drawString(chart.getLabel(), x, y);
       g.drawRect(0, y, getWidth() - 1, chartHeight - m.getHeight() - 1);
       
     }
