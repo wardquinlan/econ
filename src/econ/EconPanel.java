@@ -12,12 +12,14 @@ import javax.swing.JPanel;
 
 public class EconPanel extends JPanel {
   private EconContext ctx;
+  private Panel panel;
   private JButton button1 = new JButton("<<");
   private JButton button2 = new JButton(">>");
   
-  public EconPanel(EconContext ctx) {
+  public EconPanel(EconContext ctx, Panel panel) {
     super();
     this.ctx = ctx;
+    this.panel = panel;
     JPanel gridPanel = new JPanel();
     gridPanel.setPreferredSize(new Dimension(200, 200));
     gridPanel.setBorder(BorderFactory.createLineBorder(Color.BLUE));
@@ -40,7 +42,7 @@ public class EconPanel extends JPanel {
     FontMetrics m = g.getFontMetrics(g.getFont());
     int heightFont = m.getHeight();
     int widthText = m.stringWidth("Chart Title");
-    g.drawString("Chart Title", (widthPanel - widthText) / 2, heightFont);
+    //g.drawString("Chart Title", (widthPanel - widthText) / 2, heightFont);
     
     button1.setBounds(getWidth() - 100 - (int) ctx.get("settings.panel.padding.right"), getHeight() - 20 - (int) ctx.get("settings.panel.padding.bottom"), 50, 20);
     button2.setBounds(getWidth() - 50 - (int) ctx.get("settings.panel.padding.right"), getHeight() - 20 - (int) ctx.get("settings.panel.padding.bottom"), 50, 20);
@@ -51,8 +53,17 @@ public class EconPanel extends JPanel {
     int y = m.getHeight();
     int width = getWidth() - x - (int) ctx.get("settings.panel.padding.right");
     int height = getHeight() - y - (int) ctx.get("settings.panel.padding.bottom");
-    g.drawRect(x, y, width, height);
+    //g.drawRect(x, y, width, height);
     
+    int chartHeight = getHeight() / panel.getCharts().size();
+    for (int i = 0; i < panel.getCharts().size(); i++) {
+      x = 0;
+      //y = i * chartHeight + (i + 1) * m.getHeight();
+      y = m.getHeight() + i * chartHeight;
+      g.drawString(panel.getLabel(), x, y);
+      g.drawRect(0, y, getWidth() - 1, chartHeight - m.getHeight() - 1);
+      
+    }
     /*
     g.drawLine(0, 0, 100, 100);
     g.drawRect(10, 10, 500, 200);

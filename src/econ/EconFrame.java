@@ -28,7 +28,7 @@ public class EconFrame extends JFrame {
         model.addRow(new Object[] {"2021-10-31", "4.37", "4.25"});
       }
       JTable table = new JTable(model);
-      EconPanel econPanel = new EconPanel(ctx);
+      EconPanel econPanel = new EconPanel(ctx, panel);
       JPanel containerPanel = new JPanel();
       containerPanel.setLayout(new BorderLayout());
       containerPanel.add(new JScrollPane(table), BorderLayout.WEST);
