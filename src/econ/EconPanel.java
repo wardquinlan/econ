@@ -21,7 +21,6 @@ public class EconPanel extends JPanel {
     JPanel gridPanel = new JPanel();
     gridPanel.setPreferredSize(new Dimension(200, 200));
     gridPanel.setBorder(BorderFactory.createLineBorder(Color.BLUE));
-    setLayout(new BorderLayout());
     setLayout(null);
     //add(gridPanel, BorderLayout.WEST);
     //JPanel panel = new JPanel();
