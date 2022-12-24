@@ -40,15 +40,17 @@ public class EconPanel extends JPanel {
     setBackground(new Color((int) ctx.get("settings.panel.background.color")));
     FontMetrics m = g.getFontMetrics(g.getFont());
     
-    button1.setBounds(getWidth() - 100 - (int) ctx.get("settings.panel.padding.right"), getHeight() - 20 - (int) ctx.get("settings.panel.padding.bottom"), 50, 20);
-    button2.setBounds(getWidth() - 50 - (int) ctx.get("settings.panel.padding.right"), getHeight() - 20 - (int) ctx.get("settings.panel.padding.bottom"), 50, 20);
+    // button1.setBounds(getWidth() - 100 - (int) ctx.get("settings.panel.padding.right"), getHeight() - 20 - (int) ctx.get("settings.panel.padding.bottom"), 50, 20);
+    // button2.setBounds(getWidth() - 50 - (int) ctx.get("settings.panel.padding.right"), getHeight() - 20 - (int) ctx.get("settings.panel.padding.bottom"), 50, 20);
     
-    int chartHeight = getHeight() / panel.getCharts().size();
+    int chartHeight = (getHeight() - m.getHeight()) / panel.getCharts().size();
     for (int i = 0; i < panel.getCharts().size(); i++) {
       Chart chart = panel.getCharts().get(i);
       int y = m.getHeight() + i * chartHeight;
       g.drawString(chart.getLabel(), 0, y);
       g.drawRect(0, y, getWidth() - 1, chartHeight - m.getHeight() - 1);
+      g.setColor(new Color((int) ctx.get("settings.chart.background.color")));
+      g.fillRect(0, y, getWidth() - 1, chartHeight - m.getHeight() - 1);
       
     }
     /*
