@@ -10,13 +10,13 @@ import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
-public class EconPanel extends JPanel {
+public class ChartsPanel extends JPanel {
   private EconContext ctx;
   private Panel panel;
   private JButton button1 = new JButton("<<");
   private JButton button2 = new JButton(">>");
   
-  public EconPanel(EconContext ctx, Panel panel) {
+  public ChartsPanel(EconContext ctx, Panel panel) {
     super();
     this.ctx = ctx;
     this.panel = panel;
