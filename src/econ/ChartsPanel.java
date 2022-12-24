@@ -41,6 +41,8 @@ public class ChartsPanel extends JPanel {
     final Color CHART_BACKGROUND = new Color((int) ctx.get("settings.chart.background.color"));
     final Color CHART_RECT = new Color((int) ctx.get("settings.chart.line.color"));
     final Color CHART_FONT = new Color((int) ctx.get("settings.chart.font.color"));
+    final int CHART_SEPARATOR = (int) ctx.get("settings.chart.separator");
+    final int CHART_PADDING = (int) ctx.get("settings.chart.vpadding");
     
     setBackground(PANEL_BACKGROUND);
     FontMetrics m = g.getFontMetrics(g.getFont());
@@ -48,19 +50,19 @@ public class ChartsPanel extends JPanel {
     // button1.setBounds(getWidth() - 100 - (int) ctx.get("settings.panel.padding.right"), getHeight() - 20 - (int) ctx.get("settings.panel.padding.bottom"), 50, 20);
     // button2.setBounds(getWidth() - 50 - (int) ctx.get("settings.panel.padding.right"), getHeight() - 20 - (int) ctx.get("settings.panel.padding.bottom"), 50, 20);
     
-    int chartHeight = (getHeight() - m.getHeight()) / panel.getCharts().size();
+    int chartHeight = (getHeight() - CHART_SEPARATOR) / panel.getCharts().size();
     for (int i = 0; i < panel.getCharts().size(); i++) {
       Chart chart = panel.getCharts().get(i);
-      int y = m.getHeight() + i * chartHeight;
+      int y = CHART_SEPARATOR + i * chartHeight;
       
       g.setColor(CHART_BACKGROUND);
-      g.fillRect(0, y, getWidth() - 1, chartHeight - m.getHeight() - 1);
+      g.fillRect(0, y, getWidth() - 1, chartHeight - CHART_SEPARATOR - 1);
       
       g.setColor(CHART_RECT);
-      g.drawRect(0, y, getWidth() - 1, chartHeight - m.getHeight() - 1);
+      g.drawRect(0, y, getWidth() - 1, chartHeight - CHART_SEPARATOR - 1);
 
       g.setColor(CHART_FONT);
-      g.drawString(chart.getLabel(), 0, y);
+      g.drawString(chart.getLabel(), 0, y - CHART_PADDING);
     }
     /*
     g.drawLine(0, 0, 100, 100);
