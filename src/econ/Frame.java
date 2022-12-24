@@ -12,10 +12,10 @@ import javax.swing.JTable;
 import javax.swing.UIManager;
 import javax.swing.table.DefaultTableModel;
 
-public class EconFrame extends JFrame {
+public class Frame extends JFrame {
   private static final long serialVersionUID = 4488715210063650680L;
 
-  public EconFrame(Context ctx) throws Exception {
+  public Frame(Context ctx) throws Exception {
     super();
     UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
     JTabbedPane tabbedPane = new JTabbedPane();
