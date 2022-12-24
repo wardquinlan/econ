@@ -75,4 +75,13 @@ public class EconPanel extends JPanel {
     */
   }
   
+  /* Transformation Function:
+   *
+   * s1 = series low point
+   * s2 = series high point
+   * y1 = grid low point
+   * y2 = grid high point
+   * 
+   * f(y) = y1 + y * (y2 - y1) / (s2 - s1)
+   */
 }
