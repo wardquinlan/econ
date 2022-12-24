@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class EconContext {
+public class Context {
   private String script;
   private ArrayList<Panel> panels = new ArrayList<>();
   private Map<String, Symbol> symbolTable = new HashMap<>();

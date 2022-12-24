@@ -15,7 +15,7 @@ import javax.swing.table.DefaultTableModel;
 public class EconFrame extends JFrame {
   private static final long serialVersionUID = 4488715210063650680L;
 
-  public EconFrame(EconContext ctx) throws Exception {
+  public EconFrame(Context ctx) throws Exception {
     super();
     UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
     JTabbedPane tabbedPane = new JTabbedPane();

@@ -11,12 +11,12 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 
 public class ChartsPanel extends JPanel {
-  private EconContext ctx;
+  private Context ctx;
   private Panel panel;
   private JButton button1 = new JButton("<<");
   private JButton button2 = new JButton(">>");
   
-  public ChartsPanel(EconContext ctx, Panel panel) {
+  public ChartsPanel(Context ctx, Panel panel) {
     super();
     this.ctx = ctx;
     this.panel = panel;

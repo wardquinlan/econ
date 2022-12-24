@@ -18,7 +18,7 @@ public class XMLParser {
   public static final int MAX_LEVEL = 8;
   private Map<String, Symbol> symbolTable;
   
-	public EconContext parse(String basename, String filename, int level) throws Exception {
+	public Context parse(String basename, String filename, int level) throws Exception {
 	  if (level == MAX_LEVEL) {
 	    throw new Exception("maximum include level exceeded");
 	  }
@@ -33,25 +33,25 @@ public class XMLParser {
 			throw new Exception("unexpected root node: " + root.getNodeName());
 		}
 		
-		EconContext econContext = new EconContext();
+		Context ctx = new Context();
 		NamedNodeMap map = doc.getDocumentElement().getAttributes();
 		for (int i = 0; i < map.getLength(); i++) {
 			Node attribute = map.item(i);
 			if (attribute.getNodeName().equals("script")) {
-				econContext.setScript(attribute.getNodeValue());
+				ctx.setScript(attribute.getNodeValue());
 			} else {
 				throw new Exception("unexpected econ-context attribute: " + attribute.getNodeName());
 			}
 		}
 
 		if (level == 0) {
-		  if (econContext.getScript() == null) {
+		  if (ctx.getScript() == null) {
 		    throw new Exception("missing econ-context script attribute");
 		  }
 	    
 		  // invoke the parser so we have access to symbols for the remainder of the file
 	    Tokenizer tokenizer = new Tokenizer();
-	    TokenIterator itr = tokenizer.tokenize(basename, econContext.getScript(), 0);
+	    TokenIterator itr = tokenizer.tokenize(basename, ctx.getScript(), 0);
 	    if (itr.hasNext()) {
   	    Parser parser = new Parser();
   	    Token tk = itr.next();
@@ -60,8 +60,8 @@ public class XMLParser {
 	      symbolTable = new HashMap<String, Symbol>();
 	    }
 		} else {
-		  if (econContext.getScript() != null) {
-		    throw new Exception("unexpected econ-context script attribute: " + econContext.getScript());
+		  if (ctx.getScript() != null) {
+		    throw new Exception("unexpected econ-context script attribute: " + ctx.getScript());
 		  }
 		}
 
@@ -70,11 +70,11 @@ public class XMLParser {
 		  Node node = nodeList.item(i);
 		  if (node.getNodeType() == Node.ELEMENT_NODE) {
 		    if (node.getNodeName().equals("panel")) {
-		      econContext.getPanels().add(parsePanel(node));
+		      ctx.getPanels().add(parsePanel(node));
 		    } else if (node.getNodeName().equals("include")) {
-		      EconContext econContext2 = parseInclude(basename, node, level);
-          for (Panel panel: econContext2.getPanels()) {
-            econContext.getPanels().add(panel);
+		      Context ctx2 = parseInclude(basename, node, level);
+          for (Panel panel: ctx2.getPanels()) {
+            ctx.getPanels().add(panel);
           }
 		    } else {
 		      throw new Exception("unexpected econ-context element:" + node.getNodeName());
@@ -86,11 +86,11 @@ public class XMLParser {
 		if (symbol == null || !symbol.getValue().equals(1)) {
 		  throw new Exception("settings not loaded");
 		}
-		econContext.getSymbolTable().putAll(symbolTable);
-		return econContext;
+		ctx.getSymbolTable().putAll(symbolTable);
+		return ctx;
 	}
 	
-	private EconContext parseInclude(String basename, Node node, int level) throws Exception {
+	private Context parseInclude(String basename, Node node, int level) throws Exception {
 	  String name = null;
 	  NamedNodeMap map = node.getAttributes();
     for (int i = 0; i < map.getLength(); i++) {
