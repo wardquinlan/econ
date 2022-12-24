@@ -11,13 +11,13 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 
 public class EconPanel extends JPanel {
-  private EconContext context;
+  private EconContext ctx;
   private JButton button1 = new JButton("<<");
   private JButton button2 = new JButton(">>");
   
-  public EconPanel(EconContext context) {
+  public EconPanel(EconContext ctx) {
     super();
-    this.context = context;
+    this.ctx = ctx;
     JPanel gridPanel = new JPanel();
     gridPanel.setPreferredSize(new Dimension(200, 200));
     gridPanel.setBorder(BorderFactory.createLineBorder(Color.BLUE));
@@ -35,20 +35,22 @@ public class EconPanel extends JPanel {
   @Override
   public void paintComponent(Graphics g) {
     super.paintComponent(g);
-    setBackground(new Color((int) context.get("settings.panel.background.color")));
+    setBackground(new Color((int) ctx.get("settings.panel.background.color")));
     int widthPanel = getWidth();
     FontMetrics m = g.getFontMetrics(g.getFont());
     int heightFont = m.getHeight();
     int widthText = m.stringWidth("Chart Title");
     g.drawString("Chart Title", (widthPanel - widthText) / 2, heightFont);
     
-    button1.setBounds(10, 10, 50, 20);
-    button2.setBounds(60, 10, 50, 20);
+    button1.setBounds(getWidth() - 100 - (int) ctx.get("settings.panel.padding.right"), getHeight() - 20 - (int) ctx.get("settings.panel.padding.bottom"), 50, 20);
+    button2.setBounds(getWidth() - 50 - (int) ctx.get("settings.panel.padding.right"), getHeight() - 20 - (int) ctx.get("settings.panel.padding.bottom"), 50, 20);
+    //button1.setBounds(10, 10, 50, 20);
+    //button2.setBounds(60, 10, 50, 20);
     
-    int x = (int) context.get("settings.panel.padding.left");
+    int x = (int) ctx.get("settings.panel.padding.left");
     int y = m.getHeight();
-    int width = getWidth() - x - (int) context.get("settings.panel.padding.right");
-    int height = getHeight() - y - (int) context.get("settings.panel.padding.bottom");
+    int width = getWidth() - x - (int) ctx.get("settings.panel.padding.right");
+    int height = getHeight() - y - (int) ctx.get("settings.panel.padding.bottom");
     g.drawRect(x, y, width, height);
     
     /*
