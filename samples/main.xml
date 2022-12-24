@@ -1,4 +1,4 @@
-<econ-context script="main.ec">
+<context script="main.ec">
   <include name="panel1.xml"/>"
   <include name="panel2.xml"/>
     
@@ -10,4 +10,4 @@
   - all this implies that there are 2 JPanels: the LHS panel is for grids, and the RHS panel is for all charts
   -->
   
-</econ-context>
+</context>

@@ -29,7 +29,7 @@ public class XMLParser {
 		Document doc = builder.parse(file);
 		doc.getDocumentElement().normalize();
 		Element root = doc.getDocumentElement();
-		if (!root.getNodeName().equals("econ-context")) {
+		if (!root.getNodeName().equals("context")) {
 			throw new Exception("unexpected root node: " + root.getNodeName());
 		}
 		
@@ -40,13 +40,13 @@ public class XMLParser {
 			if (attribute.getNodeName().equals("script")) {
 				ctx.setScript(attribute.getNodeValue());
 			} else {
-				throw new Exception("unexpected econ-context attribute: " + attribute.getNodeName());
+				throw new Exception("unexpected context attribute: " + attribute.getNodeName());
 			}
 		}
 
 		if (level == 0) {
 		  if (ctx.getScript() == null) {
-		    throw new Exception("missing econ-context script attribute");
+		    throw new Exception("missing context script attribute");
 		  }
 	    
 		  // invoke the parser so we have access to symbols for the remainder of the file
@@ -61,7 +61,7 @@ public class XMLParser {
 	    }
 		} else {
 		  if (ctx.getScript() != null) {
-		    throw new Exception("unexpected econ-context script attribute: " + ctx.getScript());
+		    throw new Exception("unexpected context script attribute: " + ctx.getScript());
 		  }
 		}
 
@@ -77,7 +77,7 @@ public class XMLParser {
             ctx.getPanels().add(panel);
           }
 		    } else {
-		      throw new Exception("unexpected econ-context element:" + node.getNodeName());
+		      throw new Exception("unexpected context element:" + node.getNodeName());
 		    }
 		  }
 		}

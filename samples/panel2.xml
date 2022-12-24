@@ -1,8 +1,8 @@
-<econ-context>
+<context>
   <panel label="More Treasury Yields">
     <chart label="My Chart">
       <series ref="TBOND2" color="RED"/> <!-- accesses TBOND2 from the symbol table -->
       <series ref="TBOND10" color="#c1c1c1"/> <!-- accesses GREEN from the symbol table -->
     </chart>
   </panel>
-</econ-context>
+</context>
