@@ -50,10 +50,11 @@ public class ChartsPanel extends JPanel {
     // button1.setBounds(getWidth() - 100 - (int) ctx.get("settings.panel.padding.right"), getHeight() - 20 - (int) ctx.get("settings.panel.padding.bottom"), 50, 20);
     // button2.setBounds(getWidth() - 50 - (int) ctx.get("settings.panel.padding.right"), getHeight() - 20 - (int) ctx.get("settings.panel.padding.bottom"), 50, 20);
     
-    int chartHeight = (getHeight() - CHART_SEPARATOR) / panel.getCharts().size();
+    //int chartHeight = (getHeight() - CHART_SEPARATOR) / panel.getCharts().size();
+    int y = CHART_SEPARATOR;
     for (int i = 0; i < panel.getCharts().size(); i++) {
       Chart chart = panel.getCharts().get(i);
-      int y = CHART_SEPARATOR + i * chartHeight;
+      int chartHeight = (getHeight() - CHART_SEPARATOR) * chart.getSpan() / 100;
       
       g.setColor(CHART_BACKGROUND);
       g.fillRect(0, y, getWidth() - 1, chartHeight - CHART_SEPARATOR - 1);
@@ -63,7 +64,10 @@ public class ChartsPanel extends JPanel {
 
       g.setColor(CHART_FONT);
       g.drawString(chart.getLabel(), 0, y - CHART_PADDING);
+      
+      y += chartHeight;
     }
+    
     /*
     g.drawLine(0, 0, 100, 100);
     g.drawRect(10, 10, 500, 200);
