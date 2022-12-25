@@ -42,7 +42,8 @@ public class ChartsPanel extends JPanel {
     final Color CHART_RECT = new Color((int) ctx.get("settings.chart.line.color"));
     final Color CHART_FONT = new Color((int) ctx.get("settings.chart.font.color"));
     final int CHART_SEPARATOR = (int) ctx.get("settings.chart.separator");
-    final int CHART_PADDING = (int) ctx.get("settings.chart.vpadding");
+    final int CHART_HPADDING = (int) ctx.get("settings.chart.hpadding");
+    final int CHART_VPADDING = (int) ctx.get("settings.chart.vpadding");
     
     setBackground(PANEL_BACKGROUND);
     FontMetrics m = g.getFontMetrics(g.getFont());
@@ -57,13 +58,13 @@ public class ChartsPanel extends JPanel {
       int chartHeight = (getHeight() - CHART_SEPARATOR) * chart.getSpan() / 100;
       
       g.setColor(CHART_BACKGROUND);
-      g.fillRect(0, y, getWidth() - 1, chartHeight - CHART_SEPARATOR - 1);
+      g.fillRect(CHART_HPADDING, y, getWidth() - 1 - 2 * CHART_HPADDING, chartHeight - CHART_SEPARATOR - 1);
       
       g.setColor(CHART_RECT);
-      g.drawRect(0, y, getWidth() - 1, chartHeight - CHART_SEPARATOR - 1);
+      g.drawRect(CHART_HPADDING, y, getWidth() - 1 - 2 * CHART_HPADDING, chartHeight - CHART_SEPARATOR - 1);
 
       g.setColor(CHART_FONT);
-      g.drawString(chart.getLabel(), 0, y - CHART_PADDING);
+      g.drawString(chart.getLabel(), CHART_HPADDING, y - CHART_VPADDING);
       
       y += chartHeight;
     }
