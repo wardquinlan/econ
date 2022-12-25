@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 public class Chart {
   private String label;
+  private int span = 100;
   private ArrayList<Double> gridlines = new ArrayList<>();
   private ArrayList<Series> series = new ArrayList<>();
   
@@ -21,5 +22,13 @@ public class Chart {
   
   public ArrayList<Series> getSeries() {
     return series;
+  }
+
+  public int getSpan() {
+    return span;
+  }
+
+  public void setSpan(int span) {
+    this.span = span;
   }
 }

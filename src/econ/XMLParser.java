@@ -145,6 +145,14 @@ public class XMLParser {
       }
     }
     
+    int spanTotal = 0;
+    for (Chart chart: panel.getCharts()) {
+      spanTotal += chart.getSpan();
+    }
+    if (spanTotal != 100) {
+      throw new Exception("chart span attributes do not sum to 100: " + panel.getLabel());
+    }
+    
     return panel;
 	}
 	
@@ -155,6 +163,16 @@ public class XMLParser {
 	    Node attribute = map.item(i);
 	    if (attribute.getNodeName().equals("label")) {
 	      chart.setLabel(attribute.getNodeValue());
+	    } else if (attribute.getNodeName().equals("span")) {
+	      try {
+	        int span = Integer.parseInt(attribute.getNodeValue());
+	        if (span < 1 || span > 100) {
+	          throw new Exception("chart span attribute out of bounds: " + span);
+	        }
+	        chart.setSpan(span);
+	      } catch(NumberFormatException e) {
+	        throw new Exception("invalid chart span attribute: " + attribute.getNodeValue());
+	      }
 	    } else {
 	      throw new Exception("unexpected chart attribute: " + attribute.getNodeName());
 	    }
