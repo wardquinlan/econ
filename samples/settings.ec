@@ -2,7 +2,7 @@ include "colors.ec";
 
 settings.panel.background.color = LIGHT_GRAY;
 settings.chart.background.color = WHITE;
-settings.chart.line.color = GRAY;
+settings.chart.line.color = WHITE;
 settings.chart.font.color = DARK_GRAY;
 settings.chart.separator = 32;
 settings.chart.hpadding = 6;
