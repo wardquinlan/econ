@@ -7,13 +7,18 @@ import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Stroke;
+import java.util.List;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 public class ChartsPanel extends JPanel {
   private static final long serialVersionUID = 8263376302676172047L;
+  private static Log log = LogFactory.getFactory().getInstance(ChartsPanel.class);
   private Context ctx;
   private Panel panel;
   private JButton button1 = new JButton("<<");
@@ -49,6 +54,14 @@ public class ChartsPanel extends JPanel {
     final int CHART_HPADDING = (int) ctx.get("settings.chart.hpadding");
     final int CHART_VPADDING = (int) ctx.get("settings.chart.vpadding");
     final int DXINCR = (int) ctx.get("settings.panel.dxincr");
+    
+    List<TimeSeries> list = Utils.consolidate(panel);
+    TimeSeries timeSeries = null;
+    try {
+      timeSeries = Utils.collapse(list);
+    } catch (Exception e) {
+      log.error("error occurred while collapsing", e);
+    }
     
     setBackground(PANEL_BACKGROUND);
     FontMetrics m = g.getFontMetrics(g.getFont());
