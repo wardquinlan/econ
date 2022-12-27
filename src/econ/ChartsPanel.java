@@ -7,6 +7,7 @@ import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Stroke;
+import java.util.Calendar;
 import java.util.List;
 
 import javax.swing.BorderFactory;
@@ -101,6 +102,12 @@ public class ChartsPanel extends JPanel {
       y += chartHeight;
     }
     
+    g.setColor(CHART_FONT);
+    for (int idx = 0, x = CHART_HPADDING; idx < timeSeries.getTimeSeriesData().size() && x < chartWidth; idx++, x += DXINCR) {
+      //Calendar.getInstance()
+      //if (idx == 0 || timeSeries.getTimeSeriesData().get(idx).getDate().getMonth())
+      g.drawString("X", x, y - CHART_VPADDING);
+    }
     
     
     /*
