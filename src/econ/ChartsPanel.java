@@ -1,9 +1,12 @@
 package econ;
 
+import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FontMetrics;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.Stroke;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -39,11 +42,13 @@ public class ChartsPanel extends JPanel {
     super.paintComponent(g);
     final Color PANEL_BACKGROUND = new Color((int) ctx.get("settings.panel.background.color"));
     final Color CHART_BACKGROUND = new Color((int) ctx.get("settings.chart.background.color"));
-    final Color CHART_RECT = new Color((int) ctx.get("settings.chart.line.color"));
+    final Color CHART_RECT = new Color((int) ctx.get("settings.chart.rect.color"));
+    final Color CHART_LINE = new Color((int) ctx.get("settings.chart.line.color"));
     final Color CHART_FONT = new Color((int) ctx.get("settings.chart.font.color"));
     final int CHART_SEPARATOR = (int) ctx.get("settings.chart.separator");
     final int CHART_HPADDING = (int) ctx.get("settings.chart.hpadding");
     final int CHART_VPADDING = (int) ctx.get("settings.chart.vpadding");
+    final int DXINCR = (int) ctx.get("settings.panel.dxincr");
     
     setBackground(PANEL_BACKGROUND);
     FontMetrics m = g.getFontMetrics(g.getFont());
@@ -52,22 +57,38 @@ public class ChartsPanel extends JPanel {
     // button2.setBounds(getWidth() - 50 - (int) ctx.get("settings.panel.padding.right"), getHeight() - 20 - (int) ctx.get("settings.panel.padding.bottom"), 50, 20);
     
     //int chartHeight = (getHeight() - CHART_SEPARATOR) / panel.getCharts().size();
+    int chartWidth = getWidth() - 1 - 2 * CHART_HPADDING;
     int y = CHART_SEPARATOR;
     for (int i = 0; i < panel.getCharts().size(); i++) {
       Chart chart = panel.getCharts().get(i);
       int chartHeight = (getHeight() - CHART_SEPARATOR) * chart.getSpan() / 100;
       
+      // Fill the rectangle with the background color
       g.setColor(CHART_BACKGROUND);
-      g.fillRect(CHART_HPADDING, y, getWidth() - 1 - 2 * CHART_HPADDING, chartHeight - CHART_SEPARATOR - 1);
-      
-      g.setColor(CHART_RECT);
-      g.drawRect(CHART_HPADDING, y, getWidth() - 1 - 2 * CHART_HPADDING, chartHeight - CHART_SEPARATOR - 1);
+      g.fillRect(CHART_HPADDING, y, chartWidth, chartHeight - CHART_SEPARATOR - 1);
 
+      // Draw the grid lines
+      g.setColor(CHART_LINE);
+      Stroke strokeOrig = ((Graphics2D) g).getStroke();
+      for (int x = CHART_HPADDING; x < chartWidth; x += DXINCR) {
+        Stroke stroke = new BasicStroke(1, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 0, new float[] {1}, 0);
+        ((Graphics2D) g).setStroke(stroke);
+        g.drawLine(x, y, x, y + chartHeight - CHART_SEPARATOR - 1);
+      }
+      
+      // Draw the rectangle
+      ((Graphics2D) g).setStroke(strokeOrig);
+      g.setColor(CHART_RECT);
+      g.drawRect(CHART_HPADDING, y, chartWidth, chartHeight - CHART_SEPARATOR - 1);
+
+      // Draw the label
       g.setColor(CHART_FONT);
       g.drawString(chart.getLabel(), CHART_HPADDING, y - CHART_VPADDING);
-      
+
       y += chartHeight;
     }
+    
+    
     
     /*
     g.drawLine(0, 0, 100, 100);
