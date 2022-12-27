@@ -1,10 +1,36 @@
 package econ;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class Utils {
+  public static final Map<Integer, String> MONTHS = new HashMap<Integer, String>();
+  static {
+    MONTHS.put(1, "F");
+    MONTHS.put(2, "M");
+    MONTHS.put(3, "A");
+    MONTHS.put(4, "M");
+    MONTHS.put(5, "J");
+    MONTHS.put(6, "J");
+    MONTHS.put(7, "A");
+    MONTHS.put(8, "S");
+    MONTHS.put(9, "O");
+    MONTHS.put(10, "N");
+    MONTHS.put(11, "D");
+  }
+  
+  public static String getMonthString(Calendar cal) {
+    int month = cal.get(Calendar.MONTH);
+    if (month > 0) {
+      return MONTHS.get(month);
+    }
+    return Integer.toString(cal.get(Calendar.YEAR)).substring(2);
+  }
+  
   public static int parseHex(String string) throws Exception {
     StringBuffer sb = new StringBuffer();
     for (int i = 0; i < string.length(); i++) {

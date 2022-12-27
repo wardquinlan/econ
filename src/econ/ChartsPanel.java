@@ -8,6 +8,7 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Stroke;
 import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 import javax.swing.BorderFactory;
@@ -24,6 +25,7 @@ public class ChartsPanel extends JPanel {
   private Panel panel;
   private JButton button1 = new JButton("<<");
   private JButton button2 = new JButton(">>");
+  private Calendar cal = new GregorianCalendar();
   
   public ChartsPanel(Context ctx, Panel panel) {
     super();
@@ -104,9 +106,17 @@ public class ChartsPanel extends JPanel {
     
     g.setColor(CHART_FONT);
     for (int idx = 0, x = CHART_HPADDING; idx < timeSeries.getTimeSeriesData().size() && x < chartWidth; idx++, x += DXINCR) {
-      //Calendar.getInstance()
-      //if (idx == 0 || timeSeries.getTimeSeriesData().get(idx).getDate().getMonth())
-      g.drawString("X", x, y - CHART_VPADDING);
+      int monthPrev = -1;
+      if (idx > 0) {
+        cal.setTime(timeSeries.getTimeSeriesData().get(idx - 1).getDate());
+        monthPrev = cal.get(Calendar.MONTH);
+      }
+      cal.setTime(timeSeries.getTimeSeriesData().get(idx).getDate());
+      int month = cal.get(Calendar.MONTH);
+      
+      if (month != monthPrev) {
+        g.drawString(Utils.getMonthString(cal), x, y - m.getHeight());
+      }
     }
     
     
