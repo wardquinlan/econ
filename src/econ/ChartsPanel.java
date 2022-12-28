@@ -97,8 +97,8 @@ public class ChartsPanel extends JPanel {
       // Draw the grid lines
       g.setColor(CHART_LINE);
       ((Graphics2D) g).setStroke(strokeGridlines);
-      for (int x = CHART_HPADDING + DXINCR; x < chartWidth; x += DXINCR) {
-        g.drawLine(x, y, x, y + chartHeight - CHART_SEPARATOR - 1);
+      for (int idx = 1, x = CHART_HPADDING + DXINCR; idx < timeSeries.getTimeSeriesData().size() && x < chartWidth; idx++, x += DXINCR) {
+        g.drawLine(x, y + 1, x, y + chartHeight - CHART_SEPARATOR - 1);
       }
       
       y += chartHeight;
