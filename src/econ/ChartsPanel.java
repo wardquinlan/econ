@@ -59,14 +59,13 @@ public class ChartsPanel extends JPanel {
     final int DXINCR = (int) ctx.get("settings.panel.dxincr");
     
     List<TimeSeries> list = Utils.consolidate(panel);
-    TimeSeries timeSeries = Utils.collapse(list.get(0), list.get(1));
-    /*
+    TimeSeries timeSeries;
     try {
-      timeSeries = Utils.collapse(list.get(0), list.subList(1, list.size()));
+      timeSeries = Utils.collapse(list);
     } catch (Exception e) {
       log.error("error occurred while collapsing", e);
+      return;
     }
-    */
     
     setBackground(PANEL_BACKGROUND);
     FontMetrics m = g.getFontMetrics(g.getFont());

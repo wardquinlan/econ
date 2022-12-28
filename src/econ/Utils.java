@@ -54,19 +54,23 @@ public class Utils {
     return list;
   }
   
-  public static TimeSeries collapse(TimeSeries timeSeries, List<TimeSeries> timeSeriesList) throws Exception {
+  public static TimeSeries collapse(List<TimeSeries> timeSeriesList) throws Exception {
     if (timeSeriesList.size() == 0) {
-      return timeSeries;
+      return new TimeSeries();
     }
     
     if (timeSeriesList.size() == 1) {
-      return collapse(timeSeries, timeSeriesList.get(0));
+      return timeSeriesList.get(0);
     }
     
-    return collapse(timeSeries, timeSeriesList.subList(1, timeSeriesList.size()));
+    TimeSeries timeSeries1 = timeSeriesList.remove(0);
+    TimeSeries timeSeries2 = timeSeriesList.remove(0);
+    TimeSeries timeSeries = collapse(timeSeries1, timeSeries2);
+    timeSeriesList.add(0, timeSeries);
+    return collapse(timeSeriesList);
   }
   
-  public static TimeSeries collapse(TimeSeries timeSeries1, TimeSeries timeSeries2) {
+  private static TimeSeries collapse(TimeSeries timeSeries1, TimeSeries timeSeries2) {
     TimeSeries timeSeries = new TimeSeries();
     int index1 = 0;
     int index2 = 0;
