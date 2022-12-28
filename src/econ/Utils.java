@@ -54,27 +54,23 @@ public class Utils {
     return list;
   }
   
-  public static TimeSeries collapse(List<TimeSeries> timeSeriesList) throws Exception {
+  public static TimeSeries collapse(TimeSeries timeSeries, List<TimeSeries> timeSeriesList) throws Exception {
     if (timeSeriesList.size() == 0) {
-      throw new Exception("unexpected timeSeriesList size: 0");
+      return timeSeries;
     }
     
     if (timeSeriesList.size() == 1) {
-      return timeSeriesList.get(0);
+      return collapse(timeSeries, timeSeriesList.get(0));
     }
     
-    if (timeSeriesList.size() == 2) {
-      return collapse(timeSeriesList.get(0), timeSeriesList.get(1));
-    }
-    
-    return collapse(timeSeriesList.subList(1, timeSeriesList.size()));
+    return collapse(timeSeries, timeSeriesList.subList(1, timeSeriesList.size()));
   }
   
-  private static TimeSeries collapse(TimeSeries timeSeries1, TimeSeries timeSeries2) {
+  public static TimeSeries collapse(TimeSeries timeSeries1, TimeSeries timeSeries2) {
     TimeSeries timeSeries = new TimeSeries();
     int index1 = 0;
     int index2 = 0;
-    while (index1 < timeSeries1.getTimeSeriesData().size() && index2 < timeSeries1.getTimeSeriesData().size()) {
+    while (index1 < timeSeries1.getTimeSeriesData().size() && index2 < timeSeries2.getTimeSeriesData().size()) {
       Date date1 = timeSeries1.getTimeSeriesData().get(index1).getDate();
       Date date2 = timeSeries2.getTimeSeriesData().get(index2).getDate();
       TimeSeriesData data = new TimeSeriesData();

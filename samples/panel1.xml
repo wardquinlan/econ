@@ -3,7 +3,6 @@
     <chart label="My Chart 1" span="100">
       <series ref="TEST1" color="RED"/>
       <series ref="TEST2" color="RED"/>
-      <series ref="TEST3" color="RED"/>
     </chart>
   </panel>
 </context>
