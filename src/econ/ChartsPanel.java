@@ -53,7 +53,7 @@ public class ChartsPanel extends JPanel {
     final Color CHART_BACKGROUND = new Color((int) ctx.get("settings.chart.background.color"));
     final Color CHART_RECT = new Color((int) ctx.get("settings.chart.rect.color"));
     final Color CHART_LINE = new Color((int) ctx.get("settings.chart.line.color"));
-    final Color CHART_FONT = new Color((int) ctx.get("settings.chart.font.color"));
+    final Color PANEL_FONT_COLOR = new Color((int) ctx.get("settings.panel.font.color"));
     final String PANEL_FONT_NAME = (String) ctx.get("settings.panel.font.name");
     final int PANEL_FONT_SIZE = (int) ctx.get("settings.panel.font.size");
     final Font PANEL_FONT = new Font(PANEL_FONT_NAME, Font.PLAIN, PANEL_FONT_SIZE);
@@ -91,7 +91,7 @@ public class ChartsPanel extends JPanel {
       g.drawRect(CHART_HPADDING, y, chartWidth, chartHeight - CHART_SEPARATOR - 1);
 
       // Draw the label
-      g.setColor(CHART_FONT);
+      g.setColor(PANEL_FONT_COLOR);
       g.drawString(chart.getLabel(), CHART_HPADDING, y - CHART_VPADDING);
       
       // Draw the grid lines
@@ -108,7 +108,7 @@ public class ChartsPanel extends JPanel {
           g.drawLine(x, y + 1, x, y + chartHeight - CHART_SEPARATOR - 1);
 
           if (i == 0) {
-            g.setColor(CHART_FONT);
+            g.setColor(PANEL_FONT_COLOR);
             g.drawString(Utils.getMonthString(cal), x, getHeight() - m.getHeight());
           }
         }
