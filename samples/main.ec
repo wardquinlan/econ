@@ -12,3 +12,4 @@ s = "The rain in spain " +
     "plain.";
 
 println(s);
+listFontNames();

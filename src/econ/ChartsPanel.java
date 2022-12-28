@@ -3,6 +3,7 @@ package econ;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -53,6 +54,9 @@ public class ChartsPanel extends JPanel {
     final Color CHART_RECT = new Color((int) ctx.get("settings.chart.rect.color"));
     final Color CHART_LINE = new Color((int) ctx.get("settings.chart.line.color"));
     final Color CHART_FONT = new Color((int) ctx.get("settings.chart.font.color"));
+    final String PANEL_FONT_NAME = (String) ctx.get("settings.panel.font.name");
+    final int PANEL_FONT_SIZE = (int) ctx.get("settings.panel.font.size");
+    final Font PANEL_FONT = new Font(PANEL_FONT_NAME, Font.PLAIN, PANEL_FONT_SIZE);
     final int CHART_SEPARATOR = (int) ctx.get("settings.chart.separator");
     final int CHART_HPADDING = (int) ctx.get("settings.chart.hpadding");
     final int CHART_VPADDING = (int) ctx.get("settings.chart.vpadding");
@@ -62,6 +66,7 @@ public class ChartsPanel extends JPanel {
     TimeSeries timeSeries = Utils.collapse(list);
     
     setBackground(PANEL_BACKGROUND);
+    g.setFont(PANEL_FONT);
     FontMetrics m = g.getFontMetrics(g.getFont());
     
     // button1.setBounds(getWidth() - 100 - (int) ctx.get("settings.panel.padding.right"), getHeight() - 20 - (int) ctx.get("settings.panel.padding.bottom"), 50, 20);
