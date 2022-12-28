@@ -1,3 +1,5 @@
+TBOND10 = loadSeriesByName("TBOND10");
+println("TBOND10=" + TBOND10);
 TEST1 = loadSeriesByName("TEST1");
 println("TEST1=" + TEST1);
 TEST2 = loadSeriesByName("TEST2");

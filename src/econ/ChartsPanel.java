@@ -90,36 +90,27 @@ public class ChartsPanel extends JPanel {
       g.drawString(chart.getLabel(), CHART_HPADDING, y - CHART_VPADDING);
       
       // Draw the grid lines
-      g.setColor(CHART_LINE);
       ((Graphics2D) g).setStroke(strokeGridlines);
       for (int idx = 1, x = CHART_HPADDING + DXINCR; idx < timeSeries.getTimeSeriesData().size() && x < chartWidth; idx++, x += DXINCR) {
-        g.drawLine(x, y + 1, x, y + chartHeight - CHART_SEPARATOR - 1);
+        cal.setTime(timeSeries.getTimeSeriesData().get(idx - 1).getDate());
+        int monthPrev = cal.get(Calendar.MONTH);
+
+        cal.setTime(timeSeries.getTimeSeriesData().get(idx).getDate());
+        int month = cal.get(Calendar.MONTH);
+        
+        if (month != monthPrev) {
+          g.setColor(CHART_LINE);
+          g.drawLine(x, y + 1, x, y + chartHeight - CHART_SEPARATOR - 1);
+
+          if (i == 0) {
+            g.setColor(CHART_FONT);
+            g.drawString(Utils.getMonthString(cal), x, getHeight() - m.getHeight());
+          }
+        }
       }
       
       y += chartHeight;
     }
-    
-    g.setColor(CHART_FONT);
-    for (int idx = 1, x = CHART_HPADDING + DXINCR; idx < timeSeries.getTimeSeriesData().size() && x < chartWidth; idx++, x += DXINCR) {
-      cal.setTime(timeSeries.getTimeSeriesData().get(idx - 1).getDate());
-      int monthPrev = cal.get(Calendar.MONTH);
-
-      cal.setTime(timeSeries.getTimeSeriesData().get(idx).getDate());
-      int month = cal.get(Calendar.MONTH);
-      
-      if (month != monthPrev) {
-        g.drawString(Utils.getMonthString(cal), x, y - m.getHeight());
-      }
-    }
-    
-    /*
-    g.drawLine(0, 0, 100, 100);
-    g.drawRect(10, 10, 500, 200);
-    g.setColor(Color.BLUE);
-    g.fillRect(5, 5, 1000, 1000);
-    g.setColor(Color.GREEN);
-    g.drawLine(0, 0, 100, 100);
-    */
   }
   
   /* Transformation Function:
