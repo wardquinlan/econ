@@ -54,7 +54,7 @@ public class Utils {
     return list;
   }
   
-  public static TimeSeries collapse(List<TimeSeries> timeSeriesList) throws Exception {
+  public static TimeSeries collapse(List<TimeSeries> timeSeriesList) {
     if (timeSeriesList.size() == 0) {
       return new TimeSeries();
     }
