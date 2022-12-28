@@ -1,0 +1,12 @@
+delete from time_series_data where id = 100;
+delete from time_series where id = 100;
+insert into time_series (id, name, title, source_org) values (100, 'TEST1', 'TEST1', 'TEST');
+insert into time_series_data (id, datestamp, value) values (100, '2022-10-07', 100);
+insert into time_series_data (id, datestamp, value) values (100, '2022-10-14', 100);
+insert into time_series_data (id, datestamp, value) values (100, '2022-10-21', 100);
+insert into time_series_data (id, datestamp, value) values (100, '2022-10-28', 100);
+insert into time_series_data (id, datestamp, value) values (100, '2022-11-04', 100);
+insert into time_series_data (id, datestamp, value) values (100, '2022-11-11', 100);
+insert into time_series_data (id, datestamp, value) values (100, '2022-11-18', 100);
+insert into time_series_data (id, datestamp, value) values (100, '2022-11-25', 100);
+insert into time_series_data (id, datestamp, value) values (100, '2022-12-02', 100);

@@ -1,16 +1,7 @@
 <context>
   <panel label="Treasury Yields">
-    <chart label="My Chart 1" span="60">
-      <series ref="TBOND2" color="RED"/> <!-- accesses TBOND2 from the symbol table -->
-      <series ref="TBOND10" color="#c1c1c1"/> <!-- accesses GREEN from the symbol table -->
-    </chart>
-    <chart label="My Chart 2" span = "30">
-      <series ref="TBOND2" color="RED"/> <!-- accesses TBOND2 from the symbol table -->
-      <series ref="TBOND10" color="#c1c1c1"/> <!-- accesses GREEN from the symbol table -->
-    </chart>
-    <chart label="My Chart 3" span = "10">
-      <series ref="TBOND2" color="RED"/> <!-- accesses TBOND2 from the symbol table -->
-      <series ref="TBOND10" color="#c1c1c1"/> <!-- accesses GREEN from the symbol table -->
+    <chart label="My Chart 1" span="100">
+      <series ref="TEST1" color="RED"/> <!-- accesses TBOND2 from the symbol table -->
     </chart>
   </panel>
 </context>
