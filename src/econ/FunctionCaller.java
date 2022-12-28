@@ -8,7 +8,9 @@ import org.apache.commons.logging.LogFactory;
 public class FunctionCaller {
   private static Log log = LogFactory.getFactory().getInstance(FunctionCaller.class);
   public boolean isFunction(String funcName) {
-    return funcName.equals("println") || funcName.equals("loadSeriesByName");
+    return funcName.equals("println")          || 
+           funcName.equals("loadSeriesByName") ||
+           funcName.equals("exit");
   }
   
   public Object invokeFunction(String funcName, List<Object> params) throws Exception {
@@ -17,9 +19,25 @@ public class FunctionCaller {
         return println(params);
       case "loadSeriesByName":
         return loadSeriesByName(params);
+      case "exit":
+        return exit(params);
       default:
         throw new Exception("unknown function: " + funcName);
     }
+  }
+  
+  private Object exit(List<Object> params) throws Exception {
+    if (params.size() > 1) {
+      throw new Exception("exit: too many arguments");
+    }
+    if (params.size() == 0) {
+      TimeSeriesDAO.getInstance().close();
+      System.exit(0);
+    }
+    int value = Integer.parseInt(params.get(0).toString());
+    TimeSeriesDAO.getInstance().close();
+    System.exit(value);
+    return null;
   }
   
   private Object loadSeriesByName(List<Object> params) throws Exception {
