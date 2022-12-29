@@ -85,7 +85,6 @@ public class ChartsPanel extends JPanel {
       g.fillRect(CHART_HPADDING, y, chartWidth, chartHeight - CHART_SEPARATOR - 1);
       
       // Draw the rectangle
-      ((Graphics2D) g).setStroke(strokeOrig);
       g.setColor(CHART_RECT);
       g.drawRect(CHART_HPADDING, y, chartWidth, chartHeight - CHART_SEPARATOR - 1);
 
@@ -111,6 +110,15 @@ public class ChartsPanel extends JPanel {
             g.drawString(Utils.getMonthString(cal), x, getHeight() - CHART_SEPARATOR + m.getHeight());
           }
         }
+      }
+      
+      // Draw the grid lines
+      ((Graphics2D) g).setStroke(strokeOrig);
+      for (Series series: chart.getSeries()) {
+        g.setColor(series.getColor());
+        for (int idx = 1, x = CHART_HPADDING; idx < timeSeries.getTimeSeriesData().size() && x < chartWidth; idx++, x += DXINCR) {
+          //g.drawLine()
+        }      
       }
       
       y += chartHeight;

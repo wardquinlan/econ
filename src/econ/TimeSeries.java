@@ -65,6 +65,18 @@ public class TimeSeries {
   
   @Override
   public String toString() {
-    return "[" + id + ", " + name + ", " + title + ", " + sourceOrg + ", " + sourceName + "(count=" + timeSeriesData.size() + ")]"; 
+    return "[" + id + ", " + name + ", " + title + ", " + sourceOrg + ", " + sourceName + " (count=" + timeSeriesData.size() + ")]"; 
+  }
+  
+  public String toStringVerbose() {
+    StringBuffer sb = new StringBuffer("[" + id + ", " + name + ", " + title + ", " + sourceOrg + ", " + sourceName + "]\n");
+    sb.append(notes + "\n");
+    int i = 0;
+    for (TimeSeriesData data: timeSeriesData) {
+      sb.append(i);
+      sb.append(": " + data + "\n");
+      i++;
+    }
+    return sb.toString();
   }
 }

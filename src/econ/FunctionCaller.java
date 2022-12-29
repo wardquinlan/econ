@@ -13,6 +13,7 @@ public class FunctionCaller {
     return funcName.equals("println")          || 
            funcName.equals("loadSeriesByName") ||
            funcName.equals("listFontNames")    ||
+           funcName.equals("printSeries")  ||
            funcName.equals("exit");
   }
   
@@ -26,9 +27,25 @@ public class FunctionCaller {
         return listFontNames(params);
       case "exit":
         return exit(params);
+      case "printSeries":
+        return printSeries(params);
       default:
         throw new Exception("unknown function: " + funcName);
     }
+  }
+  
+  private Object printSeries(List<Object> params) throws Exception {
+    if (params.size() != 1) {
+      throw new Exception("printSeries: missing argument");
+    }
+    
+    if (!(params.get(0) instanceof TimeSeries)) {
+      throw new Exception("printSeries: not a series");
+    }
+    
+    TimeSeries timeSeries  = (TimeSeries) params.get(0);
+    System.out.println(timeSeries.toStringVerbose());
+    return timeSeries;
   }
   
   private Object listFontNames(List<Object> params) throws Exception {

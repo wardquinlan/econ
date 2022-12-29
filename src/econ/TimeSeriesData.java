@@ -21,4 +21,9 @@ public class TimeSeriesData {
   public void setValue(Double value) {
     this.value = value;
   }
+  
+  @Override
+  public String toString() {
+    return "[" + date + ", " + value + "]";
+  }
 }

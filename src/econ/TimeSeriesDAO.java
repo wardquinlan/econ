@@ -32,7 +32,7 @@ public class TimeSeriesDAO {
     conn = DriverManager.getConnection(url);  
   }
 
-  public Object loadSeriesByName(String name) throws Exception {
+  public TimeSeries loadSeriesByName(String name) throws Exception {
     PreparedStatement ps = conn.prepareStatement("select id, name, title, source_org, source_name, notes from time_series where name = ?");
     ps.setString(1, name);
     ResultSet resultSet = ps.executeQuery();
