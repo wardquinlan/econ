@@ -1,8 +1,11 @@
 <context>
   <panel label="Treasury Yields">
-    <chart label="My Chart 1" span="100">
+    <chart label="My Chart 1" span="70">
       <series ref="TEST1" color="RED"/>
       <series ref="TEST2" color="#c1c1c1"/>
+    </chart>
+    <chart label="My Chart 2" span="30">
+      <series ref="TBOND10" color="#c1c1c1"/>
     </chart>
   </panel>
 </context>

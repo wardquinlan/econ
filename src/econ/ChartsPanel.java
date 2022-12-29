@@ -119,8 +119,8 @@ public class ChartsPanel extends JPanel {
       for (Series series: chart.getSeries()) {
         TimeSeries timeSeries = Utils.normalize(timeSeriesCollapsed, series.getTimeSeries());
         g.setColor(series.getColor());
-        for (int idx = 0, x = CHART_HPADDING + DXINCR; idx < timeSeriesCollapsed.size() && x < chartWidth; idx++, x += DXINCR) {
-          if (timeSeries.get(idx) != null) {
+        for (int idx = 0, x = CHART_HPADDING; idx < timeSeriesCollapsed.size() && x < chartWidth; idx++, x += DXINCR) {
+          if (timeSeries.get(idx).getValue() != null) {
             g.drawString("X", x, yy);
           }
         }

@@ -76,7 +76,9 @@ public class Utils {
     
     TimeSeriesData timeSeriesLast = null;
     while (indexColl < timeSeriesCollapsed.size()) {
-      if (timeSeriesCollapsed.get(indexColl).compareTo(timeSeries.get(index)) == 0) {
+      if (index == timeSeries.size()) {
+        timeSeriesNormalized.add(timeSeriesLast);
+      } else if (timeSeriesCollapsed.get(indexColl).compareTo(timeSeries.get(index)) == 0) {
         timeSeriesLast = timeSeries.get(index);
         timeSeriesNormalized.add(timeSeriesLast);
         index++;
