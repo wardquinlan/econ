@@ -31,6 +31,7 @@ public class Frame extends JFrame {
       ChartsPanel chartsPanel = new ChartsPanel(ctx, panel);
       JPanel containerPanel = new JPanel();
       containerPanel.setLayout(new BorderLayout());
+      containerPanel.add(new ButtonPanel(), BorderLayout.NORTH);
       containerPanel.add(new JScrollPane(table), BorderLayout.WEST);
       containerPanel.add(chartsPanel, BorderLayout.CENTER);
       tabbedPane.addTab(panel.getLabel(), containerPanel);

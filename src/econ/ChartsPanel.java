@@ -24,8 +24,6 @@ public class ChartsPanel extends JPanel {
   private static Log log = LogFactory.getFactory().getInstance(ChartsPanel.class);
   private Context ctx;
   private Panel panel;
-  private JButton button1 = new JButton("<<");
-  private JButton button2 = new JButton(">>");
   private Calendar cal = new GregorianCalendar();
   
   public ChartsPanel(Context ctx, Panel panel) {
@@ -36,14 +34,6 @@ public class ChartsPanel extends JPanel {
     gridPanel.setPreferredSize(new Dimension(200, 200));
     gridPanel.setBorder(BorderFactory.createLineBorder(Color.BLUE));
     setLayout(null);
-    //add(gridPanel, BorderLayout.WEST);
-    //JPanel panel = new JPanel();
-    //panel.setBorder(BorderFactory.createLineBorder(Color.RED));
-    //add(panel, BorderLayout.CENTER);
-    //button.setBounds(10, 10, getWidth() / 2, getHeight() / 2);
-    //add(button);
-    add(button1);
-    add(button2);
   }
 
   @Override
@@ -79,11 +69,8 @@ public class ChartsPanel extends JPanel {
     if (PANEL_FONT != null) {
       g.setFont(PANEL_FONT);
     }
+
     FontMetrics m = g.getFontMetrics(g.getFont());
-    
-    // button1.setBounds(getWidth() - 100 - (int) ctx.get("settings.panel.padding.right"), getHeight() - 20 - (int) ctx.get("settings.panel.padding.bottom"), 50, 20);
-    // button2.setBounds(getWidth() - 50 - (int) ctx.get("settings.panel.padding.right"), getHeight() - 20 - (int) ctx.get("settings.panel.padding.bottom"), 50, 20);
-    
     Stroke strokeOrig = ((Graphics2D) g).getStroke();
     Stroke strokeGridlines = new BasicStroke(1, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 0, new float[] {1}, 0);
     int chartWidth = getWidth() - 1 - 2 * CHART_HPADDING;
