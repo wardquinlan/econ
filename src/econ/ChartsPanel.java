@@ -63,7 +63,8 @@ public class ChartsPanel extends JPanel {
     }
 
     List<TimeSeries> list = Utils.consolidate(panel);
-    TimeSeries timeSeries = Utils.collapse(list);
+    TimeSeries timeSeriesCollapsed = Utils.collapse(list);
+    System.out.println(timeSeriesCollapsed.toStringVerbose());
     
     setBackground(PANEL_BACKGROUND);
     if (PANEL_FONT != null) {
@@ -94,11 +95,11 @@ public class ChartsPanel extends JPanel {
       
       // Draw the grid lines
       ((Graphics2D) g).setStroke(strokeGridlines);
-      for (int idx = 1, x = CHART_HPADDING + DXINCR; idx < timeSeries.getTimeSeriesData().size() && x < chartWidth; idx++, x += DXINCR) {
-        cal.setTime(timeSeries.getTimeSeriesData().get(idx - 1).getDate());
+      for (int idx = 1, x = CHART_HPADDING + DXINCR; idx < timeSeriesCollapsed.size() && x < chartWidth; idx++, x += DXINCR) {
+        cal.setTime(timeSeriesCollapsed.get(idx - 1).getDate());
         int monthPrev = cal.get(Calendar.MONTH);
 
-        cal.setTime(timeSeries.getTimeSeriesData().get(idx).getDate());
+        cal.setTime(timeSeriesCollapsed.get(idx).getDate());
         int month = cal.get(Calendar.MONTH);
         
         if (month != monthPrev) {
@@ -116,17 +117,11 @@ public class ChartsPanel extends JPanel {
       ((Graphics2D) g).setStroke(strokeOrig);
       int yy = 200;
       for (Series series: chart.getSeries()) {
-        TimeSeries timeSeriesCurr = series.getTimeSeries();
+        TimeSeries timeSeries = Utils.normalize(timeSeriesCollapsed, series.getTimeSeries());
         g.setColor(series.getColor());
-        int idxCurr = 0;
-        for (int idx = 0, x = CHART_HPADDING; idx < timeSeries.getTimeSeriesData().size() && x < chartWidth; idx++, x += DXINCR) {
-          TimeSeriesData data = timeSeries.getTimeSeriesData().get(idx);
-          TimeSeriesData dataCurr = timeSeriesCurr.getTimeSeriesData().get(idxCurr);
-          if (dataCurr.getDate().compareTo(data.getDate()) == 0) {
-            g.drawString("x", x, yy);
-            if (idxCurr < timeSeriesCurr.getTimeSeriesData().size() - 1) {
-              idxCurr++;
-            }
+        for (int idx = 0, x = CHART_HPADDING + DXINCR; idx < timeSeriesCollapsed.size() && x < chartWidth; idx++, x += DXINCR) {
+          if (timeSeries.get(idx) != null) {
+            g.drawString("X", x, yy);
           }
         }
         yy += 40;

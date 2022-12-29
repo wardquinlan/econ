@@ -7,7 +7,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 public class Utils {
+  private static Log log = LogFactory.getFactory().getInstance(Utils.class);
   public static final Map<Integer, String> MONTHS = new HashMap<Integer, String>();
   static {
     MONTHS.put(1, "F");
@@ -54,6 +58,37 @@ public class Utils {
     return list;
   }
   
+  public static TimeSeries normalize(TimeSeries timeSeriesColl, TimeSeries timeSeries) {
+    TimeSeries timeSeriesNormalized = new TimeSeries();
+    int indexColl = 0;
+    int index = 0;
+    
+    if (timeSeries.size() == 0) {
+      return timeSeriesColl;
+    }
+    
+    while (timeSeriesColl.get(indexColl).compareTo(timeSeries.get(index)) < 0) {
+      TimeSeriesData timeSeriesData = new TimeSeriesData();
+      timeSeriesData.setDate(timeSeriesColl.get(indexColl).getDate());
+      timeSeriesNormalized.add(timeSeriesData);
+      indexColl++;
+    }
+    
+    TimeSeriesData timeSeriesLast = null;
+    while (indexColl < timeSeriesColl.size()) {
+      if (timeSeriesColl.get(indexColl).compareTo(timeSeries.get(index)) == 0) {
+        timeSeriesLast = timeSeries.get(index);
+        timeSeriesNormalized.add(timeSeriesLast);
+        index++;
+      } else {
+        timeSeriesNormalized.add(timeSeriesLast);
+      }
+      indexColl++;
+    }
+    
+    return timeSeriesNormalized;
+  }
+  
   public static TimeSeries collapse(List<TimeSeries> timeSeriesList) {
     if (timeSeriesList.size() == 0) {
       return new TimeSeries();
@@ -74,37 +109,37 @@ public class Utils {
     TimeSeries timeSeries = new TimeSeries();
     int index1 = 0;
     int index2 = 0;
-    while (index1 < timeSeries1.getTimeSeriesData().size() && index2 < timeSeries2.getTimeSeriesData().size()) {
-      Date date1 = timeSeries1.getTimeSeriesData().get(index1).getDate();
-      Date date2 = timeSeries2.getTimeSeriesData().get(index2).getDate();
+    while (index1 < timeSeries1.size() && index2 < timeSeries2.size()) {
+      Date date1 = timeSeries1.get(index1).getDate();
+      Date date2 = timeSeries2.get(index2).getDate();
       TimeSeriesData data = new TimeSeriesData();
       if (date1.compareTo(date2) < 0) {
         data.setDate(date1);
-        timeSeries.getTimeSeriesData().add(data);
+        timeSeries.add(data);
         index1++;
       } else if (date1.compareTo(date2) > 0) {
         data.setDate(date2);
-        timeSeries.getTimeSeriesData().add(data);
+        timeSeries.add(data);
         index2++;
       } else {
         data.setDate(date1);
-        timeSeries.getTimeSeriesData().add(data);
+        timeSeries.add(data);
         index1++;
         index2++;
       }
     }
     
-    while (index1 < timeSeries1.getTimeSeriesData().size()) {
+    while (index1 < timeSeries1.size()) {
       TimeSeriesData data = new TimeSeriesData();
-      data.setDate(timeSeries1.getTimeSeriesData().get(index1).getDate());
-      timeSeries.getTimeSeriesData().add(data);
+      data.setDate(timeSeries1.get(index1).getDate());
+      timeSeries.add(data);
       index1++;
     }
 
-    while (index2 < timeSeries2.getTimeSeriesData().size()) {
+    while (index2 < timeSeries2.size()) {
       TimeSeriesData data = new TimeSeriesData();
-      data.setDate(timeSeries2.getTimeSeriesData().get(index2).getDate());
-      timeSeries.getTimeSeriesData().add(data);
+      data.setDate(timeSeries2.get(index2).getDate());
+      timeSeries.add(data);
       index2++;
     }
     

@@ -6,6 +6,10 @@ public class TimeSeriesData {
   private Date date;
   private Double value;
   
+  public int compareTo(TimeSeriesData timeSeriesData) {
+    return date.compareTo(timeSeriesData.getDate());
+  }
+  
   public Date getDate() {
     return date;
   }

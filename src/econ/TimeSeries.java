@@ -9,7 +9,19 @@ public class TimeSeries {
   private String sourceOrg;
   private String sourceName;
   private String notes;
-  private ArrayList<TimeSeriesData> timeSeriesData = new ArrayList<>();
+  private ArrayList<TimeSeriesData> timeSeriesDataList = new ArrayList<>();
+  
+  public int size() {
+    return timeSeriesDataList.size();
+  }
+  
+  public TimeSeriesData get(int index) {
+    return timeSeriesDataList.get(index);
+  }
+  
+  public void add(TimeSeriesData timeSeriesData) {
+    timeSeriesDataList.add(timeSeriesData);
+  }
   
   public int getId() {
     return id;
@@ -59,20 +71,20 @@ public class TimeSeries {
     this.notes = notes;
   }
 
-  public ArrayList<TimeSeriesData> getTimeSeriesData() {
-    return timeSeriesData;
+  public ArrayList<TimeSeriesData> getTimeSeriesDataList() {
+    return timeSeriesDataList;
   }
   
   @Override
   public String toString() {
-    return "[" + id + ", " + name + ", " + title + ", " + sourceOrg + ", " + sourceName + " (count=" + timeSeriesData.size() + ")]"; 
+    return "[" + id + ", " + name + ", " + title + ", " + sourceOrg + ", " + sourceName + " (count=" + timeSeriesDataList.size() + ")]"; 
   }
   
   public String toStringVerbose() {
     StringBuffer sb = new StringBuffer("[" + id + ", " + name + ", " + title + ", " + sourceOrg + ", " + sourceName + "]\n");
     sb.append(notes + "\n");
     int i = 0;
-    for (TimeSeriesData data: timeSeriesData) {
+    for (TimeSeriesData data: timeSeriesDataList) {
       sb.append(i);
       sb.append(": " + data + "\n");
       i++;

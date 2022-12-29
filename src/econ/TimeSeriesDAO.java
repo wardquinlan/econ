@@ -55,7 +55,7 @@ public class TimeSeriesDAO {
       TimeSeriesData timeSeriesData = new TimeSeriesData();
       timeSeriesData.setDate(resultSet.getDate(1));
       timeSeriesData.setValue(resultSet.getDouble(2));
-      series.getTimeSeriesData().add(timeSeriesData);
+      series.add(timeSeriesData);
     }
     return series;
   }
