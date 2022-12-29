@@ -58,25 +58,25 @@ public class Utils {
     return list;
   }
   
-  public static TimeSeries normalize(TimeSeries timeSeriesColl, TimeSeries timeSeries) {
+  public static TimeSeries normalize(TimeSeries timeSeriesCollapsed, TimeSeries timeSeries) {
     TimeSeries timeSeriesNormalized = new TimeSeries();
     int indexColl = 0;
     int index = 0;
     
     if (timeSeries.size() == 0) {
-      return timeSeriesColl;
+      return timeSeriesCollapsed;
     }
     
-    while (timeSeriesColl.get(indexColl).compareTo(timeSeries.get(index)) < 0) {
+    while (timeSeriesCollapsed.get(indexColl).compareTo(timeSeries.get(index)) < 0) {
       TimeSeriesData timeSeriesData = new TimeSeriesData();
-      timeSeriesData.setDate(timeSeriesColl.get(indexColl).getDate());
+      timeSeriesData.setDate(timeSeriesCollapsed.get(indexColl).getDate());
       timeSeriesNormalized.add(timeSeriesData);
       indexColl++;
     }
     
     TimeSeriesData timeSeriesLast = null;
-    while (indexColl < timeSeriesColl.size()) {
-      if (timeSeriesColl.get(indexColl).compareTo(timeSeries.get(index)) == 0) {
+    while (indexColl < timeSeriesCollapsed.size()) {
+      if (timeSeriesCollapsed.get(indexColl).compareTo(timeSeries.get(index)) == 0) {
         timeSeriesLast = timeSeries.get(index);
         timeSeriesNormalized.add(timeSeriesLast);
         index++;
