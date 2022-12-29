@@ -112,13 +112,24 @@ public class ChartsPanel extends JPanel {
         }
       }
       
-      // Draw the grid lines
+      // Draw the series themselves
       ((Graphics2D) g).setStroke(strokeOrig);
+      int yy = 200;
       for (Series series: chart.getSeries()) {
+        TimeSeries timeSeriesCurr = series.getTimeSeries();
         g.setColor(series.getColor());
-        for (int idx = 1, x = CHART_HPADDING; idx < timeSeries.getTimeSeriesData().size() && x < chartWidth; idx++, x += DXINCR) {
-          //g.drawLine()
-        }      
+        int idxCurr = 0;
+        for (int idx = 0, x = CHART_HPADDING; idx < timeSeries.getTimeSeriesData().size() && x < chartWidth; idx++, x += DXINCR) {
+          TimeSeriesData data = timeSeries.getTimeSeriesData().get(idx);
+          TimeSeriesData dataCurr = timeSeriesCurr.getTimeSeriesData().get(idxCurr);
+          if (dataCurr.getDate().compareTo(data.getDate()) == 0) {
+            g.drawString("x", x, yy);
+            if (idxCurr < timeSeriesCurr.getTimeSeriesData().size() - 1) {
+              idxCurr++;
+            }
+          }
+        }
+        yy += 40;
       }
       
       y += chartHeight;

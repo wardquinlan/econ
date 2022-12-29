@@ -1,7 +1,7 @@
 include "colors.ec";
 
 settings.panel.background.color = LIGHT_GRAY;
-settings.panel.dxincr=4;
+settings.panel.dxincr=6;
 settings.chart.background.color = WHITE;
 settings.chart.line.color = LIGHT_GRAY;
 settings.chart.rect.color = RED;
