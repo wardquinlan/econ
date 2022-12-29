@@ -55,18 +55,30 @@ public class ChartsPanel extends JPanel {
     final Color CHART_LINE = new Color((int) ctx.get("settings.chart.line.color"));
     final Color PANEL_FONT_COLOR = new Color((int) ctx.get("settings.panel.font.color"));
     final String PANEL_FONT_NAME = (String) ctx.get("settings.panel.font.name");
-    final int PANEL_FONT_SIZE = (int) ctx.get("settings.panel.font.size");
-    final Font PANEL_FONT = new Font(PANEL_FONT_NAME, Font.PLAIN, PANEL_FONT_SIZE);
+    final Integer PANEL_FONT_SIZE = (Integer) ctx.get("settings.panel.font.size");
     final int CHART_SEPARATOR = (int) ctx.get("settings.chart.separator");
     final int CHART_HPADDING = (int) ctx.get("settings.chart.hpadding");
     final int CHART_VPADDING = (int) ctx.get("settings.chart.vpadding");
     final int DXINCR = (int) ctx.get("settings.panel.dxincr");
+    final Font PANEL_FONT;
     
+    if (PANEL_FONT_NAME != null && PANEL_FONT_SIZE != null) {
+      PANEL_FONT = new Font(PANEL_FONT_NAME, Font.PLAIN, PANEL_FONT_SIZE);
+    } else if (PANEL_FONT_NAME != null) {
+      PANEL_FONT = new Font(PANEL_FONT_NAME, Font.PLAIN, g.getFont().getSize());
+    } else if (PANEL_FONT_SIZE != null) {
+      PANEL_FONT = new Font(g.getFont().getName(), Font.PLAIN, PANEL_FONT_SIZE);
+    } else {
+      PANEL_FONT = null;
+    }
+
     List<TimeSeries> list = Utils.consolidate(panel);
     TimeSeries timeSeries = Utils.collapse(list);
     
     setBackground(PANEL_BACKGROUND);
-    g.setFont(PANEL_FONT);
+    if (PANEL_FONT != null) {
+      g.setFont(PANEL_FONT);
+    }
     FontMetrics m = g.getFontMetrics(g.getFont());
     
     // button1.setBounds(getWidth() - 100 - (int) ctx.get("settings.panel.padding.right"), getHeight() - 20 - (int) ctx.get("settings.panel.padding.bottom"), 50, 20);
@@ -109,7 +121,7 @@ public class ChartsPanel extends JPanel {
 
           if (i == 0) {
             g.setColor(PANEL_FONT_COLOR);
-            g.drawString(Utils.getMonthString(cal), x, getHeight() - m.getHeight());
+            g.drawString(Utils.getMonthString(cal), x, getHeight() - CHART_SEPARATOR + m.getHeight());
           }
         }
       }

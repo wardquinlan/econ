@@ -26,6 +26,9 @@ public class Context {
   }
   
   public Object get(String id) {
+    if (symbolTable.get(id) == null) {
+      return null;
+    }
     return symbolTable.get(id).getValue();
   }
 }
