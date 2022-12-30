@@ -64,7 +64,7 @@ public class ChartsPanel extends JPanel {
 
     List<TimeSeries> list = Utils.consolidate(panel);
     TimeSeries timeSeriesCollapsed = Utils.collapse(list);
-    System.out.println(timeSeriesCollapsed.toStringVerbose());
+    System.out.println("collapsed series=" + timeSeriesCollapsed.toStringVerbose());
     
     setBackground(PANEL_BACKGROUND);
     if (PANEL_FONT != null) {

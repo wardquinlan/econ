@@ -81,8 +81,8 @@ public class TimeSeries {
   }
   
   public String toStringVerbose() {
-    StringBuffer sb = new StringBuffer("[" + id + ", " + name + ", " + title + ", " + sourceOrg + ", " + sourceName + "]\n");
-    sb.append(notes + "\n");
+    StringBuffer sb = new StringBuffer("[" + id + ", " + name + ", " + title + ", " + sourceOrg + ", " + (sourceName == null ? "NULL" : sourceName) + "]\n");
+    sb.append((notes == null ? "NULL" : notes) + "\n");
     int i = 0;
     for (TimeSeriesData data: timeSeriesDataList) {
       sb.append(i);

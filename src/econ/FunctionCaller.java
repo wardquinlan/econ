@@ -13,7 +13,8 @@ public class FunctionCaller {
     return funcName.equals("println")          || 
            funcName.equals("loadSeriesByName") ||
            funcName.equals("listFontNames")    ||
-           funcName.equals("printSeries")  ||
+           funcName.equals("getSeriesDetails") ||
+           funcName.equals("usage")            ||
            funcName.equals("exit");
   }
   
@@ -27,25 +28,33 @@ public class FunctionCaller {
         return listFontNames(params);
       case "exit":
         return exit(params);
-      case "printSeries":
-        return printSeries(params);
+      case "getSeriesDetails":
+        return getSeriesDetails(params);
+      case "usage":
+        return usage(params);
       default:
         throw new Exception("unknown function: " + funcName);
     }
   }
   
-  private Object printSeries(List<Object> params) throws Exception {
+  private Object usage(List<Object> params) throws Exception {
+    System.out.println("loadSeriesByName(SERIES)");
+    System.out.println("  loads SERIES by its name");
+    System.out.println("  returns SERIES");
+    return 0;
+  }
+  
+  private Object getSeriesDetails(List<Object> params) throws Exception {
     if (params.size() != 1) {
-      throw new Exception("printSeries: missing argument");
+      throw new Exception("getSeriesDetails: missing argument");
     }
     
     if (!(params.get(0) instanceof TimeSeries)) {
-      throw new Exception("printSeries: not a series");
+      throw new Exception("getSeriesDetails: not a series");
     }
     
     TimeSeries timeSeries  = (TimeSeries) params.get(0);
-    System.out.println(timeSeries.toStringVerbose());
-    return timeSeries;
+    return timeSeries.toStringVerbose();
   }
   
   private Object listFontNames(List<Object> params) throws Exception {
