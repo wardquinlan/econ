@@ -1,15 +1,7 @@
 include "settings.ec";
 include "series.ec";
 
--- do something here
-println("ec files loaded");
-
-a = .3;
-println(a);
-
+-- this is how you create a multi-line string
 s = "The rain in spain " +
     "falls mainly on the " + 
     "plain.";
-
-println(s);
---listFontNames();
