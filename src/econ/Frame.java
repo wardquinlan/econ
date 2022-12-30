@@ -16,7 +16,7 @@ public class Frame extends JFrame {
   private static final long serialVersionUID = 4488715210063650680L;
 
   public Frame(Context ctx) throws Exception {
-    super();
+    super("Econ");
     UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
     JTabbedPane tabbedPane = new JTabbedPane();
     for (Panel panel: ctx.getPanels()) {
@@ -36,10 +36,8 @@ public class Frame extends JFrame {
       containerPanel.add(chartsPanel, BorderLayout.CENTER);
       tabbedPane.addTab(panel.getLabel(), containerPanel);
     }
-    JFrame frame = new JFrame("Econ");
-    frame.setSize(Toolkit.getDefaultToolkit().getScreenSize());
-    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    frame.getContentPane().add(tabbedPane);
-    frame.setVisible(true);
+    setSize(Toolkit.getDefaultToolkit().getScreenSize());
+    getContentPane().add(tabbedPane);
+    setVisible(true);
   }
 }

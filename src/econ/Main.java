@@ -1,8 +1,12 @@
 package econ;
 
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.File;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+
+import javax.swing.JFrame;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -42,7 +46,14 @@ public class Main {
       String basename = path.getParent().toString();
       String filename = file.getName();
       Context ctx = xmlParser.parse(basename, filename, 0);
-      new Frame(ctx);
+      JFrame frame = new Frame(ctx);
+      frame.addWindowListener(new WindowAdapter() {
+        @Override
+        public void windowClosing(WindowEvent e) {
+            log.info("closing");
+            System.exit(0);
+        }
+      });
       // TimeSeriesDAO.getInstance().close();
     } catch(Exception e) {
       log.error(e);
