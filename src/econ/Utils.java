@@ -27,6 +27,13 @@ public class Utils {
     MONTHS.put(11, "D");
   }
   
+  public static void ASSERT(boolean condition, String message) {
+    if (!condition) {
+      log.fatal("***ASSERTION FAILED: " + message);
+      System.exit(1);
+    }
+  }
+  
   public static String getMonthString(Calendar cal) {
     int month = cal.get(Calendar.MONTH);
     if (month > 0) {
@@ -60,32 +67,33 @@ public class Utils {
   
   public static TimeSeries normalize(TimeSeries timeSeriesCollapsed, TimeSeries timeSeries) {
     TimeSeries timeSeriesNormalized = new TimeSeries();
-    int indexColl = 0;
+    int indexCollapsed = 0;
     int index = 0;
     
     if (timeSeries.size() == 0) {
       return timeSeriesCollapsed;
     }
     
-    while (timeSeriesCollapsed.get(indexColl).compareTo(timeSeries.get(index)) < 0) {
+    while (timeSeriesCollapsed.get(indexCollapsed).compareTo(timeSeries.get(index)) < 0) {
       TimeSeriesData timeSeriesData = new TimeSeriesData();
-      timeSeriesData.setDate(timeSeriesCollapsed.get(indexColl).getDate());
+      timeSeriesData.setDate(timeSeriesCollapsed.get(indexCollapsed).getDate());
       timeSeriesNormalized.add(timeSeriesData);
-      indexColl++;
+      indexCollapsed++;
     }
     
-    TimeSeriesData timeSeriesLast = null;
-    while (indexColl < timeSeriesCollapsed.size()) {
+    Double valueLast = null;
+    while (indexCollapsed < timeSeriesCollapsed.size()) {
       if (index == timeSeries.size()) {
-        timeSeriesNormalized.add(timeSeriesLast);
-      } else if (timeSeriesCollapsed.get(indexColl).compareTo(timeSeries.get(index)) == 0) {
-        timeSeriesLast = timeSeries.get(index);
-        timeSeriesNormalized.add(timeSeriesLast);
+        Utils.ASSERT(valueLast != null, "valueLast not expected to be NULL");
+      } else if (timeSeriesCollapsed.get(indexCollapsed).compareTo(timeSeries.get(index)) == 0) {
+        valueLast = timeSeries.get(index).getValue();
         index++;
-      } else {
-        timeSeriesNormalized.add(timeSeriesLast);
       }
-      indexColl++;
+      TimeSeriesData timeSeriesData = new TimeSeriesData();
+      timeSeriesData.setDate(timeSeriesCollapsed.get(indexCollapsed).getDate());
+      timeSeriesData.setValue(valueLast);
+      timeSeriesNormalized.add(timeSeriesData);
+      indexCollapsed++;
     }
     
     return timeSeriesNormalized;

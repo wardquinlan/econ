@@ -121,7 +121,7 @@ public class ChartsPanel extends JPanel {
         g.setColor(series.getColor());
         for (int idx = 0, x = CHART_HPADDING; idx < timeSeriesCollapsed.size() && x < chartWidth; idx++, x += DXINCR) {
           if (timeSeries.get(idx).getValue() != null) {
-            g.drawString("X", x, yy);
+            g.drawString(timeSeries.get(idx).getValue().toString(), x, yy);
           }
         }
         yy += 40;
