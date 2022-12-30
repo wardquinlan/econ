@@ -12,7 +12,7 @@ public class FunctionCaller {
   public boolean isFunction(String funcName) {
     return funcName.equals("println")          || 
            funcName.equals("loadSeriesByName") ||
-           funcName.equals("listFontNames")    ||
+           funcName.equals("printFontNames")    ||
            funcName.equals("getSeriesDetails") ||
            funcName.equals("usage")            ||
            funcName.equals("exit");
@@ -24,8 +24,8 @@ public class FunctionCaller {
         return println(params);
       case "loadSeriesByName":
         return loadSeriesByName(params);
-      case "listFontNames":
-        return listFontNames(params);
+      case "printFontNames":
+        return printFontNames(params);
       case "exit":
         return exit(params);
       case "getSeriesDetails":
@@ -38,9 +38,33 @@ public class FunctionCaller {
   }
   
   private Object usage(List<Object> params) throws Exception {
+    System.out.println("usage:");
+    System.out.println();
+    System.out.println("exit()");
+    System.out.println("  exits with status code of 0");
+    System.out.println("exit(CODE)");
+    System.out.println("  exits with status code of CODE");
+    System.out.println("println(OBJECT)");
+    System.out.println("  prints OBJECT");
+    System.out.println("  returns OBJECT");
+    System.out.println("getSeriesDetails(SERIES)");
+    System.out.println("  gets SERIES details (including values) as a string");
+    System.out.println("  returns SERIES details as a string");
     System.out.println("loadSeriesByName(SERIES)");
     System.out.println("  loads SERIES by its name");
     System.out.println("  returns SERIES");
+    System.out.println("printFontNames()");
+    System.out.println("  prints a list of all system font names");
+    System.out.println("  returns 0");
+    System.out.println("println()");
+    System.out.println("  prints a carriage return");
+    System.out.println("  returns 0");
+    System.out.println("println(OBJECT)");
+    System.out.println("  prints OBJECT");
+    System.out.println("  returns OBJECT");
+    System.out.println("usage()");
+    System.out.println("  prints out this screen");
+    System.out.println("  returns 0");
     return 0;
   }
   
@@ -57,9 +81,9 @@ public class FunctionCaller {
     return timeSeries.toStringVerbose();
   }
   
-  private Object listFontNames(List<Object> params) throws Exception {
+  private Object printFontNames(List<Object> params) throws Exception {
     if (params.size() != 0) {
-      throw new Exception("listFontNames: too many arguments");
+      throw new Exception("printFontNames: too many arguments");
     }
     
     Font fonts[] = GraphicsEnvironment.getLocalGraphicsEnvironment().getAllFonts();
