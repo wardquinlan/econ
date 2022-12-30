@@ -13,6 +13,7 @@ import org.apache.commons.logging.LogFactory;
 
 public class Main {
   private static final Log log = LogFactory.getFactory().getInstance(Main.class);
+  
   public static void main(String[] args) {
     log.info("application starting");
     
@@ -51,9 +52,17 @@ public class Main {
         @Override
         public void windowClosing(WindowEvent e) {
             log.info("closing");
-            System.exit(0);
+            synchronized (Lock.instance()) {
+              Lock.instance().notify();
+            }
+            //System.exit(0);
         }
       });
+      synchronized (Lock.instance()) {
+        Lock.instance().wait();
+      }
+      
+      System.out.println("***");
       // TimeSeriesDAO.getInstance().close();
     } catch(Exception e) {
       log.error(e);
