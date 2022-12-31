@@ -1,5 +1,3 @@
-include "colors.ec";
-
 settings.panel.background.color = LIGHT_GRAY;
 settings.panel.dxincr=40;
 settings.chart.background.color = WHITE;
@@ -15,3 +13,5 @@ settings.chart.vpadding = 2;
 
 -- used to mark that settings have completed loading
 settings.loaded = 1;
+
+println("settings loaded");

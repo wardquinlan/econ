@@ -14,3 +14,5 @@ LIGHT_GRAY = #c0c0c0; -- java.awt.Color[r=192, g=192, b=192]
 DARK_GRAY  = #404040; -- java.awt.Color[r=64,  g=64,  b=64]
 PINK       = #ffafaf; -- java.awt.Color[r=255, g=175, b=175]
 ORANGE     = #ffc800; -- java.awt.Color[r=255, g=200, b=0]
+
+println("colors loaded");

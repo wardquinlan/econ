@@ -33,6 +33,7 @@
   <target name="jar" depends="compile">
     <mkdir dir="${output}"/>
     <mkdir dir="${output}/${appname}.d"/>
+  	<mkdir dir="${output}/includes"/>
     <jar jarfile="${output}/${appname}.d/${appname}.jar" basedir="${classes}"/>
     <copy todir="${output}" file="${resources}/econ.sh"/>
     <copy todir="${output}" file="${resources}/import.sh"/>
@@ -44,6 +45,9 @@
     <copy todir="${output}/${appname}.d">
       <fileset dir="${resources}" includes="*.properties"/>
     </copy>
+  	<copy tofile="${output}/.econ.ec" file="${resources}/econ.ec"/>
+  	<copy todir="${output}/includes" file="${resources}/settings.ec"/>
+  	<copy todir="${output}/includes" file="${resources}/colors.ec"/>
     <chmod file="${output}/econ.sh" perm="755"/>
   	<chmod file="${output}/import.sh" perm="755"/>
     <chmod file="${output}/createdb.sh" perm="755"/>
