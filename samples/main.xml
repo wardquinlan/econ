@@ -1,4 +1,4 @@
-<context script="main.ec">
+<context> 
   <include name="panel1.xml"/>"
     
   <!-- maybe I could do something like this:
