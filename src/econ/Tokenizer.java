@@ -3,6 +3,7 @@ package econ;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,11 +19,11 @@ public class Tokenizer {
   private LookAheadReader rdr;
   private static final int MAX_LEVEL = 8;
   
-  public Tokenizer() throws Exception {
+  public Tokenizer(InputStream inputStream) throws Exception {
     this.basename = System.getProperty("user.dir");
     this.file = new File(basename + File.separator + "null");
     this.level = 0;
-    rdr = new LookAheadReader(System.in);
+    rdr = new LookAheadReader(inputStream);
   }
   
   public Tokenizer(File file, int level) throws Exception {

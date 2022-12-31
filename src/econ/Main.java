@@ -1,6 +1,10 @@
 package econ;
 
+import java.io.BufferedReader;
+import java.io.ByteArrayInputStream;
 import java.io.File;
+import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -33,11 +37,28 @@ public class Main {
     try {
       // Initialize the instance before we get too far
       TimeSeriesDAO.getInstance();
+      Runtime.getRuntime().addShutdownHook(new Thread() {
+        public void run() {
+          log.info("shutting down...");
+          try {
+            TimeSeriesDAO.getInstance().close();
+            log.info("DAO connection closed");
+          } catch(Exception e) {
+            log.error("could not close DAO connection", e);
+          }
+        }
+      });
+      
       Tokenizer tokenizer;
       if (args.length == 1) {
         tokenizer = new Tokenizer(new File(args[0]), 0);
       } else {
-        tokenizer = new Tokenizer();
+        BufferedReader rdr = new BufferedReader(new InputStreamReader(System.in));
+        while (true) {
+          String line = rdr.readLine();
+          //tokenizer = new Tokenizer(new ByteArrayInputStream(line.getBytes(StandardCharsets.UTF_8)));
+          System.out.println(line);
+        }
       }
       TokenIterator itr = tokenizer.tokenize();
       if (itr.hasNext()) {
