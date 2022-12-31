@@ -1,5 +1,6 @@
 package econ;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -10,9 +11,13 @@ import org.apache.commons.logging.LogFactory;
 
 public class Parser {
   private static final Log log = LogFactory.getFactory().getInstance(Parser.class);
-  private static FunctionCaller funcCaller = new FunctionCaller();
+  private FunctionCaller functionCaller;
   private Map<String, Symbol> symbolTable;
 
+  public Parser(File file) {
+    functionCaller = new FunctionCaller(file);
+  }
+  
   public Map<String, Symbol> parse(Token tk, TokenIterator itr) throws Exception {
     symbolTable = new HashMap<String, Symbol>();
     while (true) {
@@ -343,7 +348,7 @@ public class Parser {
           }
         }
       }
-      return funcCaller.invokeFunction(funcName, params);
+      return functionCaller.invokeFunction(funcName, symbolTable, params);
     }
     throw new Exception("unsupported primary expression: " + tk);
   }

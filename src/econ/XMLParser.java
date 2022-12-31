@@ -2,7 +2,7 @@ package econ;
 
 import java.awt.Color;
 import java.io.File;
-import java.util.HashMap;
+import java.nio.file.Paths;
 import java.util.Map;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -16,93 +16,76 @@ import org.w3c.dom.NodeList;
 
 public class XMLParser {
   public static final int MAX_LEVEL = 8;
+  private File file;
+  private int level;
+  private String basename;
   private Map<String, Symbol> symbolTable;
   
-	public Context parse(String basename, String filename, int level) throws Exception {
-	  if (level == MAX_LEVEL) {
-	    throw new Exception("maximum include level exceeded");
-	  }
-	  
-	  DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-		DocumentBuilder builder = factory.newDocumentBuilder();
-		File file = new File(basename + File.separator + filename);
-		Document doc = builder.parse(file);
-		doc.getDocumentElement().normalize();
-		Element root = doc.getDocumentElement();
-		if (!root.getNodeName().equals("context")) {
-			throw new Exception("unexpected root node: " + root.getNodeName());
-		}
-		
-		Context ctx = new Context();
-		NamedNodeMap map = doc.getDocumentElement().getAttributes();
-		for (int i = 0; i < map.getLength(); i++) {
-			Node attribute = map.item(i);
-			if (attribute.getNodeName().equals("script")) {
-				ctx.setScript(attribute.getNodeValue());
-			} else {
-				throw new Exception("unexpected context attribute: " + attribute.getNodeName());
-			}
-		}
+  public XMLParser(File file, int level, Map<String, Symbol> symbolTable) throws Exception {
+    if (level > MAX_LEVEL) {
+      throw new Exception("exceeds maximum include level");
+    }
 
-		if (level == 0) {
-		  if (ctx.getScript() == null) {
-		    throw new Exception("missing context script attribute");
-		  }
-	    
-		  // invoke the parser so we have access to symbols for the remainder of the file
-	    Tokenizer tokenizer = new Tokenizer();
-	    TokenIterator itr = tokenizer.tokenize(basename, ctx.getScript(), 0);
-	    if (itr.hasNext()) {
-  	    Parser parser = new Parser();
-  	    Token tk = itr.next();
-  	    symbolTable = parser.parse(tk, itr);
-	    } else {
-	      symbolTable = new HashMap<String, Symbol>();
-	    }
-		} else {
-		  if (ctx.getScript() != null) {
-		    throw new Exception("unexpected context script attribute: " + ctx.getScript());
-		  }
-		}
+    this.file = file;
+    this.level = level;
+    this.basename = Paths.get(file.getAbsolutePath()).getParent().toString();
+    this.symbolTable = symbolTable;
+  }
+  
+  public Context parse() throws Exception {
+    DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+    DocumentBuilder builder = factory.newDocumentBuilder();
+    Document doc = builder.parse(file);
+    doc.getDocumentElement().normalize();
+    Element root = doc.getDocumentElement();
+    if (!root.getNodeName().equals("context")) {
+      throw new Exception("unexpected root node: " + root.getNodeName());
+    }
+    
+    Context ctx = new Context();
+    NamedNodeMap map = doc.getDocumentElement().getAttributes();
+    if (map.getLength() > 0) {
+      throw new Exception("unexpected context attribute(s)");
+    }
 
-		NodeList nodeList = doc.getDocumentElement().getChildNodes();
-		for (int i = 0; i < nodeList.getLength(); i++) {
-		  Node node = nodeList.item(i);
-		  if (node.getNodeType() == Node.ELEMENT_NODE) {
-		    if (node.getNodeName().equals("panel")) {
-		      ctx.getPanels().add(parsePanel(node));
-		    } else if (node.getNodeName().equals("include")) {
-		      Context ctx2 = parseInclude(basename, node, level);
+    NodeList nodeList = doc.getDocumentElement().getChildNodes();
+    for (int i = 0; i < nodeList.getLength(); i++) {
+      Node node = nodeList.item(i);
+      if (node.getNodeType() == Node.ELEMENT_NODE) {
+        if (node.getNodeName().equals("panel")) {
+          ctx.getPanels().add(parsePanel(node));
+        } else if (node.getNodeName().equals("include")) {
+          Context ctx2 = parseInclude(basename, node, level);
           for (Panel panel: ctx2.getPanels()) {
             ctx.getPanels().add(panel);
           }
-		    } else {
-		      throw new Exception("unexpected context element:" + node.getNodeName());
-		    }
-		  }
-		}
-		
-		Symbol symbol = symbolTable.get("settings.loaded");
-		if (symbol == null || !symbol.getValue().equals(1)) {
-		  throw new Exception("settings not loaded");
-		}
-		ctx.getSymbolTable().putAll(symbolTable);
-		return ctx;
-	}
-	
-	private Context parseInclude(String basename, Node node, int level) throws Exception {
-	  String name = null;
-	  NamedNodeMap map = node.getAttributes();
+        } else {
+          throw new Exception("unexpected context element:" + node.getNodeName());
+        }
+      }
+    }
+    
+    Symbol symbol = symbolTable.get("settings.loaded");
+    if (symbol == null || !symbol.getValue().equals(1)) {
+      throw new Exception("settings not loaded");
+    }
+    ctx.getSymbolTable().putAll(symbolTable);
+    return ctx;
+  }
+  
+  private Context parseInclude(String basename, Node node, int level) throws Exception {
+    String filename = null;
+    NamedNodeMap map = node.getAttributes();
     for (int i = 0; i < map.getLength(); i++) {
       Node attribute = map.item(i);
       if (attribute.getNodeName().equals("name")) {
-        name = attribute.getNodeValue();
+        filename = attribute.getNodeValue();
       } else {
         throw new Exception("unexpected include attribute: " + attribute.getNodeName());
       }
     }
     
-    if (name == null) {
+    if (filename == null) {
       throw new Exception("missing include name attribute");
     }
     
@@ -114,11 +97,17 @@ public class XMLParser {
       }
     }
     
-    return parse(basename, name, level + 1);
-	}
-	
-	private Panel parsePanel(Node node) throws Exception {
-	  Panel panel = new Panel();
+    XMLParser parser;
+    if (Paths.get(filename).isAbsolute()) {
+      parser = new XMLParser(new File(filename), level + 1, symbolTable);
+    } else {
+      parser = new XMLParser(new File(basename + File.separator + filename), level + 1, symbolTable);
+    }
+    return parser.parse();
+  }
+  
+  private Panel parsePanel(Node node) throws Exception {
+    Panel panel = new Panel();
     NamedNodeMap map = node.getAttributes();
     for (int i = 0; i < map.getLength(); i++) {
       Node attribute = map.item(i);
@@ -154,35 +143,35 @@ public class XMLParser {
     }
     
     return panel;
-	}
-	
-	private Chart parseChart(Node node) throws Exception {
-	  Chart chart = new Chart();
-	  NamedNodeMap map = node.getAttributes();
-	  for (int i = 0; i < map.getLength(); i++) {
-	    Node attribute = map.item(i);
-	    if (attribute.getNodeName().equals("label")) {
-	      chart.setLabel(attribute.getNodeValue());
-	    } else if (attribute.getNodeName().equals("span")) {
-	      try {
-	        int span = Integer.parseInt(attribute.getNodeValue());
-	        if (span < 1 || span > 100) {
-	          throw new Exception("chart span attribute out of bounds: " + span);
-	        }
-	        chart.setSpan(span);
-	      } catch(NumberFormatException e) {
-	        throw new Exception("invalid chart span attribute: " + attribute.getNodeValue());
-	      }
-	    } else {
-	      throw new Exception("unexpected chart attribute: " + attribute.getNodeName());
-	    }
-	  }
+  }
+  
+  private Chart parseChart(Node node) throws Exception {
+    Chart chart = new Chart();
+    NamedNodeMap map = node.getAttributes();
+    for (int i = 0; i < map.getLength(); i++) {
+      Node attribute = map.item(i);
+      if (attribute.getNodeName().equals("label")) {
+        chart.setLabel(attribute.getNodeValue());
+      } else if (attribute.getNodeName().equals("span")) {
+        try {
+          int span = Integer.parseInt(attribute.getNodeValue());
+          if (span < 1 || span > 100) {
+            throw new Exception("chart span attribute out of bounds: " + span);
+          }
+          chart.setSpan(span);
+        } catch(NumberFormatException e) {
+          throw new Exception("invalid chart span attribute: " + attribute.getNodeValue());
+        }
+      } else {
+        throw new Exception("unexpected chart attribute: " + attribute.getNodeName());
+      }
+    }
 
     if (chart.getLabel() == null) {
       throw new Exception("missing chart label attribute");
     }
-	  
-	  NodeList nodeList = node.getChildNodes();
+    
+    NodeList nodeList = node.getChildNodes();
     for (int i = 0; i < nodeList.getLength(); i++) {
       Node node2 = nodeList.item(i);
       if (node2.getNodeType() == Node.ELEMENT_NODE) {
@@ -193,13 +182,13 @@ public class XMLParser {
         }
       }
     }
-	  
+    
     return chart;
-	}
-	
-	private Series parseSeries(Node node) throws Exception {
-	  Series series = new Series();
-	  NamedNodeMap map = node.getAttributes();
+  }
+  
+  private Series parseSeries(Node node) throws Exception {
+    Series series = new Series();
+    NamedNodeMap map = node.getAttributes();
     for (int i = 0; i < map.getLength(); i++) {
       Node attribute = map.item(i);
       if (attribute.getNodeName().equals("ref")) {
@@ -247,5 +236,5 @@ public class XMLParser {
       }
     }
     return series;
-	}
+  }
 }

@@ -3,6 +3,7 @@ package econ;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,17 +12,25 @@ import org.apache.commons.logging.LogFactory;
 
 public class Tokenizer {
   private static Log log = LogFactory.getFactory().getInstance(Tokenizer.class);
-  private static FunctionCaller funcCaller = new FunctionCaller();
+  private File file;
+  private int level;
+  private String basename;
   private static final int MAX_LEVEL = 8;
   
-  public TokenIterator tokenize(String basename, String filename, int level) throws Exception {
+  public Tokenizer(File file, int level) throws Exception {
     if (level > MAX_LEVEL) {
-      throw new Exception("exceeded maximum include level");
+      throw new Exception("exceeds maximum include level");
     }
+    
+    this.file = file;
+    this.level = level;
+    this.basename = Paths.get(file.getAbsolutePath()).getParent().toString();
+  }
+  
+  public TokenIterator tokenize() throws Exception {
     LookAheadReader rdr = null;
     List<Token> list = new ArrayList<Token>();
     try {
-      File file = new File(basename + File.separator + filename);
       rdr = new LookAheadReader(new FileInputStream(file));
       while (true) {
         int val = rdr.read();
@@ -46,8 +55,9 @@ public class Tokenizer {
             tk = new Token(Token.INC);
           } else if (sb.toString().equals("const")) {
             tk = new Token(Token.CONST);
-          } else if (funcCaller.isFunction(sb.toString())) {
+          } else if (FunctionCaller.isFunction(sb.toString())) {
             tk = new Token(Token.FUNC);
+            tk.setFile(file); // set the file so that the XML parser is able to calculate the relative path
           } else {
             tk = new Token(Token.SYMBOL);
           }
@@ -171,10 +181,10 @@ public class Tokenizer {
         }
       }
     }
-    return postTokenize(basename, list, level);
+    return postTokenize(list);
   }
   
-  private TokenIterator postTokenize(String basename, List<Token> list, int level) throws Exception {
+  private TokenIterator postTokenize(List<Token> list) throws Exception {
     List<Token> listNew = new ArrayList<Token>();
     for (int i = 0; i < list.size(); i++) {
       Token tk = list.get(i);
@@ -196,8 +206,13 @@ public class Tokenizer {
         if (tk.getType() != Token.SEMI) {
           throw new Exception("misformatted include statement");
         }
-        Tokenizer tokenizer = new Tokenizer();
-        TokenIterator itr = tokenizer.tokenize(basename, filename, level + 1);
+        Tokenizer tokenizer;
+        if (Paths.get(filename).isAbsolute()) {
+          tokenizer = new Tokenizer(new File(filename), level + 1);
+        } else {
+          tokenizer = new Tokenizer(new File(basename + File.separator + filename), level + 1);
+        }
+        TokenIterator itr = tokenizer.tokenize();
         while (itr.hasNext()) {
           listNew.add(itr.next());
         }

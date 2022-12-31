@@ -2,23 +2,37 @@ package econ;
 
 import java.awt.Font;
 import java.awt.GraphicsEnvironment;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.io.File;
+import java.nio.file.Paths;
 import java.util.List;
+import java.util.Map;
+
+import javax.swing.JFrame;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 public class FunctionCaller {
   private static Log log = LogFactory.getFactory().getInstance(FunctionCaller.class);
-  public boolean isFunction(String funcName) {
+  private String basename;
+  
+  public FunctionCaller(File file) {
+    this.basename = Paths.get(file.getAbsolutePath()).getParent().toString();
+  }
+  
+  public static boolean isFunction(String funcName) {
     return funcName.equals("println")          || 
            funcName.equals("loadSeriesByName") ||
-           funcName.equals("printFontNames")    ||
+           funcName.equals("printFontNames")   ||
            funcName.equals("getSeriesDetails") ||
            funcName.equals("usage")            ||
+           funcName.equals("plot")             ||
            funcName.equals("exit");
   }
   
-  public Object invokeFunction(String funcName, List<Object> params) throws Exception {
+  public Object invokeFunction(String funcName, Map<String, Symbol> symbolTable, List<Object> params) throws Exception {
     switch(funcName) {
       case "println":
         return println(params);
@@ -32,9 +46,51 @@ public class FunctionCaller {
         return getSeriesDetails(params);
       case "usage":
         return usage(params);
+      case "plot":
+        return plot(symbolTable, params);
       default:
         throw new Exception("unknown function: " + funcName);
     }
+  }
+  
+  private Object plot(Map<String, Symbol> symbolTable, List<Object> params) throws Exception {
+    if (params.size() > 2) {
+      throw new Exception("plot: too many arguments");
+    }
+    
+    if (params.size() == 1) {
+      throw new Exception("plot: missing argument");
+    }
+    
+    if (!(params.get(0) instanceof String)) {
+      throw new Exception("plot: argument not a string");
+    }
+    
+    String filename = (String) params.get(0);
+    XMLParser xmlParser;
+    if (Paths.get(filename).isAbsolute()) {
+      xmlParser = new XMLParser(new File(filename), 0, symbolTable);
+    } else {
+      xmlParser = new XMLParser(new File(basename + File.separator + filename), 0, symbolTable);
+    }
+    
+    Context ctx = xmlParser.parse();
+    JFrame frame = new Frame(ctx);
+    frame.addWindowListener(new WindowAdapter() {
+      @Override
+      public void windowClosing(WindowEvent e) {
+          log.info("closing");
+          synchronized (Lock.instance()) {
+            Lock.instance().notify();
+          }
+      }
+    });
+
+    synchronized (Lock.instance()) {
+      Lock.instance().wait();
+    }
+    
+    return 0;
   }
   
   private Object usage(List<Object> params) throws Exception {
@@ -53,6 +109,9 @@ public class FunctionCaller {
     System.out.println("loadSeriesByName(SERIES)");
     System.out.println("  loads SERIES by its name");
     System.out.println("  returns SERIES");
+    System.out.println("plot(DESCRIPTOR-FILE)");
+    System.out.println("  plots series as defined in DESCRIPTOR-FILE");
+    System.out.println("  returns 0");
     System.out.println("printFontNames()");
     System.out.println("  prints a list of all system font names");
     System.out.println("  returns 0");
@@ -69,7 +128,11 @@ public class FunctionCaller {
   }
   
   private Object getSeriesDetails(List<Object> params) throws Exception {
-    if (params.size() != 1) {
+    if (params.size() > 1) {
+      throw new Exception("getSeriesDetails: too many arguments");
+    }
+    
+    if (params.size() == 0) {
       throw new Exception("getSeriesDetails: missing argument");
     }
     

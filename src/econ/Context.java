@@ -5,18 +5,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Context {
-  private String script;
   private ArrayList<Panel> panels = new ArrayList<>();
   private Map<String, Symbol> symbolTable = new HashMap<>();
 
-  public String getScript() {
-    return script;
-  }
-
-  public void setScript(String script) {
-    this.script = script;
-  }
-  
   public ArrayList<Panel> getPanels() {
     return panels;
   }

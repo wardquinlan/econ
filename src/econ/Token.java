@@ -1,5 +1,6 @@
 package econ;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -63,6 +64,7 @@ public class Token {
   
   private int type;
   private Object value;
+  private File file; // file which created this token
 	
   public Token(int type) {
     this.type = type;
@@ -79,7 +81,15 @@ public class Token {
   public void setValue(Object object) {
     value = object;
   }
-  
+
+  public File getFile() {
+    return file;
+  }
+
+  public void setFile(File file) {
+    this.file = file;
+  }
+
   @Override
   public String toString() {
     return map.get(type) + (value == null ? "" : "=" + value);
