@@ -87,6 +87,8 @@ public class Parser {
     symbolTable.put(symbolName, new Symbol(val, true));
   }
   
+  // I believe COND goes right here, before expression
+  
   private Object expression(Token tk, TokenIterator itr) throws Exception {
     Object val1 = term(tk, itr);
     while (true) {

@@ -1,0 +1,16 @@
+- The grid panel can maybe be smaller, and I can put 1 or 2 panels underneath it
+- for example:
+  - a panel which displays meta information about a selected series
+  - a "quote box", possibly displayed as a table (but not necessarily)
+ 
+- Interactive mode can maybe call the Tokenizer / Parser on one single statement at a time
+- Just don't throw away the symbol table.  Something like that
+- Functions:
+  string getenv(String);
+  int parseint(String);
+  real parsereal(String);
+  string readln();
+- But we might have to implement something like this, since we don't have while() constructs:
+  string readstring();
+  int readint();
+  real readreal();

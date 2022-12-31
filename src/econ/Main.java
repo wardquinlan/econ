@@ -9,8 +9,6 @@ public class Main {
   private static final Log log = LogFactory.getFactory().getInstance(Main.class);
   
   public static void main(String[] args) {
-    log.info("application starting");
-    
     if (System.getenv("ECON_HOST") == null) {
       log.error("ECON_HOST not set");
       System.exit(1);
@@ -28,7 +26,7 @@ public class Main {
       System.exit(1);
     }
     if (args.length != 1) {
-      log.error("usage: econ.Main <profile>.xml");
+      log.error("usage: econ.Main <script.ec>");
       System.exit(1);
     }
     
