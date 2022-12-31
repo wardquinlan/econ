@@ -39,7 +39,7 @@ public class Main {
       Tokenizer tokenizer = new Tokenizer(file, 0);
       TokenIterator itr = tokenizer.tokenize();
       if (itr.hasNext()) {
-        Parser parser = new Parser(file);
+        Parser parser = new Parser();
         Token tk = itr.next();
         parser.parse(tk, itr);
       }

@@ -11,13 +11,9 @@ import org.apache.commons.logging.LogFactory;
 
 public class Parser {
   private static final Log log = LogFactory.getFactory().getInstance(Parser.class);
-  private FunctionCaller functionCaller;
+  private FunctionCaller functionCaller = new FunctionCaller();
   private Map<String, Symbol> symbolTable;
 
-  public Parser(File file) {
-    functionCaller = new FunctionCaller(file);
-  }
-  
   public Map<String, Symbol> parse(Token tk, TokenIterator itr) throws Exception {
     symbolTable = new HashMap<String, Symbol>();
     while (true) {
@@ -321,6 +317,7 @@ public class Parser {
         log.error("unexpected end of input: " + funcName);
         throw new Exception("syntax error: " + funcName);
       }
+      File file = tk.getFile();
       tk = itr.next();
       if (tk.getType() != Token.LPAREN) {
         log.error("expecting left parenthesis: " + funcName);
@@ -347,6 +344,9 @@ public class Parser {
             throw new Exception("syntax error: " + funcName);
           }
         }
+      }
+      if (file != null) {
+        params.add(file);
       }
       return functionCaller.invokeFunction(funcName, symbolTable, params);
     }

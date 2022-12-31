@@ -16,11 +16,6 @@ import org.apache.commons.logging.LogFactory;
 
 public class FunctionCaller {
   private static Log log = LogFactory.getFactory().getInstance(FunctionCaller.class);
-  private String basename;
-  
-  public FunctionCaller(File file) {
-    this.basename = Paths.get(file.getAbsolutePath()).getParent().toString();
-  }
   
   public static boolean isFunction(String funcName) {
     return funcName.equals("println")          || 
@@ -67,10 +62,12 @@ public class FunctionCaller {
     }
     
     String filename = (String) params.get(0);
+    File file = (File) params.get(1);
     XMLParser xmlParser;
     if (Paths.get(filename).isAbsolute()) {
       xmlParser = new XMLParser(new File(filename), 0, symbolTable);
     } else {
+      String basename = Paths.get(file.getAbsolutePath()).getParent().toString();
       xmlParser = new XMLParser(new File(basename + File.separator + filename), 0, symbolTable);
     }
     
