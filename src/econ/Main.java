@@ -25,16 +25,20 @@ public class Main {
       log.error("ECON_PASSWORD not set");
       System.exit(1);
     }
-    if (args.length != 1) {
-      log.error("usage: econ.Main <script.ec>");
+    if (args.length > 1) {
+      log.error("usage: econ.Main [<script.ec>]");
       System.exit(1);
     }
     
     try {
       // Initialize the instance before we get too far
       TimeSeriesDAO.getInstance();
-      File file = new File(args[0]);
-      Tokenizer tokenizer = new Tokenizer(file, 0);
+      Tokenizer tokenizer;
+      if (args.length == 1) {
+        tokenizer = new Tokenizer(new File(args[0]), 0);
+      } else {
+        tokenizer = new Tokenizer();
+      }
       TokenIterator itr = tokenizer.tokenize();
       if (itr.hasNext()) {
         Parser parser = new Parser();

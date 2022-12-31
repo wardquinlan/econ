@@ -15,7 +15,15 @@ public class Tokenizer {
   private File file;
   private int level;
   private String basename;
+  private LookAheadReader rdr;
   private static final int MAX_LEVEL = 8;
+  
+  public Tokenizer() throws Exception {
+    this.basename = System.getProperty("user.dir");
+    this.file = new File(basename + File.separator + "null");
+    this.level = 0;
+    rdr = new LookAheadReader(System.in);
+  }
   
   public Tokenizer(File file, int level) throws Exception {
     if (level > MAX_LEVEL) {
@@ -25,13 +33,12 @@ public class Tokenizer {
     this.file = file;
     this.level = level;
     this.basename = Paths.get(file.getAbsolutePath()).getParent().toString();
+    rdr = new LookAheadReader(new FileInputStream(file));
   }
   
   public TokenIterator tokenize() throws Exception {
-    LookAheadReader rdr = null;
     List<Token> list = new ArrayList<Token>();
     try {
-      rdr = new LookAheadReader(new FileInputStream(file));
       while (true) {
         int val = rdr.read();
         if (val == -1) {
