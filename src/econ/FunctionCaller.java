@@ -161,12 +161,10 @@ public class FunctionCaller {
     }
     
     if (params.size() == 0) {
-      TimeSeriesDAO.getInstance().close();
       System.exit(0);
     }
     
     int value = Integer.parseInt(params.get(0).toString());
-    TimeSeriesDAO.getInstance().close();
     System.exit(value);
     return 0;
   }

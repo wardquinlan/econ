@@ -49,25 +49,29 @@ public class Main {
         }
       });
       
-      Tokenizer tokenizer;
       if (args.length == 1) {
-        tokenizer = new Tokenizer(new File(args[0]), 0);
+        Tokenizer tokenizer = new Tokenizer(new File(args[0]), 0);
+        TokenIterator itr = tokenizer.tokenize();
+        if (itr.hasNext()) {
+          Parser parser = new Parser();
+          Token tk = itr.next();
+          parser.parse(tk, itr);
+        }
       } else {
         BufferedReader rdr = new BufferedReader(new InputStreamReader(System.in));
         while (true) {
+          System.out.print("> ");
           String line = rdr.readLine();
-          //tokenizer = new Tokenizer(new ByteArrayInputStream(line.getBytes(StandardCharsets.UTF_8)));
-          System.out.println(line);
+          Tokenizer tokenizer = new Tokenizer(new ByteArrayInputStream(line.getBytes(StandardCharsets.UTF_8)));
+          TokenIterator itr = tokenizer.tokenize();
+          if (itr.hasNext()) {
+            Parser parser = new Parser();
+            Token tk = itr.next();
+            parser.parse(tk, itr);
+          }
         }
       }
-      TokenIterator itr = tokenizer.tokenize();
-      if (itr.hasNext()) {
-        Parser parser = new Parser();
-        Token tk = itr.next();
-        parser.parse(tk, itr);
-      }
       
-      TimeSeriesDAO.getInstance().close();
       System.exit(0);
     } catch(Exception e) {
       log.error(e);
