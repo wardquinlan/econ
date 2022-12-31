@@ -5,6 +5,8 @@ import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -58,20 +60,24 @@ public class Main {
           parser.parse(tk, itr);
         }
       } else {
+        Map<String, Symbol> symbolTable = new HashMap<String, Symbol>();
         BufferedReader rdr = new BufferedReader(new InputStreamReader(System.in));
         while (true) {
-          System.out.print("> ");
-          String line = rdr.readLine();
-          Tokenizer tokenizer = new Tokenizer(new ByteArrayInputStream(line.getBytes(StandardCharsets.UTF_8)));
-          TokenIterator itr = tokenizer.tokenize();
-          if (itr.hasNext()) {
-            Parser parser = new Parser();
-            Token tk = itr.next();
-            parser.parse(tk, itr);
+          try {
+            System.out.print("> ");
+            String line = rdr.readLine();
+            Tokenizer tokenizer = new Tokenizer(new ByteArrayInputStream(line.getBytes(StandardCharsets.UTF_8)));
+            TokenIterator itr = tokenizer.tokenize();
+            if (itr.hasNext()) {
+              Parser parser = new Parser(symbolTable);
+              Token tk = itr.next();
+              parser.parse(tk, itr);
+            }
+          } catch(Exception e) {
+            log.error(e);
           }
         }
       }
-      
       System.exit(0);
     } catch(Exception e) {
       log.error(e);

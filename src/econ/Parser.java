@@ -14,8 +14,15 @@ public class Parser {
   private FunctionCaller functionCaller = new FunctionCaller();
   private Map<String, Symbol> symbolTable;
 
+  public Parser() {
+    this.symbolTable = new HashMap<String, Symbol>();
+  }
+  
+  public Parser(Map<String, Symbol> symbolTable) {
+    this.symbolTable = symbolTable;
+  }
+  
   public Map<String, Symbol> parse(Token tk, TokenIterator itr) throws Exception {
-    symbolTable = new HashMap<String, Symbol>();
     while (true) {
       parseStatement(tk, itr);
       if (!itr.hasNext()) {
