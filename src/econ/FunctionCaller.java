@@ -28,6 +28,9 @@ public class FunctionCaller {
   }
   
   public Object invokeFunction(String funcName, Map<String, Symbol> symbolTable, List<Object> params) throws Exception {
+    Utils.ASSERT(params.size() >= 1, "params.size() == 0");
+    Utils.ASSERT(params.get(params.size() - 1) instanceof File, "params last element is not a File");
+    File file = (File) params.remove(params.size() - 1);
     switch(funcName) {
       case "println":
         return println(params);
@@ -42,18 +45,18 @@ public class FunctionCaller {
       case "usage":
         return usage(params);
       case "plot":
-        return plot(symbolTable, params);
+        return plot(symbolTable, file, params);
       default:
         throw new Exception("unknown function: " + funcName);
     }
   }
   
-  private Object plot(Map<String, Symbol> symbolTable, List<Object> params) throws Exception {
-    if (params.size() > 2) {
+  private Object plot(Map<String, Symbol> symbolTable, File file, List<Object> params) throws Exception {
+    if (params.size() > 1) {
       throw new Exception("plot: too many arguments");
     }
     
-    if (params.size() == 1) {
+    if (params.size() == 0) {
       throw new Exception("plot: missing argument");
     }
     
@@ -62,7 +65,6 @@ public class FunctionCaller {
     }
     
     String filename = (String) params.get(0);
-    File file = (File) params.get(1);
     XMLParser xmlParser;
     if (Paths.get(filename).isAbsolute()) {
       xmlParser = new XMLParser(new File(filename), 0, symbolTable);

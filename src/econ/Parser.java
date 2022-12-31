@@ -345,9 +345,8 @@ public class Parser {
           }
         }
       }
-      if (file != null) {
-        params.add(file);
-      }
+      Utils.ASSERT(file != null, "file is null");
+      params.add(file);
       return functionCaller.invokeFunction(funcName, symbolTable, params);
     }
     throw new Exception("unsupported primary expression: " + tk);
