@@ -14,10 +14,6 @@ public class Parser {
   private FunctionCaller functionCaller = new FunctionCaller();
   private Map<String, Symbol> symbolTable;
 
-  public Parser() {
-    this.symbolTable = new HashMap<String, Symbol>();
-  }
-  
   public Parser(Map<String, Symbol> symbolTable) {
     this.symbolTable = symbolTable;
   }

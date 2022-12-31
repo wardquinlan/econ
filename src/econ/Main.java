@@ -15,6 +15,10 @@ public class Main {
   private static final Log log = LogFactory.getFactory().getInstance(Main.class);
   
   public static void main(String[] args) {
+    if (System.getenv("ECON_HOME") == null) {
+      log.error("ECON_HOME not set");
+      System.exit(1);
+    }
     if (System.getenv("ECON_HOST") == null) {
       log.error("ECON_HOST not set");
       System.exit(1);
@@ -51,16 +55,30 @@ public class Main {
         }
       });
       
-      if (args.length == 1) {
-        Tokenizer tokenizer = new Tokenizer(new File(args[0]), 0);
+      Map<String, Symbol> symbolTable = new HashMap<String, Symbol>();
+      File file = new File(System.getenv("ECON_HOME") + File.separator + ".econ.ec");
+      if (file.exists()) {
+        log.info("found .econ.ec...");
+        Tokenizer tokenizer = new Tokenizer(file, 0);
         TokenIterator itr = tokenizer.tokenize();
         if (itr.hasNext()) {
-          Parser parser = new Parser();
+          Parser parser = new Parser(symbolTable);
           Token tk = itr.next();
           parser.parse(tk, itr);
         }
       } else {
-        Map<String, Symbol> symbolTable = new HashMap<String, Symbol>();
+        log.warn(".econ.ec does not exist, skipping");
+      }
+      
+      if (args.length == 1) {
+        Tokenizer tokenizer = new Tokenizer(new File(args[0]), 0);
+        TokenIterator itr = tokenizer.tokenize();
+        if (itr.hasNext()) {
+          Parser parser = new Parser(symbolTable);
+          Token tk = itr.next();
+          parser.parse(tk, itr);
+        }
+      } else {
         BufferedReader rdr = new BufferedReader(new InputStreamReader(System.in));
         while (true) {
           try {
