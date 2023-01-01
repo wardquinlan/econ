@@ -51,6 +51,15 @@ public class TimeSeriesDAO {
     return list;
   }
 
+  public void deleteSeries(int id) throws Exception {
+    PreparedStatement ps = conn.prepareStatement("delete from time_series_data where id = ?");
+    ps.setInt(1, id);
+    ps.executeUpdate();
+    ps = conn.prepareStatement("delete from time_series where id = ?");
+    ps.setInt(1, id);
+    ps.executeUpdate();
+  }
+  
   public void createSeries(TimeSeries timeSeries) throws Exception {
     PreparedStatement ps = conn.prepareStatement("insert into time_series(id, name, title, source_org, source_name) values(?,?,?,?,?)");
     ps.setInt(1, timeSeries.getId());

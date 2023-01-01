@@ -31,6 +31,7 @@ public class FunctionCaller {
            funcName.equals("plot")               ||
            funcName.equals("createSeries")       ||
            funcName.equals("quit")               ||
+           funcName.equals("deleteSeries")       ||
            funcName.equals("exit");
   }
   
@@ -61,6 +62,8 @@ public class FunctionCaller {
         return plot(symbolTable, file, params);
       case "createSeries":
         return createSeries(params);
+      case "deleteSeries":
+        return deleteSeries(symbolTable, params);
       default:
         throw new Exception("unknown function: " + funcName);
     }
@@ -114,6 +117,9 @@ public class FunctionCaller {
     System.out.println("int createSeries(int id, String name, String title, String sourceOrg);");
     System.out.println("  creates a new series");
     System.out.println("  returns 0\n");
+    System.out.println("int deleteSeries(int id);");
+    System.out.println("  deletes a series (note that 'settings.confirm' must == 1 for this to work)");
+    System.out.println("  returns 0\n");
     System.out.println("int exit([int code]);");
     System.out.println("int quit([int code]);");
     System.out.println("  exits");
@@ -143,6 +149,22 @@ public class FunctionCaller {
     System.out.println("Series printSeries(Series series);");
     System.out.println("  print series details (including data)");
     System.out.println("  returns series\n");
+    return 0;
+  }
+  
+  private Object deleteSeries(Map<String, Symbol> symbolTable, List<Object> params) throws Exception {
+    Symbol symbol = symbolTable.get("settings.confirm");
+    if (symbol == null || !symbol.getValue().equals(1)) {
+      throw new Exception("settings.confirm != 1");
+    }
+    
+    if (params.size() > 1) {
+      throw new Exception("too many arguments");
+    }
+    
+    if (params.size() == 0) {
+      throw new Exception("missing argument");
+    }
     return 0;
   }
   
