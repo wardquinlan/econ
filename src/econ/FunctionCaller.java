@@ -117,45 +117,56 @@ public class FunctionCaller {
   private Object help(List<Object> params) throws Exception {
     System.out.println("Econ version 0.10");
     System.out.println("usage:\n");
-    System.out.println("int createSeries(int id, String name, String title, String sourceOrg, String sourceName);");
-    System.out.println("int createSeries(int id, String name, String title, String sourceOrg);");
-    System.out.println("  creates a new series");
-    System.out.println("  returns 0\n");
-    System.out.println("int deleteSeries(int id);");
-    System.out.println("  deletes a series (note that 'settings.confirm' must == 1 for this to work)");
-    System.out.println("  returns 0\n");
+    System.out.println("int create(int id, String name, String title, String sourceOrg[, String sourceName]);");
+    System.out.println("  creates a new series with empty notes, a possibly empty source name, and no series data");
+    System.out.println("  returns: 0\n");
+    
+    System.out.println("int delete(Object object[, String date]);");
+    System.out.println("  deletes:");
+    System.out.println("  - an entire series using 'object' as either an id or a name");
+    System.out.println("  - series data associated with 'date', using 'object' as either an id or a name");
+    System.out.println("  note: 'settings.confirm' must == 1 for this command to work");
+    System.out.println("  returns: 0\n");
+    
     System.out.println("int exit([int code]);");
-    System.out.println("int quit([int code]);");
-    System.out.println("  exits");
-    System.out.println("  returns code (0 if not supplied)\n");
+    System.out.println("  exits the application with status code 'code', or 0 if 'code' not supplied");
+    System.out.println("  returns: 'code', or 0 if 'code' not supplied\n");
+    
     System.out.println("int help();");
-    System.out.println("  prints out this screen");
-    System.out.println("  returns 0\n");
-    System.out.println("insertSeriesData(int id, String date, float value;");
-    System.out.println("  inserts series data");
-    System.out.println("  returns 0");
-    System.out.println("int listSeries();");
-    System.out.println("  list series");
-    System.out.println("  returns 0\n");
-    System.out.println("Series loadSeriesById(int id);");
-    System.out.println("  loads series by id");
-    System.out.println("  returns Series (null if not found)\n");
-    System.out.println("Series loadSeriesByName(String seriesName);");
-    System.out.println("  loads series by name");
-    System.out.println("  returns Series (null if not found)\n");
-    System.out.println("int plot(String fileName);");
-    System.out.println("  plots series as defined in fileName");
-    System.out.println("  returns 0\n");
-    System.out.println("int listFontNames();");
-    System.out.println("  lists system font names");
-    System.out.println("  returns 0\n");
-    System.out.println("Object println([Object object]);");
+    System.out.println("  prints out this help screen");
+    System.out.println("  returns: 0\n");
+    
+    System.out.println("int insert(Object object, String date, float value);");
+    System.out.println("  inserts series data, using 'object' as either an id or a name");
+    System.out.println("  returns: 0\n");
+    
+    System.out.println("int list([Object object]);");
+    System.out.println("  lists:");
+    System.out.println("  - all series)");
+    System.out.println("  - series data associated with 'object' as either an id or a name");
+    System.out.println("  returns: 0\n");
+    
+    System.out.println("int listFonts();");
+    System.out.println("  lists all system font names");
+    System.out.println("  returns: 0\n");
+    
+    System.out.println("Series load(Object object);");
+    System.out.println("  loads a series using 'object' as either an id or a name");
+    System.out.println("  returns: Series, or null if not found\n");
+    
+    System.out.println("int plot(String filename);");
+    System.out.println("  plots series as defined in the context file 'filename'");
+    System.out.println("  returns: 0\n");
+    
     System.out.println("Object print([Object object]);");
-    System.out.println("  prints object (empty line if not supplied)");
-    System.out.println("  returns Object (0 if not supplied)\n");
-    System.out.println("Series printSeries(Series series);");
-    System.out.println("  print series details (including data)");
-    System.out.println("  returns series\n");
+    System.out.println("  prints:");
+    System.out.println("  - 'object' (directly from memory)");
+    System.out.println("  - an empty line if 'object' supplied");
+    System.out.println("  returns: 'object', or 0 if 'object' not supplied\n");
+    
+    System.out.println("Series printDetails(Series series);");
+    System.out.println("  prints series details for 'series' (directly from memory)");
+    System.out.println("  returns: 'series'\n");
     return 0;
   }
   
