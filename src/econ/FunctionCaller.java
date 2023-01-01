@@ -20,10 +20,11 @@ public class FunctionCaller {
   public static boolean isFunction(String funcName) {
     return funcName.equals("println")          || 
            funcName.equals("loadSeriesByName") ||
-           funcName.equals("printFontNames")   ||
+           funcName.equals("listFontNames")    ||
            funcName.equals("getSeriesDetails") ||
            funcName.equals("help")             ||
            funcName.equals("plot")             ||
+           funcName.equals("quit")             ||
            funcName.equals("exit");
   }
   
@@ -36,9 +37,10 @@ public class FunctionCaller {
         return println(params);
       case "loadSeriesByName":
         return loadSeriesByName(params);
-      case "printFontNames":
-        return printFontNames(params);
+      case "listFontNames":
+        return listFontNames(params);
       case "exit":
+      case "quit":
         return exit(params);
       case "getSeriesDetails":
         return getSeriesDetails(params);
@@ -101,12 +103,12 @@ public class FunctionCaller {
     System.out.println("int exit(int code);");
     System.out.println("  exits");
     System.out.println("  returns code\n");
-    System.out.println("Object println(Object object);");
-    System.out.println("  prints object");
-    System.out.println("  returns object\n");
     System.out.println("String getSeriesDetails(String seriesName);");
     System.out.println("  gets series details (including data) as a string");
     System.out.println("  returns series details\n");
+    System.out.println("int help();");
+    System.out.println("  prints out this screen");
+    System.out.println("  returns 0\n");
     System.out.println("int listSeries();");
     System.out.println("  list series");
     System.out.println("  returns 0\n");
@@ -125,9 +127,12 @@ public class FunctionCaller {
     System.out.println("Object println(Object object);");
     System.out.println("  prints object");
     System.out.println("  returns Object\n");
-    System.out.println("int help();");
-    System.out.println("  prints out this screen");
+    System.out.println("int quit();");
+    System.out.println("  exits");
     System.out.println("  returns 0\n");
+    System.out.println("int quit(int code);");
+    System.out.println("  exits");
+    System.out.println("  returns code\n");
     return 0;
   }
   
@@ -148,7 +153,7 @@ public class FunctionCaller {
     return timeSeries.toStringVerbose();
   }
   
-  private Object printFontNames(List<Object> params) throws Exception {
+  private Object listFontNames(List<Object> params) throws Exception {
     if (params.size() != 0) {
       throw new Exception("printFontNames: too many arguments");
     }
