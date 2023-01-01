@@ -18,14 +18,15 @@ public class FunctionCaller {
   private static Log log = LogFactory.getFactory().getInstance(FunctionCaller.class);
   
   public static boolean isFunction(String funcName) {
-    return funcName.equals("println")          || 
-           funcName.equals("loadSeriesByName") ||
-           funcName.equals("listFontNames")    ||
-           funcName.equals("getSeriesDetails") ||
-           funcName.equals("listSeries")       ||
-           funcName.equals("help")             ||
-           funcName.equals("plot")             ||
-           funcName.equals("quit")             ||
+    return funcName.equals("println")            ||
+           funcName.equals("print")              ||
+           funcName.equals("loadSeriesByName")   ||
+           funcName.equals("listFontNames")      ||
+           funcName.equals("printSeriesDetails") ||
+           funcName.equals("listSeries")         ||
+           funcName.equals("help")               ||
+           funcName.equals("plot")               ||
+           funcName.equals("quit")               ||
            funcName.equals("exit");
   }
   
@@ -34,6 +35,7 @@ public class FunctionCaller {
     Utils.ASSERT(params.get(params.size() - 1) instanceof File, "params last element is not a File");
     File file = (File) params.remove(params.size() - 1);
     switch(funcName) {
+      case "print":
       case "println":
         return println(params);
       case "loadSeriesByName":
@@ -45,8 +47,8 @@ public class FunctionCaller {
         return exit(params);
       case "listSeries":
         return listSeries(params);
-      case "getSeriesDetails":
-        return getSeriesDetails(params);
+      case "printSeriesDetails":
+        return printSeriesDetails(params);
       case "help":
         return help(params);
       case "plot":
@@ -58,15 +60,15 @@ public class FunctionCaller {
   
   private Object plot(Map<String, Symbol> symbolTable, File file, List<Object> params) throws Exception {
     if (params.size() > 1) {
-      throw new Exception("plot: too many arguments");
+      throw new Exception("too many arguments");
     }
     
     if (params.size() == 0) {
-      throw new Exception("plot: missing argument");
+      throw new Exception("missing argument");
     }
     
     if (!(params.get(0) instanceof String)) {
-      throw new Exception("plot: argument not a string");
+      throw new Exception("argument not a string");
     }
     
     String filename = (String) params.get(0);
@@ -100,15 +102,10 @@ public class FunctionCaller {
   private Object help(List<Object> params) throws Exception {
     System.out.println("Econ version 0.10");
     System.out.println("usage:\n");
-    System.out.println("int exit();");
+    System.out.println("int exit([int code]);");
+    System.out.println("int quit([int code]);");
     System.out.println("  exits");
-    System.out.println("  returns 0\n");
-    System.out.println("int exit(int code);");
-    System.out.println("  exits");
-    System.out.println("  returns code\n");
-    System.out.println("String getSeriesDetails(String seriesName);");
-    System.out.println("  gets series details (including data) as a string");
-    System.out.println("  returns series details\n");
+    System.out.println("  returns code (0 if not supplied)\n");
     System.out.println("int help();");
     System.out.println("  prints out this screen");
     System.out.println("  returns 0\n");
@@ -124,41 +121,37 @@ public class FunctionCaller {
     System.out.println("int listFontNames();");
     System.out.println("  lists system font names");
     System.out.println("  returns 0\n");
-    System.out.println("int println();");
-    System.out.println("  prints a carriage return");
-    System.out.println("  returns 0\n");
-    System.out.println("Object println(Object object);");
-    System.out.println("  prints object");
-    System.out.println("  returns Object\n");
-    System.out.println("int quit();");
-    System.out.println("  exits");
-    System.out.println("  returns 0\n");
-    System.out.println("int quit(int code);");
-    System.out.println("  exits");
-    System.out.println("  returns code\n");
+    System.out.println("Object println([Object object]);");
+    System.out.println("Object print([Object object]);");
+    System.out.println("  prints object (empty line)");
+    System.out.println("  returns Object (0 if not supplied)\n");
+    System.out.println("Series printSeriesDetails(Series series);");
+    System.out.println("  print series details (including data)");
+    System.out.println("  returns series\n");
     return 0;
   }
   
-  private Object getSeriesDetails(List<Object> params) throws Exception {
+  private Object printSeriesDetails(List<Object> params) throws Exception {
     if (params.size() > 1) {
-      throw new Exception("getSeriesDetails: too many arguments");
+      throw new Exception("too many arguments");
     }
     
     if (params.size() == 0) {
-      throw new Exception("getSeriesDetails: missing argument");
+      throw new Exception("missing argument");
     }
     
     if (!(params.get(0) instanceof TimeSeries)) {
-      throw new Exception("getSeriesDetails: not a series");
+      throw new Exception("not a series");
     }
     
     TimeSeries timeSeries  = (TimeSeries) params.get(0);
-    return timeSeries.toStringVerbose();
+    System.out.println(timeSeries.toStringVerbose());
+    return timeSeries;
   }
   
   private Object listFontNames(List<Object> params) throws Exception {
     if (params.size() != 0) {
-      throw new Exception("printFontNames: too many arguments");
+      throw new Exception("too many arguments");
     }
     
     Font fonts[] = GraphicsEnvironment.getLocalGraphicsEnvironment().getAllFonts();
@@ -170,7 +163,7 @@ public class FunctionCaller {
   
   private Object exit(List<Object> params) throws Exception {
     if (params.size() > 1) {
-      throw new Exception("exit: too many arguments");
+      throw new Exception("too many arguments");
     }
     
     if (params.size() == 0) {
@@ -184,7 +177,7 @@ public class FunctionCaller {
   
   private Object listSeries(List<Object> params) throws Exception {
     if (params.size() > 0) {
-      throw new Exception("listSeries: too many arguments");
+      throw new Exception("too many arguments");
     }
     
     List<TimeSeries> list = TimeSeriesDAO.getInstance().listSeries();
@@ -198,11 +191,11 @@ public class FunctionCaller {
   
   private Object loadSeriesByName(List<Object> params) throws Exception {
     if (params.size() > 1) {
-      throw new Exception("loadSeriesByName: too many arguments");
+      throw new Exception("too many arguments");
     }
     
     if (params.size() == 0) {
-      throw new Exception("loadSeriesByName: missing argument");
+      throw new Exception("missing argument");
     }
     
     return TimeSeriesDAO.getInstance().loadSeriesByName(params.get(0).toString());
@@ -210,7 +203,7 @@ public class FunctionCaller {
   
   private Object println(List<Object> params) throws Exception {
     if (params.size() > 1) {
-      throw new Exception("println: too many arguments");
+      throw new Exception("too many arguments");
     }
     
     if (params.size() == 0) {
