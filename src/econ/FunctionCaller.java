@@ -16,7 +16,9 @@ import org.apache.commons.logging.LogFactory;
 
 public class FunctionCaller {
   private static Log log = LogFactory.getFactory().getInstance(FunctionCaller.class);
-  
+
+  static final int COL_WIDTHS[] = {5, 20, 20, 20, 20};
+
   public static boolean isFunction(String funcName) {
     return funcName.equals("println")            ||
            funcName.equals("print")              ||
@@ -209,16 +211,44 @@ public class FunctionCaller {
     return 0;
   }
   
+  private static String generateTitleFormatString() {
+    StringBuffer sb = new StringBuffer();
+    for (int i = 0; i < COL_WIDTHS.length; i++) {
+      sb.append("%" + COL_WIDTHS[i] + "s");
+    }
+    return sb.toString();
+  }
+
+  private static String generateDataFormatString() {
+    StringBuffer sb = new StringBuffer();
+    for (int i = 0; i < COL_WIDTHS.length; i++) {
+      sb.append("%" + COL_WIDTHS[i]);
+      sb.append(i == 0 ? "d" : "s");
+    }
+    return sb.toString();
+  }
+  
+  private static String generateUnderlineString() {
+    StringBuffer sb = new StringBuffer();
+    for (int i = 0; i < COL_WIDTHS.length; i++) {
+      for (int j = 0; j < COL_WIDTHS[i]; j++) {
+        sb.append("-");
+      }
+    }
+    return sb.toString();
+  }
+  
   private Object listSeries(List<Object> params) throws Exception {
     if (params.size() > 0) {
       throw new Exception("too many arguments");
     }
-    
+
+    System.out.printf(generateTitleFormatString() + "\n", "Id", "Name", "Title", "Source Org", "Source Name");
+    System.out.printf(generateUnderlineString() + "\n");
     List<TimeSeries> list = TimeSeriesDAO.getInstance().listSeries();
-    System.out.println("   Id                                    Name");
-    System.out.println("---------------------------------------------");
     for (TimeSeries timeSeries: list) {
-      System.out.printf("%5d%40s\n", timeSeries.getId(), timeSeries.getName());
+      System.out.printf(generateDataFormatString() + "\n", timeSeries.getId(), timeSeries.getName(), timeSeries.getTitle(), timeSeries.getSourceOrg(), 
+        timeSeries.getSourceName() == null ? "NULL" : timeSeries.getSourceName());
     }
     return 0;
   }
