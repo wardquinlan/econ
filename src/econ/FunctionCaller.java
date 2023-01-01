@@ -27,6 +27,7 @@ public class FunctionCaller {
            funcName.equals("listSeries")         ||
            funcName.equals("help")               ||
            funcName.equals("plot")               ||
+           funcName.equals("createSeries")       ||
            funcName.equals("quit")               ||
            funcName.equals("exit");
   }
@@ -56,6 +57,8 @@ public class FunctionCaller {
         return help(params);
       case "plot":
         return plot(symbolTable, file, params);
+      case "createSeries":
+        return createSeries(params);
       default:
         throw new Exception("unknown function: " + funcName);
     }
@@ -105,6 +108,10 @@ public class FunctionCaller {
   private Object help(List<Object> params) throws Exception {
     System.out.println("Econ version 0.10");
     System.out.println("usage:\n");
+    System.out.println("int createSeries(int id, String name, String title, String sourceOrg, String sourceName);");
+    System.out.println("int createSeries(int id, String name, String title, String sourceOrg);");
+    System.out.println("  creates a new series");
+    System.out.println("  returns 0\n");
     System.out.println("int exit([int code]);");
     System.out.println("int quit([int code]);");
     System.out.println("  exits");
@@ -134,6 +141,27 @@ public class FunctionCaller {
     System.out.println("Series printSeries(Series series);");
     System.out.println("  print series details (including data)");
     System.out.println("  returns series\n");
+    return 0;
+  }
+  
+  private Object createSeries(List<Object> params) throws Exception {
+    if (params.size() < 4) {
+      throw new Exception("missing arguments");
+    }
+
+    if (params.size() > 5) {
+      throw new Exception("too many arguments");
+    }
+    
+    TimeSeries timeSeries = new TimeSeries();
+    timeSeries.setId((Integer) params.get(0));
+    timeSeries.setName((String) params.get(1));
+    timeSeries.setTitle((String) params.get(2));
+    timeSeries.setSourceOrg((String) params.get(3));
+    if (params.size() == 5) {
+      timeSeries.setSourceName((String) params.get(4));
+    }
+    TimeSeriesDAO.getInstance().createSeries(timeSeries);
     return 0;
   }
   
