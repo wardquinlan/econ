@@ -5,6 +5,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.apache.commons.logging.Log;
@@ -51,6 +52,15 @@ public class TimeSeriesDAO {
     return list;
   }
 
+  public void insertSeriesData(int id, Date date, float value) throws Exception {
+    java.sql.Date sqlDate = new java.sql.Date(date.getTime());
+    PreparedStatement ps = conn.prepareStatement("insert into time_series_data(id, datestamp, value) values(?, ?, ?)");
+    ps.setInt(1, id);
+    ps.setDate(2, sqlDate);
+    ps.setFloat(3, value);
+    ps.executeUpdate();
+  }
+  
   public void deleteSeries(int id) throws Exception {
     PreparedStatement ps = conn.prepareStatement("delete from time_series_data where id = ?");
     ps.setInt(1, id);
@@ -93,7 +103,7 @@ public class TimeSeriesDAO {
     while (resultSet.next()) {
       TimeSeriesData timeSeriesData = new TimeSeriesData();
       timeSeriesData.setDate(resultSet.getDate(1));
-      timeSeriesData.setValue(resultSet.getDouble(2));
+      timeSeriesData.setValue(resultSet.getFloat(2));
       series.add(timeSeriesData);
     }
     return series;
@@ -122,7 +132,7 @@ public class TimeSeriesDAO {
     while (resultSet.next()) {
       TimeSeriesData timeSeriesData = new TimeSeriesData();
       timeSeriesData.setDate(resultSet.getDate(1));
-      timeSeriesData.setValue(resultSet.getDouble(2));
+      timeSeriesData.setValue(resultSet.getFloat(2));
       series.add(timeSeriesData);
     }
     return series;

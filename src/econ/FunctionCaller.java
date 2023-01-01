@@ -6,6 +6,7 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.File;
 import java.nio.file.Paths;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -32,6 +33,7 @@ public class FunctionCaller {
            funcName.equals("createSeries")       ||
            funcName.equals("quit")               ||
            funcName.equals("deleteSeries")       ||
+           funcName.equals("insertSeriesData")   ||
            funcName.equals("exit");
   }
   
@@ -64,6 +66,8 @@ public class FunctionCaller {
         return createSeries(params);
       case "deleteSeries":
         return deleteSeries(symbolTable, params);
+      case "insertSeriesData":
+        return insertSeriesData(params);
       default:
         throw new Exception("unknown function: " + funcName);
     }
@@ -127,6 +131,9 @@ public class FunctionCaller {
     System.out.println("int help();");
     System.out.println("  prints out this screen");
     System.out.println("  returns 0\n");
+    System.out.println("insertSeriesData(int id, String date, float value;");
+    System.out.println("  inserts series data");
+    System.out.println("  returns 0");
     System.out.println("int listSeries();");
     System.out.println("  list series");
     System.out.println("  returns 0\n");
@@ -152,6 +159,19 @@ public class FunctionCaller {
     return 0;
   }
   
+  private Object insertSeriesData(List<Object> params) throws Exception {
+    if (params.size() > 3) {
+      throw new Exception("too many arguments");
+    }
+    
+    if (params.size() < 3) {
+      throw new Exception("missing argument(s)");
+    }
+    Date date = Utils.DATE_FORMAT.parse((String) params.get(1));
+    TimeSeriesDAO.getInstance().insertSeriesData((Integer) params.get(0), date, (Float) params.get(2));
+    return 0;
+  }
+  
   private Object deleteSeries(Map<String, Symbol> symbolTable, List<Object> params) throws Exception {
     Symbol symbol = symbolTable.get("settings.confirm");
     if (symbol == null || !symbol.getValue().equals(1)) {
@@ -171,7 +191,7 @@ public class FunctionCaller {
   
   private Object createSeries(List<Object> params) throws Exception {
     if (params.size() < 4) {
-      throw new Exception("missing arguments");
+      throw new Exception("missing argument(s)");
     }
 
     if (params.size() > 5) {

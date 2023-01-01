@@ -1,5 +1,7 @@
 package econ;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -26,6 +28,7 @@ public class Utils {
     MONTHS.put(10, "N");
     MONTHS.put(11, "D");
   }
+  public static final DateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd");
   
   public static void ASSERT(boolean condition, String message) {
     if (!condition) {
@@ -81,7 +84,7 @@ public class Utils {
       indexCollapsed++;
     }
     
-    Double valueLast = null;
+    Float valueLast = null;
     while (indexCollapsed < timeSeriesCollapsed.size()) {
       if (index == timeSeries.size()) {
         Utils.ASSERT(valueLast != null, "valueLast not expected to be NULL");

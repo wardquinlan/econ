@@ -4,7 +4,7 @@ import java.util.Date;
 
 public class TimeSeriesData {
   private Date date;
-  private Double value;
+  private Float value;
   
   public int compareTo(TimeSeriesData timeSeriesData) {
     return date.compareTo(timeSeriesData.getDate());
@@ -18,11 +18,11 @@ public class TimeSeriesData {
     this.date = date;
   }
   
-  public Double getValue() {
+  public Float getValue() {
     return value;
   }
   
-  public void setValue(Double value) {
+  public void setValue(Float value) {
     this.value = value;
   }
   

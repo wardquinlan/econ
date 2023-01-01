@@ -5,7 +5,7 @@ import java.util.ArrayList;
 public class Chart {
   private String label;
   private int span = 100;
-  private ArrayList<Double> gridlines = new ArrayList<>();
+  private ArrayList<Float> gridlines = new ArrayList<>();
   private ArrayList<Series> series = new ArrayList<>();
   
   public String getLabel() {
@@ -16,7 +16,7 @@ public class Chart {
     this.label = label;
   }
   
-  public ArrayList<Double> getGridlines() {
+  public ArrayList<Float> getGridlines() {
     return gridlines;
   }
   
