@@ -129,7 +129,7 @@ public class FunctionCaller {
     System.out.println("  returns 0\n");
     System.out.println("Object println([Object object]);");
     System.out.println("Object print([Object object]);");
-    System.out.println("  prints object (empty line)");
+    System.out.println("  prints object (empty line if not supplied)");
     System.out.println("  returns Object (0 if not supplied)\n");
     System.out.println("Series printSeries(Series series);");
     System.out.println("  print series details (including data)");

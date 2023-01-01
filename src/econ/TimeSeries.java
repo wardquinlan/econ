@@ -77,7 +77,7 @@ public class TimeSeries {
   
   @Override
   public String toString() {
-    return "[" + id + ", " + name + ", " + title + ", " + sourceOrg + ", " + sourceName + " (count=" + timeSeriesDataList.size() + ")]"; 
+    return "[" + id + ", " + name + ", " + title + ", " + sourceOrg + ", " + (sourceName == null ? "NULL" : sourceName) + " (count=" + timeSeriesDataList.size() + ")]"; 
   }
   
   public String toStringVerbose() {
