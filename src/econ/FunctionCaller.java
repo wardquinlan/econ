@@ -165,6 +165,7 @@ public class FunctionCaller {
     if (params.size() == 0) {
       throw new Exception("missing argument");
     }
+    TimeSeriesDAO.getInstance().deleteSeries((Integer) params.get(0));
     return 0;
   }
   
