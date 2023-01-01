@@ -50,6 +50,35 @@ public class TimeSeriesDAO {
     }
     return list;
   }
+
+  public TimeSeries loadSeriesById(int id) throws Exception {
+    PreparedStatement ps = conn.prepareStatement("select id, name, title, source_org, source_name, notes from time_series where id = ?");
+    ps.setInt(1, id);
+    ResultSet resultSet = ps.executeQuery();
+    if (!resultSet.next()) {
+      // not found
+      return null;
+    }
+    TimeSeries series = new TimeSeries();
+    series.setId(resultSet.getInt(1));
+    series.setName(resultSet.getString(2));
+    series.setTitle(resultSet.getString(3));
+    series.setSourceOrg(resultSet.getString(4));
+    series.setSourceName(resultSet.getString(5));
+    series.setNotes(resultSet.getString(6));
+    Utils.ASSERT(!resultSet.next(), "resultSet not empty");
+    
+    ps = conn.prepareStatement("select datestamp, value from time_series_data where id = ? order by datestamp");
+    ps.setInt(1, series.getId());
+    resultSet = ps.executeQuery();
+    while (resultSet.next()) {
+      TimeSeriesData timeSeriesData = new TimeSeriesData();
+      timeSeriesData.setDate(resultSet.getDate(1));
+      timeSeriesData.setValue(resultSet.getDouble(2));
+      series.add(timeSeriesData);
+    }
+    return series;
+  }
   
   public TimeSeries loadSeriesByName(String name) throws Exception {
     PreparedStatement ps = conn.prepareStatement("select id, name, title, source_org, source_name, notes from time_series where name = ?");
@@ -66,6 +95,7 @@ public class TimeSeriesDAO {
     series.setSourceOrg(resultSet.getString(4));
     series.setSourceName(resultSet.getString(5));
     series.setNotes(resultSet.getString(6));
+    Utils.ASSERT(!resultSet.next(), "resultSet not empty");
     
     ps = conn.prepareStatement("select datestamp, value from time_series_data where id = ? order by datestamp");
     ps.setInt(1, series.getId());

@@ -21,8 +21,9 @@ public class FunctionCaller {
     return funcName.equals("println")            ||
            funcName.equals("print")              ||
            funcName.equals("loadSeriesByName")   ||
+           funcName.equals("loadSeriesById")     ||
            funcName.equals("listFontNames")      ||
-           funcName.equals("printSeriesDetails") ||
+           funcName.equals("printSeries")        ||
            funcName.equals("listSeries")         ||
            funcName.equals("help")               ||
            funcName.equals("plot")               ||
@@ -40,6 +41,8 @@ public class FunctionCaller {
         return println(params);
       case "loadSeriesByName":
         return loadSeriesByName(params);
+      case "loadSeriesById":
+        return loadSeriesById(params);
       case "listFontNames":
         return listFontNames(params);
       case "exit":
@@ -47,8 +50,8 @@ public class FunctionCaller {
         return exit(params);
       case "listSeries":
         return listSeries(params);
-      case "printSeriesDetails":
-        return printSeriesDetails(params);
+      case "printSeries":
+        return printSeries(params);
       case "help":
         return help(params);
       case "plot":
@@ -112,9 +115,12 @@ public class FunctionCaller {
     System.out.println("int listSeries();");
     System.out.println("  list series");
     System.out.println("  returns 0\n");
+    System.out.println("Series loadSeriesById(int id);");
+    System.out.println("  loads series by id");
+    System.out.println("  returns Series (null if not found)\n");
     System.out.println("Series loadSeriesByName(String seriesName);");
     System.out.println("  loads series by name");
-    System.out.println("  returns Series\n");
+    System.out.println("  returns Series (null if not found)\n");
     System.out.println("int plot(String fileName);");
     System.out.println("  plots series as defined in fileName");
     System.out.println("  returns 0\n");
@@ -125,13 +131,13 @@ public class FunctionCaller {
     System.out.println("Object print([Object object]);");
     System.out.println("  prints object (empty line)");
     System.out.println("  returns Object (0 if not supplied)\n");
-    System.out.println("Series printSeriesDetails(Series series);");
+    System.out.println("Series printSeries(Series series);");
     System.out.println("  print series details (including data)");
     System.out.println("  returns series\n");
     return 0;
   }
   
-  private Object printSeriesDetails(List<Object> params) throws Exception {
+  private Object printSeries(List<Object> params) throws Exception {
     if (params.size() > 1) {
       throw new Exception("too many arguments");
     }
@@ -199,6 +205,18 @@ public class FunctionCaller {
     }
     
     return TimeSeriesDAO.getInstance().loadSeriesByName(params.get(0).toString());
+  }
+
+  private Object loadSeriesById(List<Object> params) throws Exception {
+    if (params.size() > 1) {
+      throw new Exception("too many arguments");
+    }
+    
+    if (params.size() == 0) {
+      throw new Exception("missing argument");
+    }
+    
+    return TimeSeriesDAO.getInstance().loadSeriesById(Integer.parseInt(params.get(0).toString()));
   }
   
   private Object println(List<Object> params) throws Exception {
