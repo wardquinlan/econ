@@ -22,7 +22,7 @@ public class FunctionCaller {
            funcName.equals("loadSeriesByName") ||
            funcName.equals("printFontNames")   ||
            funcName.equals("getSeriesDetails") ||
-           funcName.equals("usage")            ||
+           funcName.equals("help")             ||
            funcName.equals("plot")             ||
            funcName.equals("exit");
   }
@@ -42,8 +42,8 @@ public class FunctionCaller {
         return exit(params);
       case "getSeriesDetails":
         return getSeriesDetails(params);
-      case "usage":
-        return usage(params);
+      case "help":
+        return help(params);
       case "plot":
         return plot(symbolTable, file, params);
       default:
@@ -92,37 +92,42 @@ public class FunctionCaller {
     return 0;
   }
   
-  private Object usage(List<Object> params) throws Exception {
-    System.out.println("usage:");
-    System.out.println();
-    System.out.println("exit()");
-    System.out.println("  exits with status code of 0");
-    System.out.println("exit(CODE)");
-    System.out.println("  exits with status code of CODE");
-    System.out.println("println(OBJECT)");
-    System.out.println("  prints OBJECT");
-    System.out.println("  returns OBJECT");
-    System.out.println("getSeriesDetails(SERIES)");
-    System.out.println("  gets SERIES details (including values) as a string");
-    System.out.println("  returns SERIES details as a string");
-    System.out.println("loadSeriesByName(SERIES)");
-    System.out.println("  loads SERIES by its name");
-    System.out.println("  returns SERIES");
-    System.out.println("plot(DESCRIPTOR-FILE)");
-    System.out.println("  plots series as defined in DESCRIPTOR-FILE");
-    System.out.println("  returns 0");
-    System.out.println("printFontNames()");
-    System.out.println("  prints a list of all system font names");
-    System.out.println("  returns 0");
-    System.out.println("println()");
+  private Object help(List<Object> params) throws Exception {
+    System.out.println("Econ version 0.10");
+    System.out.println("usage:\n");
+    System.out.println("int exit();");
+    System.out.println("  exits");
+    System.out.println("  returns 0\n");
+    System.out.println("int exit(int code);");
+    System.out.println("  exits");
+    System.out.println("  returns code\n");
+    System.out.println("Object println(Object object);");
+    System.out.println("  prints object");
+    System.out.println("  returns object\n");
+    System.out.println("String getSeriesDetails(String seriesName);");
+    System.out.println("  gets series details (including data) as a string");
+    System.out.println("  returns series details\n");
+    System.out.println("int listSeries();");
+    System.out.println("  list series");
+    System.out.println("  returns 0\n");
+    System.out.println("Series loadSeriesByName(String seriesName);");
+    System.out.println("  loads series by name");
+    System.out.println("  returns Series\n");
+    System.out.println("int plot(String fileName);");
+    System.out.println("  plots series as defined in fileName");
+    System.out.println("  returns 0\n");
+    System.out.println("int listFontNames();");
+    System.out.println("  lists system font names");
+    System.out.println("  returns 0\n");
+    System.out.println("int println();");
     System.out.println("  prints a carriage return");
-    System.out.println("  returns 0");
-    System.out.println("println(OBJECT)");
-    System.out.println("  prints OBJECT");
-    System.out.println("  returns OBJECT");
-    System.out.println("usage()");
+    System.out.println("  returns 0\n");
+    System.out.println("Object println(Object object);");
+    System.out.println("  prints object");
+    System.out.println("  returns Object\n");
+    System.out.println("int help();");
     System.out.println("  prints out this screen");
-    System.out.println("  returns 0");
+    System.out.println("  returns 0\n");
     return 0;
   }
   
