@@ -22,6 +22,7 @@ public class FunctionCaller {
            funcName.equals("loadSeriesByName") ||
            funcName.equals("listFontNames")    ||
            funcName.equals("getSeriesDetails") ||
+           funcName.equals("listSeries")       ||
            funcName.equals("help")             ||
            funcName.equals("plot")             ||
            funcName.equals("quit")             ||
@@ -42,6 +43,8 @@ public class FunctionCaller {
       case "exit":
       case "quit":
         return exit(params);
+      case "listSeries":
+        return listSeries(params);
       case "getSeriesDetails":
         return getSeriesDetails(params);
       case "help":
@@ -176,6 +179,20 @@ public class FunctionCaller {
     
     int value = Integer.parseInt(params.get(0).toString());
     System.exit(value);
+    return 0;
+  }
+  
+  private Object listSeries(List<Object> params) throws Exception {
+    if (params.size() > 0) {
+      throw new Exception("listSeries: too many arguments");
+    }
+    
+    List<TimeSeries> list = TimeSeriesDAO.getInstance().listSeries();
+    System.out.println("   Id                                    Name");
+    System.out.println("---------------------------------------------");
+    for (TimeSeries timeSeries: list) {
+      System.out.printf("%5d%40s\n", timeSeries.getId(), timeSeries.getName());
+    }
     return 0;
   }
   

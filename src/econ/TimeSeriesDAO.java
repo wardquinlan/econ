@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -32,6 +34,23 @@ public class TimeSeriesDAO {
     conn = DriverManager.getConnection(url);  
   }
 
+  public List<TimeSeries> listSeries() throws Exception {
+    List<TimeSeries> list = new ArrayList<>();
+    PreparedStatement ps = conn.prepareStatement("select id, name, title, source_org, source_name, notes from time_series order by id");
+    ResultSet resultSet = ps.executeQuery();
+    while (resultSet.next()) {
+      TimeSeries series = new TimeSeries();
+      series.setId(resultSet.getInt(1));
+      series.setName(resultSet.getString(2));
+      series.setTitle(resultSet.getString(3));
+      series.setSourceOrg(resultSet.getString(4));
+      series.setSourceName(resultSet.getString(5));
+      series.setNotes(resultSet.getString(6));
+      list.add(series);
+    }
+    return list;
+  }
+  
   public TimeSeries loadSeriesByName(String name) throws Exception {
     PreparedStatement ps = conn.prepareStatement("select id, name, title, source_org, source_name, notes from time_series where name = ?");
     ps.setString(1, name);
