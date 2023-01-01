@@ -214,7 +214,17 @@ public class FunctionCaller {
   private static String generateTitleFormatString() {
     StringBuffer sb = new StringBuffer();
     for (int i = 0; i < COL_WIDTHS.length; i++) {
-      sb.append("%" + COL_WIDTHS[i] + "s");
+      switch (i) {
+        case 0:
+        case 1:
+        case 2:
+        case 3:
+          sb.append("%" + COL_WIDTHS[i] + "s ");
+          break;
+        case 4:
+          sb.append("%" + COL_WIDTHS[i] + "s");
+          break;
+      }
     }
     return sb.toString();
   }
@@ -222,8 +232,19 @@ public class FunctionCaller {
   private static String generateDataFormatString() {
     StringBuffer sb = new StringBuffer();
     for (int i = 0; i < COL_WIDTHS.length; i++) {
-      sb.append("%" + COL_WIDTHS[i]);
-      sb.append(i == 0 ? "d" : "s");
+      switch (i) {
+        case 0:
+          sb.append("%" + COL_WIDTHS[i] + "d ");
+          break;
+        case 1:
+        case 2:
+        case 3:
+          sb.append("%" + COL_WIDTHS[i] + "s ");
+          break;
+        case 4:
+          sb.append("%" + COL_WIDTHS[i] + "s");
+          break;
+      }
     }
     return sb.toString();
   }
@@ -234,8 +255,23 @@ public class FunctionCaller {
       for (int j = 0; j < COL_WIDTHS[i]; j++) {
         sb.append("-");
       }
+      if (i != COL_WIDTHS.length - 1) {
+        sb.append("-");
+      }
     }
     return sb.toString();
+  }
+  
+  private static String generateTruncatedData(int i, String data) {
+    if (data == null) {
+      return data;
+    }
+    
+    if (data.length() <= COL_WIDTHS[i]) {
+      return data;
+    }
+    
+    return data.substring(0, COL_WIDTHS[i] - 3) + "...";
   }
   
   private Object listSeries(List<Object> params) throws Exception {
@@ -247,8 +283,12 @@ public class FunctionCaller {
     System.out.printf(generateUnderlineString() + "\n");
     List<TimeSeries> list = TimeSeriesDAO.getInstance().listSeries();
     for (TimeSeries timeSeries: list) {
-      System.out.printf(generateDataFormatString() + "\n", timeSeries.getId(), timeSeries.getName(), timeSeries.getTitle(), timeSeries.getSourceOrg(), 
-        timeSeries.getSourceName() == null ? "NULL" : timeSeries.getSourceName());
+      System.out.printf(generateDataFormatString() + "\n", 
+        timeSeries.getId(), 
+        generateTruncatedData(1, timeSeries.getName()), 
+        generateTruncatedData(2, timeSeries.getTitle()), 
+        generateTruncatedData(3, timeSeries.getSourceOrg()), 
+        generateTruncatedData(4, timeSeries.getSourceName() == null ? "NULL" : timeSeries.getSourceName()));
     }
     return 0;
   }
