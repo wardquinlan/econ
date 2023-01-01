@@ -17,7 +17,7 @@ import org.apache.commons.logging.LogFactory;
 public class FunctionCaller {
   private static Log log = LogFactory.getFactory().getInstance(FunctionCaller.class);
 
-  static final int COL_WIDTHS[] = {5, 20, 20, 20, 20};
+  static final int COL_WIDTHS[] = {5, 20, 30, 12, 30};
 
   public static boolean isFunction(String funcName) {
     return funcName.equals("println")            ||
