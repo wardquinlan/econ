@@ -21,20 +21,17 @@ public class FunctionCaller {
   static final int COL_WIDTHS[] = {5, 20, 30, 12, 30};
 
   public static boolean isFunction(String funcName) {
-    return funcName.equals("println")            ||
-           funcName.equals("print")              ||
-           funcName.equals("loadSeriesByName")   ||
-           funcName.equals("loadSeriesById")     ||
-           funcName.equals("listFontNames")      ||
-           funcName.equals("printSeries")        ||
-           funcName.equals("listSeries")         ||
-           funcName.equals("help")               ||
-           funcName.equals("plot")               ||
-           funcName.equals("createSeries")       ||
-           funcName.equals("quit")               ||
-           funcName.equals("deleteSeries")       ||
-           funcName.equals("insertSeriesData")   ||
-           funcName.equals("exit");
+    return funcName.equals("create")        ||
+           funcName.equals("delete")        ||
+           funcName.equals("exit")          ||
+           funcName.equals("help")          ||
+           funcName.equals("insert")        ||
+           funcName.equals("list")          ||
+           funcName.equals("listFonts")     ||
+           funcName.equals("load")          ||
+           funcName.equals("plot")          ||
+           funcName.equals("print")         ||
+           funcName.equals("printDetails");
   }
   
   public Object invokeFunction(String funcName, Map<String, Symbol> symbolTable, List<Object> params) throws Exception {
