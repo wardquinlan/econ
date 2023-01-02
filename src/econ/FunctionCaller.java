@@ -206,7 +206,15 @@ public class FunctionCaller {
     }
     
     Date date = Utils.DATE_FORMAT.parse((String) params.get(1));
-    TimeSeriesDAO.getInstance().insertSeriesData(timeSeries.getId(), date, (Float) params.get(2));
+    float value;
+    if (params.get(2) instanceof Integer) {
+      value = ((Integer) params.get(2)).floatValue();
+    } else if (params.get(2) instanceof Float) {
+      value = (Float) params.get(2);
+    } else {
+      throw new Exception("invalid value: " + params.get(2));
+    }
+    TimeSeriesDAO.getInstance().insertSeriesData(timeSeries.getId(), date, value);
     return 0;
   }
   
