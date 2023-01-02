@@ -84,6 +84,9 @@ public class Main {
           try {
             System.out.print("> ");
             String line = rdr.readLine();
+            if (line == null) {
+              break;
+            }
             Tokenizer tokenizer = new Tokenizer(new ByteArrayInputStream(line.getBytes(StandardCharsets.UTF_8)));
             TokenIterator itr = tokenizer.tokenize();
             if (itr.hasNext()) {
