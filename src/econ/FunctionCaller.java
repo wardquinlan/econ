@@ -23,17 +23,20 @@ public class FunctionCaller {
   static final int TIME_SERIES_DATA_COL_WIDTHS[] = {5, 10, 10};
 
   public static boolean isFunction(String funcName) {
-    return funcName.equals("create")        ||
-           funcName.equals("delete")        ||
-           funcName.equals("exit")          ||
-           funcName.equals("help")          ||
-           funcName.equals("insert")        ||
-           funcName.equals("list")          ||
-           funcName.equals("listFonts")     ||
-           funcName.equals("load")          ||
-           funcName.equals("plot")          ||
-           funcName.equals("print")         ||
-           funcName.equals("printDetails");
+    return funcName.equals("create")     ||
+           funcName.equals("delete")     ||
+           funcName.equals("exit")       ||
+           funcName.equals("getNotes")   ||
+           funcName.equals("help")       ||
+           funcName.equals("import")     ||
+           funcName.equals("insert")     ||
+           funcName.equals("list")       ||
+           funcName.equals("listFonts")  ||
+           funcName.equals("load")       ||
+           funcName.equals("notes")      ||
+           funcName.equals("plot")       ||
+           funcName.equals("print")      ||
+           funcName.equals("printData");
   }
   
   public Object invokeFunction(String funcName, Map<String, Symbol> symbolTable, List<Object> params) throws Exception {
@@ -47,8 +50,12 @@ public class FunctionCaller {
         return delete(symbolTable, params);
       case "exit":
         return exit(params);
+      case "getNotes":
+        return getNotes(params);
       case "help":
         return help(params);
+      case "import":
+        return importData(symbolTable, params);
       case "insert":
         return insert(params);
       case "list":
@@ -57,12 +64,14 @@ public class FunctionCaller {
         return listFonts(params);
       case "load":
         return load(params);
+      case "notes":
+        return notes(params);
       case "plot":
         return plot(symbolTable, file, params);
       case "print":
         return print(params);
-      case "printDetails":
-        return printDetails(params);
+      case "printData":
+        return printData(params);
       default:
         throw new Exception("unknown function: " + funcName);
     }
@@ -113,13 +122,13 @@ public class FunctionCaller {
     System.out.println("Econ version 0.10");
     System.out.println("usage:\n");
     System.out.println("int create(int id, String name, String title, String sourceOrg[, String sourceName]);");
-    System.out.println("  creates a new series with empty notes, a possibly empty source name, and no series data");
+    System.out.println("  creates a new series in the database with empty notes, a possibly empty source name, and no series data");
     System.out.println("  returns: 0\n");
     
     System.out.println("int delete(Object object[, String date]);");
-    System.out.println("  deletes:");
-    System.out.println("  - an entire series using 'object' as either an id or a name");
-    System.out.println("  - series data associated with 'date', using 'object' as either an id or a name");
+    System.out.println("  deletes from the database:");
+    System.out.println("  - an entire series, using 'object' as either an id or a name");
+    System.out.println("  - the single series data point associated with 'date', using 'object' as either an id or a name");
     System.out.println("  note: 'settings.confirm' must == 1 for this command to work");
     System.out.println("  returns: 0\n");
     
@@ -127,40 +136,55 @@ public class FunctionCaller {
     System.out.println("  exits the application with status code 'code', or 0 if 'code' not supplied");
     System.out.println("  returns: 'code', or 0 if 'code' not supplied\n");
     
+    System.out.println("String getNotes(Series series);");
+    System.out.println("  gets notes from 'series' in memory");
+    System.out.println("  returns: String, or null if no notes attached to 'series'\n");
+    
     System.out.println("int help();");
-    System.out.println("  prints out this help screen");
+    System.out.println("  prints this help screen");
+    System.out.println("  returns: 0\n");
+    
+    System.out.println("int import(String path[, String name]);");
+    System.out.println("  imports Quote data from 'path' into the database:");
+    System.out.println("  - filters on 'name' if present");
+    System.out.println("  - otherwise imports all data");
+    System.out.println("  note: 'settings.confirm' must == 1 for this command to work");
     System.out.println("  returns: 0\n");
     
     System.out.println("int insert(Object object, String date, float value);");
-    System.out.println("  inserts series data, using 'object' as either an id or a name");
+    System.out.println("  inserts series data into the database, using 'object' as either an id or a name");
     System.out.println("  returns: 0\n");
     
     System.out.println("int list([Object object]);");
-    System.out.println("  lists:");
+    System.out.println("  list from the database:");
     System.out.println("  - all series)");
     System.out.println("  - series data associated with 'object' as either an id or a name");
     System.out.println("  returns: 0\n");
     
     System.out.println("int listFonts();");
-    System.out.println("  lists all system font names");
+    System.out.println("  list all system font names");
     System.out.println("  returns: 0\n");
     
     System.out.println("Series load(Object object);");
-    System.out.println("  loads a series using 'object' as either an id or a name");
+    System.out.println("  loads a series from the database into memory, using 'object' as either an id or a name");
     System.out.println("  returns: Series, or null if not found\n");
+    
+    System.out.println("int notes(Object object);");
+    System.out.println("  prints a series' notes from the database, using 'object' as either an id or a name");
+    System.out.println("  returns: 0");
     
     System.out.println("int plot(String filename);");
     System.out.println("  plots series as defined in the context file 'filename'");
     System.out.println("  returns: 0\n");
     
     System.out.println("Object print([Object object]);");
-    System.out.println("  prints:");
-    System.out.println("  - 'object' (directly from memory)");
+    System.out.println("  prints from memory:");
+    System.out.println("  - 'object'");
     System.out.println("  - an empty line if 'object' supplied");
     System.out.println("  returns: 'object', or 0 if 'object' not supplied\n");
     
-    System.out.println("Series printDetails(Series series);");
-    System.out.println("  prints series details for 'series' (directly from memory)");
+    System.out.println("Series printData(Series series);");
+    System.out.println("  prints series data for 'series' in memory");
     System.out.println("  returns: 'series'\n");
     return 0;
   }
@@ -240,7 +264,7 @@ public class FunctionCaller {
     return 0;
   }
   
-  private Object printDetails(List<Object> params) throws Exception {
+  private Object printData(List<Object> params) throws Exception {
     if (params.size() > 1) {
       throw new Exception("too many arguments");
     }
@@ -334,15 +358,66 @@ public class FunctionCaller {
     return data.substring(0, colWidths[i] - 3) + "...";
   }
   
+  private Object importData(Map<String, Symbol> symbolTable, List<Object> params) throws Exception {
+    System.out.println("TODO: IMPORT DATA");
+    Symbol symbol = symbolTable.get("settings.confirm");
+    if (symbol == null || !symbol.getValue().equals(1)) {
+      throw new Exception("settings.confirm != 1");
+    }
+    return 0;
+  }
+  
+  private Object getNotes(List<Object> params) throws Exception {
+    if (params.size() > 1) {
+      throw new Exception("too many arguments");
+    }
+    
+    if (params.size() == 0) {
+      throw new Exception("missing argument");
+    }
+    
+    if (!(params.get(0) instanceof TimeSeries)) {
+      throw new Exception("not a series: " + params.get(0));
+    }
+    
+    TimeSeries timeSeries = (TimeSeries) params.get(0);
+    return timeSeries.getNotes();
+  }
+  
+  private Object notes(List<Object> params) throws Exception {
+    if (params.size() > 1) {
+      throw new Exception("too many arguments");
+    }
+    
+    if (params.size() == 0) {
+      throw new Exception("missing argument");
+    }
+    
+    TimeSeries timeSeries = (TimeSeries) this.load(params);
+    if (timeSeries == null) {
+      throw new Exception("time series not found: " + params.get(0));
+    }
+
+    System.out.printf(generateFormatString(TIME_SERIES_COL_WIDTHS) + "\n", "Id", "Name", "Title", "Source Org", "Source Name");
+    System.out.printf(generateUnderlineString(TIME_SERIES_COL_WIDTHS) + "\n");
+    System.out.printf(generateFormatString(TIME_SERIES_COL_WIDTHS) + "\n", 
+        timeSeries.getId().toString(), 
+        generateTruncatedData(TIME_SERIES_COL_WIDTHS, 1, timeSeries.getName()), 
+        generateTruncatedData(TIME_SERIES_COL_WIDTHS, 2, timeSeries.getTitle()), 
+        generateTruncatedData(TIME_SERIES_COL_WIDTHS, 3, timeSeries.getSourceOrg()), 
+        generateTruncatedData(TIME_SERIES_COL_WIDTHS, 4, timeSeries.getSourceName() == null ? "NULL" : timeSeries.getSourceName()));
+    System.out.println();
+    System.out.println(timeSeries.getNotes() == null ? "NULL" : timeSeries.getNotes());
+    return 0;
+  }
+  
   private Object list(List<Object> params) throws Exception {
     if (params.size() > 1) {
       throw new Exception("too many arguments");
     }
 
     if (params.size() == 1) {
-      List<Object> params2 = new ArrayList<>();
-      params2.add(params.get(0));
-      TimeSeries timeSeries = (TimeSeries) this.load(params2);
+      TimeSeries timeSeries = (TimeSeries) this.load(params);
       if (timeSeries == null) {
         throw new Exception("time series not found: " + params.get(0));
       }
@@ -355,8 +430,6 @@ public class FunctionCaller {
           generateTruncatedData(TIME_SERIES_COL_WIDTHS, 2, timeSeries.getTitle()), 
           generateTruncatedData(TIME_SERIES_COL_WIDTHS, 3, timeSeries.getSourceOrg()), 
           generateTruncatedData(TIME_SERIES_COL_WIDTHS, 4, timeSeries.getSourceName() == null ? "NULL" : timeSeries.getSourceName()));
-      System.out.println();
-      System.out.println(timeSeries.getNotes() == null ? "NULL" : timeSeries.getNotes());
       System.out.println();
       System.out.printf(generateFormatString(TIME_SERIES_DATA_COL_WIDTHS) + "\n", "Id", "Date", "Value");
       System.out.printf(generateUnderlineString(TIME_SERIES_DATA_COL_WIDTHS) + "\n");
