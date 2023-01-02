@@ -3,7 +3,7 @@ package econ;
 import java.util.ArrayList;
 
 public class TimeSeries {
-  private int id;
+  private Integer id;
   private String name;
   private String title;
   private String sourceOrg;
@@ -23,11 +23,11 @@ public class TimeSeries {
     timeSeriesDataList.add(timeSeriesData);
   }
   
-  public int getId() {
+  public Integer getId() {
     return id;
   }
   
-  public void setId(int id) {
+  public void setId(Integer id) {
     this.id = id;
   }
   

@@ -142,4 +142,4 @@ const SlateGray=#708090;
 const DarkSlateGray=#2F4F4F;
 const Black=#000000;
 
-println("colors loaded");
+print("colors loaded");

@@ -14,4 +14,4 @@ settings.chart.vpadding = 2;
 -- used to mark that settings have completed loading
 settings.loaded = 1;
 
-println("settings loaded");
+print("settings loaded");

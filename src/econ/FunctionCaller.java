@@ -6,6 +6,7 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.File;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -18,7 +19,8 @@ import org.apache.commons.logging.LogFactory;
 public class FunctionCaller {
   private static Log log = LogFactory.getFactory().getInstance(FunctionCaller.class);
 
-  static final int COL_WIDTHS[] = {5, 20, 30, 12, 30};
+  static final int TIME_SERIES_COL_WIDTHS[] = {5, 20, 30, 12, 30};
+  static final int TIME_SERIES_DATA_COL_WIDTHS[] = {5, 10, 10};
 
   public static boolean isFunction(String funcName) {
     return funcName.equals("create")        ||
@@ -39,32 +41,28 @@ public class FunctionCaller {
     Utils.ASSERT(params.get(params.size() - 1) instanceof File, "params last element is not a File");
     File file = (File) params.remove(params.size() - 1);
     switch(funcName) {
-      case "print":
-      case "println":
-        return println(params);
-      case "loadSeriesByName":
-        return loadSeriesByName(params);
-      case "loadSeriesById":
-        return loadSeriesById(params);
-      case "listFontNames":
-        return listFontNames(params);
+      case "create":
+        return create(params);
+      case "delete":
+        return delete(symbolTable, params);
       case "exit":
-      case "quit":
         return exit(params);
-      case "listSeries":
-        return listSeries(params);
-      case "printSeries":
-        return printSeries(params);
       case "help":
         return help(params);
+      case "insert":
+        return insert(params);
+      case "list":
+        return list(params);
+      case "listFonts":
+        return listFonts(params);
+      case "load":
+        return load(params);
       case "plot":
         return plot(symbolTable, file, params);
-      case "createSeries":
-        return createSeries(params);
-      case "deleteSeries":
-        return deleteSeries(symbolTable, params);
-      case "insertSeriesData":
-        return insertSeriesData(params);
+      case "print":
+        return print(params);
+      case "printDetails":
+        return printDetails(params);
       default:
         throw new Exception("unknown function: " + funcName);
     }
@@ -167,7 +165,7 @@ public class FunctionCaller {
     return 0;
   }
   
-  private Object insertSeriesData(List<Object> params) throws Exception {
+  private Object insert(List<Object> params) throws Exception {
     if (params.size() > 3) {
       throw new Exception("too many arguments");
     }
@@ -175,29 +173,53 @@ public class FunctionCaller {
     if (params.size() < 3) {
       throw new Exception("missing argument(s)");
     }
+
+    List<Object> params2 = new ArrayList<>();
+    params2.add(params.get(0));
+    TimeSeries timeSeries = (TimeSeries) this.load(params2);
+    if (timeSeries == null) {
+      throw new Exception("time series not found: " + params.get(0));
+    }
+    
     Date date = Utils.DATE_FORMAT.parse((String) params.get(1));
-    TimeSeriesDAO.getInstance().insertSeriesData((Integer) params.get(0), date, (Float) params.get(2));
+    TimeSeriesDAO.getInstance().insertSeriesData(timeSeries.getId(), date, (Float) params.get(2));
     return 0;
   }
   
-  private Object deleteSeries(Map<String, Symbol> symbolTable, List<Object> params) throws Exception {
+  private Object delete(Map<String, Symbol> symbolTable, List<Object> params) throws Exception {
     Symbol symbol = symbolTable.get("settings.confirm");
     if (symbol == null || !symbol.getValue().equals(1)) {
       throw new Exception("settings.confirm != 1");
     }
     
-    if (params.size() > 1) {
+    if (params.size() > 2) {
       throw new Exception("too many arguments");
     }
     
     if (params.size() == 0) {
-      throw new Exception("missing argument");
+      throw new Exception("missing argument(s)");
     }
-    TimeSeriesDAO.getInstance().deleteSeries((Integer) params.get(0));
+
+    List<Object> params2 = new ArrayList<>();
+    params2.add(params.get(0));
+    TimeSeries timeSeries = (TimeSeries) this.load(params2);
+    if (timeSeries == null) {
+      log.warn("time series not found: " + params.get(0));
+      return 0;
+    }
+    
+    Date date = null;
+    if (params.size() == 2) {
+      date = Utils.DATE_FORMAT.parse((String) params.get(1));
+      TimeSeriesDAO.getInstance().deleteSeriesData(timeSeries.getId(), date);
+    } else {
+      TimeSeriesDAO.getInstance().deleteSeries(timeSeries.getId());
+    }
+    
     return 0;
   }
   
-  private Object createSeries(List<Object> params) throws Exception {
+  private Object create(List<Object> params) throws Exception {
     if (params.size() < 4) {
       throw new Exception("missing argument(s)");
     }
@@ -218,7 +240,7 @@ public class FunctionCaller {
     return 0;
   }
   
-  private Object printSeries(List<Object> params) throws Exception {
+  private Object printDetails(List<Object> params) throws Exception {
     if (params.size() > 1) {
       throw new Exception("too many arguments");
     }
@@ -228,15 +250,29 @@ public class FunctionCaller {
     }
     
     if (!(params.get(0) instanceof TimeSeries)) {
-      throw new Exception("not a series");
+      throw new Exception("not a series: " + params.get(0));
     }
     
     TimeSeries timeSeries  = (TimeSeries) params.get(0);
     System.out.println(timeSeries.toStringVerbose());
     return timeSeries;
   }
+
+  private Object print(List<Object> params) throws Exception {
+    if (params.size() > 1) {
+      throw new Exception("too many arguments");
+    }
+    
+    if (params.size() == 0) {
+      System.out.println();
+      return 0;
+    } else {
+      System.out.println(params.get(0).toString());
+      return params.get(0);
+    }
+  }
   
-  private Object listFontNames(List<Object> params) throws Exception {
+  private Object listFonts(List<Object> params) throws Exception {
     if (params.size() != 0) {
       throw new Exception("too many arguments");
     }
@@ -262,89 +298,91 @@ public class FunctionCaller {
     return 0;
   }
   
-  private static String generateTitleFormatString() {
+  private static String generateFormatString(int colWidths[]) {
     StringBuffer sb = new StringBuffer();
-    for (int i = 0; i < COL_WIDTHS.length; i++) {
-      switch (i) {
-        case 0:
-        case 1:
-        case 2:
-        case 3:
-          sb.append("%" + COL_WIDTHS[i] + "s ");
-          break;
-        case 4:
-          sb.append("%" + COL_WIDTHS[i] + "s");
-          break;
+    for (int i = 0; i < colWidths.length; i++) {
+      sb.append("%" + colWidths[i] + "s");
+      if (i < colWidths.length - 1) {
+        sb.append(" ");
       }
     }
     return sb.toString();
   }
 
-  private static String generateDataFormatString() {
+  private static String generateUnderlineString(int colWidths[]) {
     StringBuffer sb = new StringBuffer();
-    for (int i = 0; i < COL_WIDTHS.length; i++) {
-      switch (i) {
-        case 0:
-          sb.append("%" + COL_WIDTHS[i] + "d ");
-          break;
-        case 1:
-        case 2:
-        case 3:
-          sb.append("%" + COL_WIDTHS[i] + "s ");
-          break;
-        case 4:
-          sb.append("%" + COL_WIDTHS[i] + "s");
-          break;
-      }
-    }
-    return sb.toString();
-  }
-  
-  private static String generateUnderlineString() {
-    StringBuffer sb = new StringBuffer();
-    for (int i = 0; i < COL_WIDTHS.length; i++) {
-      for (int j = 0; j < COL_WIDTHS[i]; j++) {
+    for (int i = 0; i < colWidths.length; i++) {
+      for (int j = 0; j < colWidths[i]; j++) {
         sb.append("-");
       }
-      if (i != COL_WIDTHS.length - 1) {
+      if (i < colWidths.length - 1) {
         sb.append("-");
       }
     }
     return sb.toString();
   }
   
-  private static String generateTruncatedData(int i, String data) {
+  private static String generateTruncatedData(int colWidths[], int i, String data) {
     if (data == null) {
       return data;
     }
     
-    if (data.length() <= COL_WIDTHS[i]) {
+    if (data.length() <= colWidths[i]) {
       return data;
     }
     
-    return data.substring(0, COL_WIDTHS[i] - 3) + "...";
+    return data.substring(0, colWidths[i] - 3) + "...";
   }
   
-  private Object listSeries(List<Object> params) throws Exception {
-    if (params.size() > 0) {
+  private Object list(List<Object> params) throws Exception {
+    if (params.size() > 1) {
       throw new Exception("too many arguments");
     }
 
-    System.out.printf(generateTitleFormatString() + "\n", "Id", "Name", "Title", "Source Org", "Source Name");
-    System.out.printf(generateUnderlineString() + "\n");
-    List<TimeSeries> list = TimeSeriesDAO.getInstance().listSeries();
-    for (TimeSeries timeSeries: list) {
-      System.out.printf(generateDataFormatString() + "\n", 
-        timeSeries.getId(), 
-        generateTruncatedData(1, timeSeries.getName()), 
-        generateTruncatedData(2, timeSeries.getTitle()), 
-        generateTruncatedData(3, timeSeries.getSourceOrg()), 
-        generateTruncatedData(4, timeSeries.getSourceName() == null ? "NULL" : timeSeries.getSourceName()));
+    if (params.size() == 1) {
+      List<Object> params2 = new ArrayList<>();
+      params2.add(params.get(0));
+      TimeSeries timeSeries = (TimeSeries) this.load(params2);
+      if (timeSeries == null) {
+        throw new Exception("time series not found: " + params.get(0));
+      }
+
+      System.out.printf(generateFormatString(TIME_SERIES_COL_WIDTHS) + "\n", "Id", "Name", "Title", "Source Org", "Source Name");
+      System.out.printf(generateUnderlineString(TIME_SERIES_COL_WIDTHS) + "\n");
+      System.out.printf(generateFormatString(TIME_SERIES_COL_WIDTHS) + "\n", 
+          timeSeries.getId().toString(), 
+          generateTruncatedData(TIME_SERIES_COL_WIDTHS, 1, timeSeries.getName()), 
+          generateTruncatedData(TIME_SERIES_COL_WIDTHS, 2, timeSeries.getTitle()), 
+          generateTruncatedData(TIME_SERIES_COL_WIDTHS, 3, timeSeries.getSourceOrg()), 
+          generateTruncatedData(TIME_SERIES_COL_WIDTHS, 4, timeSeries.getSourceName() == null ? "NULL" : timeSeries.getSourceName()));
+      System.out.println();
+      System.out.println(timeSeries.getNotes() == null ? "NULL" : timeSeries.getNotes());
+      System.out.println();
+      System.out.printf(generateFormatString(TIME_SERIES_DATA_COL_WIDTHS) + "\n", "Id", "Date", "Value");
+      System.out.printf(generateUnderlineString(TIME_SERIES_DATA_COL_WIDTHS) + "\n");
+      for (TimeSeriesData timeSeriesData: timeSeries.getTimeSeriesDataList()) {
+        System.out.printf(generateFormatString(TIME_SERIES_DATA_COL_WIDTHS) + "\n", 
+          timeSeriesData.getId().toString(), 
+          generateTruncatedData(TIME_SERIES_DATA_COL_WIDTHS, 1, Utils.DATE_FORMAT.format(timeSeriesData.getDate())), 
+          generateTruncatedData(TIME_SERIES_DATA_COL_WIDTHS, 2, timeSeriesData.getValue().toString())); 
+      }
+    } else {
+      System.out.printf(generateFormatString(TIME_SERIES_COL_WIDTHS) + "\n", "Id", "Name", "Title", "Source Org", "Source Name");
+      System.out.printf(generateUnderlineString(TIME_SERIES_COL_WIDTHS) + "\n");
+      List<TimeSeries> list = TimeSeriesDAO.getInstance().listSeries();
+      for (TimeSeries timeSeries: list) {
+        System.out.printf(generateFormatString(TIME_SERIES_COL_WIDTHS) + "\n", 
+          timeSeries.getId().toString(), 
+          generateTruncatedData(TIME_SERIES_COL_WIDTHS, 1, timeSeries.getName()), 
+          generateTruncatedData(TIME_SERIES_COL_WIDTHS, 2, timeSeries.getTitle()), 
+          generateTruncatedData(TIME_SERIES_COL_WIDTHS, 3, timeSeries.getSourceOrg()), 
+          generateTruncatedData(TIME_SERIES_COL_WIDTHS, 4, timeSeries.getSourceName() == null ? "NULL" : timeSeries.getSourceName()));
+      }
     }
     return 0;
   }
   
-  private Object loadSeriesByName(List<Object> params) throws Exception {
+  private Object load(List<Object> params) throws Exception {
     if (params.size() > 1) {
       throw new Exception("too many arguments");
     }
@@ -353,32 +391,12 @@ public class FunctionCaller {
       throw new Exception("missing argument");
     }
     
-    return TimeSeriesDAO.getInstance().loadSeriesByName(params.get(0).toString());
-  }
-
-  private Object loadSeriesById(List<Object> params) throws Exception {
-    if (params.size() > 1) {
-      throw new Exception("too many arguments");
-    }
-    
-    if (params.size() == 0) {
-      throw new Exception("missing argument");
-    }
-    
-    return TimeSeriesDAO.getInstance().loadSeriesById(Integer.parseInt(params.get(0).toString()));
-  }
-  
-  private Object println(List<Object> params) throws Exception {
-    if (params.size() > 1) {
-      throw new Exception("too many arguments");
-    }
-    
-    if (params.size() == 0) {
-      System.out.println();
-      return 0;
+    if (params.get(0) instanceof Integer) {
+      return TimeSeriesDAO.getInstance().loadSeriesById(Integer.parseInt(params.get(0).toString()));
+    } else if (params.get(0) instanceof String) {
+      return TimeSeriesDAO.getInstance().loadSeriesByName(params.get(0).toString());
     } else {
-      System.out.println(params.get(0).toString());
-      return params.get(0);
+      throw new Exception("unexpected argument: " + params.get(0));
     }
   }
 }

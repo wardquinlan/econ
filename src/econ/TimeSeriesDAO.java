@@ -69,6 +69,14 @@ public class TimeSeriesDAO {
     ps.setInt(1, id);
     ps.executeUpdate();
   }
+
+  public void deleteSeriesData(int id, Date date) throws Exception {
+    java.sql.Date sqlDate = new java.sql.Date(date.getTime());
+    PreparedStatement ps = conn.prepareStatement("delete from time_series_data where id = ? and datestamp = ?");
+    ps.setInt(1, id);
+    ps.setDate(2, sqlDate);
+    ps.executeUpdate();
+  }
   
   public void createSeries(TimeSeries timeSeries) throws Exception {
     PreparedStatement ps = conn.prepareStatement("insert into time_series(id, name, title, source_org, source_name) values(?,?,?,?,?)");
@@ -97,13 +105,14 @@ public class TimeSeriesDAO {
     series.setNotes(resultSet.getString(6));
     Utils.ASSERT(!resultSet.next(), "resultSet not empty");
     
-    ps = conn.prepareStatement("select datestamp, value from time_series_data where id = ? order by datestamp");
+    ps = conn.prepareStatement("select id, datestamp, value from time_series_data where id = ? order by datestamp");
     ps.setInt(1, series.getId());
     resultSet = ps.executeQuery();
     while (resultSet.next()) {
       TimeSeriesData timeSeriesData = new TimeSeriesData();
-      timeSeriesData.setDate(resultSet.getDate(1));
-      timeSeriesData.setValue(resultSet.getFloat(2));
+      timeSeriesData.setId(resultSet.getInt(1));
+      timeSeriesData.setDate(resultSet.getDate(2));
+      timeSeriesData.setValue(resultSet.getFloat(3));
       series.add(timeSeriesData);
     }
     return series;
@@ -126,13 +135,14 @@ public class TimeSeriesDAO {
     series.setNotes(resultSet.getString(6));
     Utils.ASSERT(!resultSet.next(), "resultSet not empty");
     
-    ps = conn.prepareStatement("select datestamp, value from time_series_data where id = ? order by datestamp");
+    ps = conn.prepareStatement("select id, datestamp, value from time_series_data where id = ? order by datestamp");
     ps.setInt(1, series.getId());
     resultSet = ps.executeQuery();
     while (resultSet.next()) {
       TimeSeriesData timeSeriesData = new TimeSeriesData();
-      timeSeriesData.setDate(resultSet.getDate(1));
-      timeSeriesData.setValue(resultSet.getFloat(2));
+      timeSeriesData.setId(resultSet.getInt(1));
+      timeSeriesData.setDate(resultSet.getDate(2));
+      timeSeriesData.setValue(resultSet.getFloat(3));
       series.add(timeSeriesData);
     }
     return series;

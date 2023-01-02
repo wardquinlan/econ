@@ -3,6 +3,7 @@ package econ;
 import java.util.Date;
 
 public class TimeSeriesData {
+  private Integer id;
   private Date date;
   private Float value;
   
@@ -10,6 +11,14 @@ public class TimeSeriesData {
     return date.compareTo(timeSeriesData.getDate());
   }
   
+  public Integer getId() {
+    return id;
+  }
+
+  public void setId(Integer id) {
+    this.id = id;
+  }
+
   public Date getDate() {
     return date;
   }
