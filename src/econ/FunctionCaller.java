@@ -180,7 +180,7 @@ public class FunctionCaller {
     System.out.println("Object print([Object object]);");
     System.out.println("  prints from memory:");
     System.out.println("  - 'object'");
-    System.out.println("  - an empty line if 'object' supplied");
+    System.out.println("  - an empty line if 'object' not supplied");
     System.out.println("  returns: 'object', or 0 if 'object' not supplied\n");
     
     System.out.println("Series printData(Series series);");
