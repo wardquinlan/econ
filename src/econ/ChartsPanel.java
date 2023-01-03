@@ -118,6 +118,8 @@ public class ChartsPanel extends JPanel {
       int yy = 200;
       for (Series series: chart.getSeries()) {
         TimeSeries timeSeries = Utils.normalize(timeSeriesCollapsed, series.getTimeSeries());
+        Float minValue = minValue(timeSeries, timeSeriesCollapsed, chartWidth);
+        Float maxValue = maxValue(timeSeries, timeSeriesCollapsed, chartWidth);
         g.setColor(series.getColor());
         for (int idx = 0, x = CHART_HPADDING; idx < timeSeriesCollapsed.size() && x < chartWidth; idx++, x += DXINCR) {
           if (timeSeries.get(idx).getValue() != null) {
@@ -129,6 +131,30 @@ public class ChartsPanel extends JPanel {
       
       y += chartHeight;
     }
+  }
+  
+  private Float minValue(TimeSeries timeSeries, TimeSeries timeSeriesCollapsed, int chartWidth) {
+    float min = Float.MAX_VALUE;
+    final int CHART_HPADDING = (int) ctx.get("settings.chart.hpadding");
+    final int DXINCR = (int) ctx.get("settings.panel.dxincr");
+    for (int idx = 0, x = CHART_HPADDING; idx < timeSeriesCollapsed.size() && x < chartWidth; idx++, x += DXINCR) {
+      if (timeSeries.get(idx).getValue() != null && timeSeries.get(idx).getValue() < min) {
+        min = timeSeries.get(idx).getValue();
+      }
+    }
+    return min;
+  }
+  
+  private Float maxValue(TimeSeries timeSeries, TimeSeries timeSeriesCollapsed, int chartWidth) {
+    float max = Float.MIN_VALUE;
+    final int CHART_HPADDING = (int) ctx.get("settings.chart.hpadding");
+    final int DXINCR = (int) ctx.get("settings.panel.dxincr");
+    for (int idx = 0, x = CHART_HPADDING; idx < timeSeriesCollapsed.size() && x < chartWidth; idx++, x += DXINCR) {
+      if (timeSeries.get(idx).getValue() != null && timeSeries.get(idx).getValue() > max) {
+        max = timeSeries.get(idx).getValue();
+      }
+    }
+    return max;
   }
   
   /* Transformation Function:

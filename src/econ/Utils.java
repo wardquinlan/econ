@@ -58,6 +58,19 @@ public class Utils {
     return Integer.parseInt(sb.toString(), 16);
   }
   
+  /* Transformation Function:
+  *
+  * s1 = series low point
+  * s2 = series high point
+  * y1 = grid low point
+  * y2 = grid high point
+  * 
+  * f(y) = y1 + y * (y2 - y1) / (s2 - s1)
+  */
+  public static int transform(Float y1) {
+    return 0;
+  }
+  
   public static List<TimeSeries> consolidate(Panel panel) {
     ArrayList<TimeSeries> list = new ArrayList<>();
     for (Chart chart: panel.getCharts()) {
