@@ -115,7 +115,6 @@ public class ChartsPanel extends JPanel {
       
       // Draw the series themselves
       ((Graphics2D) g).setStroke(strokeOrig);
-      int yy = 200;
       for (Series series: chart.getSeries()) {
         TimeSeries timeSeries = Utils.normalize(timeSeriesCollapsed, series.getTimeSeries());
         Float valueMin = minValue(timeSeries, timeSeriesCollapsed, chartWidth);
@@ -128,7 +127,6 @@ public class ChartsPanel extends JPanel {
             g.drawLine(x - DXINCR, v1, x, v2);
           }
         }
-        yy += 40;
       }
       
       y += chartHeight;
@@ -158,14 +156,4 @@ public class ChartsPanel extends JPanel {
     }
     return max;
   }
-  
-  /* Transformation Function:
-   *
-   * s1 = series low point
-   * s2 = series high point
-   * y1 = grid low point
-   * y2 = grid high point
-   * 
-   * f(y) = y1 + y * (y2 - y1) / (s2 - s1)
-   */
 }

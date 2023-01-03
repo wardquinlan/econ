@@ -3,6 +3,7 @@ settings.panel.dxincr=3;
 settings.chart.background.color = White;
 settings.chart.line.color = LightGray;
 settings.chart.rect.color = Red;
+settings.chart.gridlines=4
 --settings.panel.font.name = "Courier 10 Pitch";
 --settings.panel.font.name = "Source Code Pro Black";
 settings.panel.font.size = 10;

@@ -29,6 +29,40 @@ public class Utils {
     MONTHS.put(11, "D");
   }
   public static final DateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd");
+
+  public static final float rgnum[] = {
+    0.01f,
+    0.02f,
+    0.05f,
+    0.1f,
+    0.2f,
+    0.5f,
+    1f,
+    2f,
+    5f,
+    10f,
+    20f,
+    50f,
+    100f,
+    200f,
+    500f,
+    1000f,
+    2000f,
+    5000f,
+    10000f
+  };
+  
+  public static float findDYGridLines(int nGridLines, float min, float max) throws Exception {
+    int idx = 0;
+    while (min + nGridLines * rgnum[idx] < max && idx < rgnum.length) {
+      idx++;
+    }
+    
+    if (idx == rgnum.length) {
+      throw new Exception("gridlines overflowed");
+    }
+    return rgnum[idx];
+  }
   
   public static void ASSERT(boolean condition, String message) {
     if (!condition) {
