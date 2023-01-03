@@ -121,15 +121,20 @@ public class ChartsPanel extends JPanel {
         valueMax = maxValue(valueMax, timeSeries, timeSeriesCollapsed, chartWidth);
       }
       log.info("valueMin=" + valueMin + ", valueMax=" + valueMax);
+      float gridLines[] = new float[5];
       try {
-        float dyGridLines = Utils.findDYGridLines(4, valueMin, valueMax);
+        float dyGridLines = Utils.findDYGridLines(5, valueMin, valueMax);
         log.info("dyGridLines=" + dyGridLines);
         float yGridLine = (float) Math.ceil(valueMin / dyGridLines) * dyGridLines;
         int count = 0; 
-        while (count < 4) {
+        while (count < 5) {
           log.info("yGridLine=" + yGridLine);
+          gridLines[count] = yGridLine;
           yGridLine += dyGridLines;
           count++;
+        }
+        if (gridLines[4] > valueMax) {
+          valueMax = gridLines[4];
         }
       } catch(Exception ex) {
         log.error("dyGridLines overflowed, not displaying chart " + chart.getLabel());
