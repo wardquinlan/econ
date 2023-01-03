@@ -125,6 +125,7 @@ public class ChartsPanel extends JPanel {
           if (timeSeries.get(idx).getValue() != null) {
             int v1 = Utils.transform(timeSeries.get(idx - 1).getValue(), y + chartHeight - CHART_SEPARATOR - 1, y, valueMin, valueMax);
             int v2 = Utils.transform(timeSeries.get(idx).getValue(), y + chartHeight - CHART_SEPARATOR - 1, y, valueMin, valueMax);
+            g.drawLine(x - DXINCR, v1, x, v2);
           }
         }
         yy += 40;

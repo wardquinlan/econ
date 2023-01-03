@@ -1,12 +1,12 @@
 <context>
   <panel label="Treasury Yields">
     <chart label="My Chart 1" span="70">
-      <series ref="T1" color="Red"/>
+      <series ref="T1" color="Blue"/>
       <series ref="T2" color="Blue"/>
       <series ref="T3" color="Green"/>
     </chart>
     <chart label="My Chart 2" span="30">
-      <series ref="T1" color="Red"/>
+      <series ref="T1" color="Gray"/>
       <series ref="T2" color="Blue"/>
       <series ref="T3" color="Green"/>
     </chart>
