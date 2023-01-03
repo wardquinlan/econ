@@ -142,6 +142,18 @@ public class ChartsPanel extends JPanel {
         continue;
       }
       
+      // Draw the horizontal gridlines
+      g.setColor(CHART_LINE);
+      for (float gridLine: gridLines) {
+        if (gridLine != valueMax) {
+          int x1 = CHART_HPADDING + 1;
+          int y1 = Utils.transform(gridLine, y + chartHeight - CHART_SEPARATOR - 1, y, valueMin, valueMax);
+          int x2 = x1 + chartWidth;
+          int y2 = y1;
+          g.drawLine(x1, y1, x2, y2);
+        }
+      }
+      
       // Draw the series themselves
       ((Graphics2D) g).setStroke(strokeOrig);
       for (Series series: chart.getSeries()) {
