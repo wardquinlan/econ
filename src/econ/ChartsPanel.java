@@ -50,6 +50,7 @@ public class ChartsPanel extends JPanel {
     final int CHART_HPADDING = (int) ctx.get("settings.chart.hpadding");
     final int CHART_VPADDING = (int) ctx.get("settings.chart.vpadding");
     final int DXINCR = (int) ctx.get("settings.panel.dxincr");
+    final int CHART_GRIDLINES = (int) ctx.get("settings.chart.gridlines");
     final Font PANEL_FONT;
     
     if (PANEL_FONT_NAME != null && PANEL_FONT_SIZE != null) {
@@ -121,20 +122,20 @@ public class ChartsPanel extends JPanel {
         valueMax = maxValue(valueMax, timeSeries, timeSeriesCollapsed, chartWidth);
       }
       log.info("valueMin=" + valueMin + ", valueMax=" + valueMax);
-      float gridLines[] = new float[5];
+      float gridLines[] = new float[CHART_GRIDLINES];
       try {
-        float dyGridLines = Utils.findDYGridLines(5, valueMin, valueMax);
+        float dyGridLines = Utils.findDYGridLines(CHART_GRIDLINES, valueMin, valueMax);
         log.info("dyGridLines=" + dyGridLines);
         float yGridLine = (float) Math.ceil(valueMin / dyGridLines) * dyGridLines;
         int count = 0; 
-        while (count < 5) {
+        while (count < CHART_GRIDLINES) {
           log.info("yGridLine=" + yGridLine);
           gridLines[count] = yGridLine;
           yGridLine += dyGridLines;
           count++;
         }
-        if (gridLines[4] > valueMax) {
-          valueMax = gridLines[4];
+        if (gridLines[CHART_GRIDLINES - 1] > valueMax) {
+          valueMax = gridLines[CHART_GRIDLINES - 1];
         }
       } catch(Exception ex) {
         log.error("dyGridLines overflowed, not displaying chart " + chart.getLabel());
