@@ -60,15 +60,17 @@ public class Utils {
   
   /* Transformation Function:
   *
+  * s  = series point
   * s1 = series low point
   * s2 = series high point
   * y1 = grid low point
   * y2 = grid high point
   * 
-  * f(y) = y1 + y * (y2 - y1) / (s2 - s1)
+  * f(s) = y1 + s * (y2 - y1) / (s2 - s1)
   */
-  public static int transform(Float y1) {
-    return 0;
+  public static int transform(Float s, int y1, int y2, Float s1, Float s2) {
+    Float ret =  y1 +  s * (y2 - y1) / (s2 - s1);
+    return ret.intValue();
   }
   
   public static List<TimeSeries> consolidate(Panel panel) {

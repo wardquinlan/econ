@@ -118,11 +118,13 @@ public class ChartsPanel extends JPanel {
       int yy = 200;
       for (Series series: chart.getSeries()) {
         TimeSeries timeSeries = Utils.normalize(timeSeriesCollapsed, series.getTimeSeries());
-        Float minValue = minValue(timeSeries, timeSeriesCollapsed, chartWidth);
-        Float maxValue = maxValue(timeSeries, timeSeriesCollapsed, chartWidth);
+        Float valueMin = minValue(timeSeries, timeSeriesCollapsed, chartWidth);
+        Float valueMax = maxValue(timeSeries, timeSeriesCollapsed, chartWidth);
         g.setColor(series.getColor());
         for (int idx = 0, x = CHART_HPADDING; idx < timeSeriesCollapsed.size() && x < chartWidth; idx++, x += DXINCR) {
           if (timeSeries.get(idx).getValue() != null) {
+            int value = Utils.transform(timeSeries.get(idx).getValue(), y, y + chartHeight - CHART_SEPARATOR - 1, valueMin, valueMax);
+            System.out.println("y1=" + y + ", y2=" + (y + chartHeight - CHART_SEPARATOR - 1) + ", value=" + value);
             g.drawString(timeSeries.get(idx).getValue().toString(), x, yy);
           }
         }
