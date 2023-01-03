@@ -66,10 +66,13 @@ public class Utils {
   * y1 = grid low point
   * y2 = grid high point
   * 
-  * f(s) = y1 + s * (y2 - y1) / (s2 - s1)
+  * Scaling factor S = (y2 - y1) / (s2 - s1)
+  * 
+  * f(s) = S * (s - s1) + y1
   */
   public static int transform(Float s, int y1, int y2, Float s1, Float s2) {
-    Float ret =  y1 +  s * (y2 - y1) / (s2 - s1);
+    Float S = (y2 - y1) / (s2 - s1);
+    Float ret =  S * (s - s1) + y1;
     return ret.intValue();
   }
   
