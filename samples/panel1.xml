@@ -3,6 +3,7 @@
     <chart label="My Chart 1" span="70">
       <series ref="TBOND2" color="Blue"/>
       <series ref="TBOND10" color="Red"/>
+      <series ref="TBILL3" color="Black"/>
     </chart>
     <chart label="My Chart 2" span="30">
       <series ref="T1" color="Gray"/>
