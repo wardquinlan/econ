@@ -120,6 +120,21 @@ public class ChartsPanel extends JPanel {
         valueMin = minValue(valueMin, timeSeries, timeSeriesCollapsed, chartWidth);
         valueMax = maxValue(valueMax, timeSeries, timeSeriesCollapsed, chartWidth);
       }
+      log.info("valueMin=" + valueMin + ", valueMax=" + valueMax);
+      try {
+        float dyGridLines = Utils.findDYGridLines(4, valueMin, valueMax);
+        log.info("dyGridLines=" + dyGridLines);
+        float yGridLine = (float) Math.ceil(valueMin / dyGridLines) * dyGridLines;
+        int count = 0; 
+        while (count < 4) {
+          log.info("yGridLine=" + yGridLine);
+          yGridLine += dyGridLines;
+          count++;
+        }
+      } catch(Exception ex) {
+        log.error("dyGridLines overflowed, not displaying chart " + chart.getLabel());
+        continue;
+      }
       
       // Draw the series themselves
       ((Graphics2D) g).setStroke(strokeOrig);

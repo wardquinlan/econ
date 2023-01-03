@@ -105,10 +105,10 @@ public class Utils {
   * f(s) = S * (s - s1) + y1
   */
   public static int transform(Float s, int y1, int y2, Float s1, Float s2) {
-    log.info("transform called: s=" + s + ", y1=" + y1 + ", y2=" + y2 + ", s1=" + s1 + ", s2=" + s2);
+    log.debug("transform called: s=" + s + ", y1=" + y1 + ", y2=" + y2 + ", s1=" + s1 + ", s2=" + s2);
     Float S = (y2 - y1) / (s2 - s1);
     Float ret =  S * (s - s1) + y1;
-    log.info("transform returning: " + ret);
+    log.debug("transform returning: " + ret);
     return ret.intValue();
   }
   
