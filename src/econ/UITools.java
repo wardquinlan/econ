@@ -12,7 +12,11 @@ import java.util.GregorianCalendar;
 
 import javax.swing.JComponent;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 public class UITools {
+  final private static Log log = LogFactory.getFactory().getInstance(UITools.class);
   final private Color PANEL_BACKGROUND;
   final private Color CHART_BACKGROUND;
   final private Color CHART_RECT;
@@ -85,7 +89,7 @@ public class UITools {
     g.setColor(PANEL_FONT_COLOR);
     g.drawString(chart.getLabel(), CHART_HPADDING, yBase - CHART_VPADDING);
     
-    // Draw the grid lines
+    // Draw the vertical grid lines
     ((Graphics2D) g).setStroke(strokeGridlines);
     for (int idx = 1, x = CHART_HPADDING + DXINCR; idx < timeSeriesCollapsed.size() && x < chartWidth; idx++, x += DXINCR) {
       cal.setTime(timeSeriesCollapsed.get(idx - 1).getDate());
@@ -101,6 +105,51 @@ public class UITools {
         if (withMonthLegend) {
           g.setColor(PANEL_FONT_COLOR);
           g.drawString(Utils.getMonthString(cal), x, component.getHeight() - CHART_SEPARATOR + m.getHeight());
+        }
+      }
+    }
+  }
+  
+  public float[] calculateGridlines(MinMaxPair pair) throws Exception {
+    float gridLines[] = new float[CHART_GRIDLINES];
+    float dyGridLines = Utils.findDYGridLines(CHART_GRIDLINES, pair);
+    log.debug("dyGridLines=" + dyGridLines);
+    float yGridLine = (float) Math.ceil(pair.getMinValue() / dyGridLines) * dyGridLines;
+    int count = 0; 
+    while (count < CHART_GRIDLINES) {
+      log.debug("yGridLine=" + yGridLine);
+      gridLines[count] = yGridLine;
+      yGridLine += dyGridLines;
+      count++;
+    }
+    if (gridLines[CHART_GRIDLINES - 1] > pair.getMaxValue()) {
+      pair.setMaxValue(gridLines[CHART_GRIDLINES - 1]);
+    }
+    return gridLines;
+  }
+  
+  public void drawHorizontalGridlines(float gridLines[], MinMaxPair pair) {
+    g.setColor(CHART_LINE);
+    for (float gridLine: gridLines) {
+      if (gridLine != pair.getMaxValue()) {
+        int x1 = CHART_HPADDING + 1;
+        int y1 = Utils.transform(gridLine, yBase + chartHeight - CHART_SEPARATOR - 1, yBase, pair.getMinValue(), pair.getMaxValue());
+        int x2 = x1 + chartWidth;
+        int y2 = y1;
+        g.drawLine(x1, y1, x2, y2);
+      }
+    }
+  }
+  
+  public void drawSeries(Chart chart, MinMaxPair pair) {
+    for (Series series: chart.getSeries()) {
+      TimeSeries timeSeries = Utils.normalize(timeSeriesCollapsed, series.getTimeSeries());
+      g.setColor(series.getColor());
+      for (int idx = 1, x = CHART_HPADDING + DXINCR; idx < timeSeriesCollapsed.size() && x < chartWidth; idx++, x += DXINCR) {
+        if (timeSeries.get(idx - 1).getValue() != null) {
+          int v1 = Utils.transform(timeSeries.get(idx - 1).getValue(), yBase + chartHeight - CHART_SEPARATOR - 1, yBase, pair.getMinValue(), pair.getMaxValue());
+          int v2 = Utils.transform(timeSeries.get(idx).getValue(), yBase + chartHeight - CHART_SEPARATOR - 1, yBase, pair.getMinValue(), pair.getMaxValue());
+          g.drawLine(x - DXINCR, v1, x, v2);
         }
       }
     }

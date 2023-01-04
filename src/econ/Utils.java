@@ -52,9 +52,9 @@ public class Utils {
     10000f
   };
   
-  public static float findDYGridLines(int nGridLines, float min, float max) throws Exception {
+  public static float findDYGridLines(int nGridLines, MinMaxPair pair) throws Exception {
     int idx = 0;
-    while (min + nGridLines * rgnum[idx] < max && idx < rgnum.length) {
+    while (pair.getMinValue() + nGridLines * rgnum[idx] < pair.getMaxValue() && idx < rgnum.length) {
       idx++;
     }
     
@@ -211,5 +211,19 @@ public class Utils {
     }
     
     return timeSeries;
+  }
+
+  public static MinMaxPair calculateMinMax(MinMaxPair pair, Context ctx, TimeSeries timeSeries, TimeSeries timeSeriesCollapsed, int chartWidth) {
+    final int CHART_HPADDING = (int) ctx.get("settings.chart.hpadding");
+    final int DXINCR = (int) ctx.get("settings.panel.dxincr");
+    for (int idx = 0, x = CHART_HPADDING; idx < timeSeriesCollapsed.size() && x < chartWidth; idx++, x += DXINCR) {
+      if (timeSeries.get(idx).getValue() != null && timeSeries.get(idx).getValue() < pair.getMinValue()) {
+        pair.setMinValue(timeSeries.get(idx).getValue());
+      }
+      if (timeSeries.get(idx).getValue() != null && timeSeries.get(idx).getValue() > pair.getMaxValue()) {
+        pair.setMaxValue(timeSeries.get(idx).getValue());
+      }
+    }
+    return pair;
   }
 }
