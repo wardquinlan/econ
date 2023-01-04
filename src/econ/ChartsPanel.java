@@ -62,9 +62,6 @@ public class ChartsPanel extends JPanel {
       int chartHeight = (getHeight() - CHART_SEPARATOR) * chart.getSpan() / 100;
       UITools ut = new UITools(chart, this, timeSeriesCollapsed, g, ctx, yBase);
       
-      // draw the chart background
-      ut.drawChartBackground(chart, i == 0);
-      
       // calculate the minimum and maximum
       MinMaxPair pair = new MinMaxPair();
       for (Series series: chart.getSeries()) {
@@ -81,6 +78,9 @@ public class ChartsPanel extends JPanel {
         log.error("dyGridLines overflowed, not displaying chart " + chart.getLabel());
         continue;
       }
+      
+      // draw the chart background
+      ut.drawChartBackground(chart, i == 0);
       
       // draw the horizontal gridlines
       ut.drawHorizontalGridlines(gridLines, pair);
