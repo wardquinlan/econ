@@ -66,7 +66,7 @@ public class ChartsPanel extends JPanel {
     for (int i = 0; i < panel.getCharts().size(); i++) {
       // create the UITools instance
       Chart chart = panel.getCharts().get(i);
-      UITools ut = new UITools(chart, this, timeSeriesCollapsed, g, ctx, yBase);
+      UITools ut = new UITools(chart, this, timeSeriesCollapsed, g, ctx, yBase, 0);
       
       // calculate the minimum and maximum
       MinMaxPair pair = new MinMaxPair();
@@ -93,7 +93,7 @@ public class ChartsPanel extends JPanel {
       // create the UITools instance
       Chart chart = panel.getCharts().get(i);
       int chartHeight = (getHeight() - CHART_SEPARATOR) * chart.getSpan() / 100;
-      UITools ut = new UITools(chart, this, timeSeriesCollapsed, g, ctx, yBase);
+      UITools ut = new UITools(chart, this, timeSeriesCollapsed, g, ctx, yBase, gridLineStringWidth);
       
       // draw the chart background
       ut.drawChartBackground(chart, i == 0);

@@ -38,7 +38,7 @@ public class UITools {
   final private Calendar cal;
   final private int yBase;
   
-  public UITools(Chart chart, JComponent component, TimeSeries timeSeriesCollapsed, Graphics g, Context ctx, int yBase) {
+  public UITools(Chart chart, JComponent component, TimeSeries timeSeriesCollapsed, Graphics g, Context ctx, int yBase, int gridLineWidth) {
     this.component = component;
     this.timeSeriesCollapsed = timeSeriesCollapsed;
     this.strokeGridlines = new BasicStroke(1, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 0, new float[] {1}, 0);
@@ -59,7 +59,7 @@ public class UITools {
     DXINCR = (int) ctx.get("settings.panel.dxincr");
     CHART_GRIDLINES = (int) ctx.get("settings.chart.gridlines");
     
-    chartWidth = component.getWidth() - 1 - 2 * CHART_HPADDING;
+    chartWidth = component.getWidth() - 1 - 2 * CHART_HPADDING - gridLineWidth;
     chartHeight = (component.getHeight() - CHART_SEPARATOR) * chart.getSpan() / 100;
     
     if (PANEL_FONT_NAME != null && PANEL_FONT_SIZE != null) {
@@ -140,7 +140,7 @@ public class UITools {
       if (gridLine != pair.getMaxValue()) {
         int x1 = CHART_HPADDING + 1;
         int y1 = Utils.transform(gridLine, yBase + chartHeight - CHART_SEPARATOR - 1, yBase, pair.getMinValue(), pair.getMaxValue());
-        int x2 = x1 + chartWidth;
+        int x2 = x1 + chartWidth - 1;
         int y2 = y1;
         g.drawLine(x1, y1, x2, y2);
       }
