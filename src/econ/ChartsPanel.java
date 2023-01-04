@@ -41,14 +41,20 @@ public class ChartsPanel extends JPanel {
     final Color PANEL_BACKGROUND = new Color((int) ctx.get("settings.panel.background.color"));
     final int CHART_SEPARATOR = (int) ctx.get("settings.chart.separator");
     final int CHART_HPADDING = (int) ctx.get("settings.chart.hpadding");
+    final int chartWidth = getWidth() - 1 - 2 * CHART_HPADDING;
     
-    int chartWidth = getWidth() - 1 - 2 * CHART_HPADDING;
+    // consolidate all time series into a single list
     List<TimeSeries> list = Utils.consolidate(panel);
+    
+    // collapse all time series into a single, consolidated time series
     TimeSeries timeSeriesCollapsed = Utils.collapse(list);
     log.debug("collapsed series=" + timeSeriesCollapsed.toStringVerbose());
+    
+    // set up the background panel and save the stroke
     setBackground(PANEL_BACKGROUND);
     Stroke strokeOrig = ((Graphics2D) g).getStroke();
 
+    // iterate through the charts
     int yBase = CHART_SEPARATOR;
     for (int i = 0; i < panel.getCharts().size(); i++) {
       // create the UITools instance
