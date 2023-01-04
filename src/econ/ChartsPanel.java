@@ -61,6 +61,7 @@ public class ChartsPanel extends JPanel {
     Map<Integer, float[]> mapGridLines = new HashMap<>();
     
     // iterate through the charts
+    int gridLineStringWidth = 0;
     int yBase = CHART_SEPARATOR;
     for (int i = 0; i < panel.getCharts().size(); i++) {
       // create the UITools instance
@@ -81,6 +82,7 @@ public class ChartsPanel extends JPanel {
       try {
         gridLines = ut.calculateGridlines(pair);
         mapGridLines.put(i, gridLines);
+        gridLineStringWidth = ut.getMaximumStringWidth(gridLines, gridLineStringWidth);
       } catch(Exception ex) {
         log.error("dyGridLines overflowed, not displaying chart: " + chart.getLabel());
         return;

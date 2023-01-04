@@ -37,7 +37,6 @@ public class UITools {
   final private Graphics g;
   final private Calendar cal;
   final private int yBase;
-  final private FontMetrics m;
   
   public UITools(Chart chart, JComponent component, TimeSeries timeSeriesCollapsed, Graphics g, Context ctx, int yBase) {
     this.component = component;
@@ -46,7 +45,6 @@ public class UITools {
     this.g = g;
     this.yBase = yBase;
     this.cal = new GregorianCalendar();
-    this.m = g.getFontMetrics(g.getFont());
     
     PANEL_BACKGROUND = new Color((int) ctx.get("settings.panel.background.color"));
     CHART_BACKGROUND = new Color((int) ctx.get("settings.chart.background.color"));
@@ -104,12 +102,20 @@ public class UITools {
 
         if (withMonthLegend) {
           g.setColor(PANEL_FONT_COLOR);
-          g.drawString(Utils.getMonthString(cal), x, component.getHeight() - CHART_SEPARATOR + m.getHeight());
+          g.drawString(Utils.getMonthString(cal), x, component.getHeight() - CHART_SEPARATOR + g.getFontMetrics(g.getFont()).getHeight());
         }
       }
     }
   }
   
+  public int getMaximumStringWidth(float[] gridLines, int max) {
+    for (float gridLine: gridLines) {
+      if (g.getFontMetrics().stringWidth(Float.toString(gridLine)) > max) {
+        max = g.getFontMetrics().stringWidth(Float.toString(gridLine));
+      }
+    }
+    return max;
+  }
   public float[] calculateGridlines(MinMaxPair pair) throws Exception {
     float gridLines[] = new float[CHART_GRIDLINES];
     float dyGridLines = Utils.findDYGridLines(CHART_GRIDLINES, pair);
