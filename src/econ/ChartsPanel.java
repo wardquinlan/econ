@@ -10,7 +10,9 @@ import java.awt.Graphics2D;
 import java.awt.Stroke;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -54,12 +56,15 @@ public class ChartsPanel extends JPanel {
     setBackground(PANEL_BACKGROUND);
     Stroke strokeOrig = ((Graphics2D) g).getStroke();
 
+    // save the calculated pairs and gridlines for later
+    Map<Integer, MinMaxPair> mapPair = new HashMap<>();
+    Map<Integer, float[]> mapGridLines = new HashMap<>();
+    
     // iterate through the charts
     int yBase = CHART_SEPARATOR;
     for (int i = 0; i < panel.getCharts().size(); i++) {
       // create the UITools instance
       Chart chart = panel.getCharts().get(i);
-      int chartHeight = (getHeight() - CHART_SEPARATOR) * chart.getSpan() / 100;
       UITools ut = new UITools(chart, this, timeSeriesCollapsed, g, ctx, yBase);
       
       // calculate the minimum and maximum
@@ -68,26 +73,35 @@ public class ChartsPanel extends JPanel {
         TimeSeries timeSeries = Utils.normalize(timeSeriesCollapsed, series.getTimeSeries());
         pair = Utils.calculateMinMax(pair, ctx, timeSeries, timeSeriesCollapsed, chartWidth);
       }
+      mapPair.put(i, pair);
       log.debug("pair=" + pair);
       
       // compute the gridlines
       float gridLines[];
       try {
         gridLines = ut.calculateGridlines(pair);
+        mapGridLines.put(i, gridLines);
       } catch(Exception ex) {
-        log.error("dyGridLines overflowed, not displaying chart " + chart.getLabel());
-        continue;
+        log.error("dyGridLines overflowed, not displaying chart: " + chart.getLabel());
+        return;
       }
+    }
+    
+    for (int i = 0; i < panel.getCharts().size(); i++) {
+      // create the UITools instance
+      Chart chart = panel.getCharts().get(i);
+      int chartHeight = (getHeight() - CHART_SEPARATOR) * chart.getSpan() / 100;
+      UITools ut = new UITools(chart, this, timeSeriesCollapsed, g, ctx, yBase);
       
       // draw the chart background
       ut.drawChartBackground(chart, i == 0);
       
       // draw the horizontal gridlines
-      ut.drawHorizontalGridlines(gridLines, pair);
+      ut.drawHorizontalGridlines(mapGridLines.get(i), mapPair.get(i));
       
       // draw the series themselves
       ((Graphics2D) g).setStroke(strokeOrig);
-      ut.drawSeries(chart, pair);
+      ut.drawSeries(chart, mapPair.get(i));
       
       // advance to the next chart
       yBase += chartHeight;
