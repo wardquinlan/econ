@@ -44,33 +44,18 @@ public class ChartsPanel extends JPanel {
     final Color CHART_RECT = new Color((int) ctx.get("settings.chart.rect.color"));
     final Color CHART_LINE = new Color((int) ctx.get("settings.chart.line.color"));
     final Color PANEL_FONT_COLOR = new Color((int) ctx.get("settings.panel.font.color"));
-    final String PANEL_FONT_NAME = (String) ctx.get("settings.panel.font.name");
-    final Integer PANEL_FONT_SIZE = (Integer) ctx.get("settings.panel.font.size");
     final int CHART_SEPARATOR = (int) ctx.get("settings.chart.separator");
     final int CHART_HPADDING = (int) ctx.get("settings.chart.hpadding");
     final int CHART_VPADDING = (int) ctx.get("settings.chart.vpadding");
     final int DXINCR = (int) ctx.get("settings.panel.dxincr");
     final int CHART_GRIDLINES = (int) ctx.get("settings.chart.gridlines");
-    final Font PANEL_FONT;
     
-    if (PANEL_FONT_NAME != null && PANEL_FONT_SIZE != null) {
-      PANEL_FONT = new Font(PANEL_FONT_NAME, Font.PLAIN, PANEL_FONT_SIZE);
-    } else if (PANEL_FONT_NAME != null) {
-      PANEL_FONT = new Font(PANEL_FONT_NAME, Font.PLAIN, g.getFont().getSize());
-    } else if (PANEL_FONT_SIZE != null) {
-      PANEL_FONT = new Font(g.getFont().getName(), Font.PLAIN, PANEL_FONT_SIZE);
-    } else {
-      PANEL_FONT = null;
-    }
-
     List<TimeSeries> list = Utils.consolidate(panel);
     TimeSeries timeSeriesCollapsed = Utils.collapse(list);
     log.info("collapsed series=" + timeSeriesCollapsed.toStringVerbose());
     
+    UIUtils ut = new UIUtils(g, ctx);
     setBackground(PANEL_BACKGROUND);
-    if (PANEL_FONT != null) {
-      g.setFont(PANEL_FONT);
-    }
 
     FontMetrics m = g.getFontMetrics(g.getFont());
     Stroke strokeOrig = ((Graphics2D) g).getStroke();
