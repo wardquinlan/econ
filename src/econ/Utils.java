@@ -31,25 +31,12 @@ public class Utils {
   public static final DateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd");
 
   public static final float rgnum[] = {
-    0.01f,
-    0.02f,
-    0.05f,
-    0.1f,
-    0.2f,
-    0.5f,
-    1f,
-    2f,
-    5f,
-    10f,
-    20f,
-    50f,
-    100f,
-    200f,
-    500f,
-    1000f,
-    2000f,
-    5000f,
-    10000f
+    0.01f, 0.02f, 0.03f, 0.04f, 0.05f, 0.06f, 0.07f, 0.08f, 0.09f,
+     0.1f,  0.2f,  0.3f,  0.4f,  0.5f,  0.6f,  0.7f,  0.8f,  0.9f, 
+       1f,    2f,    3f,    4f,    5f,    6f,    7f,    8f,    9f,
+      10f,   20f,   30f,   40f,   50f,   60f,   70f,   80f,   90f,
+     100f,  200f,  300f,  400f,  500f,  600f,  700f,  800f,  900f,
+    1000f, 2000f, 3000f, 4000f, 5000f, 6000f, 7000f, 8000f, 900f
   };
   
   public static float findDYGridLines(int nGridLines, MinMaxPair pair) throws Exception {

@@ -7,6 +7,7 @@ import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Stroke;
+import java.text.DecimalFormat;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
@@ -17,7 +18,7 @@ import org.apache.commons.logging.LogFactory;
 
 public class UITools {
   final private static Log log = LogFactory.getFactory().getInstance(UITools.class);
-  final private Color PANEL_BACKGROUND;
+  final private static DecimalFormat df = new DecimalFormat("#.###");
   final private Color CHART_BACKGROUND;
   final private Color CHART_RECT;
   final private Color CHART_LINE;
@@ -46,7 +47,6 @@ public class UITools {
     this.yBase = yBase;
     this.cal = new GregorianCalendar();
     
-    PANEL_BACKGROUND = new Color((int) ctx.get("settings.panel.background.color"));
     CHART_BACKGROUND = new Color((int) ctx.get("settings.chart.background.color"));
     CHART_RECT = new Color((int) ctx.get("settings.chart.rect.color"));
     CHART_LINE = new Color((int) ctx.get("settings.chart.line.color"));
@@ -135,14 +135,17 @@ public class UITools {
   }
   
   public void drawHorizontalGridlines(float gridLines[], MinMaxPair pair) {
-    g.setColor(CHART_LINE);
     for (float gridLine: gridLines) {
       if (gridLine != pair.getMaxValue()) {
         int x1 = CHART_HPADDING + 1;
         int y1 = Utils.transform(gridLine, yBase + chartHeight - CHART_SEPARATOR - 1, yBase, pair.getMinValue(), pair.getMaxValue());
         int x2 = x1 + chartWidth - 1;
         int y2 = y1;
+        g.setColor(CHART_LINE);
         g.drawLine(x1, y1, x2, y2);
+        g.setColor(PANEL_FONT_COLOR);
+        int h = g.getFontMetrics().getHeight();
+        g.drawString(df.format(gridLine), x2 + CHART_HPADDING, y2);
       }
     }
   }
