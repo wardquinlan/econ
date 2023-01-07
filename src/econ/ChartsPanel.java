@@ -135,6 +135,7 @@ public class ChartsPanel extends JPanel {
 
   private void keyLeft() {
     System.out.println("LEFT");
+    System.out.println(panel.getLabel());
   }
   
   private void keyRight() {
