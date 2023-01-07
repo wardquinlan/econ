@@ -5,6 +5,8 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Stroke;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.HashMap;
@@ -13,7 +15,6 @@ import java.util.Map;
 
 import javax.swing.BorderFactory;
 import javax.swing.JPanel;
-import javax.swing.JTabbedPane;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -24,7 +25,7 @@ public class ChartsPanel extends JPanel {
   private Context ctx;
   private Panel panel;
   
-  public ChartsPanel(JTabbedPane tabbedPane, Context ctx, Panel panel) {
+  public ChartsPanel(Context ctx, Panel panel) {
     super();
     this.ctx = ctx;
     this.panel = panel;
@@ -35,7 +36,26 @@ public class ChartsPanel extends JPanel {
     addMouseListener(new MouseAdapter() {
       @Override
       public void mouseClicked(MouseEvent event) {
-        tabbedPane.requestFocus();
+        requestFocus();
+      }
+    });
+    addKeyListener(new KeyAdapter() {
+      @Override
+      public void keyPressed(KeyEvent event) {
+        switch (event.getKeyCode()) {
+        case KeyEvent.VK_LEFT:
+          keyLeft();
+          return;
+        case KeyEvent.VK_RIGHT:
+          keyRight();
+          return;
+        case KeyEvent.VK_HOME:
+          keyHome();
+          return;
+        case KeyEvent.VK_END:
+          keyEnd();
+          return;
+        }
       }
     });
   }
@@ -111,5 +131,21 @@ public class ChartsPanel extends JPanel {
       // advance to the next chart
       yBase += chartHeight;
     }
+  }
+
+  private void keyLeft() {
+    System.out.println("LEFT");
+  }
+  
+  private void keyRight() {
+    System.out.println("RIGHT");
+  }
+   
+  private void keyHome() {
+    System.out.println("HOME");
+  }
+  
+  private void keyEnd() {
+    System.out.println("END");
   }
 }

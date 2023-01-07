@@ -1,5 +1,7 @@
 <context> 
-  <include name="panel1.xml"/>"
+  <include name="panel1.xml"/>
+  <include name="panel2.xml"/>
+  <include name="panel1.xml"/>
     
   <!-- maybe I could do something like this:
   - you can only have 1 grid in a panel.  If present, it is left-aligned
