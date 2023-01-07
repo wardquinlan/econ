@@ -110,8 +110,9 @@ public class UITools {
   
   public int getMaximumStringWidth(float[] gridLines, int max) {
     for (float gridLine: gridLines) {
-      if (g.getFontMetrics().stringWidth(Float.toString(gridLine)) > max) {
-        max = g.getFontMetrics().stringWidth(Float.toString(gridLine));
+      int width = g.getFontMetrics().stringWidth(df.format(gridLine)) + CHART_HPADDING;
+      if (width > max) {
+        max = width;
       }
     }
     return max;
