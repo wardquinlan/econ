@@ -2,6 +2,8 @@ package econ;
 
 import java.awt.BorderLayout;
 import java.awt.Toolkit;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -18,6 +20,13 @@ public class Frame extends JFrame {
     super("Econ");
     UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
     JTabbedPane tabbedPane = new JTabbedPane();
+    tabbedPane.addKeyListener(new KeyAdapter() {
+      @Override
+      public void keyPressed(KeyEvent event) {
+        System.out.println(event.getKeyCode());
+      }
+    });
+    
     for (Panel panel: ctx.getPanels()) {
       DefaultTableModel model = new DefaultTableModel();
       model.addColumn("Date");
