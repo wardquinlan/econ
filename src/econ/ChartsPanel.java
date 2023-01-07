@@ -63,6 +63,7 @@ public class ChartsPanel extends JPanel {
   @Override
   public void paintComponent(Graphics g) {
     super.paintComponent(g);
+    System.out.println("REPAINTING...");
     final Color PANEL_BACKGROUND = new Color((int) ctx.get("settings.panel.background.color"));
     final int CHART_SEPARATOR = (int) ctx.get("settings.chart.separator");
     final int CHART_HPADDING = (int) ctx.get("settings.chart.hpadding");
@@ -136,6 +137,7 @@ public class ChartsPanel extends JPanel {
   private void keyLeft() {
     System.out.println("LEFT");
     System.out.println(panel.getLabel());
+    repaint();
   }
   
   private void keyRight() {
