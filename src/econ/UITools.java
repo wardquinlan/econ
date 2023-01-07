@@ -41,7 +41,7 @@ public class UITools {
   public UITools(Chart chart, JComponent component, TimeSeries timeSeriesCollapsed, Graphics g, Context ctx, int yBase, int gridLineWidth) {
     this.component = component;
     this.timeSeriesCollapsed = timeSeriesCollapsed;
-    this.strokeGridlines = new BasicStroke(1, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 0, new float[] {1}, 0);
+    this.strokeGridlines = new BasicStroke(1, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 0, new float[] {1f, 2f}, 0);
     this.g = g;
     this.yBase = yBase;
     this.cal = new GregorianCalendar();
