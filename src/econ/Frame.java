@@ -36,7 +36,7 @@ public class Frame extends JFrame {
         model.addRow(new Object[] {"2021-10-31", "4.37", "4.25"});
       }
       JTable table = new JTable(model);
-      ChartsPanel chartsPanel = new ChartsPanel(ctx, panel);
+      ChartsPanel chartsPanel = new ChartsPanel(tabbedPane, ctx, panel);
       JPanel containerPanel = new JPanel();
       containerPanel.setLayout(new BorderLayout());
       containerPanel.add(new ButtonPanel(), BorderLayout.NORTH);

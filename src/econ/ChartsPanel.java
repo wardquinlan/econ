@@ -1,22 +1,19 @@
 package econ;
 
-import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.Font;
-import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Stroke;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.swing.BorderFactory;
-import javax.swing.JButton;
 import javax.swing.JPanel;
+import javax.swing.JTabbedPane;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -27,7 +24,7 @@ public class ChartsPanel extends JPanel {
   private Context ctx;
   private Panel panel;
   
-  public ChartsPanel(Context ctx, Panel panel) {
+  public ChartsPanel(JTabbedPane tabbedPane, Context ctx, Panel panel) {
     super();
     this.ctx = ctx;
     this.panel = panel;
@@ -35,6 +32,12 @@ public class ChartsPanel extends JPanel {
     gridPanel.setPreferredSize(new Dimension(200, 200));
     gridPanel.setBorder(BorderFactory.createLineBorder(Color.BLUE));
     setLayout(null);
+    addMouseListener(new MouseAdapter() {
+      @Override
+      public void mouseClicked(MouseEvent event) {
+        tabbedPane.requestFocus();
+      }
+    });
   }
 
   @Override
