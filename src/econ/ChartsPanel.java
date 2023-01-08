@@ -23,10 +23,13 @@ import org.apache.commons.logging.LogFactory;
 public class ChartsPanel extends JPanel {
   private static final long serialVersionUID = 8263376302676172047L;
   private static Log log = LogFactory.getFactory().getInstance(ChartsPanel.class);
-  private Context ctx;
-  private Panel panel;
+  private final Context ctx;
+  private final Panel panel;
   private final Map<Point, Series> mapLegend = new HashMap<>();
   private final int CHART_LEGEND_SIZE;
+  private final Color PANEL_BACKGROUND;
+  private final int CHART_SEPARATOR;
+  private final int CHART_HPADDING;
   
   public ChartsPanel(Context ctx, Panel panel) {
     super();
@@ -62,15 +65,14 @@ public class ChartsPanel extends JPanel {
       }
     });
     CHART_LEGEND_SIZE = (int) ctx.get("settings.chart.legend.size");
+    PANEL_BACKGROUND = new Color((int) ctx.get("settings.panel.background.color"));
+    CHART_SEPARATOR = (int) ctx.get("settings.chart.separator");
+    CHART_HPADDING = (int) ctx.get("settings.chart.hpadding");
   }
 
   @Override
   public void paintComponent(Graphics g) {
     super.paintComponent(g);
-    System.out.println("REPAINTING...");
-    final Color PANEL_BACKGROUND = new Color((int) ctx.get("settings.panel.background.color"));
-    final int CHART_SEPARATOR = (int) ctx.get("settings.chart.separator");
-    final int CHART_HPADDING = (int) ctx.get("settings.chart.hpadding");
     final int chartWidth = getWidth() - 1 - 2 * CHART_HPADDING;
     
     // consolidate all time series into a single list
@@ -91,6 +93,7 @@ public class ChartsPanel extends JPanel {
     // iterate through the charts
     int gridLineStringWidth = 0;
     int yBase = CHART_SEPARATOR;
+    mapLegend.clear();
     for (int i = 0; i < panel.getCharts().size(); i++) {
       // create the UITools instance
       Chart chart = panel.getCharts().get(i);

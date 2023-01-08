@@ -89,7 +89,6 @@ public class UITools {
     g.drawRect(CHART_HPADDING, yBase, chartWidth, chartHeight - CHART_SEPARATOR - 1);
 
     // Draw the legend
-    mapLegend.clear();
     for (int i = chart.getSeries().size() - 1; i >= 0; i--) {
       Series series = chart.getSeries().get(i);
       g.setColor(series.getColor());
