@@ -128,7 +128,7 @@ public class ChartsPanel extends JPanel {
       UITools ut = new UITools(chart, this, timeSeriesCollapsed, g, ctx, yBase, gridLineStringWidth);
       
       // draw the chart background
-      ut.drawChartBackground(chart, mapLegend, i == 0);
+      ut.drawChartBackground(chart, i == 0);
       
       // draw the horizontal gridlines
       ut.drawHorizontalGridlines(mapGridLines.get(i), mapPair.get(i));
@@ -136,6 +136,9 @@ public class ChartsPanel extends JPanel {
       // draw the series themselves
       ((Graphics2D) g).setStroke(strokeOrig);
       ut.drawSeries(chart, mapPair.get(i));
+      
+      // draw the legend
+      ut.drawLegend(chart, mapLegend);
       
       // advance to the next chart
       yBase += chartHeight;
