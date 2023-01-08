@@ -83,6 +83,12 @@ public class UITools {
     g.setColor(CHART_RECT);
     g.drawRect(CHART_HPADDING, yBase, chartWidth, chartHeight - CHART_SEPARATOR - 1);
 
+    for (int i = chart.getSeries().size() - 1; i >= 0; i--) {
+      Series series = chart.getSeries().get(i);
+      g.setColor(series.getColor());
+      g.fillRect(chartWidth - 4 - i * 40, yBase - 4, 20, 20);
+    }
+    
     // Draw the label
     g.setColor(PANEL_FONT_COLOR);
     g.drawString(chart.getLabel(), CHART_HPADDING, yBase - CHART_VPADDING);
