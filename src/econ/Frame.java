@@ -2,7 +2,6 @@ package econ;
 
 import java.awt.BorderLayout;
 import java.awt.Toolkit;
-import java.awt.event.MouseEvent;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
