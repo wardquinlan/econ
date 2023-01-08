@@ -8,6 +8,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
+import javax.swing.ToolTipManager;
 import javax.swing.UIManager;
 import javax.swing.table.DefaultTableModel;
 
@@ -38,6 +39,8 @@ public class Frame extends JFrame {
     }
     setSize(Toolkit.getDefaultToolkit().getScreenSize());
     getContentPane().add(tabbedPane);
+    ToolTipManager.sharedInstance().setInitialDelay((int) ctx.get("settings.tooltips.initialdelay"));
+    ToolTipManager.sharedInstance().setDismissDelay((int) ctx.get("settings.tooltips.dismissdelay"));
     setVisible(true);
   }
 }
