@@ -161,6 +161,6 @@ public class ChartsPanel extends JPanel {
     sb.append("<h2><strong>" + panel.getLabel() + "</strong></h2>");
     sb.append("<p>" + "The rain in spain falls mainly on the plain" + "</p>");
     sb.append("</html>");
-    return sb.toString();
+    return event.getX() < 200 ? sb.toString() : null;
   }
 }

@@ -28,6 +28,7 @@ public class UITools {
   final private int CHART_SEPARATOR;
   final private int CHART_HPADDING;
   final private int CHART_VPADDING;
+  final private int CHART_LEGEND_SIZE;
   final private int DXINCR;
   final private int CHART_GRIDLINES;
   final private int chartWidth;
@@ -58,6 +59,7 @@ public class UITools {
     CHART_VPADDING = (int) ctx.get("settings.chart.vpadding");
     DXINCR = (int) ctx.get("settings.panel.dxincr");
     CHART_GRIDLINES = (int) ctx.get("settings.chart.gridlines");
+    CHART_LEGEND_SIZE = (int) ctx.get("settings.chart.legend.size");
     
     chartWidth = component.getWidth() - 1 - 2 * CHART_HPADDING - gridLineWidth;
     chartHeight = (component.getHeight() - CHART_SEPARATOR) * chart.getSpan() / 100;
@@ -83,10 +85,13 @@ public class UITools {
     g.setColor(CHART_RECT);
     g.drawRect(CHART_HPADDING, yBase, chartWidth, chartHeight - CHART_SEPARATOR - 1);
 
+    // Draw the legend
     for (int i = chart.getSeries().size() - 1; i >= 0; i--) {
       Series series = chart.getSeries().get(i);
       g.setColor(series.getColor());
-      g.fillRect(chartWidth - 4 - i * 40, yBase - 4, 20, 20);
+      int x = chartWidth + CHART_HPADDING - CHART_LEGEND_SIZE - (i * (CHART_LEGEND_SIZE + CHART_HPADDING));
+      int y = yBase - CHART_LEGEND_SIZE - CHART_VPADDING;
+      g.fillRect(x, y, CHART_LEGEND_SIZE, CHART_LEGEND_SIZE);
     }
     
     // Draw the label
