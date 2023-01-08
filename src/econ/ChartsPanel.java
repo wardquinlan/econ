@@ -156,6 +156,11 @@ public class ChartsPanel extends JPanel {
   public String getToolTipText(MouseEvent event) {
     System.out.println(event.getX());
     System.out.println(event.getY());
-    return panel.getLabel();
+    StringBuffer sb = new StringBuffer();
+    sb.append("<html>");
+    sb.append("<h2><strong>" + panel.getLabel() + "</strong></h2>");
+    sb.append("<p>" + "The rain in spain falls mainly on the plain" + "</p>");
+    sb.append("</html>");
+    return sb.toString();
   }
 }
