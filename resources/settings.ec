@@ -11,7 +11,7 @@ settings.panel.font.name = "Courier";
 settings.panel.font.color = DimGray;
 settings.chart.separator = 32;
 settings.chart.hpadding = 6;
-settings.chart.vpadding = 2;
+settings.chart.vpadding = 3;
 settings.tooltips.initialdelay = 200;
 settings.tooltips.dismissdelay = 3600 * 1000;
 

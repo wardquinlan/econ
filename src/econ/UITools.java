@@ -89,11 +89,13 @@ public class UITools {
     g.drawRect(CHART_HPADDING, yBase, chartWidth, chartHeight - CHART_SEPARATOR - 1);
 
     // Draw the legend
-    for (int i = chart.getSeries().size() - 1; i >= 0; i--) {
+    for (int i = 0; i < chart.getSeries().size(); i++) {
       Series series = chart.getSeries().get(i);
       g.setColor(series.getColor());
-      int x = chartWidth + CHART_HPADDING - CHART_LEGEND_SIZE - (i * (CHART_LEGEND_SIZE + CHART_HPADDING));
-      int y = yBase - CHART_LEGEND_SIZE - CHART_VPADDING;
+      int x = CHART_HPADDING + CHART_HPADDING + i * (CHART_LEGEND_SIZE + CHART_HPADDING);
+      int y = yBase + CHART_VPADDING;
+      //int x = chartWidth + CHART_HPADDING - CHART_LEGEND_SIZE - (i * (CHART_LEGEND_SIZE + CHART_HPADDING));
+      //int y = yBase - CHART_LEGEND_SIZE - CHART_VPADDING;
       Point point = new Point(x, y);
       mapLegend.put(point, series);
       g.fillRect(x, y, CHART_LEGEND_SIZE, CHART_LEGEND_SIZE);
