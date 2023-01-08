@@ -151,4 +151,9 @@ public class ChartsPanel extends JPanel {
   private void keyEnd() {
     System.out.println("END");
   }
+
+  @Override
+  public String getToolTipText(MouseEvent event) {
+    return panel.getLabel();
+  }
 }

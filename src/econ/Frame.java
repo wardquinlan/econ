@@ -2,6 +2,7 @@ package econ;
 
 import java.awt.BorderLayout;
 import java.awt.Toolkit;
+import java.awt.event.MouseEvent;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -28,7 +29,13 @@ public class Frame extends JFrame {
       }
       JTable table = new JTable(model);
       ChartsPanel chartsPanel = new ChartsPanel(ctx, panel);
-      JPanel containerPanel = new JPanel();
+      chartsPanel.setToolTipText("");
+      JPanel containerPanel = new JPanel() {
+        @Override
+        public String getToolTipText(MouseEvent event) {
+          return chartsPanel.getToolTipText(event);
+        }
+      };
       containerPanel.setLayout(new BorderLayout());
       containerPanel.add(new ButtonPanel(), BorderLayout.NORTH);
       containerPanel.add(new JScrollPane(table), BorderLayout.WEST);
