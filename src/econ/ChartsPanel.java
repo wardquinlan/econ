@@ -162,13 +162,22 @@ public class ChartsPanel extends JPanel {
   @Override
   public String getToolTipText(MouseEvent event) {
     for (Point point: mapLegend.keySet()) {
-      if (event.getX() >= point.getX() && event.getX() < point.getX() + CHART_LEGEND_SIZE &&
-          event.getY() >= point.getY() && event.getY() < point.getY() + CHART_LEGEND_SIZE) {
-        Series series = mapLegend.get(point);
+      if (event.getX() >= point.getX() && event.getX() <= point.getX() + CHART_LEGEND_SIZE &&
+          event.getY() >= point.getY() && event.getY() <= point.getY() + CHART_LEGEND_SIZE) {
+        TimeSeries timeSeries = mapLegend.get(point).getTimeSeries();
         StringBuffer sb = new StringBuffer();
         sb.append("<html>");
-        sb.append("<h2><strong>" + series.getTimeSeries().getName() + "</strong></h2>");
-        sb.append("<p>" + "The rain in spain falls mainly on the plain" + "</p>");
+        sb.append("<h3><strong>" + timeSeries.getTitle() + "</strong></h3>");
+        sb.append("<p>" + "Id: " + timeSeries.getId() + "</p>");
+        sb.append("<p>" + "Name: " + timeSeries.getName() + "</p>");
+        sb.append("<p>" + "Source Org: " + timeSeries.getSourceOrg() + "</p>");
+        if (timeSeries.getSourceName() != null) {
+          sb.append("<p>" + "Source Name: " + timeSeries.getSourceName() + "</p>");
+        }
+        if (timeSeries.getNotes() != null) {
+          sb.append("<p></p>");
+          sb.append("<p>" + timeSeries.getNotes() + "</p>");
+        }
         sb.append("</html>");
         return sb.toString();
       }
