@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Point;
 import java.awt.Stroke;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
@@ -24,6 +25,8 @@ public class ChartsPanel extends JPanel {
   private static Log log = LogFactory.getFactory().getInstance(ChartsPanel.class);
   private Context ctx;
   private Panel panel;
+  private final Map<Point, Series> mapLegend = new HashMap<>();
+  private final int CHART_LEGEND_SIZE;
   
   public ChartsPanel(Context ctx, Panel panel) {
     super();
@@ -58,6 +61,7 @@ public class ChartsPanel extends JPanel {
         }
       }
     });
+    CHART_LEGEND_SIZE = (int) ctx.get("settings.chart.legend.size");
   }
 
   @Override
@@ -120,7 +124,7 @@ public class ChartsPanel extends JPanel {
       UITools ut = new UITools(chart, this, timeSeriesCollapsed, g, ctx, yBase, gridLineStringWidth);
       
       // draw the chart background
-      ut.drawChartBackground(chart, i == 0);
+      ut.drawChartBackground(chart, mapLegend, i == 0);
       
       // draw the horizontal gridlines
       ut.drawHorizontalGridlines(mapGridLines.get(i), mapPair.get(i));
@@ -154,13 +158,18 @@ public class ChartsPanel extends JPanel {
 
   @Override
   public String getToolTipText(MouseEvent event) {
-    System.out.println(event.getX());
-    System.out.println(event.getY());
-    StringBuffer sb = new StringBuffer();
-    sb.append("<html>");
-    sb.append("<h2><strong>" + panel.getLabel() + "</strong></h2>");
-    sb.append("<p>" + "The rain in spain falls mainly on the plain" + "</p>");
-    sb.append("</html>");
-    return event.getX() < 200 ? sb.toString() : null;
+    for (Point point: mapLegend.keySet()) {
+      if (event.getX() >= point.getX() && event.getX() < point.getX() + CHART_LEGEND_SIZE &&
+          event.getY() >= point.getY() && event.getY() < point.getY() + CHART_LEGEND_SIZE) {
+        Series series = mapLegend.get(point);
+        StringBuffer sb = new StringBuffer();
+        sb.append("<html>");
+        sb.append("<h2><strong>" + series.getTimeSeries().getName() + "</strong></h2>");
+        sb.append("<p>" + "The rain in spain falls mainly on the plain" + "</p>");
+        sb.append("</html>");
+        return sb.toString();
+      }
+    }
+    return null;
   }
 }
