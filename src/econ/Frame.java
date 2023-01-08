@@ -30,12 +30,7 @@ public class Frame extends JFrame {
       JTable table = new JTable(model);
       ChartsPanel chartsPanel = new ChartsPanel(ctx, panel);
       chartsPanel.setToolTipText("");
-      JPanel containerPanel = new JPanel() {
-        @Override
-        public String getToolTipText(MouseEvent event) {
-          return chartsPanel.getToolTipText(event);
-        }
-      };
+      JPanel containerPanel = new JPanel();
       containerPanel.setLayout(new BorderLayout());
       containerPanel.add(new ButtonPanel(), BorderLayout.NORTH);
       containerPanel.add(new JScrollPane(table), BorderLayout.WEST);
