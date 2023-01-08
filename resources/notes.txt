@@ -20,4 +20,8 @@
 - I think I want to read data directly from FRED.  Virtually all updates get data from FRED, through text files.
 - list() should list counts, too
 - may want to create an index on DATESTAMP
--   
+
+  --------------------
+
+  I can probably put things like the DB name, password, and also the FRED account # ... all in settings.ec
+  

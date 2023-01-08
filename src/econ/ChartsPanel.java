@@ -154,6 +154,8 @@ public class ChartsPanel extends JPanel {
 
   @Override
   public String getToolTipText(MouseEvent event) {
+    System.out.println(event.getX());
+    System.out.println(event.getY());
     return panel.getLabel();
   }
 }
