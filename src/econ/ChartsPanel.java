@@ -168,11 +168,11 @@ public class ChartsPanel extends JPanel {
         StringBuffer sb = new StringBuffer();
         sb.append("<html>");
         sb.append("<h3><strong>" + timeSeries.getTitle() + "</strong></h3>");
-        sb.append("<p>" + "Id: " + timeSeries.getId() + "</p>");
-        sb.append("<p>" + "Name: " + timeSeries.getName() + "</p>");
-        sb.append("<p>" + "Source Org: " + timeSeries.getSourceOrg() + "</p>");
+        sb.append("<p><strong>" + "Id:</strong> " + timeSeries.getId() + "</p>");
+        sb.append("<p><strong>" + "Name:</strong> " + timeSeries.getName() + "</p>");
+        sb.append("<p><strong>" + "Source Org:</strong> " + timeSeries.getSourceOrg() + "</p>");
         if (timeSeries.getSourceName() != null) {
-          sb.append("<p>" + "Source Name: " + timeSeries.getSourceName() + "</p>");
+          sb.append("<p><strong>" + "Source Name:</strong> " + timeSeries.getSourceName() + "</p>");
         }
         if (timeSeries.getNotes() != null) {
           sb.append("<p></p>");
