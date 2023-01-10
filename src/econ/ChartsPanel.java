@@ -87,16 +87,14 @@ public class ChartsPanel extends JPanel {
     setBackground(PANEL_BACKGROUND);
     Stroke strokeOrig = ((Graphics2D) g).getStroke();
 
-    // save the calculated pairs and gridlines for later
-    Map<Integer, MinMaxPair> mapPair = new HashMap<>();
-    Map<Integer, float[]> mapGridLines = new HashMap<>();
-    
     // iterate through the charts
     int yBase = CHART_SEPARATOR;
     mapLegend.clear();
     for (int i = 0; i < panel.getCharts().size(); i++) {
-      // create the UITools instance
       Chart chart = panel.getCharts().get(i);
+      
+      // create the UITools instance
+      int chartHeight = (getHeight() - CHART_SEPARATOR) * chart.getSpan() / 100;
       UITools ut = new UITools(chart, this, timeSeriesCollapsed, g, ctx, yBase);
       
       // calculate the minimum and maximum
@@ -105,35 +103,25 @@ public class ChartsPanel extends JPanel {
         TimeSeries timeSeries = Utils.normalize(timeSeriesCollapsed, series.getTimeSeries());
         pair = Utils.calculateMinMax(pair, ctx, timeSeries, timeSeriesCollapsed, chartWidth);
       }
-      mapPair.put(i, pair);
-      log.debug("pair=" + pair);
       
-      // compute the gridlines
+      // calculate the gridlines
       float gridLines[];
       try {
         gridLines = ut.calculateGridlines(pair);
-        mapGridLines.put(i, gridLines);
       } catch(Exception ex) {
-        log.error("dyGridLines overflowed, not displaying chart: " + chart.getLabel());
+        log.error("dyGridLines overflowed, not displaying panel: " + panel.getLabel());
         return;
       }
-    }
-    
-    for (int i = 0; i < panel.getCharts().size(); i++) {
-      // create the UITools instance
-      Chart chart = panel.getCharts().get(i);
-      int chartHeight = (getHeight() - CHART_SEPARATOR) * chart.getSpan() / 100;
-      UITools ut = new UITools(chart, this, timeSeriesCollapsed, g, ctx, yBase);
       
       // draw the chart background
       ut.drawChartBackground(chart, i == 0);
       
       // draw the horizontal gridlines
-      ut.drawHorizontalGridlines(mapGridLines.get(i), mapPair.get(i));
+      ut.drawHorizontalGridlines(gridLines, pair);
       
       // draw the series themselves
       ((Graphics2D) g).setStroke(strokeOrig);
-      ut.drawSeries(chart, mapPair.get(i));
+      ut.drawSeries(chart, pair);
       
       // draw the legend
       ut.drawLegend(chart, mapLegend);
