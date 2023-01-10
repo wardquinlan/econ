@@ -93,9 +93,9 @@ public class ChartsPanel extends JPanel {
     for (int i = 0; i < panel.getCharts().size(); i++) {
       Chart chart = panel.getCharts().get(i);
       
-      // create the UITools instance
+      // create the renderer
       int chartHeight = (getHeight() - CHART_SEPARATOR) * chart.getSpan() / 100;
-      UITools ut = new UITools(chart, this, timeSeriesCollapsed, g, ctx, yBase);
+      ChartRenderer r = new ChartRenderer(chart, this, timeSeriesCollapsed, g, ctx, yBase);
       
       // calculate the minimum and maximum
       MinMaxPair pair = new MinMaxPair();
@@ -107,24 +107,24 @@ public class ChartsPanel extends JPanel {
       // calculate the gridlines
       float gridLines[];
       try {
-        gridLines = ut.calculateGridlines(pair);
+        gridLines = r.calculateGridlines(pair);
       } catch(Exception ex) {
         log.error("dyGridLines overflowed, not displaying panel: " + panel.getLabel());
         return;
       }
       
       // draw the chart background
-      ut.drawChartBackground(chart, i == 0);
+      r.drawChartBackground(chart, i == 0);
       
       // draw the horizontal gridlines
-      ut.drawHorizontalGridlines(gridLines, pair);
+      r.drawHorizontalGridlines(gridLines, pair);
       
       // draw the series themselves
       ((Graphics2D) g).setStroke(strokeOrig);
-      ut.drawSeries(chart, pair);
+      r.drawSeries(chart, pair);
       
       // draw the legend
-      ut.drawLegend(chart, mapLegend);
+      r.drawLegend(chart, mapLegend);
       
       // advance to the next chart
       yBase += chartHeight;

@@ -19,8 +19,8 @@ import javax.swing.JComponent;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-public class UITools {
-  final private static Log log = LogFactory.getFactory().getInstance(UITools.class);
+public class ChartRenderer {
+  final private static Log log = LogFactory.getFactory().getInstance(ChartRenderer.class);
   final private static DecimalFormat df = new DecimalFormat("#.###");
   final private Color CHART_BACKGROUND;
   final private Color CHART_RECT;
@@ -44,7 +44,7 @@ public class UITools {
   final private Calendar cal;
   final private int yBase;
   
-  public UITools(Chart chart, JComponent component, TimeSeries timeSeriesCollapsed, Graphics g, Context ctx, int yBase) {
+  public ChartRenderer(Chart chart, JComponent component, TimeSeries timeSeriesCollapsed, Graphics g, Context ctx, int yBase) {
     this.component = component;
     this.timeSeriesCollapsed = timeSeriesCollapsed;
     this.strokeGridlines = new BasicStroke(1, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 0, new float[] {1f, 2f}, 0);
