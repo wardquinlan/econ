@@ -144,6 +144,19 @@ public class ChartRenderer {
     }
     return gridLines;
   }
+
+  public MinMaxPair calculateMinMax(MinMaxPair pair, Context ctx, TimeSeries timeSeries, TimeSeries timeSeriesCollapsed) {
+    int idxMax = Math.min(chartWidth / DXINCR, timeSeriesCollapsed.size());
+    for (int idx = 0; idx < idxMax; idx++) {
+      if (timeSeries.get(idx).getValue() != null && timeSeries.get(idx).getValue() < pair.getMinValue()) {
+        pair.setMinValue(timeSeries.get(idx).getValue());
+      }
+      if (timeSeries.get(idx).getValue() != null && timeSeries.get(idx).getValue() > pair.getMaxValue()) {
+        pair.setMaxValue(timeSeries.get(idx).getValue());
+      }
+    }
+    return pair;
+  }
   
   public void drawHorizontalGridlines(float gridLines[], MinMaxPair pair) {
     for (float gridLine: gridLines) {

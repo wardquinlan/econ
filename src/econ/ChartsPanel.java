@@ -101,7 +101,7 @@ public class ChartsPanel extends JPanel {
       MinMaxPair pair = new MinMaxPair();
       for (Series series: chart.getSeries()) {
         TimeSeries timeSeries = Utils.normalize(timeSeriesCollapsed, series.getTimeSeries());
-        pair = Utils.calculateMinMax(pair, ctx, timeSeries, timeSeriesCollapsed, chartWidth);
+        pair = r.calculateMinMax(pair, ctx, timeSeries, timeSeriesCollapsed);
       }
       
       // calculate the gridlines
