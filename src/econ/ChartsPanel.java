@@ -92,13 +92,12 @@ public class ChartsPanel extends JPanel {
     Map<Integer, float[]> mapGridLines = new HashMap<>();
     
     // iterate through the charts
-    int gridLineStringWidth = 0;
     int yBase = CHART_SEPARATOR;
     mapLegend.clear();
     for (int i = 0; i < panel.getCharts().size(); i++) {
       // create the UITools instance
       Chart chart = panel.getCharts().get(i);
-      UITools ut = new UITools(chart, this, timeSeriesCollapsed, g, ctx, yBase, 0);
+      UITools ut = new UITools(chart, this, timeSeriesCollapsed, g, ctx, yBase);
       
       // calculate the minimum and maximum
       MinMaxPair pair = new MinMaxPair();
@@ -114,7 +113,6 @@ public class ChartsPanel extends JPanel {
       try {
         gridLines = ut.calculateGridlines(pair);
         mapGridLines.put(i, gridLines);
-        gridLineStringWidth = ut.getMaximumStringWidth(gridLines, gridLineStringWidth);
       } catch(Exception ex) {
         log.error("dyGridLines overflowed, not displaying chart: " + chart.getLabel());
         return;
@@ -125,7 +123,7 @@ public class ChartsPanel extends JPanel {
       // create the UITools instance
       Chart chart = panel.getCharts().get(i);
       int chartHeight = (getHeight() - CHART_SEPARATOR) * chart.getSpan() / 100;
-      UITools ut = new UITools(chart, this, timeSeriesCollapsed, g, ctx, yBase, gridLineStringWidth);
+      UITools ut = new UITools(chart, this, timeSeriesCollapsed, g, ctx, yBase);
       
       // draw the chart background
       ut.drawChartBackground(chart, i == 0);

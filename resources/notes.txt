@@ -25,3 +25,24 @@
 
   I can probably put things like the DB name, password, and also the FRED account # ... all in settings.ec
   
+  There are 2 instances of UIUtils.  The first is used to calculate the width of gridlines, which depends upon minimums / maximums.
+  And then the 2nd one is used to actually do the drawing.  But the minimums / maximums might be slightly different when taking the gridlines into account,
+  which in turn would affect the gridlines.  It is a bit of a catch-22.  It feels a bit clumsy to be honest.
+  
+  In practice I think it will work.  However, as a fall-back, I can always just use settings to create a static gridlines width.  I am tempted to do this.
+  
+  I also note that UITools are on a per-chart basis because they are drawing the gridlines, the chart background, all of that kind of stuff.
+  
+  But idxBase is on a per-panel basis.  So, I don't think UITools should calculate idxBase or anything like that.
+  
+  I suppose the # of data points at END can be determined using:
+  
+  idxBase = Math.max(timeSeriesCollapsed.size() - chartWidth / DXINCR, timeSeriesCollapsed.size());
+  
+  HOME is simply:
+  
+  idxBase = 0;
+  
+  -----------------------
+  
+  
