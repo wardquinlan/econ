@@ -155,7 +155,6 @@ public class ChartRenderer {
         g.setColor(CHART_LINE);
         g.drawLine(x1, y1, x2, y2);
         g.setColor(PANEL_FONT_COLOR);
-        int h = g.getFontMetrics().getHeight();
         g.drawString(df.format(gridLine), x2 + CHART_HPADDING, y2);
       }
     }
@@ -165,7 +164,9 @@ public class ChartRenderer {
     for (Series series: chart.getSeries()) {
       TimeSeries timeSeries = Utils.normalize(timeSeriesCollapsed, series.getTimeSeries());
       g.setColor(series.getColor());
-      for (int idx = 1, x = CHART_HPADDING + DXINCR; idx < timeSeriesCollapsed.size() && x < chartWidth; idx++, x += DXINCR) {
+      int idxMax = Math.min(chartWidth / DXINCR, timeSeriesCollapsed.size());
+      for (int idx = 1; idx < idxMax; idx++) {
+        int x = CHART_HPADDING + idx * DXINCR;
         if (timeSeries.get(idx - 1).getValue() != null) {
           int v1 = Utils.transform(timeSeries.get(idx - 1).getValue(), yBase + chartHeight - CHART_SEPARATOR - 1, yBase, pair.getMinValue(), pair.getMaxValue());
           int v2 = Utils.transform(timeSeries.get(idx).getValue(), yBase + chartHeight - CHART_SEPARATOR - 1, yBase, pair.getMinValue(), pair.getMaxValue());
