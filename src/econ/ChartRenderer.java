@@ -96,7 +96,10 @@ public class ChartRenderer {
     
     // Draw the vertical grid lines
     ((Graphics2D) g).setStroke(strokeGridlines);
-    for (int idx = 1, x = CHART_HPADDING + DXINCR; idx < timeSeriesCollapsed.size() && x < chartWidth; idx++, x += DXINCR) {
+
+    int idxMax = Math.min(chartWidth / DXINCR, timeSeriesCollapsed.size());
+    for (int idx = 1; idx < idxMax; idx++) {
+      int x = CHART_HPADDING + idx * DXINCR;
       cal.setTime(timeSeriesCollapsed.get(idx - 1).getDate());
       int monthPrev = cal.get(Calendar.MONTH);
 
