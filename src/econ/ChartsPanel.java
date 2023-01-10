@@ -74,7 +74,6 @@ public class ChartsPanel extends JPanel {
   @Override
   public void paintComponent(Graphics g) {
     super.paintComponent(g);
-    final int chartWidth = getWidth() - 1 - 2 * CHART_HPADDING;
     
     // consolidate all time series into a single list
     List<TimeSeries> list = Utils.consolidate(panel);
