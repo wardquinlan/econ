@@ -127,15 +127,6 @@ public class UITools {
     }
   }
   
-  public int getMaximumStringWidth(float[] gridLines, int max) {
-    for (float gridLine: gridLines) {
-      int width = g.getFontMetrics().stringWidth(df.format(gridLine)) + CHART_HPADDING;
-      if (width > max) {
-        max = width;
-      }
-    }
-    return max;
-  }
   public float[] calculateGridlines(MinMaxPair pair) throws Exception {
     float gridLines[] = new float[CHART_GRIDLINES];
     float dyGridLines = Utils.findDYGridLines(CHART_GRIDLINES, pair);
