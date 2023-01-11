@@ -150,8 +150,7 @@ public class ChartsPanel extends JPanel {
   
   private void keyEnd() {
     int chartWidth = getWidth() - 1 - 2 * CHART_HPADDING - GRID_LINE_TEXT_WIDTH;
-    //idxBase = Math.max(timeSeriesCollapsed.size() - chartWidth / DXINCR, 0);
-    idxBase = 100;
+    idxBase = Math.max(timeSeriesCollapsed.size() - chartWidth / DXINCR, 0);
     repaint();
   }
 

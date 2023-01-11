@@ -147,7 +147,7 @@ public class ChartRenderer {
   }
 
   public MinMaxPair calculateMinMax(MinMaxPair pair, Context ctx, TimeSeries timeSeries, TimeSeries timeSeriesCollapsed, int idxBase) {
-    int idxMax = Math.min(chartWidth / DXINCR, timeSeriesCollapsed.size());
+    int idxMax = Math.min(idxBase + chartWidth / DXINCR, timeSeriesCollapsed.size());
     for (int idx = idxBase; idx < idxMax; idx++) {
       if (timeSeries.get(idx).getValue() != null && timeSeries.get(idx).getValue() < pair.getMinValue()) {
         pair.setMinValue(timeSeries.get(idx).getValue());
@@ -176,9 +176,9 @@ public class ChartRenderer {
     for (Series series: chart.getSeries()) {
       TimeSeries timeSeries = Utils.normalize(timeSeriesCollapsed, series.getTimeSeries());
       g.setColor(series.getColor());
-      int idxMax = Math.min(chartWidth / DXINCR, timeSeriesCollapsed.size());
+      int idxMax = Math.min(idxBase + chartWidth / DXINCR, timeSeriesCollapsed.size());
       for (int idx = idxBase + 1; idx < idxMax; idx++) {
-        int x = CHART_HPADDING + idx * DXINCR;
+        int x = CHART_HPADDING + (idx - idxBase) * DXINCR;
         if (timeSeries.get(idx - 1).getValue() != null) {
           int v1 = Utils.transform(timeSeries.get(idx - 1).getValue(), yBase + chartHeight - CHART_SEPARATOR - 1, yBase, pair.getMinValue(), pair.getMaxValue());
           int v2 = Utils.transform(timeSeries.get(idx).getValue(), yBase + chartHeight - CHART_SEPARATOR - 1, yBase, pair.getMinValue(), pair.getMaxValue());
