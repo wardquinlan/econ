@@ -29,7 +29,6 @@ public class ChartsPanel extends JPanel {
   private final int CHART_LEGEND_SIZE;
   private final Color PANEL_BACKGROUND;
   private final int CHART_SEPARATOR;
-  private final int CHART_HPADDING;
   
   public ChartsPanel(Context ctx, Panel panel) {
     super();
@@ -68,7 +67,6 @@ public class ChartsPanel extends JPanel {
     CHART_LEGEND_SIZE = (int) ctx.get("settings.chart.legend.size");
     PANEL_BACKGROUND = new Color((int) ctx.get("settings.panel.background.color"));
     CHART_SEPARATOR = (int) ctx.get("settings.chart.separator");
-    CHART_HPADDING = (int) ctx.get("settings.chart.hpadding");
   }
 
   @Override

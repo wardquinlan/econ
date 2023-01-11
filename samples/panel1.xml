@@ -6,7 +6,7 @@
       <series ref="TBILL3" color="Black"/>
     </chart>
     <chart label="My Chart 2" span="30">
-      <series ref="T1" color="Green"/>
+      <series ref="TBOND2" color="Green"/>
     </chart>
   </panel>
 </context>

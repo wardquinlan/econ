@@ -3,7 +3,6 @@ package econ;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Font;
-import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Point;
@@ -11,7 +10,6 @@ import java.awt.Stroke;
 import java.text.DecimalFormat;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
-import java.util.HashMap;
 import java.util.Map;
 
 import javax.swing.JComponent;
@@ -163,16 +161,14 @@ public class ChartRenderer {
   
   public void drawHorizontalGridlines(float gridLines[], MinMaxPair pair) {
     for (float gridLine: gridLines) {
-      if (gridLine != pair.getMaxValue()) {
-        int x1 = CHART_HPADDING + 1;
-        int y1 = Utils.transform(gridLine, yBase + chartHeight - CHART_SEPARATOR - 1, yBase, pair.getMinValue(), pair.getMaxValue());
-        int x2 = x1 + chartWidth - 1;
-        int y2 = y1;
-        g.setColor(CHART_LINE);
-        g.drawLine(x1, y1, x2, y2);
-        g.setColor(PANEL_FONT_COLOR);
-        g.drawString(df.format(gridLine), x2 + CHART_HPADDING, y2);
-      }
+      int x1 = CHART_HPADDING + 1;
+      int y1 = Utils.transform(gridLine, yBase + chartHeight - CHART_SEPARATOR - 1, yBase, pair.getMinValue(), pair.getMaxValue());
+      int x2 = x1 + chartWidth - 1;
+      int y2 = y1;
+      g.setColor(CHART_LINE);
+      g.drawLine(x1, y1, x2, y2);
+      g.setColor(PANEL_FONT_COLOR);
+      g.drawString(df.format(gridLine), x2 + CHART_HPADDING, y2);
     }
   }
   
