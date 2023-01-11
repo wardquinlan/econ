@@ -76,7 +76,7 @@ public class ChartRenderer {
     }
   }
   
-  public void drawChartBackground(Chart chart, boolean withMonthLegend) {
+  public void drawChartBackground(Chart chart, boolean withMonthLegend, int idxBase) {
     Stroke strokeOrig = ((Graphics2D) g).getStroke();
     ((Graphics2D) g).setStroke(strokeOrig);
     
@@ -95,9 +95,9 @@ public class ChartRenderer {
     // Draw the vertical grid lines
     ((Graphics2D) g).setStroke(strokeGridlines);
 
-    int idxMax = Math.min(chartWidth / DXINCR, timeSeriesCollapsed.size());
-    for (int idx = 1; idx < idxMax; idx++) {
-      int x = CHART_HPADDING + idx * DXINCR;
+    int idxMax = Math.min(idxBase + chartWidth / DXINCR, timeSeriesCollapsed.size());
+    for (int idx = idxBase + 1; idx < idxMax; idx++) {
+      int x = CHART_HPADDING + (idx - idxBase) * DXINCR;
       cal.setTime(timeSeriesCollapsed.get(idx - 1).getDate());
       int monthPrev = cal.get(Calendar.MONTH);
 
@@ -146,9 +146,9 @@ public class ChartRenderer {
     return gridLines;
   }
 
-  public MinMaxPair calculateMinMax(MinMaxPair pair, Context ctx, TimeSeries timeSeries, TimeSeries timeSeriesCollapsed) {
+  public MinMaxPair calculateMinMax(MinMaxPair pair, Context ctx, TimeSeries timeSeries, TimeSeries timeSeriesCollapsed, int idxBase) {
     int idxMax = Math.min(chartWidth / DXINCR, timeSeriesCollapsed.size());
-    for (int idx = 0; idx < idxMax; idx++) {
+    for (int idx = idxBase; idx < idxMax; idx++) {
       if (timeSeries.get(idx).getValue() != null && timeSeries.get(idx).getValue() < pair.getMinValue()) {
         pair.setMinValue(timeSeries.get(idx).getValue());
       }
@@ -172,12 +172,12 @@ public class ChartRenderer {
     }
   }
   
-  public void drawSeries(Chart chart, MinMaxPair pair) {
+  public void drawSeries(Chart chart, MinMaxPair pair, int idxBase) {
     for (Series series: chart.getSeries()) {
       TimeSeries timeSeries = Utils.normalize(timeSeriesCollapsed, series.getTimeSeries());
       g.setColor(series.getColor());
       int idxMax = Math.min(chartWidth / DXINCR, timeSeriesCollapsed.size());
-      for (int idx = 1; idx < idxMax; idx++) {
+      for (int idx = idxBase + 1; idx < idxMax; idx++) {
         int x = CHART_HPADDING + idx * DXINCR;
         if (timeSeries.get(idx - 1).getValue() != null) {
           int v1 = Utils.transform(timeSeries.get(idx - 1).getValue(), yBase + chartHeight - CHART_SEPARATOR - 1, yBase, pair.getMinValue(), pair.getMaxValue());

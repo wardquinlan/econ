@@ -106,7 +106,7 @@ public class ChartsPanel extends JPanel {
       MinMaxPair pair = new MinMaxPair();
       for (Series series: chart.getSeries()) {
         TimeSeries timeSeries = Utils.normalize(timeSeriesCollapsed, series.getTimeSeries());
-        pair = r.calculateMinMax(pair, ctx, timeSeries, timeSeriesCollapsed);
+        pair = r.calculateMinMax(pair, ctx, timeSeries, timeSeriesCollapsed, idxBase);
       }
       
       // calculate the gridlines
@@ -119,14 +119,14 @@ public class ChartsPanel extends JPanel {
       }
       
       // draw the chart background
-      r.drawChartBackground(chart, i == 0);
+      r.drawChartBackground(chart, i == 0, idxBase);
       
       // draw the horizontal gridlines
       r.drawHorizontalGridlines(gridLines, pair);
       
       // draw the series themselves
       ((Graphics2D) g).setStroke(strokeOrig);
-      r.drawSeries(chart, pair);
+      r.drawSeries(chart, pair, idxBase);
       
       // draw the legend
       r.drawLegend(chart, mapLegend);
@@ -137,25 +137,21 @@ public class ChartsPanel extends JPanel {
   }
 
   private void keyLeft() {
-    System.out.println("LEFT");
-    System.out.println(panel.getLabel());
     repaint();
   }
   
   private void keyRight() {
-    System.out.println("RIGHT");
   }
    
   private void keyHome() {
-    System.out.println("HOME");
     idxBase = 0;
     repaint();
   }
   
   private void keyEnd() {
-    System.out.println("END");
     int chartWidth = getWidth() - 1 - 2 * CHART_HPADDING - GRID_LINE_TEXT_WIDTH;
-    idxBase = Math.max(timeSeriesCollapsed.size() - chartWidth / DXINCR, timeSeriesCollapsed.size());
+    //idxBase = Math.max(timeSeriesCollapsed.size() - chartWidth / DXINCR, 0);
+    idxBase = 100;
     repaint();
   }
 
