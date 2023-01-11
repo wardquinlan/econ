@@ -141,6 +141,10 @@ public class ChartsPanel extends JPanel {
   }
   
   private void keyRight() {
+    int chartWidth = getWidth() - 1 - 2 * CHART_HPADDING - GRID_LINE_TEXT_WIDTH;
+    int idxIncr = (chartWidth / DXINCR) / 8;
+    idxBase = Math.min(idxBase + idxIncr, timeSeriesCollapsed.size() - 1);
+    repaint();
   }
    
   private void keyHome() {
