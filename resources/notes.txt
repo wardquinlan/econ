@@ -45,4 +45,47 @@
   
   -----------------------
   
-  
+- .econ.ec can print out something like:
+
+  type 'help();' for a list of commands
+  type 'help("list");' for help on a specific command 
+
+- help() will now take an optional argument for detailed help
+
+- connect("hostname", "database", "username", "password");
+
+=> I can either return a CONNECTION object, and then later write a "close(CONNECTION);" function.
+=> Or I can just throw an exception if you try to connect a second time
+=> Just allocated the DAO instance inside the connect() method.  Then test for it inside the getInstance() method.
+=> And forgo the close.  That is probably the easiest.
+
+- will also introduce functions:
+
+- collapse(TimeSeries series[, TimeSeries series...])
+
+- normalize()
+
+- size(Series);
+
+=> Big Question: Should we import data RIGHT INTO MEMORY?  And then call:
+
+> TBOND2 = import("FRED", "DGS2" ...);
+> export(TBOND2, 2, "TBOND2", ...);
+
+Know what I mean?  You could even argue the same for Quote data like this:
+
+> CPI = import("TEMPLATE", "/home/ward/c/quote/template/ng.txt", "CPI");
+> setSeriesNotes(CPI, "...");
+> setSeriesSomething(CPI, "...");
+> export(CPI, 253, "CPI", ...);
+
+I'd also like to be able to plot directly, like this:
+
+> SOYBEANS = import("FRED", ...);
+> plot(SOYBEANS); --> uses a default panel, with a single default chart, with default values
+
+=> But you get into things like how to list "parts" of the symbol table, in this case the series.
+=> I am not sure how that is going to work.
+
+
+    
