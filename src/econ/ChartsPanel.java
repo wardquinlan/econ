@@ -29,6 +29,11 @@ public class ChartsPanel extends JPanel {
   private final int CHART_LEGEND_SIZE;
   private final Color PANEL_BACKGROUND;
   private final int CHART_SEPARATOR;
+  private final int DXINCR;
+  private final int CHART_HPADDING;
+  private final int GRID_LINE_TEXT_WIDTH;
+  private final TimeSeries timeSeriesCollapsed;
+  private int idxBase = 0;
   
   public ChartsPanel(Context ctx, Panel panel) {
     super();
@@ -67,18 +72,21 @@ public class ChartsPanel extends JPanel {
     CHART_LEGEND_SIZE = (int) ctx.get("settings.chart.legend.size");
     PANEL_BACKGROUND = new Color((int) ctx.get("settings.panel.background.color"));
     CHART_SEPARATOR = (int) ctx.get("settings.chart.separator");
+    DXINCR = (int) ctx.get("settings.panel.dxincr");
+    CHART_HPADDING = (int) ctx.get("settings.chart.hpadding");
+    GRID_LINE_TEXT_WIDTH = (int) ctx.get("settings.panel.gridlinetextwidth");
+
+    // consolidate all time series into a single list
+    List<TimeSeries> list = Utils.consolidate(panel);
+    
+    // collapse all time series into a single, consolidated time series
+    timeSeriesCollapsed = Utils.collapse(list);
+    log.debug("collapsed series=" + timeSeriesCollapsed.toStringVerbose());
   }
 
   @Override
   public void paintComponent(Graphics g) {
     super.paintComponent(g);
-    
-    // consolidate all time series into a single list
-    List<TimeSeries> list = Utils.consolidate(panel);
-    
-    // collapse all time series into a single, consolidated time series
-    TimeSeries timeSeriesCollapsed = Utils.collapse(list);
-    log.debug("collapsed series=" + timeSeriesCollapsed.toStringVerbose());
     
     // set up the background panel and save the stroke
     setBackground(PANEL_BACKGROUND);
@@ -140,10 +148,15 @@ public class ChartsPanel extends JPanel {
    
   private void keyHome() {
     System.out.println("HOME");
+    idxBase = 0;
+    repaint();
   }
   
   private void keyEnd() {
     System.out.println("END");
+    int chartWidth = getWidth() - 1 - 2 * CHART_HPADDING - GRID_LINE_TEXT_WIDTH;
+    idxBase = Math.max(timeSeriesCollapsed.size() - chartWidth / DXINCR, timeSeriesCollapsed.size());
+    repaint();
   }
 
   @Override
