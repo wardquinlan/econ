@@ -33,7 +33,8 @@ public class ChartsPanel extends JPanel {
   private final int CHART_HPADDING;
   private final int GRID_LINE_TEXT_WIDTH;
   private final TimeSeries timeSeriesCollapsed;
-  private int idxBase = 0;
+  private int idxBase;
+  private boolean firstInvokation = true;
   
   public ChartsPanel(Context ctx, Panel panel) {
     super();
@@ -87,6 +88,13 @@ public class ChartsPanel extends JPanel {
   @Override
   public void paintComponent(Graphics g) {
     super.paintComponent(g);
+
+    // go to end on first invokation
+    if (firstInvokation) {
+      firstInvokation = false;
+      int chartWidth = getWidth() - 1 - 2 * CHART_HPADDING - GRID_LINE_TEXT_WIDTH;
+      idxBase = Math.max(timeSeriesCollapsed.size() - chartWidth / DXINCR, 0);    
+    }
     
     // set up the background panel and save the stroke
     setBackground(PANEL_BACKGROUND);
