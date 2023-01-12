@@ -199,4 +199,22 @@ public class Utils {
     
     return timeSeries;
   }
+
+  public static String getToolTipText(TimeSeries timeSeries) {
+    StringBuffer sb = new StringBuffer();
+    sb.append("<html>");
+    sb.append("<h3><strong>" + timeSeries.getTitle() + "</strong></h3>");
+    sb.append("<p><strong>" + "Id:</strong> " + timeSeries.getId() + "</p>");
+    sb.append("<p><strong>" + "Name:</strong> " + timeSeries.getName() + "</p>");
+    sb.append("<p><strong>" + "Source Org:</strong> " + timeSeries.getSourceOrg() + "</p>");
+    if (timeSeries.getSourceName() != null) {
+      sb.append("<p><strong>" + "Source Name:</strong> " + timeSeries.getSourceName() + "</p>");
+    }
+    if (timeSeries.getNotes() != null) {
+      sb.append("<p></p>");
+      sb.append("<p>" + timeSeries.getNotes() + "</p>");
+    }
+    sb.append("</html>");
+    return sb.toString();
+  }
 }
