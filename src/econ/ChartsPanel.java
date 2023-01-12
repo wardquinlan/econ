@@ -137,6 +137,9 @@ public class ChartsPanel extends JPanel {
   }
 
   private void keyLeft() {
+    int chartWidth = getWidth() - 1 - 2 * CHART_HPADDING - GRID_LINE_TEXT_WIDTH;
+    int idxIncr = (chartWidth / DXINCR) / 8;
+    idxBase = Math.max(idxBase - idxIncr, 0);
     repaint();
   }
   
