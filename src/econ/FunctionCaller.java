@@ -39,7 +39,15 @@ public class FunctionCaller {
   
   public Object invokeFunction(String funcName, Map<String, Symbol> symbolTable, File file, List<Object> params) throws Exception {
     if (funcName.equals("help")) {
-      return 0;
+      if (params.size() == 1) {
+        
+      } else {
+        for (String name: commandMap.keySet()) {
+          Command command = commandMap.get(name);
+          System.out.println(command.getSummary());
+        }
+        return 0;
+      }
     }
     return commandMap.get(funcName).run(symbolTable, file, params);
   }
