@@ -10,72 +10,38 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.TreeMap;
 
 import javax.swing.JFrame;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import econ.command.Command;
+import econ.command.ExitCommand;
+import econ.command.PrintCommand;
+
 public class FunctionCaller {
   private static Log log = LogFactory.getFactory().getInstance(FunctionCaller.class);
-  private HelpTextTool htTool = new HelpTextTool();
+  private Map<String, Command> commandMap = new TreeMap<>();
 
   static final int TIME_SERIES_COL_WIDTHS[] = {5, 20, 30, 12, 30};
   static final int TIME_SERIES_DATA_COL_WIDTHS[] = {5, 10, 10};
 
-  public static boolean isFunction(String funcName) {
-    return funcName.equals("create")     ||
-           funcName.equals("delete")     ||
-           funcName.equals("exit")       ||
-           funcName.equals("getNotes")   ||
-           funcName.equals("help")       ||
-           funcName.equals("import")     ||
-           funcName.equals("insert")     ||
-           funcName.equals("list")       ||
-           funcName.equals("listFonts")  ||
-           funcName.equals("load")       ||
-           funcName.equals("notes")      ||
-           funcName.equals("plot")       ||
-           funcName.equals("print")      ||
-           funcName.equals("printData");
+  public FunctionCaller() {
+    commandMap.put("exit", new ExitCommand());
+    commandMap.put("print", new PrintCommand());
   }
   
-  public Object invokeFunction(String funcName, Map<String, Symbol> symbolTable, List<Object> params) throws Exception {
-    Utils.ASSERT(params.size() >= 1, "params.size() == 0");
-    Utils.ASSERT(params.get(params.size() - 1) instanceof File, "params last element is not a File");
-    File file = (File) params.remove(params.size() - 1);
-    switch(funcName) {
-      case "create":
-        return create(params);
-      case "delete":
-        return delete(symbolTable, params);
-      case "exit":
-        return exit(params);
-      case "getNotes":
-        return getNotes(params);
-      case "help":
-        return help(params);
-      case "import":
-        return importData(symbolTable, params);
-      case "insert":
-        return insert(params);
-      case "list":
-        return list(params);
-      case "listFonts":
-        return listFonts(params);
-      case "load":
-        return load(params);
-      case "notes":
-        return notes(params);
-      case "plot":
-        return plot(symbolTable, file, params);
-      case "print":
-        return print(params);
-      case "printData":
-        return printData(params);
-      default:
-        throw new Exception("unknown function: " + funcName);
+  public boolean isFunction(String funcName) {
+    return commandMap.keySet().contains(funcName);
+  }
+  
+  public Object invokeFunction(String funcName, Map<String, Symbol> symbolTable, File file, List<Object> params) throws Exception {
+    if (funcName.equals("help")) {
+      return 0;
     }
+    return commandMap.get(funcName).run(symbolTable, file, params);
   }
   
   private Object plot(Map<String, Symbol> symbolTable, File file, List<Object> params) throws Exception {
@@ -116,11 +82,6 @@ public class FunctionCaller {
       Lock.instance().wait();
     }
     
-    return 0;
-  }
-  
-  private Object help(List<Object> params) throws Exception {
-    htTool.showHelp(params);
     return 0;
   }
   

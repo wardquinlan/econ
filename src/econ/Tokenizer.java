@@ -17,6 +17,7 @@ public class Tokenizer {
   private int level;
   private String basename;
   private LookAheadReader rdr;
+  private FunctionCaller functionCaller = new FunctionCaller();
   private static final int MAX_LEVEL = 8;
   
   public Tokenizer(InputStream inputStream) throws Exception {
@@ -63,7 +64,7 @@ public class Tokenizer {
             tk = new Token(Token.INC);
           } else if (sb.toString().equals("const")) {
             tk = new Token(Token.CONST);
-          } else if (FunctionCaller.isFunction(sb.toString())) {
+          } else if (functionCaller.isFunction(sb.toString())) {
             tk = new Token(Token.FUNC);
             tk.setFile(file); // set the file so that the XML parser is able to calculate the relative path
           } else {
