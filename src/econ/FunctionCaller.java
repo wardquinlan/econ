@@ -207,46 +207,6 @@ public class FunctionCaller {
     return timeSeries;
   }
 
-  private Object print(List<Object> params) throws Exception {
-    if (params.size() > 1) {
-      throw new Exception("too many arguments");
-    }
-    
-    if (params.size() == 0) {
-      System.out.println();
-      return 0;
-    } else {
-      System.out.println(params.get(0).toString());
-      return params.get(0);
-    }
-  }
-  
-  private Object listFonts(List<Object> params) throws Exception {
-    if (params.size() != 0) {
-      throw new Exception("too many arguments");
-    }
-    
-    Font fonts[] = GraphicsEnvironment.getLocalGraphicsEnvironment().getAllFonts();
-    for (Font font: fonts) {
-      System.out.println(font.getFontName());
-    }  
-    return 0;
-  }
-  
-  private Object exit(List<Object> params) throws Exception {
-    if (params.size() > 1) {
-      throw new Exception("too many arguments");
-    }
-    
-    if (params.size() == 0) {
-      System.exit(0);
-    }
-    
-    int value = Integer.parseInt(params.get(0).toString());
-    System.exit(value);
-    return 0;
-  }
-  
   private static String generateFormatString(int colWidths[]) {
     StringBuffer sb = new StringBuffer();
     for (int i = 0; i < colWidths.length; i++) {

@@ -17,17 +17,9 @@ public class HelpTextTool {
     System.out.println("  note: 'settings.confirm' must == 1 for this command to work");
     System.out.println("  returns: 0\n");
     
-    System.out.println("int exit([int code]);");
-    System.out.println("  exits the application with status code 'code', or 0 if 'code' not supplied");
-    System.out.println("  returns: 'code', or 0 if 'code' not supplied\n");
-    
     System.out.println("String getNotes(Series series);");
     System.out.println("  gets notes from 'series' in memory");
     System.out.println("  returns: String, or null if no notes attached to 'series'\n");
-    
-    System.out.println("int help();");
-    System.out.println("  prints this help screen");
-    System.out.println("  returns: 0\n");
     
     System.out.println("int import(String path[, String name]);");
     System.out.println("  imports Quote data from 'path' into the database:");
@@ -44,10 +36,6 @@ public class HelpTextTool {
     System.out.println("  list from the database:");
     System.out.println("  - all series)");
     System.out.println("  - series data associated with 'object' as either an id or a name");
-    System.out.println("  returns: 0\n");
-    
-    System.out.println("int listFonts();");
-    System.out.println("  list all system font names");
     System.out.println("  returns: 0\n");
     
     System.out.println("Series load(Object object);");
