@@ -34,20 +34,27 @@ public class FunctionCaller {
   }
   
   public boolean isFunction(String funcName) {
-    return commandMap.keySet().contains(funcName);
+    return funcName.equals("help") || commandMap.keySet().contains(funcName);
   }
   
   public Object invokeFunction(String funcName, Map<String, Symbol> symbolTable, File file, List<Object> params) throws Exception {
     if (funcName.equals("help")) {
       if (params.size() == 1) {
-        
-      } else {
-        for (String name: commandMap.keySet()) {
-          Command command = commandMap.get(name);
+        Command command = commandMap.get(params.get(0));
+        if (command != null) {
           System.out.println(command.getSummary());
+          System.out.println();
+          for (String detail: command.getDetails()) {
+            System.out.println(detail);
+          }
+          return 0;
         }
-        return 0;
       }
+      for (String name: commandMap.keySet()) {
+        Command command = commandMap.get(name);
+        System.out.println(command.getSummary());
+      }
+      return 0;
     }
     return commandMap.get(funcName).run(symbolTable, file, params);
   }

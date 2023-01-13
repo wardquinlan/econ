@@ -1,6 +1,7 @@
 package econ.command;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -15,9 +16,11 @@ public class ExitCommand extends Command {
     return "int exit([int code]);";
   }
   
-  public String getDetails() {
-    return "  exits the application with status code 'code', or 0 if 'code' not supplied\n" +
-           "  returns: 'code', or 0 if 'code' not supplied";
+  public List<String> getDetails() {
+    List<String> list = new ArrayList<>();
+    list.add("exits the application with status code 'code', or 0 if 'code' not supplied");
+    list.add("returns: 'code', or 0 if 'code' not supplied");
+    return list;
   }
   
   public Object run(Map<String, Symbol> symbolTable, File file, List<Object> params) throws Exception {

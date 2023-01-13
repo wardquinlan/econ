@@ -1,6 +1,7 @@
 package econ.command;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -15,11 +16,13 @@ public class PrintCommand extends Command {
     return "Object print([Object object]);";
   }
   
-  public String getDetails() {
-    return "  prints from memory:\n" +
-           "  - 'object'\n" +
-           "  - an empty line if 'object' not supplied\n" +
-           "  returns: 'object', or 0 if 'object' not supplied";
+  public List<String> getDetails() {
+    List<String> list = new ArrayList<>();
+    list.add("prints from memory:");
+    list.add("  - 'object'");
+    list.add("  - an empty line if 'object' not supplied");
+    list.add("returns: 'object', or 0 if 'object' not supplied");
+    return list;
   }
 
   public Object run(Map<String, Symbol> symbolTable, File file, List<Object> params) throws Exception {
