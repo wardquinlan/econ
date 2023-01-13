@@ -38,10 +38,6 @@ public class HelpTextTool {
     System.out.println("  - series data associated with 'object' as either an id or a name");
     System.out.println("  returns: 0\n");
     
-    System.out.println("Series load(Object object);");
-    System.out.println("  loads a series from the database into memory, using 'object' as either an id or a name");
-    System.out.println("  returns: Series, or null if not found\n");
-    
     System.out.println("int notes(Object object);");
     System.out.println("  prints a series' notes from the database, using 'object' as either an id or a name");
     System.out.println("  returns: 0\n");

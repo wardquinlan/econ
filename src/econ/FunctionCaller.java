@@ -21,6 +21,7 @@ import econ.command.Command;
 import econ.command.ExitCommand;
 import econ.command.HelpCommand;
 import econ.command.ListFontsCommand;
+import econ.command.LoadCommand;
 import econ.command.PrintCommand;
 
 public class FunctionCaller {
@@ -35,6 +36,7 @@ public class FunctionCaller {
     commandMap.put("print", new PrintCommand());
     commandMap.put("lsfonts", new ListFontsCommand());
     commandMap.put("help", new HelpCommand());
+    commandMap.put("load", new LoadCommand());
   }
   
   public boolean isFunction(String funcName) {
