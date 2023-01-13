@@ -253,4 +253,14 @@ public class Utils {
     
     return data.substring(0, colWidths[i] - 3) + "...";
   }
+
+  public static TimeSeries load(Object object) throws Exception {
+    if (object instanceof Integer) {
+      return TimeSeriesDAO.getInstance().loadSeriesById((Integer) object);
+    } else if (object instanceof String) {
+      return TimeSeriesDAO.getInstance().loadSeriesByName((String) object);
+    } else {
+      throw new Exception("unexpected argument: " + object);
+    }
+  }
 }

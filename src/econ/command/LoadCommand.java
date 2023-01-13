@@ -7,6 +7,7 @@ import java.util.Map;
 
 import econ.Symbol;
 import econ.TimeSeriesDAO;
+import econ.Utils;
 
 public class LoadCommand extends Command {
   public LoadCommand() {
@@ -39,13 +40,6 @@ public class LoadCommand extends Command {
     if (params.size() == 0) {
       throw new Exception("missing argument");
     }
-    
-    if (params.get(0) instanceof Integer) {
-      return TimeSeriesDAO.getInstance().loadSeriesById(Integer.parseInt(params.get(0).toString()));
-    } else if (params.get(0) instanceof String) {
-      return TimeSeriesDAO.getInstance().loadSeriesByName(params.get(0).toString());
-    } else {
-      throw new Exception("unexpected argument: " + params.get(0));
-    }
+    return Utils.load(params.get(0));
   }
 }

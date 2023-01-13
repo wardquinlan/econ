@@ -18,6 +18,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import econ.command.Command;
+import econ.command.DataDSCommand;
 import econ.command.ExitCommand;
 import econ.command.HelpCommand;
 import econ.command.ListDSCommand;
@@ -41,6 +42,7 @@ public class FunctionCaller {
     commandMap.put("load", new LoadCommand());
     commandMap.put("plot", new PlotCommand());
     commandMap.put("lsds", new ListDSCommand());
+    commandMap.put("datads", new DataDSCommand());
   }
   
   public boolean isFunction(String funcName) {

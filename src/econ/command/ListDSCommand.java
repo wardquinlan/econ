@@ -19,19 +19,19 @@ public class ListDSCommand extends Command {
 
   @Override
   public String getSummary() {
-    return "int lsds([Object object]);";
+    return "int lsds();";
   }
   
   @Override
   public List<String> getDetails() {
     List<String> list = new ArrayList<>();
-    list.add("lists series from the data store:");
+    list.add("lists series from the data store");
     return list;
   }
   
   @Override
   public String getReturns() {
-    return "";
+    return "0";
   }
   
   @Override
