@@ -84,7 +84,7 @@ public class FunctionCaller {
 
     List<Object> params2 = new ArrayList<>();
     params2.add(params.get(0));
-    TimeSeries timeSeries = (TimeSeries) this.load(params2);
+    TimeSeries timeSeries = (TimeSeries) Utils.load(params2);
     if (timeSeries == null) {
       throw new Exception("time series not found: " + params.get(0));
     }
@@ -118,7 +118,7 @@ public class FunctionCaller {
 
     List<Object> params2 = new ArrayList<>();
     params2.add(params.get(0));
-    TimeSeries timeSeries = (TimeSeries) this.load(params2);
+    TimeSeries timeSeries = (TimeSeries) Utils.load(params2);
     if (timeSeries == null) {
       log.warn("time series not found: " + params.get(0));
       return 0;
@@ -209,7 +209,7 @@ public class FunctionCaller {
       throw new Exception("missing argument");
     }
     
-    TimeSeries timeSeries = (TimeSeries) this.load(params);
+    TimeSeries timeSeries = (TimeSeries) Utils.load(params);
     if (timeSeries == null) {
       throw new Exception("time series not found: " + params.get(0));
     }
@@ -227,65 +227,4 @@ public class FunctionCaller {
     return 0;
   }
   
-  private Object list(List<Object> params) throws Exception {
-    if (params.size() > 1) {
-      throw new Exception("too many arguments");
-    }
-
-    if (params.size() == 1) {
-      TimeSeries timeSeries = (TimeSeries) this.load(params);
-      if (timeSeries == null) {
-        throw new Exception("time series not found: " + params.get(0));
-      }
-
-      System.out.printf(Utils.generateFormatString(TIME_SERIES_COL_WIDTHS) + "\n", "Id", "Name", "Title", "Source Org", "Source Name");
-      System.out.printf(Utils.generateUnderlineString(TIME_SERIES_COL_WIDTHS) + "\n");
-      System.out.printf(Utils.generateFormatString(TIME_SERIES_COL_WIDTHS) + "\n", 
-          timeSeries.getId().toString(), 
-          Utils.generateTruncatedData(TIME_SERIES_COL_WIDTHS, 1, timeSeries.getName()), 
-          Utils.generateTruncatedData(TIME_SERIES_COL_WIDTHS, 2, timeSeries.getTitle()), 
-          Utils.generateTruncatedData(TIME_SERIES_COL_WIDTHS, 3, timeSeries.getSourceOrg()), 
-          Utils.generateTruncatedData(TIME_SERIES_COL_WIDTHS, 4, timeSeries.getSourceName() == null ? "NULL" : timeSeries.getSourceName()));
-      System.out.println();
-      System.out.printf(Utils.generateFormatString(TIME_SERIES_DATA_COL_WIDTHS) + "\n", "Id", "Date", "Value");
-      System.out.printf(Utils.generateUnderlineString(TIME_SERIES_DATA_COL_WIDTHS) + "\n");
-      for (TimeSeriesData timeSeriesData: timeSeries.getTimeSeriesDataList()) {
-        System.out.printf(Utils.generateFormatString(TIME_SERIES_DATA_COL_WIDTHS) + "\n", 
-          timeSeriesData.getId().toString(), 
-          Utils.generateTruncatedData(TIME_SERIES_DATA_COL_WIDTHS, 1, Utils.DATE_FORMAT.format(timeSeriesData.getDate())), 
-          Utils.generateTruncatedData(TIME_SERIES_DATA_COL_WIDTHS, 2, timeSeriesData.getValue().toString())); 
-      }
-    } else {
-      System.out.printf(Utils.generateFormatString(TIME_SERIES_COL_WIDTHS) + "\n", "Id", "Name", "Title", "Source Org", "Source Name");
-      System.out.printf(Utils.generateUnderlineString(TIME_SERIES_COL_WIDTHS) + "\n");
-      List<TimeSeries> list = TimeSeriesDAO.getInstance().listSeries();
-      for (TimeSeries timeSeries: list) {
-        System.out.printf(Utils.generateFormatString(TIME_SERIES_COL_WIDTHS) + "\n", 
-          timeSeries.getId().toString(), 
-          Utils.generateTruncatedData(TIME_SERIES_COL_WIDTHS, 1, timeSeries.getName()), 
-          Utils.generateTruncatedData(TIME_SERIES_COL_WIDTHS, 2, timeSeries.getTitle()), 
-          Utils.generateTruncatedData(TIME_SERIES_COL_WIDTHS, 3, timeSeries.getSourceOrg()), 
-          Utils.generateTruncatedData(TIME_SERIES_COL_WIDTHS, 4, timeSeries.getSourceName() == null ? "NULL" : timeSeries.getSourceName()));
-      }
-    }
-    return 0;
-  }
-  
-  private Object load(List<Object> params) throws Exception {
-    if (params.size() > 1) {
-      throw new Exception("too many arguments");
-    }
-    
-    if (params.size() == 0) {
-      throw new Exception("missing argument");
-    }
-    
-    if (params.get(0) instanceof Integer) {
-      return TimeSeriesDAO.getInstance().loadSeriesById(Integer.parseInt(params.get(0).toString()));
-    } else if (params.get(0) instanceof String) {
-      return TimeSeriesDAO.getInstance().loadSeriesByName(params.get(0).toString());
-    } else {
-      throw new Exception("unexpected argument: " + params.get(0));
-    }
-  }
 }
