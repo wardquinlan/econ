@@ -22,6 +22,7 @@ import econ.command.ExitCommand;
 import econ.command.HelpCommand;
 import econ.command.ListFontsCommand;
 import econ.command.LoadCommand;
+import econ.command.PlotCommand;
 import econ.command.PrintCommand;
 
 public class FunctionCaller {
@@ -37,6 +38,7 @@ public class FunctionCaller {
     commandMap.put("lsfonts", new ListFontsCommand());
     commandMap.put("help", new HelpCommand());
     commandMap.put("load", new LoadCommand());
+    commandMap.put("plot", new PlotCommand());
   }
   
   public boolean isFunction(String funcName) {
@@ -65,47 +67,6 @@ public class FunctionCaller {
       return 0;
     }
     return commandMap.get(funcName).run(symbolTable, file, params);
-  }
-  
-  private Object plot(Map<String, Symbol> symbolTable, File file, List<Object> params) throws Exception {
-    if (params.size() > 1) {
-      throw new Exception("too many arguments");
-    }
-    
-    if (params.size() == 0) {
-      throw new Exception("missing argument");
-    }
-    
-    if (!(params.get(0) instanceof String)) {
-      throw new Exception("argument not a string");
-    }
-    
-    String filename = (String) params.get(0);
-    XMLParser xmlParser;
-    if (Paths.get(filename).isAbsolute()) {
-      xmlParser = new XMLParser(new File(filename), 0, symbolTable);
-    } else {
-      String basename = Paths.get(file.getAbsolutePath()).getParent().toString();
-      xmlParser = new XMLParser(new File(basename + File.separator + filename), 0, symbolTable);
-    }
-    
-    Context ctx = xmlParser.parse();
-    JFrame frame = new Frame(ctx);
-    frame.addWindowListener(new WindowAdapter() {
-      @Override
-      public void windowClosing(WindowEvent e) {
-          log.info("closing");
-          synchronized (Lock.instance()) {
-            Lock.instance().notify();
-          }
-      }
-    });
-
-    synchronized (Lock.instance()) {
-      Lock.instance().wait();
-    }
-    
-    return 0;
   }
   
   private Object insert(List<Object> params) throws Exception {

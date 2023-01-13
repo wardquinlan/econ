@@ -42,10 +42,6 @@ public class HelpTextTool {
     System.out.println("  prints a series' notes from the database, using 'object' as either an id or a name");
     System.out.println("  returns: 0\n");
     
-    System.out.println("int plot(String filename);");
-    System.out.println("  plots series as defined in the context file 'filename'");
-    System.out.println("  returns: 0\n");
-    
     System.out.println("Series printData(Series series);");
     System.out.println("  prints series data for 'series' in memory");
     System.out.println("  returns: 'series'\n");
