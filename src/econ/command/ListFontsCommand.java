@@ -16,15 +16,19 @@ public class ListFontsCommand extends Command {
 
   @Override
   public String getSummary() {
-    return "int lsFonts();";
+    return "int lsfonts();";
   }
   
   @Override
   public List<String> getDetails() {
     List<String> list = new ArrayList<>();
-    list.add("list all system font names");
-    list.add("returns: 0\n");
+    list.add("lists system font names");
     return list;
+  }
+  
+  @Override
+  public String getReturns() {
+    return "0";
   }
   
   @Override

@@ -6,41 +6,33 @@ import java.util.List;
 import java.util.Map;
 
 import econ.Symbol;
+import econ.Utils;
 
-public class ExitCommand extends Command {
-  public ExitCommand() {
-    super("exit");
+public class HelpCommand extends Command {
+  public HelpCommand() {
+    super("help");
   }
   
   @Override
   public String getSummary() {
-    return "int exit([int code]);";
+    return "int help([String command]);";
   }
   
   @Override
   public List<String> getDetails() {
     List<String> list = new ArrayList<>();
-    list.add("exits the application");
+    list.add("prints help for 'command' (if supplied), or prints this screen");
     return list;
   }
   
   @Override
   public String getReturns() {
-    return "exits with exit code 'code', or 0 if 'code' not supplied";
+    return "0";
   }
   
   @Override
   public Object run(Map<String, Symbol> symbolTable, File file, List<Object> params) throws Exception {
-    if (params.size() > 1) {
-      throw new Exception("too many arguments");
-    }
-    
-    if (params.size() == 0) {
-      System.exit(0);
-    }
-    
-    int value = Integer.parseInt(params.get(0).toString());
-    System.exit(value);
+    Utils.ASSERT(false, "run method of help() invoked");
     return 0;
   }
 }

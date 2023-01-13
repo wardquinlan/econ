@@ -19,6 +19,7 @@ import org.apache.commons.logging.LogFactory;
 
 import econ.command.Command;
 import econ.command.ExitCommand;
+import econ.command.HelpCommand;
 import econ.command.ListFontsCommand;
 import econ.command.PrintCommand;
 
@@ -32,7 +33,8 @@ public class FunctionCaller {
   public FunctionCaller() {
     commandMap.put("exit", new ExitCommand());
     commandMap.put("print", new PrintCommand());
-    commandMap.put("lsFonts", new ListFontsCommand());
+    commandMap.put("lsfonts", new ListFontsCommand());
+    commandMap.put("help", new HelpCommand());
   }
   
   public boolean isFunction(String funcName) {
@@ -49,6 +51,8 @@ public class FunctionCaller {
           for (String detail: command.getDetails()) {
             System.out.println(detail);
           }
+          System.out.println();
+          System.out.println("returns: " + command.getReturns());
           return 0;
         }
       }

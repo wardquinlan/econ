@@ -11,6 +11,8 @@ public abstract class Command {
 
   public abstract String getSummary();
   public abstract List<String> getDetails();
+  public abstract String getReturns();
+  
   public abstract Object run(Map<String, Symbol> symbolTable, File file, List<Object> params) throws Exception;
   
   public Command(String name) {

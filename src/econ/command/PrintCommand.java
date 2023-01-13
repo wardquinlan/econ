@@ -23,10 +23,14 @@ public class PrintCommand extends Command {
     list.add("prints from memory:");
     list.add("  - 'object'");
     list.add("  - an empty line if 'object' not supplied");
-    list.add("returns: 'object', or 0 if 'object' not supplied");
     return list;
   }
 
+  @Override
+  public String getReturns() {
+    return "'object', or 0 if 'object' not supplied";
+  }
+  
   @Override
   public Object run(Map<String, Symbol> symbolTable, File file, List<Object> params) throws Exception {
     if (params.size() > 1) {
