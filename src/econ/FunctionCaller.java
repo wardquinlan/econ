@@ -20,6 +20,7 @@ import org.apache.commons.logging.LogFactory;
 import econ.command.Command;
 import econ.command.ExitCommand;
 import econ.command.HelpCommand;
+import econ.command.ListDSCommand;
 import econ.command.ListFontsCommand;
 import econ.command.LoadCommand;
 import econ.command.PlotCommand;
@@ -39,6 +40,7 @@ public class FunctionCaller {
     commandMap.put("help", new HelpCommand());
     commandMap.put("load", new LoadCommand());
     commandMap.put("plot", new PlotCommand());
+    commandMap.put("lsds", new ListDSCommand());
   }
   
   public boolean isFunction(String funcName) {
