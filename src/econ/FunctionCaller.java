@@ -170,42 +170,6 @@ public class FunctionCaller {
     return timeSeries;
   }
 
-  private static String generateFormatString(int colWidths[]) {
-    StringBuffer sb = new StringBuffer();
-    for (int i = 0; i < colWidths.length; i++) {
-      sb.append("%" + colWidths[i] + "s");
-      if (i < colWidths.length - 1) {
-        sb.append(" ");
-      }
-    }
-    return sb.toString();
-  }
-
-  private static String generateUnderlineString(int colWidths[]) {
-    StringBuffer sb = new StringBuffer();
-    for (int i = 0; i < colWidths.length; i++) {
-      for (int j = 0; j < colWidths[i]; j++) {
-        sb.append("-");
-      }
-      if (i < colWidths.length - 1) {
-        sb.append("-");
-      }
-    }
-    return sb.toString();
-  }
-  
-  private static String generateTruncatedData(int colWidths[], int i, String data) {
-    if (data == null) {
-      return data;
-    }
-    
-    if (data.length() <= colWidths[i]) {
-      return data;
-    }
-    
-    return data.substring(0, colWidths[i] - 3) + "...";
-  }
-  
   private Object importData(Map<String, Symbol> symbolTable, List<Object> params) throws Exception {
     System.out.println("TODO: IMPORT DATA");
     Symbol symbol = symbolTable.get("settings.confirm");
@@ -246,14 +210,14 @@ public class FunctionCaller {
       throw new Exception("time series not found: " + params.get(0));
     }
 
-    System.out.printf(generateFormatString(TIME_SERIES_COL_WIDTHS) + "\n", "Id", "Name", "Title", "Source Org", "Source Name");
-    System.out.printf(generateUnderlineString(TIME_SERIES_COL_WIDTHS) + "\n");
-    System.out.printf(generateFormatString(TIME_SERIES_COL_WIDTHS) + "\n", 
+    System.out.printf(Utils.generateFormatString(TIME_SERIES_COL_WIDTHS) + "\n", "Id", "Name", "Title", "Source Org", "Source Name");
+    System.out.printf(Utils.generateUnderlineString(TIME_SERIES_COL_WIDTHS) + "\n");
+    System.out.printf(Utils.generateFormatString(TIME_SERIES_COL_WIDTHS) + "\n", 
         timeSeries.getId().toString(), 
-        generateTruncatedData(TIME_SERIES_COL_WIDTHS, 1, timeSeries.getName()), 
-        generateTruncatedData(TIME_SERIES_COL_WIDTHS, 2, timeSeries.getTitle()), 
-        generateTruncatedData(TIME_SERIES_COL_WIDTHS, 3, timeSeries.getSourceOrg()), 
-        generateTruncatedData(TIME_SERIES_COL_WIDTHS, 4, timeSeries.getSourceName() == null ? "NULL" : timeSeries.getSourceName()));
+        Utils.generateTruncatedData(TIME_SERIES_COL_WIDTHS, 1, timeSeries.getName()), 
+        Utils.generateTruncatedData(TIME_SERIES_COL_WIDTHS, 2, timeSeries.getTitle()), 
+        Utils.generateTruncatedData(TIME_SERIES_COL_WIDTHS, 3, timeSeries.getSourceOrg()), 
+        Utils.generateTruncatedData(TIME_SERIES_COL_WIDTHS, 4, timeSeries.getSourceName() == null ? "NULL" : timeSeries.getSourceName()));
     System.out.println();
     System.out.println(timeSeries.getNotes() == null ? "NULL" : timeSeries.getNotes());
     return 0;
@@ -270,34 +234,34 @@ public class FunctionCaller {
         throw new Exception("time series not found: " + params.get(0));
       }
 
-      System.out.printf(generateFormatString(TIME_SERIES_COL_WIDTHS) + "\n", "Id", "Name", "Title", "Source Org", "Source Name");
-      System.out.printf(generateUnderlineString(TIME_SERIES_COL_WIDTHS) + "\n");
-      System.out.printf(generateFormatString(TIME_SERIES_COL_WIDTHS) + "\n", 
+      System.out.printf(Utils.generateFormatString(TIME_SERIES_COL_WIDTHS) + "\n", "Id", "Name", "Title", "Source Org", "Source Name");
+      System.out.printf(Utils.generateUnderlineString(TIME_SERIES_COL_WIDTHS) + "\n");
+      System.out.printf(Utils.generateFormatString(TIME_SERIES_COL_WIDTHS) + "\n", 
           timeSeries.getId().toString(), 
-          generateTruncatedData(TIME_SERIES_COL_WIDTHS, 1, timeSeries.getName()), 
-          generateTruncatedData(TIME_SERIES_COL_WIDTHS, 2, timeSeries.getTitle()), 
-          generateTruncatedData(TIME_SERIES_COL_WIDTHS, 3, timeSeries.getSourceOrg()), 
-          generateTruncatedData(TIME_SERIES_COL_WIDTHS, 4, timeSeries.getSourceName() == null ? "NULL" : timeSeries.getSourceName()));
+          Utils.generateTruncatedData(TIME_SERIES_COL_WIDTHS, 1, timeSeries.getName()), 
+          Utils.generateTruncatedData(TIME_SERIES_COL_WIDTHS, 2, timeSeries.getTitle()), 
+          Utils.generateTruncatedData(TIME_SERIES_COL_WIDTHS, 3, timeSeries.getSourceOrg()), 
+          Utils.generateTruncatedData(TIME_SERIES_COL_WIDTHS, 4, timeSeries.getSourceName() == null ? "NULL" : timeSeries.getSourceName()));
       System.out.println();
-      System.out.printf(generateFormatString(TIME_SERIES_DATA_COL_WIDTHS) + "\n", "Id", "Date", "Value");
-      System.out.printf(generateUnderlineString(TIME_SERIES_DATA_COL_WIDTHS) + "\n");
+      System.out.printf(Utils.generateFormatString(TIME_SERIES_DATA_COL_WIDTHS) + "\n", "Id", "Date", "Value");
+      System.out.printf(Utils.generateUnderlineString(TIME_SERIES_DATA_COL_WIDTHS) + "\n");
       for (TimeSeriesData timeSeriesData: timeSeries.getTimeSeriesDataList()) {
-        System.out.printf(generateFormatString(TIME_SERIES_DATA_COL_WIDTHS) + "\n", 
+        System.out.printf(Utils.generateFormatString(TIME_SERIES_DATA_COL_WIDTHS) + "\n", 
           timeSeriesData.getId().toString(), 
-          generateTruncatedData(TIME_SERIES_DATA_COL_WIDTHS, 1, Utils.DATE_FORMAT.format(timeSeriesData.getDate())), 
-          generateTruncatedData(TIME_SERIES_DATA_COL_WIDTHS, 2, timeSeriesData.getValue().toString())); 
+          Utils.generateTruncatedData(TIME_SERIES_DATA_COL_WIDTHS, 1, Utils.DATE_FORMAT.format(timeSeriesData.getDate())), 
+          Utils.generateTruncatedData(TIME_SERIES_DATA_COL_WIDTHS, 2, timeSeriesData.getValue().toString())); 
       }
     } else {
-      System.out.printf(generateFormatString(TIME_SERIES_COL_WIDTHS) + "\n", "Id", "Name", "Title", "Source Org", "Source Name");
-      System.out.printf(generateUnderlineString(TIME_SERIES_COL_WIDTHS) + "\n");
+      System.out.printf(Utils.generateFormatString(TIME_SERIES_COL_WIDTHS) + "\n", "Id", "Name", "Title", "Source Org", "Source Name");
+      System.out.printf(Utils.generateUnderlineString(TIME_SERIES_COL_WIDTHS) + "\n");
       List<TimeSeries> list = TimeSeriesDAO.getInstance().listSeries();
       for (TimeSeries timeSeries: list) {
-        System.out.printf(generateFormatString(TIME_SERIES_COL_WIDTHS) + "\n", 
+        System.out.printf(Utils.generateFormatString(TIME_SERIES_COL_WIDTHS) + "\n", 
           timeSeries.getId().toString(), 
-          generateTruncatedData(TIME_SERIES_COL_WIDTHS, 1, timeSeries.getName()), 
-          generateTruncatedData(TIME_SERIES_COL_WIDTHS, 2, timeSeries.getTitle()), 
-          generateTruncatedData(TIME_SERIES_COL_WIDTHS, 3, timeSeries.getSourceOrg()), 
-          generateTruncatedData(TIME_SERIES_COL_WIDTHS, 4, timeSeries.getSourceName() == null ? "NULL" : timeSeries.getSourceName()));
+          Utils.generateTruncatedData(TIME_SERIES_COL_WIDTHS, 1, timeSeries.getName()), 
+          Utils.generateTruncatedData(TIME_SERIES_COL_WIDTHS, 2, timeSeries.getTitle()), 
+          Utils.generateTruncatedData(TIME_SERIES_COL_WIDTHS, 3, timeSeries.getSourceOrg()), 
+          Utils.generateTruncatedData(TIME_SERIES_COL_WIDTHS, 4, timeSeries.getSourceName() == null ? "NULL" : timeSeries.getSourceName()));
       }
     }
     return 0;

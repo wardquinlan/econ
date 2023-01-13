@@ -217,4 +217,40 @@ public class Utils {
     sb.append("</html>");
     return sb.toString();
   }
+  
+  public static String generateFormatString(int colWidths[]) {
+    StringBuffer sb = new StringBuffer();
+    for (int i = 0; i < colWidths.length; i++) {
+      sb.append("%" + colWidths[i] + "s");
+      if (i < colWidths.length - 1) {
+        sb.append(" ");
+      }
+    }
+    return sb.toString();
+  }
+
+  public static String generateUnderlineString(int colWidths[]) {
+    StringBuffer sb = new StringBuffer();
+    for (int i = 0; i < colWidths.length; i++) {
+      for (int j = 0; j < colWidths[i]; j++) {
+        sb.append("-");
+      }
+      if (i < colWidths.length - 1) {
+        sb.append("-");
+      }
+    }
+    return sb.toString();
+  }
+  
+  public static String generateTruncatedData(int colWidths[], int i, String data) {
+    if (data == null) {
+      return data;
+    }
+    
+    if (data.length() <= colWidths[i]) {
+      return data;
+    }
+    
+    return data.substring(0, colWidths[i] - 3) + "...";
+  }
 }
