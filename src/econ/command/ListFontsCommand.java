@@ -1,5 +1,7 @@
 package econ.command;
 
+import java.awt.Font;
+import java.awt.GraphicsEnvironment;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
@@ -7,36 +9,34 @@ import java.util.Map;
 
 import econ.Symbol;
 
-public class ExitCommand extends Command {
-  public ExitCommand() {
-    super("exit");
+public class ListFontsCommand extends Command {
+  public ListFontsCommand() {
+    super("listFonts");
   }
-  
+
   @Override
   public String getSummary() {
-    return "int exit([int code]);";
+    return "int lsFonts();";
   }
   
   @Override
   public List<String> getDetails() {
     List<String> list = new ArrayList<>();
-    list.add("exits the application with status code 'code', or 0 if 'code' not supplied");
-    list.add("returns: 'code', or 0 if 'code' not supplied");
+    list.add("list all system font names");
+    list.add("returns: 0\n");
     return list;
   }
   
   @Override
   public Object run(Map<String, Symbol> symbolTable, File file, List<Object> params) throws Exception {
-    if (params.size() > 1) {
+    if (params.size() != 0) {
       throw new Exception("too many arguments");
     }
     
-    if (params.size() == 0) {
-      System.exit(0);
-    }
-    
-    int value = Integer.parseInt(params.get(0).toString());
-    System.exit(value);
+    Font fonts[] = GraphicsEnvironment.getLocalGraphicsEnvironment().getAllFonts();
+    for (Font font: fonts) {
+      System.out.println(font.getFontName());
+    }  
     return 0;
   }
 }

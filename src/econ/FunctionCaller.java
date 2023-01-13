@@ -19,6 +19,7 @@ import org.apache.commons.logging.LogFactory;
 
 import econ.command.Command;
 import econ.command.ExitCommand;
+import econ.command.ListFontsCommand;
 import econ.command.PrintCommand;
 
 public class FunctionCaller {
@@ -31,6 +32,7 @@ public class FunctionCaller {
   public FunctionCaller() {
     commandMap.put("exit", new ExitCommand());
     commandMap.put("print", new PrintCommand());
+    commandMap.put("lsFonts", new ListFontsCommand());
   }
   
   public boolean isFunction(String funcName) {

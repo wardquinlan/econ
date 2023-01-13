@@ -1,3 +1,6 @@
+help();
+exit(0);
+
 T1 = load("T1");
 T2 = load("T2");
 T3 = load("T3");

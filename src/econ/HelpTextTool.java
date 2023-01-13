@@ -62,12 +62,6 @@ public class HelpTextTool {
     System.out.println("  plots series as defined in the context file 'filename'");
     System.out.println("  returns: 0\n");
     
-    System.out.println("Object print([Object object]);");
-    System.out.println("  prints from memory:");
-    System.out.println("  - 'object'");
-    System.out.println("  - an empty line if 'object' not supplied");
-    System.out.println("  returns: 'object', or 0 if 'object' not supplied\n");
-    
     System.out.println("Series printData(Series series);");
     System.out.println("  prints series data for 'series' in memory");
     System.out.println("  returns: 'series'\n");

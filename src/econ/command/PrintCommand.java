@@ -12,10 +12,12 @@ public class PrintCommand extends Command {
     super("print");
   }
   
+  @Override
   public String getSummary() {
     return "Object print([Object object]);";
   }
   
+  @Override
   public List<String> getDetails() {
     List<String> list = new ArrayList<>();
     list.add("prints from memory:");
@@ -25,6 +27,7 @@ public class PrintCommand extends Command {
     return list;
   }
 
+  @Override
   public Object run(Map<String, Symbol> symbolTable, File file, List<Object> params) throws Exception {
     if (params.size() > 1) {
       throw new Exception("too many arguments");
