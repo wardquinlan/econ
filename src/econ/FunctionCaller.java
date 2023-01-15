@@ -22,7 +22,7 @@ import econ.command.DataCommand;
 import econ.command.ExitCommand;
 import econ.command.HelpCommand;
 import econ.command.LsCommand;
-import econ.command.ListFontsCommand;
+import econ.command.FontsCommand;
 import econ.command.LoadCommand;
 import econ.command.MetaCommand;
 import econ.command.PlotCommand;
@@ -38,7 +38,7 @@ public class FunctionCaller {
   public FunctionCaller() {
     commandMap.put("exit", new ExitCommand());
     commandMap.put("print", new PrintCommand());
-    commandMap.put("lsfonts", new ListFontsCommand());
+    commandMap.put("fonts", new FontsCommand());
     commandMap.put("help", new HelpCommand());
     commandMap.put("load", new LoadCommand());
     commandMap.put("plot", new PlotCommand());

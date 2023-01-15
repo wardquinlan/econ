@@ -9,16 +9,16 @@ import java.util.Map;
 
 import econ.Symbol;
 
-public class ListFontsCommand implements Command {
+public class FontsCommand implements Command {
   @Override
   public String getSummary() {
-    return "int lsfonts();";
+    return "int fonts();";
   }
   
   @Override
   public List<String> getDetails() {
     List<String> list = new ArrayList<>();
-    list.add("lists system font names");
+    list.add("Lists system font names");
     return list;
   }
   

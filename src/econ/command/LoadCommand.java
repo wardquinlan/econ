@@ -18,7 +18,7 @@ public class LoadCommand implements Command {
   @Override
   public List<String> getDetails() {
     List<String> list = new ArrayList<>();
-    list.add("loads a series from the database into memory, using 'object' as either an id or a name");
+    list.add("Loads a series from the database into memory, using 'object' as either an id or a name");
     return list;
   }
 

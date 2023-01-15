@@ -16,7 +16,7 @@ public class PrintCommand implements Command {
   @Override
   public List<String> getDetails() {
     List<String> list = new ArrayList<>();
-    list.add("prints from memory:");
+    list.add("Prints:");
     list.add("  - 'object'");
     list.add("  - an empty line if 'object' not supplied");
     return list;

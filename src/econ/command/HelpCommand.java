@@ -17,7 +17,7 @@ public class HelpCommand implements Command {
   @Override
   public List<String> getDetails() {
     List<String> list = new ArrayList<>();
-    list.add("prints help for 'command' (if supplied), or prints this screen");
+    list.add("Prints help for 'command' (if supplied), or prints this screen");
     return list;
   }
   

@@ -25,7 +25,7 @@ public class PlotCommand implements Command {
   @Override
   public List<String> getDetails() {
     List<String> list = new ArrayList<>();
-    list.add("plots series as defined in the context file 'filename'");
+    list.add("Plots series as defined in the context file 'filename'");
     return list;
   }
   

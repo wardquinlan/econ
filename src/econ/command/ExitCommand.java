@@ -16,13 +16,13 @@ public class ExitCommand implements Command {
   @Override
   public List<String> getDetails() {
     List<String> list = new ArrayList<>();
-    list.add("exits the application");
+    list.add("Exits the application");
     return list;
   }
   
   @Override
   public String getReturns() {
-    return "exits with exit code 'code', or 0 if 'code' not supplied";
+    return "never returns, but process exits with exit code 'code' (or 0 if 'code' not supplied)";
   }
   
   @Override
