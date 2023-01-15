@@ -10,10 +10,10 @@ import econ.TimeSeries;
 import econ.TimeSeriesDAO;
 import econ.Utils;
 
-public class CataCommand implements Command {
+public class CatCommand implements Command {
   @Override
   public String getSummary() {
-    return "int cata()";
+    return "int cat()";
   }
   
   @Override

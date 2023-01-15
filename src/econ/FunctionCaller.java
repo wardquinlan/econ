@@ -17,11 +17,12 @@ import javax.swing.JFrame;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import econ.command.CataCommand;
+import econ.command.CatCommand;
 import econ.command.Command;
 import econ.command.DataCommand;
 import econ.command.ExitCommand;
 import econ.command.HelpCommand;
+import econ.command.ImportCommand;
 import econ.command.LsCommand;
 import econ.command.FontsCommand;
 import econ.command.LoadCommand;
@@ -46,7 +47,8 @@ public class FunctionCaller {
     commandMap.put("ls", new LsCommand());
     commandMap.put("data", new DataCommand());
     commandMap.put("meta", new MetaCommand());
-    commandMap.put("cata", new CataCommand());
+    commandMap.put("cat", new CatCommand());
+    commandMap.put("import", new ImportCommand());
   }
   
   public boolean isFunction(String funcName) {
