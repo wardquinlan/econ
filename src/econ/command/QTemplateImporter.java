@@ -6,8 +6,10 @@ import java.io.FileInputStream;
 import java.io.InputStreamReader;
 import java.nio.file.Paths;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.StringTokenizer;
 
 import econ.Symbol;
@@ -32,6 +34,7 @@ public class QTemplateImporter implements Importer {
     
     String templateFilePath = (String) params.get(0);
     String name = (String) params.get(1);
+    Set<String> duplicateCheckSet = new HashSet<>();
     
     TimeSeries timeSeries = new TimeSeries();
     timeSeries.setSourceId(name);
@@ -85,11 +88,17 @@ public class QTemplateImporter implements Importer {
           continue;
         }
 
+        if (duplicateCheckSet.contains(date)) {
+          log.warn("ignoring duplicate line: " + line);
+          continue;
+        }
+        
         try {
           TimeSeriesData timeSeriesData = new TimeSeriesData();
           timeSeriesData.setDate(Utils.DATE_FORMAT.parse(date));
           timeSeriesData.setValue(Float.parseFloat(value));
           timeSeries.add(timeSeriesData);
+          duplicateCheckSet.add(date);
         } catch(Exception e) {
           log.warn("ignoring invalid line: " + line);
           continue;
