@@ -24,6 +24,7 @@ import econ.command.HelpCommand;
 import econ.command.ListDSCommand;
 import econ.command.ListFontsCommand;
 import econ.command.LoadCommand;
+import econ.command.MetaCommand;
 import econ.command.PlotCommand;
 import econ.command.PrintCommand;
 
@@ -43,6 +44,7 @@ public class FunctionCaller {
     commandMap.put("plot", new PlotCommand());
     commandMap.put("lsds", new ListDSCommand());
     commandMap.put("datads", new DataDSCommand());
+    commandMap.put("meta", new MetaCommand());
   }
   
   public boolean isFunction(String funcName) {
@@ -60,7 +62,7 @@ public class FunctionCaller {
             System.out.println(detail);
           }
           System.out.println();
-          System.out.println("returns: " + command.getReturns());
+          System.out.println("Returns: " + command.getReturns());
           return 0;
         }
       }
