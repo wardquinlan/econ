@@ -11,10 +11,10 @@ import java.util.Map;
 import javax.swing.JFrame;
 
 import econ.Context;
-import econ.Frame;
 import econ.Lock;
 import econ.Symbol;
 import econ.XMLParser;
+import econ.gui.Frame;
 
 public class PlotCommand extends Command {
   public PlotCommand() {

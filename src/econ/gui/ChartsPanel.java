@@ -1,4 +1,4 @@
-package econ;
+package econ.gui;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -19,6 +19,14 @@ import javax.swing.JPanel;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+
+import econ.Chart;
+import econ.Context;
+import econ.MinMaxPair;
+import econ.Panel;
+import econ.Series;
+import econ.TimeSeries;
+import econ.Utils;
 
 public class ChartsPanel extends JPanel {
   private static final long serialVersionUID = 8263376302676172047L;

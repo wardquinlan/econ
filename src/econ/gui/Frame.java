@@ -1,4 +1,4 @@
-package econ;
+package econ.gui;
 
 import java.awt.Toolkit;
 
@@ -6,6 +6,9 @@ import javax.swing.JFrame;
 import javax.swing.JTabbedPane;
 import javax.swing.ToolTipManager;
 import javax.swing.UIManager;
+
+import econ.Context;
+import econ.Panel;
 
 public class Frame extends JFrame {
   private static final long serialVersionUID = 4488715210063650680L;
