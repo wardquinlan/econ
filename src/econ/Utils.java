@@ -263,4 +263,8 @@ public class Utils {
       throw new Exception("unexpected argument: " + object);
     }
   }
+  
+  public static String stringWithNULL(String string) {
+    return (string == null ? "NULL" : string);
+  }
 }

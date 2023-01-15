@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.Map;
 
 import econ.Symbol;
+import econ.TimeSeries;
+import econ.Utils;
 
 public class MetaCommand implements Command {
   @Override
@@ -33,6 +35,32 @@ public class MetaCommand implements Command {
   
   @Override
   public Object run(Map<String, Symbol> symbolTable, File file, List<Object> params) throws Exception {
+    if (params.size() > 1) {
+      throw new Exception("too many arguments");
+    }
+    
+    if (params.size() == 0) {
+      throw new Exception("missing argument");
+    }
+
+    TimeSeries timeSeries;
+    Object object = params.get(0);
+    if (object instanceof TimeSeries) {
+      timeSeries = (TimeSeries) object;
+    } else {
+      timeSeries = Utils.load(params.get(0));
+      if (timeSeries == null) {
+        throw new Exception("time series not found: " + params.get(0));
+      }
+    }
+
+    System.out.println("Id         : " + timeSeries.getId());
+    System.out.println("Name       : " + timeSeries.getName());
+    System.out.println("Title      : " + timeSeries.getTitle());
+    System.out.println("Source Org : " + timeSeries.getSourceOrg());
+    System.out.println("Source Name: " + Utils.stringWithNULL(timeSeries.getSourceName()));
+    System.out.println();
+    System.out.println(Utils.stringWithNULL(timeSeries.getNotes()));
     return 0;
   }
 }
