@@ -10,18 +10,18 @@ import econ.TimeSeries;
 import econ.TimeSeriesDAO;
 import econ.Utils;
 
-public class ListDSCommand implements Command {
+public class LsCommand implements Command {
   private static final int TIME_SERIES_COL_WIDTHS[] = {5, 20, 30, 12, 30};
   
   @Override
   public String getSummary() {
-    return "int lsds();";
+    return "int ls();";
   }
   
   @Override
   public List<String> getDetails() {
     List<String> list = new ArrayList<>();
-    list.add("lists series from the data store");
+    list.add("Lists series from the datastore");
     return list;
   }
   

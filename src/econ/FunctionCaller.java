@@ -21,7 +21,7 @@ import econ.command.Command;
 import econ.command.DataDSCommand;
 import econ.command.ExitCommand;
 import econ.command.HelpCommand;
-import econ.command.ListDSCommand;
+import econ.command.LsCommand;
 import econ.command.ListFontsCommand;
 import econ.command.LoadCommand;
 import econ.command.MetaCommand;
@@ -42,7 +42,7 @@ public class FunctionCaller {
     commandMap.put("help", new HelpCommand());
     commandMap.put("load", new LoadCommand());
     commandMap.put("plot", new PlotCommand());
-    commandMap.put("lsds", new ListDSCommand());
+    commandMap.put("ls", new LsCommand());
     commandMap.put("datads", new DataDSCommand());
     commandMap.put("meta", new MetaCommand());
   }
