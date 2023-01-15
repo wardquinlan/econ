@@ -17,6 +17,7 @@ import javax.swing.JFrame;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import econ.command.CataCommand;
 import econ.command.Command;
 import econ.command.DataCommand;
 import econ.command.ExitCommand;
@@ -45,6 +46,7 @@ public class FunctionCaller {
     commandMap.put("ls", new LsCommand());
     commandMap.put("data", new DataCommand());
     commandMap.put("meta", new MetaCommand());
+    commandMap.put("cata", new CataCommand());
   }
   
   public boolean isFunction(String funcName) {

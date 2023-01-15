@@ -10,16 +10,16 @@ import econ.TimeSeries;
 import econ.TimeSeriesDAO;
 import econ.Utils;
 
-public class LsCommand implements Command {
+public class CataCommand implements Command {
   @Override
   public String getSummary() {
-    return "int ls();";
+    return "int cata()";
   }
   
   @Override
   public List<String> getDetails() {
     List<String> list = new ArrayList<>();
-    list.add("Lists series in the datastore");
+    list.add("Lists series in the catalog");
     return list;
   }
   
@@ -35,7 +35,14 @@ public class LsCommand implements Command {
     }
     System.out.printf(Utils.generateFormatString(TIME_SERIES_COL_WIDTHS) + "\n", "Id", "Name", "Title", "Source", "Source Id");
     System.out.printf(Utils.generateUnderlineString(TIME_SERIES_COL_WIDTHS) + "\n");
-    List<TimeSeries> list = TimeSeriesDAO.getInstance().listSeries();
+    
+    List<TimeSeries> list = new ArrayList<>();
+    for(Object key: symbolTable.keySet()) {
+      Symbol symbol = symbolTable.get(key);
+      if (symbol.getValue() instanceof TimeSeries) {
+        list.add((TimeSeries) symbol.getValue());
+      }
+    }
     for (TimeSeries timeSeries: list) {
       System.out.printf(Utils.generateFormatString(TIME_SERIES_COL_WIDTHS) + "\n", 
         timeSeries.getId().toString(), 

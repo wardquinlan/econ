@@ -11,8 +11,6 @@ import econ.TimeSeriesData;
 import econ.Utils;
 
 public class DataCommand implements Command {
-  private static final int TIME_SERIES_DATA_COL_WIDTHS[] = {5, 10, 10};
-  
   @Override
   public String getSummary() {
     return "int data(Object object);";

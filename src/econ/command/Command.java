@@ -38,6 +38,8 @@ import econ.Symbol;
 
 public interface Command {
   public static Log log = LogFactory.getFactory().getInstance(Command.class);
+  public static final int TIME_SERIES_COL_WIDTHS[] = {5, 20, 30, 12, 30};
+  public static final int TIME_SERIES_DATA_COL_WIDTHS[] = {5, 10, 10};
 
   public abstract String getSummary();
   public abstract List<String> getDetails();
