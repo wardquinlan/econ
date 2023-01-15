@@ -44,8 +44,8 @@ public class TimeSeriesDAO {
       series.setId(resultSet.getInt(1));
       series.setName(resultSet.getString(2));
       series.setTitle(resultSet.getString(3));
-      series.setSourceOrg(resultSet.getString(4));
-      series.setSourceName(resultSet.getString(5));
+      series.setSource(resultSet.getString(4));
+      series.setSourceId(resultSet.getString(5));
       series.setNotes(resultSet.getString(6));
       list.add(series);
     }
@@ -83,8 +83,8 @@ public class TimeSeriesDAO {
     ps.setInt(1, timeSeries.getId());
     ps.setString(2, timeSeries.getName());
     ps.setString(3, timeSeries.getTitle());
-    ps.setString(4, timeSeries.getSourceOrg());
-    ps.setString(5, timeSeries.getSourceName());
+    ps.setString(4, timeSeries.getSource());
+    ps.setString(5, timeSeries.getSourceId());
     ps.executeUpdate();    
   }
   
@@ -100,8 +100,8 @@ public class TimeSeriesDAO {
     series.setId(resultSet.getInt(1));
     series.setName(resultSet.getString(2));
     series.setTitle(resultSet.getString(3));
-    series.setSourceOrg(resultSet.getString(4));
-    series.setSourceName(resultSet.getString(5));
+    series.setSource(resultSet.getString(4));
+    series.setSourceId(resultSet.getString(5));
     series.setNotes(resultSet.getString(6));
     Utils.ASSERT(!resultSet.next(), "resultSet not empty");
     
@@ -130,8 +130,8 @@ public class TimeSeriesDAO {
     series.setId(resultSet.getInt(1));
     series.setName(resultSet.getString(2));
     series.setTitle(resultSet.getString(3));
-    series.setSourceOrg(resultSet.getString(4));
-    series.setSourceName(resultSet.getString(5));
+    series.setSource(resultSet.getString(4));
+    series.setSourceId(resultSet.getString(5));
     series.setNotes(resultSet.getString(6));
     Utils.ASSERT(!resultSet.next(), "resultSet not empty");
     

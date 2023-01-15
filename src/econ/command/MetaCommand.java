@@ -54,11 +54,11 @@ public class MetaCommand implements Command {
       }
     }
 
-    System.out.println("Id         : " + timeSeries.getId());
-    System.out.println("Name       : " + timeSeries.getName());
-    System.out.println("Title      : " + timeSeries.getTitle());
-    System.out.println("Source Org : " + timeSeries.getSourceOrg());
-    System.out.println("Source Name: " + Utils.stringWithNULL(timeSeries.getSourceName()));
+    System.out.println("Id       : " + timeSeries.getId());
+    System.out.println("Name     : " + timeSeries.getName());
+    System.out.println("Title    : " + timeSeries.getTitle());
+    System.out.println("Source   : " + timeSeries.getSource());
+    System.out.println("Source Id: " + Utils.stringWithNULL(timeSeries.getSourceId()));
     System.out.println();
     System.out.println(Utils.stringWithNULL(timeSeries.getNotes()));
     return 0;

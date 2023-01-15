@@ -150,9 +150,9 @@ public class FunctionCaller {
     timeSeries.setId((Integer) params.get(0));
     timeSeries.setName((String) params.get(1));
     timeSeries.setTitle((String) params.get(2));
-    timeSeries.setSourceOrg((String) params.get(3));
+    timeSeries.setSource((String) params.get(3));
     if (params.size() == 5) {
-      timeSeries.setSourceName((String) params.get(4));
+      timeSeries.setSourceId((String) params.get(4));
     }
     TimeSeriesDAO.getInstance().createSeries(timeSeries);
     return 0;
@@ -222,8 +222,8 @@ public class FunctionCaller {
         timeSeries.getId().toString(), 
         Utils.generateTruncatedData(TIME_SERIES_COL_WIDTHS, 1, timeSeries.getName()), 
         Utils.generateTruncatedData(TIME_SERIES_COL_WIDTHS, 2, timeSeries.getTitle()), 
-        Utils.generateTruncatedData(TIME_SERIES_COL_WIDTHS, 3, timeSeries.getSourceOrg()), 
-        Utils.generateTruncatedData(TIME_SERIES_COL_WIDTHS, 4, timeSeries.getSourceName() == null ? "NULL" : timeSeries.getSourceName()));
+        Utils.generateTruncatedData(TIME_SERIES_COL_WIDTHS, 3, timeSeries.getSource()), 
+        Utils.generateTruncatedData(TIME_SERIES_COL_WIDTHS, 4, Utils.stringWithNULL(timeSeries.getSourceId())));
     System.out.println();
     System.out.println(timeSeries.getNotes() == null ? "NULL" : timeSeries.getNotes());
     return 0;

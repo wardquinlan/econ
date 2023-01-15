@@ -6,8 +6,8 @@ public class TimeSeries {
   private Integer id;
   private String name;
   private String title;
-  private String sourceOrg;
-  private String sourceName;
+  private String source;
+  private String sourceId;
   private String notes;
   private ArrayList<TimeSeriesData> timeSeriesDataList = new ArrayList<>();
   
@@ -47,20 +47,20 @@ public class TimeSeries {
     this.title = title;
   }
   
-  public String getSourceOrg() {
-    return sourceOrg;
+  public String getSource() {
+    return source;
   }
   
-  public void setSourceOrg(String sourceOrg) {
-    this.sourceOrg = sourceOrg;
+  public void setSource(String source) {
+    this.source = source;
   }
   
-  public String getSourceName() {
-    return sourceName;
+  public String getSourceId() {
+    return sourceId;
   }
   
-  public void setSourceName(String sourceName) {
-    this.sourceName = sourceName;
+  public void setSourceId(String sourceId) {
+    this.sourceId = sourceId;
   }
   
   public String getNotes() {
@@ -77,7 +77,7 @@ public class TimeSeries {
   
   @Override
   public String toString() {
-    return "[" + id + ", " + name + ", " + title + ", " + sourceOrg + ", " + (sourceName == null ? "NULL" : sourceName) + " (count=" + timeSeriesDataList.size() + ")]"; 
+    return "[" + id + ", " + name + ", " + title + ", " + source + ", " + Utils.stringWithNULL(sourceId) + " (count=" + timeSeriesDataList.size() + ")]"; 
   }
   
   public String toStringVerbose() {
