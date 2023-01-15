@@ -2,11 +2,12 @@ package econ;
 
 import java.util.Date;
 
-public class TimeSeriesData {
+public class TimeSeriesData implements Comparable<TimeSeriesData> {
   private Integer id;
   private Date date;
   private Float value;
   
+  @Override
   public int compareTo(TimeSeriesData timeSeriesData) {
     return date.compareTo(timeSeriesData.getDate());
   }
