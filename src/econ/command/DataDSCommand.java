@@ -10,13 +10,9 @@ import econ.TimeSeries;
 import econ.TimeSeriesData;
 import econ.Utils;
 
-public class DataDSCommand extends Command {
+public class DataDSCommand implements Command {
   private static final int TIME_SERIES_DATA_COL_WIDTHS[] = {5, 10, 10};
   
-  public DataDSCommand() {
-    super("datads");
-  }
-
   @Override
   public String getSummary() {
     return "int datads(Object object);";

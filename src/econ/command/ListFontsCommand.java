@@ -9,11 +9,7 @@ import java.util.Map;
 
 import econ.Symbol;
 
-public class ListFontsCommand extends Command {
-  public ListFontsCommand() {
-    super("listFonts");
-  }
-
+public class ListFontsCommand implements Command {
   @Override
   public String getSummary() {
     return "int lsfonts();";

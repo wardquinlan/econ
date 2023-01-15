@@ -36,9 +36,8 @@ import econ.Symbol;
   
 */
 
-public abstract class Command {
-  protected static Log log = LogFactory.getFactory().getInstance(Command.class);
-  protected String name;
+public interface Command {
+  public static Log log = LogFactory.getFactory().getInstance(Command.class);
 
   public abstract String getSummary();
   public abstract List<String> getDetails();
@@ -46,11 +45,4 @@ public abstract class Command {
   
   public abstract Object run(Map<String, Symbol> symbolTable, File file, List<Object> params) throws Exception;
   
-  public Command(String name) {
-    this.name = name;
-  }
-
-  public String getName() {
-    return name;
-  }
 }

@@ -7,11 +7,7 @@ import java.util.Map;
 
 import econ.Symbol;
 
-public class PrintCommand extends Command {
-  public PrintCommand() {
-    super("print");
-  }
-  
+public class PrintCommand implements Command {
   @Override
   public String getSummary() {
     return "Object print([Object object]);";

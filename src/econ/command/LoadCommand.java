@@ -9,11 +9,7 @@ import econ.Symbol;
 import econ.TimeSeriesDAO;
 import econ.Utils;
 
-public class LoadCommand extends Command {
-  public LoadCommand() {
-    super("load");
-  }
-  
+public class LoadCommand implements Command {
   @Override
   public String getSummary() {
     return "Series load(Object object);";

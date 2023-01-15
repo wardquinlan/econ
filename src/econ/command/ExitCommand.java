@@ -7,11 +7,7 @@ import java.util.Map;
 
 import econ.Symbol;
 
-public class ExitCommand extends Command {
-  public ExitCommand() {
-    super("exit");
-  }
-  
+public class ExitCommand implements Command {
   @Override
   public String getSummary() {
     return "int exit([int code]);";

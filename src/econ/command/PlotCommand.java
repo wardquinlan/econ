@@ -16,11 +16,7 @@ import econ.Symbol;
 import econ.XMLParser;
 import econ.gui.Frame;
 
-public class PlotCommand extends Command {
-  public PlotCommand() {
-    super("plot");
-  }
-
+public class PlotCommand implements Command {
   @Override
   public String getSummary() {
     return "int plot(String filename);";
