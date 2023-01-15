@@ -28,6 +28,21 @@ public class ImportCommand implements Command {
   
   @Override
   public Object run(Map<String, Symbol> symbolTable, File file, List<Object> params) throws Exception {
-    return 0;
+    if (params.size() == 0) {
+      throw new Exception("missing argument(s)");
+    }
+    
+    if (!(params.get(0) instanceof String)) {
+      throw new Exception("argument not a string");
+    }
+    
+    String source = (String) params.remove(0);
+    Importer importer;
+    if (source.equals("QTEMPLATE")) {
+      importer = new QTemplateImporter();
+    } else {
+      throw new Exception("unsupported import source: " + source);
+    }
+    return importer.run(symbolTable, file, params);
   }
 }
