@@ -18,7 +18,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import econ.command.Command;
-import econ.command.DataDSCommand;
+import econ.command.DataCommand;
 import econ.command.ExitCommand;
 import econ.command.HelpCommand;
 import econ.command.LsCommand;
@@ -43,7 +43,7 @@ public class FunctionCaller {
     commandMap.put("load", new LoadCommand());
     commandMap.put("plot", new PlotCommand());
     commandMap.put("ls", new LsCommand());
-    commandMap.put("datads", new DataDSCommand());
+    commandMap.put("data", new DataCommand());
     commandMap.put("meta", new MetaCommand());
   }
   

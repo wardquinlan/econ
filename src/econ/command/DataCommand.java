@@ -10,18 +10,24 @@ import econ.TimeSeries;
 import econ.TimeSeriesData;
 import econ.Utils;
 
-public class DataDSCommand implements Command {
+public class DataCommand implements Command {
   private static final int TIME_SERIES_DATA_COL_WIDTHS[] = {5, 10, 10};
   
   @Override
   public String getSummary() {
-    return "int datads(Object object);";
+    return "int data(Object object);";
   }
   
   @Override
   public List<String> getDetails() {
     List<String> list = new ArrayList<>();
-    list.add("shows series data associated with 'object', with 'object' as either an id or a name");
+    list.add("Shows series data associated with 'object', where 'object' is:");
+    list.add("  - an id");
+    list.add("  - a name");
+    list.add("  - a Series");
+    list.add("");
+    list.add("Note that if 'object' is a series, data() shows series data from the catalog; otherwise, data() shows");
+    list.add("series data from the datastore");
     return list;
   }
   
@@ -40,9 +46,15 @@ public class DataDSCommand implements Command {
       throw new Exception("missing argument");
     }
 
-    TimeSeries timeSeries = Utils.load(params.get(0));
-    if (timeSeries == null) {
-      throw new Exception("time series not found: " + params.get(0));
+    TimeSeries timeSeries;
+    Object object = params.get(0);
+    if (object instanceof TimeSeries) {
+      timeSeries = (TimeSeries) object;
+    } else {
+      timeSeries = Utils.load(params.get(0));
+      if (timeSeries == null) {
+        throw new Exception("time series not found: " + params.get(0));
+      }
     }
 
     System.out.printf(Utils.generateFormatString(TIME_SERIES_DATA_COL_WIDTHS) + "\n", "Id", "Date", "Value");
