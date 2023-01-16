@@ -11,6 +11,8 @@ import econ.TimeSeriesDAO;
 import econ.Utils;
 
 public class CatCommand implements Command {
+  private static final int TIME_SERIES_COL_WIDTHS[] = {20, 5, 20, 30, 12, 30};
+  
   @Override
   public String getSummary() {
     return "int cat()";
@@ -33,22 +35,24 @@ public class CatCommand implements Command {
     if (params.size() > 0) {
       throw new Exception("too many arguments");
     }
-    System.out.printf(Utils.generateFormatString(TIME_SERIES_COL_WIDTHS) + "\n", "Id", "Name", "Title", "Source", "Source Id");
+    System.out.printf(Utils.generateFormatString(TIME_SERIES_COL_WIDTHS) + "\n", "Symbol", "Id", "Name", "Title", "Source", "Source Id");
     System.out.printf(Utils.generateUnderlineString(TIME_SERIES_COL_WIDTHS) + "\n");
     
-    List<TimeSeries> list = new ArrayList<>();
-    for(Object key: symbolTable.keySet()) {
+    List<String> list = new ArrayList<>();
+    for(String key: symbolTable.keySet()) {
       Symbol symbol = symbolTable.get(key);
       if (symbol.getValue() instanceof TimeSeries) {
-        list.add((TimeSeries) symbol.getValue());
+        list.add(key);
       }
     }
-    for (TimeSeries timeSeries: list) {
+    for (String name: list) {
+      TimeSeries timeSeries = (TimeSeries) symbolTable.get(name).getValue();
       System.out.printf(Utils.generateFormatString(TIME_SERIES_COL_WIDTHS) + "\n", 
-        timeSeries.getId().toString(), 
-        Utils.generateTruncatedData(TIME_SERIES_COL_WIDTHS, 1, timeSeries.getName()), 
-        Utils.generateTruncatedData(TIME_SERIES_COL_WIDTHS, 2, timeSeries.getTitle()), 
-        Utils.generateTruncatedData(TIME_SERIES_COL_WIDTHS, 3, timeSeries.getSource()), 
+        name,
+        timeSeries.getId() == null ? "NULL" : timeSeries.getId().toString(),
+        Utils.generateTruncatedData(TIME_SERIES_COL_WIDTHS, 1, Utils.stringWithNULL(timeSeries.getName())), 
+        Utils.generateTruncatedData(TIME_SERIES_COL_WIDTHS, 2, Utils.stringWithNULL(timeSeries.getTitle())), 
+        Utils.generateTruncatedData(TIME_SERIES_COL_WIDTHS, 3, Utils.stringWithNULL(timeSeries.getSource())), 
         Utils.generateTruncatedData(TIME_SERIES_COL_WIDTHS, 4, Utils.stringWithNULL(timeSeries.getSourceId())));
     }
     return 0;

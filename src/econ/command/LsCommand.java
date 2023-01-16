@@ -11,6 +11,8 @@ import econ.TimeSeriesDAO;
 import econ.Utils;
 
 public class LsCommand implements Command {
+  private static final int TIME_SERIES_COL_WIDTHS[] = {5, 20, 30, 12, 30};
+  
   @Override
   public String getSummary() {
     return "int ls();";
