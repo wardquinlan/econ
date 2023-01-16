@@ -5,10 +5,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import econ.Symbol;
 import econ.importers.Importer;
 import econ.importers.QDBImporter;
 import econ.importers.QTemplateImporter;
+import econ.parser.Symbol;
 
 public class ImportCommand implements Command {
   @Override

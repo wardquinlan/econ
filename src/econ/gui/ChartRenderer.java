@@ -19,7 +19,6 @@ import org.apache.commons.logging.LogFactory;
 
 import econ.Chart;
 import econ.Context;
-import econ.MinMaxPair;
 import econ.Series;
 import econ.TimeSeries;
 import econ.Utils;

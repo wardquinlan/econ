@@ -12,6 +12,8 @@ import java.util.Map;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import econ.gui.MinMaxPair;
+
 public class Utils {
   private static Log log = LogFactory.getFactory().getInstance(Utils.class);
   public static final Map<Integer, String> MONTHS = new HashMap<Integer, String>();

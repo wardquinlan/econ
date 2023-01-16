@@ -1,4 +1,4 @@
-package econ;
+package econ.parser;
 
 import java.io.IOException;
 import java.io.InputStream;

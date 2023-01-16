@@ -1,4 +1,4 @@
-package econ;
+package econ.parser;
 
 public class Symbol {
   private boolean constant;

@@ -1,4 +1,4 @@
-package econ;
+package econ.parser;
 
 import java.awt.Font;
 import java.awt.GraphicsEnvironment;
@@ -17,6 +17,9 @@ import javax.swing.JFrame;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import econ.TimeSeries;
+import econ.TimeSeriesDAO;
+import econ.Utils;
 import econ.command.CatCommand;
 import econ.command.Command;
 import econ.command.DataCommand;

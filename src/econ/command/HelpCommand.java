@@ -5,8 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import econ.Symbol;
 import econ.Utils;
+import econ.parser.Symbol;
 
 public class HelpCommand implements Command {
   @Override

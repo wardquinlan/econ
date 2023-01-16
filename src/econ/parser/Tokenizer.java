@@ -1,4 +1,4 @@
-package econ;
+package econ.parser;
 
 import java.io.File;
 import java.io.FileInputStream;

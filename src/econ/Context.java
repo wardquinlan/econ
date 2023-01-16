@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import econ.parser.Symbol;
+
 public class Context {
   private ArrayList<Panel> panels = new ArrayList<>();
   private Map<String, Symbol> symbolTable = new HashMap<>();

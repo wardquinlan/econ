@@ -1,4 +1,4 @@
-package econ;
+package econ.parser;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -8,6 +8,8 @@ import java.util.Map;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+
+import econ.Utils;
 
 public class Parser {
   private static final Log log = LogFactory.getFactory().getInstance(Parser.class);

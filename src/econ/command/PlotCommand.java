@@ -16,11 +16,11 @@ import econ.Context;
 import econ.Lock;
 import econ.Panel;
 import econ.Series;
-import econ.Symbol;
 import econ.TimeSeries;
 import econ.Utils;
 import econ.XMLParser;
 import econ.gui.Frame;
+import econ.parser.Symbol;
 
 public class PlotCommand implements Command {
   @Override

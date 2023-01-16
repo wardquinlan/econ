@@ -5,10 +5,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import econ.Symbol;
 import econ.TimeSeries;
 import econ.TimeSeriesData;
 import econ.Utils;
+import econ.parser.Symbol;
 
 public class DataCommand implements Command {
   private static final int TIME_SERIES_DATA_COL_WIDTHS[] = {5, 10, 10};

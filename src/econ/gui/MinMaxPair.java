@@ -1,4 +1,4 @@
-package econ;
+package econ.gui;
 
 public class MinMaxPair {
   private float minValue = Float.MAX_VALUE;

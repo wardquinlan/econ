@@ -14,6 +14,8 @@ import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
+import econ.parser.Symbol;
+
 public class XMLParser {
   public static final int MAX_LEVEL = 8;
   private File file;

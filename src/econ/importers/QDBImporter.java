@@ -12,10 +12,10 @@ import java.util.Map;
 import java.util.Set;
 import java.util.StringTokenizer;
 
-import econ.Symbol;
 import econ.TimeSeries;
 import econ.TimeSeriesData;
 import econ.Utils;
+import econ.parser.Symbol;
 
 public class QDBImporter implements Importer {
   @Override

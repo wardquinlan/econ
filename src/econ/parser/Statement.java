@@ -1,4 +1,4 @@
-package econ;
+package econ.parser;
 
 import java.util.ArrayList;
 import java.util.List;

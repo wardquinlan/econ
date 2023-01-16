@@ -5,9 +5,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import econ.Symbol;
 import econ.TimeSeriesDAO;
 import econ.Utils;
+import econ.parser.Symbol;
 
 public class LoadCommand implements Command {
   @Override
