@@ -9,3 +9,5 @@
 --createSeries(205, "T4", "T4", "FRED");
 T1 = import("QTEMPLATE", "../../../c/quote/template/ng.txt", "TBOND10");
 cat();
+plot(T1);
+

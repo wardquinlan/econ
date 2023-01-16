@@ -87,5 +87,8 @@ I'd also like to be able to plot directly, like this:
 => But you get into things like how to list "parts" of the symbol table, in this case the series.
 => I am not sure how that is going to work.
 
+---------------------------------------------------------------------------------------------
+
+Need a way to support "conditions" in a series - somehow have to look at series data type
 
     
