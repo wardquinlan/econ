@@ -203,13 +203,11 @@ public class Utils {
   public static String getToolTipText(TimeSeries timeSeries) {
     StringBuffer sb = new StringBuffer();
     sb.append("<html>");
-    sb.append("<h3><strong>" + timeSeries.getTitle() + "</strong></h3>");
-    sb.append("<p><strong>" + "Id:</strong> " + timeSeries.getId() + "</p>");
-    sb.append("<p><strong>" + "Name:</strong> " + timeSeries.getName() + "</p>");
-    sb.append("<p><strong>" + "Source:</strong> " + timeSeries.getSource() + "</p>");
-    if (timeSeries.getSourceId() != null) {
-      sb.append("<p><strong>" + "Source Id:</strong> " + timeSeries.getSourceId() + "</p>");
-    }
+    sb.append("<h3><strong>" + (timeSeries.getTitle() == null ? "NULL" : timeSeries.getTitle()) + "</strong></h3>");
+    sb.append("<p><strong>" + "Id:</strong> " + (timeSeries.getId() == null ? "NULL" : timeSeries.getId()) + "</p>");
+    sb.append("<p><strong>" + "Name:</strong> " + (timeSeries.getName() == null ? "NULL" : timeSeries.getName()) + "</p>");
+    sb.append("<p><strong>" + "Source:</strong> " + (timeSeries.getSource() == null ? "NULL" : timeSeries.getSource()) + "</p>");
+    sb.append("<p><strong>" + "Source Id:</strong> " + (timeSeries.getSourceId() == null ? "NULL" : timeSeries.getSourceId()) + "</p>");
     if (timeSeries.getNotes() != null) {
       sb.append("<p></p>");
       sb.append("<p>" + timeSeries.getNotes() + "</p>");
