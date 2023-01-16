@@ -61,9 +61,9 @@ public class DataCommand implements Command {
     System.out.printf(Utils.generateUnderlineString(TIME_SERIES_DATA_COL_WIDTHS) + "\n");
     for (TimeSeriesData timeSeriesData: timeSeries.getTimeSeriesDataList()) {
       System.out.printf(Utils.generateFormatString(TIME_SERIES_DATA_COL_WIDTHS) + "\n", 
-        timeSeriesData.getId().toString(), 
+        timeSeriesData.getId() == null ? "NULL" : timeSeriesData.getId().toString(), 
         Utils.generateTruncatedData(TIME_SERIES_DATA_COL_WIDTHS, 1, Utils.DATE_FORMAT.format(timeSeriesData.getDate())), 
-        Utils.generateTruncatedData(TIME_SERIES_DATA_COL_WIDTHS, 2, timeSeriesData.getValue().toString())); 
+        Utils.generateTruncatedData(TIME_SERIES_DATA_COL_WIDTHS, 2, Utils.stringWithNULL(timeSeriesData.getValue().toString()))); 
     }
     return 0;
   }

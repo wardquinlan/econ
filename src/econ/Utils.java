@@ -221,7 +221,7 @@ public class Utils {
   public static String generateFormatString(int colWidths[]) {
     StringBuffer sb = new StringBuffer();
     for (int i = 0; i < colWidths.length; i++) {
-      sb.append("%" + colWidths[i] + "s");
+      sb.append("%-" + colWidths[i] + "s");
       if (i < colWidths.length - 1) {
         sb.append(" ");
       }
