@@ -267,4 +267,12 @@ public class Utils {
   public static String stringWithNULL(String string) {
     return (string == null ? "NULL" : string);
   }
+  
+  public static String getFileBaseName(String fileName) {
+    int index = fileName.indexOf('.');
+    if (index >= 0) {
+      return fileName.substring(0, index);
+    }
+    return fileName;
+  }
 }

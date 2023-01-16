@@ -40,6 +40,8 @@ public class ImportCommand implements Command {
     Importer importer;
     if (source.equals("QTEMPLATE")) {
       importer = new QTemplateImporter();
+    } else if (source.equals("QDB")) {
+      importer = new QDBImporter();
     } else {
       throw new Exception("unsupported import source: " + source);
     }

@@ -17,35 +17,36 @@ import econ.TimeSeries;
 import econ.TimeSeriesData;
 import econ.Utils;
 
-public class QTemplateImporter implements Importer {
+public class QDBImporter implements Importer {
   @Override
   public TimeSeries run(Map<String, Symbol> symbolTable, File file, List<Object> params) throws Exception {
-    if (params.size() < 2) {
+    if (params.size() < 1) {
       throw new Exception("missing argument(s)");
     }
     
-    if (params.size() > 2) {
+    if (params.size() > 1) {
       throw new Exception("too many arguments");
     }
     
-    if (!(params.get(0) instanceof String) || !(params.get(1) instanceof String)) {
+    if (!(params.get(0) instanceof String)) {
       throw new Exception("argument not a string");
     }
     
-    String templateFilePath = (String) params.get(0);
-    String name = (String) params.get(1);
+    String dbFilePath = (String) params.get(0);
+    File fileDB = new File(dbFilePath);
     Set<String> duplicateCheckSet = new HashSet<>();
     
+    String fileBase = Utils.getFileBaseName(Paths.get(fileDB.getAbsolutePath()).getFileName().toString()).toUpperCase();
     TimeSeries timeSeries = new TimeSeries();
-    timeSeries.setSource(("QTEMPLATE"));
-    timeSeries.setSourceId(name);
+    timeSeries.setSource(("QDB"));
+    timeSeries.setSourceId(fileBase);
     BufferedReader reader = null;
     try {
-      if (Paths.get(templateFilePath).isAbsolute()) {
-        reader = new BufferedReader(new InputStreamReader(new FileInputStream(templateFilePath)));
+      if (Paths.get(dbFilePath).isAbsolute()) {
+        reader = new BufferedReader(new InputStreamReader(new FileInputStream(dbFilePath)));
       } else {
         String basename = Paths.get(file.getAbsolutePath()).getParent().toString();
-        reader = new BufferedReader(new InputStreamReader(new FileInputStream(basename + File.separator + templateFilePath)));
+        reader = new BufferedReader(new InputStreamReader(new FileInputStream(basename + File.separator + dbFilePath)));
       }
 
       String line;
@@ -65,24 +66,31 @@ public class QTemplateImporter implements Importer {
           log.warn("ignoring incomplete line: " + line);
           continue;
         }
-        // ignore scope
+        st.nextToken();
+
+        if (!st.hasMoreTokens()) {
+          log.warn("ignoring incomplete line: " + line);
+          continue;
+        }
         st.nextToken();
         
         if (!st.hasMoreTokens()) {
           log.warn("ignoring incomplete line: " + line);
           continue;
         }
-        String label = st.nextToken();
-        if (!name.equals(label)) {
-          log.debug("ignoring unmatched label: " + label);
+        st.nextToken();
+
+        if (!st.hasMoreTokens()) {
+          log.warn("ignoring incomplete line: " + line);
           continue;
         }
+        String close = st.nextToken();
         
         if (!st.hasMoreTokens()) {
           log.warn("ignoring incomplete line: " + line);
           continue;
         }
-        String value = st.nextToken();
+        st.nextToken();
         
         if (st.hasMoreTokens()) {
           log.warn("ignoring invalid line: " + line);
@@ -97,7 +105,7 @@ public class QTemplateImporter implements Importer {
         try {
           TimeSeriesData timeSeriesData = new TimeSeriesData();
           timeSeriesData.setDate(Utils.DATE_FORMAT.parse(date));
-          timeSeriesData.setValue(Float.parseFloat(value));
+          timeSeriesData.setValue(Float.parseFloat(close));
           timeSeries.add(timeSeriesData);
           duplicateCheckSet.add(date);
         } catch(Exception e) {
