@@ -5,7 +5,7 @@ settings.panel.font.name = "Courier";
 settings.panel.font.color = DimGray;
 
 settings.chart.background.color = Ivory;
-settings.chart.line.color = LightGray;
+settings.chart.line.color = DimGray;
 settings.chart.rect.color = Red;
 settings.chart.gridlines=12;
 settings.chart.legend.size=14;
