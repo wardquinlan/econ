@@ -1,4 +1,4 @@
-package econ.command;
+package econ.importers;
 
 import java.io.BufferedReader;
 import java.io.File;
