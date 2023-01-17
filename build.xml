@@ -45,7 +45,7 @@
     <copy todir="${output}/${appname}.d">
       <fileset dir="${resources}" includes="*.properties"/>
     </copy>
-  	<copy tofile="${output}/.econ.ec" file="${resources}/econ.ec"/>
+  	<copy tofile="${output}/.econ.ec" file="${output}/../.econ.ec"/>
   	<copy todir="${output}/includes" file="${resources}/settings.ec"/>
   	<copy todir="${output}/includes" file="${resources}/colors.ec"/>
     <chmod file="${output}/econ.sh" perm="755"/>
