@@ -13,5 +13,5 @@ import econ.parser.Symbol;
 public interface Importer {
   public static Log log = LogFactory.getFactory().getInstance(Importer.class);
   
-  public TimeSeries run(Map<String, Symbol> symbolTable, File file, List<Object> params) throws Exception;
+  public TimeSeries run(File file, List<Object> params) throws Exception;
 }

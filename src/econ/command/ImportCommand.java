@@ -48,6 +48,6 @@ public class ImportCommand implements Command {
     } else {
       throw new Exception("unsupported import source: " + source);
     }
-    return importer.run(symbolTable, file, params);
+    return importer.run(file, params);
   }
 }

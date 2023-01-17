@@ -12,21 +12,29 @@ import econ.TimeSeries;
 import econ.parser.Symbol;
 
 public class FREDImporter implements Importer {
+  private final String BASEURL;
+  private final String APIKEY;
+  
+  public FREDImporter(Map<String, Symbol> symbolTable) throws Exception {
+    if (symbolTable.get("importers.fred.baseurl") == null) {
+      throw new Exception("importers.fred.baseurl not defined");
+    }
+    if (symbolTable.get("importers.fred.apikey") == null) {
+      throw new Exception("importers.fred.apikey not defined");
+    }
+    
+    BASEURL = (String) symbolTable.get("importers.fred.baseurl").getValue();
+    APIKEY = (String) symbolTable.get("importers.fred.apikey").getValue();
+  }
+  
   @Override
-  public TimeSeries run(Map<String, Symbol> symbolTable, File file, List<Object> params) throws Exception {
-    String baseURL = (String) symbolTable.get("importers.fred.baseurl").getValue();
-    String apikey = (String) symbolTable.get("importers.fred.apikey").getValue();
+  public TimeSeries run(File file, List<Object> params) throws Exception {
     return null;
   }
 
   private InputStream getInputStream(String relPath, String requestParamKey, String requestParamValue, String units) {
     InputStream stream = null;
-    String baseURL = System.getProperty("datamgr.baseurl");
-    if (baseURL == null) {
-      log.error("datamgr.baseurl not defined");
-      return null;
-    }
-    String url = baseURL + relPath + "?" + requestParamKey + "=" + requestParamValue + "&api_key=" + System.getProperty("datamgr.apikey");
+    String url = BASEURL + relPath + "?" + requestParamKey + "=" + requestParamValue + "&api_key=" + APIKEY;
     if (units != null ) {
       url += "&units=" + units;
     }

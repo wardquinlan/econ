@@ -19,7 +19,7 @@ import econ.parser.Symbol;
 
 public class QTemplateImporter implements Importer {
   @Override
-  public TimeSeries run(Map<String, Symbol> symbolTable, File file, List<Object> params) throws Exception {
+  public TimeSeries run(File file, List<Object> params) throws Exception {
     if (params.size() < 2) {
       throw new Exception("missing argument(s)");
     }

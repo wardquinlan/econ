@@ -19,7 +19,7 @@ import econ.parser.Symbol;
 
 public class QDBImporter implements Importer {
   @Override
-  public TimeSeries run(Map<String, Symbol> symbolTable, File file, List<Object> params) throws Exception {
+  public TimeSeries run(File file, List<Object> params) throws Exception {
     if (params.size() < 1) {
       throw new Exception("missing argument(s)");
     }
