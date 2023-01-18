@@ -5,7 +5,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.text.ParseException;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -70,9 +69,6 @@ public class FREDImporter implements Importer {
 
   private void data(TimeSeries timeSeries, String serId, String units) throws Exception {
     InputStream stream = getInputStream("/series/observations", "series_id", serId, units);
-    if (stream == null) {
-      throw new Exception("cannot open input stream, series might not exist");
-    }
     try {
       DocumentBuilder builder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
       Document doc = builder.parse(stream);
@@ -105,9 +101,10 @@ public class FREDImporter implements Importer {
           timeSeriesData.setDate(d);
           timeSeriesData.setValue(v);
           timeSeries.add(timeSeriesData);
-        } catch(NumberFormatException | ParseException e) {
+        } catch(NumberFormatException e) {
           // don't include missing data
-          log.warn("cannot parse data", e);
+        } catch(ParseException e) {
+          log.warn("cannot parse date", e);
         }
       }
     } finally {
@@ -123,9 +120,6 @@ public class FREDImporter implements Importer {
 
   private void meta(TimeSeries timeSeries, String serId) throws Exception {
     InputStream stream = getInputStream("/series", "series_id", serId, null);
-    if (stream == null) {
-      throw new Exception("cannot open input stream, series might not exist");
-    }
     try {
       DocumentBuilder builder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
       Document doc = builder.parse(stream);
@@ -152,6 +146,8 @@ public class FREDImporter implements Importer {
           throw new Exception("title attribute not found");
         }
         Node notes = map.getNamedItem("notes");
+        // default the name to the node value (but user can change later if needed)
+        timeSeries.setName(id.getNodeValue());
         timeSeries.setSourceId(id.getNodeValue());
         timeSeries.setTitle(title.getNodeValue());
         timeSeries.setNotes(notes.getNodeValue());
@@ -167,21 +163,17 @@ public class FREDImporter implements Importer {
     }
   }
   
-  private InputStream getInputStream(String relPath, String requestParamKey, String requestParamValue, String units) {
+  private InputStream getInputStream(String relPath, String requestParamKey, String requestParamValue, String units) throws Exception {
     InputStream stream = null;
     String url = BASEURL + relPath + "?" + requestParamKey + "=" + requestParamValue + "&api_key=" + APIKEY;
     if (units != null ) {
       url += "&units=" + units;
     }
-    log.info("constructed url=" + url);
-    try {
-      URL myurl = new URL(url);
-      HttpsURLConnection con = (HttpsURLConnection) myurl.openConnection();
-      con.setRequestProperty("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:63.0) Gecko/20100101 Firefox/63.0");
-      stream = con.getInputStream();
-    } catch(Exception e) {
-      log.info("caught exception", e);
-    }
+    log.debug("constructed url=" + url);
+    URL myurl = new URL(url);
+    HttpsURLConnection con = (HttpsURLConnection) myurl.openConnection();
+    con.setRequestProperty("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:63.0) Gecko/20100101 Firefox/63.0");
+    stream = con.getInputStream();
     return stream;
   }
 }
