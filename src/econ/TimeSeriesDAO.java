@@ -25,9 +25,9 @@ public class TimeSeriesDAO {
   
   private TimeSeriesDAO() throws Exception {
     Class.forName("org.postgresql.Driver");
-    log.info("attempting to connect to database with host=" + System.getenv("ECON_HOST") + 
-             ", name=" + System.getenv("ECON_DATABASE") +
-             ", username=" + System.getenv("ECON_USERNAME"));
+    log.debug("attempting to connect to database with host=" + System.getenv("ECON_HOST") + 
+              ", name=" + System.getenv("ECON_DATABASE") +
+              ", username=" + System.getenv("ECON_USERNAME"));
     String url = "jdbc:postgresql://" + System.getenv("ECON_HOST") +  
                  "/" + System.getenv("ECON_DATABASE") + 
                  "?user=" + System.getenv("ECON_USERNAME") +

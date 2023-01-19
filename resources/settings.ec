@@ -17,6 +17,10 @@ settings.tooltips.initialdelay = 200;
 settings.tooltips.dismissdelay = 3600 * 1000;
 settings.tooltips.maxline = 150;
 
+settings.version = "Development Release 0.1";
+
 -- used to mark that settings have completed loading
 settings.loaded = 1;
-print("settings loaded");
+
+print("Running Econ " + settings.version);
+print("Type 'help();' for help");

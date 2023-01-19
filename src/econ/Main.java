@@ -64,7 +64,7 @@ public class Main {
       Map<String, Symbol> symbolTable = new HashMap<String, Symbol>();
       File file = new File(System.getenv("ECON_HOME") + File.separator + ".econ.ec");
       if (file.exists()) {
-        log.info("found .econ.ec...");
+        log.debug("found .econ.ec...");
         Tokenizer tokenizer = new Tokenizer(file, 0);
         TokenIterator itr = tokenizer.tokenize();
         if (itr.hasNext()) {
@@ -88,7 +88,7 @@ public class Main {
         BufferedReader rdr = new BufferedReader(new InputStreamReader(System.in));
         while (true) {
           try {
-            System.out.print("> ");
+            System.out.print("econ> ");
             String line = rdr.readLine();
             if (line == null) {
               break;
