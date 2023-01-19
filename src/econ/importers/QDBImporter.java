@@ -40,6 +40,8 @@ public class QDBImporter implements Importer {
     TimeSeries timeSeries = new TimeSeries();
     timeSeries.setSource(("QDB"));
     timeSeries.setSourceId(fileBase);
+    timeSeries.setName(fileBase);
+    timeSeries.setTitle(fileBase);
     BufferedReader reader = null;
     try {
       if (Paths.get(dbFilePath).isAbsolute()) {

@@ -69,7 +69,7 @@ public class PlotCommand implements Command {
       series.setColor(new Color((int) symbolTable.get("settings.chart.line.color").getValue()));
       Chart chart = new Chart();
       chart.setSpan(100);
-      chart.setLabel(Utils.stringWithNULL(chart.getLabel()));
+      chart.setLabel(Utils.stringWithNULL(timeSeries.getName()));
       chart.getSeries().add(series);
       Panel panel = new Panel();
       panel.setLabel(Utils.stringWithNULL(timeSeries.getName()));

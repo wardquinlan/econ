@@ -39,6 +39,8 @@ public class QTemplateImporter implements Importer {
     TimeSeries timeSeries = new TimeSeries();
     timeSeries.setSource(("QTEMPLATE"));
     timeSeries.setSourceId(name);
+    timeSeries.setName(name);
+    timeSeries.setTitle(name);
     BufferedReader reader = null;
     try {
       if (Paths.get(templateFilePath).isAbsolute()) {
