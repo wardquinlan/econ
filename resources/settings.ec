@@ -23,5 +23,7 @@ settings.version = "Development Release 0.1";
 settings.loaded = 1;
 
 print("Running Econ " + settings.version);
-print("Type 'help();' for help");
+print();
+print("Type 'help();' to list all command");
+print("Type 'help(\"command\"); for help against a specific command");
 print();

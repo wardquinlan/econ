@@ -73,12 +73,6 @@ public class FunctionCaller {
           return 0;
         }
       }
-      System.out.println("Type:");
-      System.out.println();
-      System.out.println("  help(\"command\");");
-      System.out.println();
-      System.out.println("for detailed help against a specific command");
-      System.out.println();
       for (String name: commandMap.keySet()) {
         Command command = commandMap.get(name);
         System.out.println(command.getSummary());
