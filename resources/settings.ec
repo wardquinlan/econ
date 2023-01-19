@@ -24,3 +24,4 @@ settings.loaded = 1;
 
 print("Running Econ " + settings.version);
 print("Type 'help();' for help");
+print();
