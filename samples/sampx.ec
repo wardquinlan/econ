@@ -7,7 +7,7 @@
 
 --plot("main.xml");
 --createSeries(205, "T4", "T4", "FRED");
-T1 = import("FRED", "DGS2");
+T1 = import("QDB", "/home/ward/c/quote/db/SPX:US.txt");
 --T1 = import("QTEMPLATE", "../../../c/quote/template/ng.txt", "TBOND10");
 cat();
 plot(T1);
