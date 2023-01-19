@@ -202,7 +202,7 @@ public class Utils {
     return timeSeries;
   }
 
-  public static String getToolTipText(TimeSeries timeSeries) {
+  public static String getToolTipText(TimeSeries timeSeries, int maxline) {
     StringBuffer sb = new StringBuffer();
     sb.append("<html>");
     sb.append("<h3><strong>" + (timeSeries.getTitle() == null ? "NULL" : timeSeries.getTitle()) + "</strong></h3>");
@@ -212,12 +212,33 @@ public class Utils {
     sb.append("<p><strong>" + "Source Id:</strong> " + (timeSeries.getSourceId() == null ? "NULL" : timeSeries.getSourceId()) + "</p>");
     if (timeSeries.getNotes() != null) {
       sb.append("<p></p>");
-      sb.append("<p>" + timeSeries.getNotes() + "</p>");
+      sb.append("<p>" + splitHTML(timeSeries.getNotes(), maxline) + "</p>");
     }
     sb.append("</html>");
     return sb.toString();
   }
-  
+
+  private static String splitHTML(String text, int maxline) {
+    String array[] = text.split(" ");
+    int idx = 0;
+    StringBuffer splitHTML = new StringBuffer();
+    StringBuffer curr = new StringBuffer();
+    while (idx < array.length) {
+      curr.append(array[idx]);
+      curr.append(" ");
+      if (curr.length() > maxline) {
+        splitHTML.append(curr);
+        splitHTML.append("<br/>");
+        curr = new StringBuffer();
+      }
+      idx++;
+    }
+    if (curr.length() > 0) {
+      splitHTML.append(curr);
+    }
+    return splitHTML.toString();
+  }
+
   public static String generateFormatString(int colWidths[]) {
     StringBuffer sb = new StringBuffer();
     for (int i = 0; i < colWidths.length; i++) {

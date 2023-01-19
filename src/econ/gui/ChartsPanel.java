@@ -39,6 +39,7 @@ public class ChartsPanel extends JPanel {
   private final int DXINCR;
   private final int CHART_HPADDING;
   private final int GRID_LINE_TEXT_WIDTH;
+  private final int TOOLTIPS_MAXLINE;
   private final TimeSeries timeSeriesCollapsed;
   private int idxBase;
   private boolean firstInvokation = true;
@@ -83,6 +84,7 @@ public class ChartsPanel extends JPanel {
     DXINCR = (int) ctx.get("settings.panel.dxincr");
     CHART_HPADDING = (int) ctx.get("settings.chart.hpadding");
     GRID_LINE_TEXT_WIDTH = (int) ctx.get("settings.panel.gridlinetextwidth");
+    TOOLTIPS_MAXLINE = (int) ctx.get("settings.tooltips.maxline");
 
     // consolidate all time series into a single list
     List<TimeSeries> list = Utils.consolidate(panel);
@@ -181,7 +183,7 @@ public class ChartsPanel extends JPanel {
     for (Point point: mapLegend.keySet()) {
       if (event.getX() >= point.getX() && event.getX() <= point.getX() + CHART_LEGEND_SIZE &&
           event.getY() >= point.getY() && event.getY() <= point.getY() + CHART_LEGEND_SIZE) {
-        return Utils.getToolTipText(mapLegend.get(point).getTimeSeries());
+        return Utils.getToolTipText(mapLegend.get(point).getTimeSeries(), TOOLTIPS_MAXLINE);
       }
     }
     return null;

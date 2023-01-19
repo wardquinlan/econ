@@ -15,6 +15,7 @@ settings.chart.vpadding = 2;
 
 settings.tooltips.initialdelay = 200;
 settings.tooltips.dismissdelay = 3600 * 1000;
+settings.tooltips.maxline = 150;
 
 -- used to mark that settings have completed loading
 settings.loaded = 1;
