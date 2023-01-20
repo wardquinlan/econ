@@ -22,8 +22,8 @@ settings.version = "Development Release 0.1";
 -- used to mark that settings have completed loading
 settings.loaded = 1;
 
-print("Running Econ " + settings.version);
+print("Running Econ '" + settings.version + "'");
 print();
-print("Type 'help();' to list all command");
-print("Type 'help(\"command\"); for help against a specific command");
+print("Type 'help();' to list all commands");
+print("Type 'help(\"command\");' to display help for a specific command");
 print();
