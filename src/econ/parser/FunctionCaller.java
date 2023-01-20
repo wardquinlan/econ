@@ -22,6 +22,7 @@ import econ.TimeSeriesDAO;
 import econ.Utils;
 import econ.command.CatCommand;
 import econ.command.Command;
+import econ.command.CreateCommand;
 import econ.command.DataCommand;
 import econ.command.ExitCommand;
 import econ.command.HelpCommand;
@@ -52,6 +53,7 @@ public class FunctionCaller {
     commandMap.put("meta", new MetaCommand());
     commandMap.put("cat", new CatCommand());
     commandMap.put("import", new ImportCommand());
+    commandMap.put("create", new CreateCommand());
   }
   
   public boolean isFunction(String funcName) {
