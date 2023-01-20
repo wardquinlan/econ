@@ -11,7 +11,7 @@ import econ.Utils;
 import econ.parser.Symbol;
 
 public class DataCommand implements Command {
-  private static final int TIME_SERIES_DATA_COL_WIDTHS[] = {5, 10, 10};
+  private static final int TIME_SERIES_DATA_COL_WIDTHS[] = {8, 5, 10, 10};
   
   @Override
   public String getSummary() {
@@ -57,13 +57,15 @@ public class DataCommand implements Command {
       }
     }
 
-    System.out.printf(Utils.generateFormatString(TIME_SERIES_DATA_COL_WIDTHS) + "\n", "Id", "Date", "Value");
+    System.out.printf(Utils.generateFormatString(TIME_SERIES_DATA_COL_WIDTHS) + "\n", "Index", "Id", "Date", "Value");
     System.out.printf(Utils.generateUnderlineString(TIME_SERIES_DATA_COL_WIDTHS) + "\n");
-    for (TimeSeriesData timeSeriesData: timeSeries.getTimeSeriesDataList()) {
-      System.out.printf(Utils.generateFormatString(TIME_SERIES_DATA_COL_WIDTHS) + "\n", 
+    for (Integer idx = 0; idx < timeSeries.getTimeSeriesDataList().size(); idx++) {
+      TimeSeriesData timeSeriesData = timeSeries.getTimeSeriesDataList().get(idx);
+      System.out.printf(Utils.generateFormatString(TIME_SERIES_DATA_COL_WIDTHS) + "\n",
+        idx.toString(),
         timeSeriesData.getId() == null ? "NULL" : timeSeriesData.getId().toString(), 
-        Utils.generateTruncatedData(TIME_SERIES_DATA_COL_WIDTHS, 1, Utils.DATE_FORMAT.format(timeSeriesData.getDate())), 
-        Utils.generateTruncatedData(TIME_SERIES_DATA_COL_WIDTHS, 2, Utils.stringWithNULL(timeSeriesData.getValue().toString()))); 
+        Utils.generateTruncatedData(TIME_SERIES_DATA_COL_WIDTHS, 2, Utils.DATE_FORMAT.format(timeSeriesData.getDate())), 
+        Utils.generateTruncatedData(TIME_SERIES_DATA_COL_WIDTHS, 3, Utils.stringWithNULL(timeSeriesData.getValue().toString()))); 
     }
     return 0;
   }
