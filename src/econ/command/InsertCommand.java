@@ -59,11 +59,14 @@ public class InsertCommand implements Command {
       }
     }
     
-    if (!(params.get(2) instanceof Integer) && !(params.get(2) instanceof Float)) {
+    float value;
+    if (params.get(2) instanceof Integer) {
+      value = ((Integer) params.get(2)).floatValue();
+    } else if (params.get(2) instanceof Float) {
+      value = (Float) params.get(2);
+    } else {
       throw new Exception("'value' is neither an int nor a  float");
     }
-    float value = (Float) params.get(2);
-    
     TimeSeriesData timeSeriesData = new TimeSeriesData();
     timeSeriesData.setDate(date);
     timeSeriesData.setValue(value);
