@@ -27,6 +27,7 @@ import econ.command.DataCommand;
 import econ.command.ExitCommand;
 import econ.command.HelpCommand;
 import econ.command.ImportCommand;
+import econ.command.InsertCommand;
 import econ.command.LsCommand;
 import econ.command.FontsCommand;
 import econ.command.LoadCommand;
@@ -54,6 +55,7 @@ public class FunctionCaller {
     commandMap.put("cat", new CatCommand());
     commandMap.put("import", new ImportCommand());
     commandMap.put("create", new CreateCommand());
+    commandMap.put("insert", new InsertCommand());
   }
   
   public boolean isFunction(String funcName) {
