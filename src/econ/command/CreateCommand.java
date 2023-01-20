@@ -11,7 +11,7 @@ import econ.parser.Symbol;
 public class CreateCommand implements Command {
   @Override
   public String getSummary() {
-    return "Seres create(String name);";
+    return "Series create(String name);";
   }
   
   @Override
