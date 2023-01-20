@@ -1,71 +1,50 @@
-- The grid panel can maybe be smaller, and I can put 1 or 2 panels underneath it
-- for example:
-  - a panel which displays meta information about a selected series
-  - a "quote box", possibly displayed as a table (but not necessarily)
- 
-- Interactive mode can maybe call the Tokenizer / Parser on one single statement at a time
-- Just don't throw away the symbol table.  Something like that
-- Functions:
-  string getenv(String);
-  int parseint(String);
-  real parsereal(String);
-  string readln();
-- But we might have to implement something like this, since we don't have while() constructs:
-  string readstring();
-  int readint();
-  real readreal();
-  
-  --------------------
-  
-- I think I want to read data directly from FRED.  Virtually all updates get data from FRED, through text files.
-- list() should list counts, too
-- may want to create an index on DATESTAMP
+Notes
+=====
 
-  --------------------
+In general I need to completely rethink settings.  Most of current settings are ACTUALLY DEFAULT VALUES.  However, I can foresee:
+  - settings.dao.hostname
+  - settings.dao.database
+  - settings.dao.username
+  - settings.dao.password
+  - BUT NOTE THAT ALL OF THESE MIGHT JUST GO RIGHT INTO connect() as parameters
+  - note that ECON_HOME will remain as an environment variable
+  - also note that these will not be checked into GIT
 
-  I can probably put things like the DB name, password, and also the FRED account # ... all in settings.ec
-  
-  There are 2 instances of UIUtils.  The first is used to calculate the width of gridlines, which depends upon minimums / maximums.
-  And then the 2nd one is used to actually do the drawing.  But the minimums / maximums might be slightly different when taking the gridlines into account,
-  which in turn would affect the gridlines.  It is a bit of a catch-22.  It feels a bit clumsy to be honest.
-  
-  In practice I think it will work.  However, as a fall-back, I can always just use settings to create a static gridlines width.  I am tempted to do this.
-  
-  I also note that UITools are on a per-chart basis because they are drawing the gridlines, the chart background, all of that kind of stuff.
-  
-  But idxBase is on a per-panel basis.  So, I don't think UITools should calculate idxBase or anything like that.
-  
-  I suppose the # of data points at END can be determined using:
-  
-  idxBase = Math.max(timeSeriesCollapsed.size() - chartWidth / DXINCR, timeSeriesCollapsed.size());
-  
-  HOME is simply:
-  
-  idxBase = 0;
-  
-  -----------------------
-  
-- .econ.ec can print out something like:
+Other settings can include:
+  - settings.confirm = FALSE | TRUE
+  - if TRUE, then prompt a confirmation for "dangerous" functions, such as insert(), delete(), save()
 
-  type 'help();' for a list of commands
-  type 'help("list");' for help on a specific command 
-
-- help() will now take an optional argument for detailed help
-
-- connect("hostname", "database", "username", "password");
-
+I have also considered new functions:
+  - assert(boolean-condition, "error-message");
+  - throws an exception with "error-message" if boolean-condition is false
+  - Object read();
+  - reads object from stdin (Integer, Float, Boolean, or String)
+  - collapse();
+  - normalize();
+  - save();
+  - insert();
+  - this could potentially insert right into the datastore, being consistent with functions like data() and meta()
+  - delete();
+  - takes a date or an index
+  - connect()
+  - could take parameters to connect
+  - disconnect()
+  - disconnect current connection, if connected
+  - maybe.  Note sure I need this.
+  - can maybe only ever allow either 0 or 1 connection per instance, and it is automatically disconnected
+  - note that we might want to let the user connect, so that Econ can run without a database at all
+  - Object getXXXX(Series);
+  - Object setXXXX(Series, Object);
+  - XXXX is one of: {Id, Name, Title, Source, SourceId, Notes}
+  - String timestamp();
+  - size(Series);
+      
+  
 => I can either return a CONNECTION object, and then later write a "close(CONNECTION);" function.
 => Or I can just throw an exception if you try to connect a second time
 => Just allocated the DAO instance inside the connect() method.  Then test for it inside the getInstance() method.
 => And forgo the close.  That is probably the easiest.
 
-- will also introduce functions:
-
-- collapse(TimeSeries series[, TimeSeries series...])
-
-- normalize()
-
-- size(Series);
 
 => Big Question: Should we import data RIGHT INTO MEMORY?  And then call:
 
@@ -79,13 +58,7 @@ Know what I mean?  You could even argue the same for Quote data like this:
 > setSeriesSomething(CPI, "...");
 > export(CPI, 253, "CPI", ...);
 
-I'd also like to be able to plot directly, like this:
 
-> SOYBEANS = import("FRED", ...);
-> plot(SOYBEANS); --> uses a default panel, with a single default chart, with default values
-
-=> But you get into things like how to list "parts" of the symbol table, in this case the series.
-=> I am not sure how that is going to work.
 
 ---------------------------------------------------------------------------------------------
 
