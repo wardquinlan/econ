@@ -50,10 +50,10 @@ public class CatCommand implements Command {
       System.out.printf(Utils.generateFormatString(TIME_SERIES_COL_WIDTHS) + "\n", 
         name,
         timeSeries.getId() == null ? "NULL" : timeSeries.getId().toString(),
-        Utils.generateTruncatedData(TIME_SERIES_COL_WIDTHS, 1, Utils.stringWithNULL(timeSeries.getName())), 
-        Utils.generateTruncatedData(TIME_SERIES_COL_WIDTHS, 2, Utils.stringWithNULL(timeSeries.getTitle())), 
-        Utils.generateTruncatedData(TIME_SERIES_COL_WIDTHS, 3, Utils.stringWithNULL(timeSeries.getSource())), 
-        Utils.generateTruncatedData(TIME_SERIES_COL_WIDTHS, 4, Utils.stringWithNULL(timeSeries.getSourceId())));
+        Utils.generateTruncatedData(TIME_SERIES_COL_WIDTHS, 2, Utils.stringWithNULL(timeSeries.getName())), 
+        Utils.generateTruncatedData(TIME_SERIES_COL_WIDTHS, 3, Utils.stringWithNULL(timeSeries.getTitle())), 
+        Utils.generateTruncatedData(TIME_SERIES_COL_WIDTHS, 4, Utils.stringWithNULL(timeSeries.getSource())), 
+        Utils.generateTruncatedData(TIME_SERIES_COL_WIDTHS, 5, Utils.stringWithNULL(timeSeries.getSourceId())));
     }
     return 0;
   }
