@@ -21,6 +21,7 @@ import econ.TimeSeries;
 import econ.TimeSeriesDAO;
 import econ.Utils;
 import econ.command.CatCommand;
+import econ.command.CollapseCommand;
 import econ.command.Command;
 import econ.command.CreateCommand;
 import econ.command.DataCommand;
@@ -56,6 +57,7 @@ public class FunctionCaller {
     commandMap.put("import", new ImportCommand());
     commandMap.put("create", new CreateCommand());
     commandMap.put("insert", new InsertCommand());
+    commandMap.put("collapse", new CollapseCommand());
   }
   
   public boolean isFunction(String funcName) {
