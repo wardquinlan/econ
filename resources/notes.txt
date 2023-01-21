@@ -20,6 +20,8 @@ just traverses the tree map.  We also don't have to sort it, either.
   
 I think I want to support "." as a synonym for "include"
 
+We should use TreeMap rather than HashMap for the symbol table
+
 I have also considered new functions:
   - assert(boolean-condition, "error-message");
   - throws an exception with "error-message" if boolean-condition is false
