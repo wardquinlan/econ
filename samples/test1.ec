@@ -15,3 +15,9 @@ cat();
 print("collapsing T");
 TCollapsed = collapse(T);
 cat();
+
+print("data(T)");
+data(T);
+
+print("data(TCollapsed)");
+data(TCollapsed);

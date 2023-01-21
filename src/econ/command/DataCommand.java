@@ -65,7 +65,7 @@ public class DataCommand implements Command {
         idx.toString(),
         timeSeriesData.getId() == null ? "NULL" : timeSeriesData.getId().toString(), 
         Utils.generateTruncatedData(TIME_SERIES_DATA_COL_WIDTHS, 2, Utils.DATE_FORMAT.format(timeSeriesData.getDate())), 
-        Utils.generateTruncatedData(TIME_SERIES_DATA_COL_WIDTHS, 3, Utils.stringWithNULL(timeSeriesData.getValue().toString()))); 
+        timeSeriesData.getValue() == null ? "NULL" : timeSeriesData.getValue()); 
     }
     return 0;
   }

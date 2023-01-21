@@ -151,7 +151,13 @@ public class Utils {
     }
     
     if (timeSeriesList.size() == 1) {
-      return timeSeriesList.get(0);
+      TimeSeries timeSeries = new TimeSeries();
+      for (TimeSeriesData timeSeriesData: timeSeriesList.get(0).getTimeSeriesDataList()) {
+        TimeSeriesData data = new TimeSeriesData();
+        data.setDate(timeSeriesData.getDate());
+        timeSeries.add(data);
+      }
+      return timeSeries;
     }
     
     TimeSeries timeSeries1 = timeSeriesList.remove(0);
