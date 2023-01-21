@@ -19,6 +19,7 @@ public class CollapseCommand implements Command {
   public List<String> getDetails() {
     List<String> list = new ArrayList<>();
     list.add("Collapses 0 or more series into a single series");
+    list.add("(Note that this is primarily a test function)");
     return list;
   }
   
@@ -32,7 +33,7 @@ public class CollapseCommand implements Command {
     List<TimeSeries> timeSeriesList = new ArrayList<>();
     for (Object object: params) {
       if (!(object instanceof TimeSeries)) {
-        throw new Exception("argument(s) is/are not a series");
+        throw new Exception("argument(s) is/are not of type Series");
       }
       timeSeriesList.add((TimeSeries) object);
     }

@@ -14,6 +14,12 @@ Other settings can include:
   - settings.confirm = FALSE | TRUE
   - if TRUE, then prompt a confirmation for "dangerous" functions, such as insert(), delete(), save()
 
+Import() may want to do 2 passes.  1st pass puts everything into a TreeMap.  Which handles overwrites.  Then second pass
+just traverses the tree map.  We also don't have to sort it, either.
+  - only for QTEMPLATE and QDB sources...
+  
+I think I want to support "." as a synonym for "include"
+
 I have also considered new functions:
   - assert(boolean-condition, "error-message");
   - throws an exception with "error-message" if boolean-condition is false
@@ -21,7 +27,8 @@ I have also considered new functions:
   - reads object from stdin (Integer, Float, Boolean, or String)
   - collapse();
   - normalize();
-  - save();
+  - save(); --> saves an entire series
+  - merge(); --> merges to an existing series
   - insert();
   - * this could potentially insert right into the datastore, being consistent with functions like data() and meta()
   - delete();

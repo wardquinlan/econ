@@ -33,6 +33,7 @@ import econ.command.LsCommand;
 import econ.command.FontsCommand;
 import econ.command.LoadCommand;
 import econ.command.MetaCommand;
+import econ.command.NormalizeCommand;
 import econ.command.PlotCommand;
 import econ.command.PrintCommand;
 
@@ -58,6 +59,7 @@ public class FunctionCaller {
     commandMap.put("create", new CreateCommand());
     commandMap.put("insert", new InsertCommand());
     commandMap.put("collapse", new CollapseCommand());
+    commandMap.put("normalize", new NormalizeCommand());
   }
   
   public boolean isFunction(String funcName) {
