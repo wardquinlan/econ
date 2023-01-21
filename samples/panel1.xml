@@ -1,12 +1,12 @@
 <context>
-  <panel label="Treasury Yields">
-    <chart label="My Chart 1" span="70">
-      <series ref="TBOND2" color="Blue"/>
-      <series ref="TBOND10" color="Red"/>
-      <series ref="TBILL3" color="Black"/>
+  <panel label="S&amp;P 500 vs Selected Treasury benchmark Rates ">
+    <chart label="S&amp;P 500" span="70">
+      <series ref="SPX" color="Gray"/>
     </chart>
-    <chart label="My Chart 2" span="30">
+    <chart label="Selected Treasury benchmark rates" span="30">
+      <series ref="TBILL3" color="Red"/>
       <series ref="TBOND2" color="Green"/>
+      <series ref="TBOND10" color="Blue"/>
     </chart>
   </panel>
 </context>

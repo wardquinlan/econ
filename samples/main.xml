@@ -1,14 +1,3 @@
 <context> 
   <include name="panel1.xml"/>
-  <include name="panel2.xml"/>
-  <include name="panel1.xml"/>
-    
-  <!-- maybe I could do something like this:
-  - you can only have 1 grid in a panel.  If present, it is left-aligned
-  - the grid has no span element.  However, it is dynamically sized so that all columns are just visible
-  - all charts within a panel are always vertically aligned, and are automatically synchronized
-  - charts have a span="" attribute which control sizing.  all span elements must sum to 100
-  - all this implies that there are 2 JPanels: the LHS panel is for grids, and the RHS panel is for all charts
-  -->
-  
 </context>
