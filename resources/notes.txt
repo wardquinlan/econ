@@ -10,6 +10,40 @@ In general I need to completely rethink settings.  Most of current settings are 
   - note that ECON_HOME will remain as an environment variable
   - also note that these will not be checked into GIT
 
+For defaults, order will be:
+  - setting defined inside <chart>, <panel> whatever...
+  - if not defined, then use defaults.panel.whatever, defaults.chart.whatever, ...
+  - if not defined, then use Defaults.WHATEVER in Java
+  
+Have to do Log Scaling
+
+I would like to support Econ --define some-setting=some-value from the command line.  An arbitrary # of them...
+
+New panel attribute:
+  - "date-frequency" = {none, days, months, years}
+  - default is months
+
+NOTE: put symbolTable to Context, Panel, etc, constructors
+=> and DON'T CALL putAll()!
+  
+Context Attributes
+
+Panel Attributes
+
+  XML ATTRIBUTE         TYPE    SETTINGS PROPERTY             JAVA CONSTANT                           GETTER(SETTER) METHOD  
+  datefrequency         String  defaults.panel.datefrequency  Constants.DEFAULTS_PANEL_DATEFREQUENCY  panel.getDateFrequency()
+  dxincr                int     defaults.panel.dxincr         Constants.DEFAULTS_PANEL_DXINCR         panel.getDxIncr()
+  gridlinetextwidth     int     defaults.panel
+  fontname              String    
+  fontcolor             int
+  label                 String
+  backgroundcolor       int
+  
+Chart Attributes    
+
+Series Attributes
+
+
 Other settings can include:
   - settings.confirm = FALSE | TRUE
   - if TRUE, then prompt a confirmation for "dangerous" functions, such as insert(), delete(), save()
