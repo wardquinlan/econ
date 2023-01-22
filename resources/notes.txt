@@ -30,18 +30,28 @@ Context Attributes
 
 Panel Attributes
 
-  XML ATTRIBUTE         TYPE    SETTINGS PROPERTY             JAVA CONSTANT                           GETTER(SETTER) METHOD  
-  datefrequency         String  defaults.panel.datefrequency  Constants.DEFAULTS_PANEL_DATEFREQUENCY  panel.getDateFrequency()
-  dxincr                int     defaults.panel.dxincr         Constants.DEFAULTS_PANEL_DXINCR         panel.getDxIncr()
-  gridlinetextwidth     int     defaults.panel
-  fontname              String    
-  fontcolor             int
-  label                 String
-  backgroundcolor       int
-  
-Chart Attributes    
+  XML ATTRIBUTE         TYPE    SETTINGS PROPERTY                 GETTER(SETTER) METHOD  
+  -------------------------------------------------------------------------------------
+  backgroundcolor       int     defaults.panel.backgroundcolor    panel.getBackgroundColor()
+  dxincr                int     defaults.panel.dxincr             panel.getDxIncr()
+  gridlinetextwidth     int     defaults.panel.gridlinetextwidth  panel.getGridLineTextWidth()
+  fontname              String  defaults.panel.fontname           panel.getFontName()
+  fontcolor             int     defaults.panel.fontcolor          panel.getFontColor()
+  datefrequency         String  defaults.panel.datefrequency      panel.getDateFrequency()
+  label                 String  N/A                               panel.getLabel()
 
-Series Attributes
+  backgroundcolor       int     defaults.chart.backgroundcolor    chart.getBackgroundColor()
+  linecolor             int     defaults.chart.linecolor          chart.getLineColor()
+  rectcolor             int     defaults.chart.rectcolor          chart.getRectColor()
+  gridlines             int     defaults.chart.gridlines          chart.getGridlines()
+  legendsize            int     defaults.chart.legendsize         N/A
+  separator             int     defaults.chart.separator          N/A
+  hpadding              int     defaults.chart.hpadding           N/A
+  vpadding              int     defaults.chart.vpadding           N/A
+  label                 String  N/A                               chart.getLabel()
+  span                  int     N/A                               chart.getSpan()
+  
+  color                 int     defaults.series.color             series.getColor()
 
 
 Other settings can include:
