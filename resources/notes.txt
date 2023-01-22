@@ -32,27 +32,33 @@ Panel Attributes
 
   XML ATTRIBUTE         TYPE    SETTINGS PROPERTY                 GETTER(SETTER) METHOD  
   -------------------------------------------------------------------------------------
+  PANELS
   backgroundcolor       int     defaults.panel.backgroundcolor    panel.getBackgroundColor()
   dxincr                int     defaults.panel.dxincr             panel.getDxIncr()
   gridlinetextwidth     int     defaults.panel.gridlinetextwidth  panel.getGridLineTextWidth()
   fontname              String  defaults.panel.fontname           panel.getFontName()
   fontcolor             int     defaults.panel.fontcolor          panel.getFontColor()
+  fontsize              int     defaults.panel.fontsize           panel.getFontSize()
   datefrequency         String  defaults.panel.datefrequency      panel.getDateFrequency()
   label                 String  N/A                               panel.getLabel()
 
+  CHARTS
   backgroundcolor       int     defaults.chart.backgroundcolor    chart.getBackgroundColor()
   linecolor             int     defaults.chart.linecolor          chart.getLineColor()
   rectcolor             int     defaults.chart.rectcolor          chart.getRectColor()
   gridlines             int     defaults.chart.gridlines          chart.getGridlines()
-  N/A                   int     defaults.chart.legendsize         N/A
-  N/A                   int     defaults.chart.separator          N/A
-  N/A                   int     defaults.chart.hpadding           N/A
-  N/A                   int     defaults.chart.vpadding           N/A
   label                 String  N/A                               chart.getLabel()
   span                  int     N/A                               chart.getSpan()
   
+  SERIES
   color                 int     defaults.series.color             series.getColor()
   ref                   Series  N/A                               series.getTimeSeries()
+
+  OTHER
+  N/A                   int     chart.legendsize                  N/A
+  N/A                   int     chart.separator                   N/A
+  N/A                   int     chart.hpadding                    N/A
+  N/A                   int     chart.vpadding                    N/A
 
 
 Other settings can include:
