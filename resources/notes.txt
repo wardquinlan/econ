@@ -44,10 +44,10 @@ Panel Attributes
   linecolor             int     defaults.chart.linecolor          chart.getLineColor()
   rectcolor             int     defaults.chart.rectcolor          chart.getRectColor()
   gridlines             int     defaults.chart.gridlines          chart.getGridlines()
-  legendsize            int     defaults.chart.legendsize         N/A
-  separator             int     defaults.chart.separator          N/A
-  hpadding              int     defaults.chart.hpadding           N/A
-  vpadding              int     defaults.chart.vpadding           N/A
+  N/A                   int     defaults.chart.legendsize         N/A
+  N/A                   int     defaults.chart.separator          N/A
+  N/A                   int     defaults.chart.hpadding           N/A
+  N/A                   int     defaults.chart.vpadding           N/A
   label                 String  N/A                               chart.getLabel()
   span                  int     N/A                               chart.getSpan()
   
