@@ -52,6 +52,7 @@ Panel Attributes
   span                  int     N/A                               chart.getSpan()
   
   color                 int     defaults.series.color             series.getColor()
+  ref                   Series  N/A                               series.getTimeSeries()
 
 
 Other settings can include:
