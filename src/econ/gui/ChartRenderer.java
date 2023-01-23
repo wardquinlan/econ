@@ -28,9 +28,7 @@ public class ChartRenderer {
   final private static Log log = LogFactory.getFactory().getInstance(ChartRenderer.class);
   final private static DecimalFormat df = new DecimalFormat("#.###");
   final private Panel panel;
-  final private Color CHART_BACKGROUND;
-  final private Color CHART_RECT;
-  final private Color CHART_LINE;
+  final private Chart chart;
   final private int CHART_SEPARATOR;
   final private int CHART_HPADDING;
   final private int CHART_VPADDING;
@@ -47,6 +45,7 @@ public class ChartRenderer {
   
   public ChartRenderer(Panel panel, Chart chart, JComponent component, TimeSeries timeSeriesCollapsed, Graphics g, Context ctx, int yBase) {
     this.panel = panel;
+    this.chart = chart;
     this.component = component;
     this.timeSeriesCollapsed = timeSeriesCollapsed;
     this.strokeGridlines = new BasicStroke(1, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 0, new float[] {1f, 2f}, 0);
@@ -54,9 +53,6 @@ public class ChartRenderer {
     this.yBase = yBase;
     this.cal = new GregorianCalendar();
     
-    CHART_BACKGROUND = new Color((int) ctx.get("settings.chart.background.color"));
-    CHART_RECT = new Color((int) ctx.get("settings.chart.rect.color"));
-    CHART_LINE = new Color((int) ctx.get("settings.chart.line.color"));
     CHART_SEPARATOR = (int) ctx.get("settings.chart.separator");
     CHART_HPADDING = (int) ctx.get("settings.chart.hpadding");
     CHART_VPADDING = (int) ctx.get("settings.chart.vpadding");
@@ -72,16 +68,16 @@ public class ChartRenderer {
     g.setFont(new Font(panel.getFontName(), Font.PLAIN, panel.getFontSize()));
   }
   
-  public void drawChartBackground(Chart chart, boolean withMonthLegend, int idxBase) {
+  public void drawChartBackground(boolean withMonthLegend, int idxBase) {
     Stroke strokeOrig = ((Graphics2D) g).getStroke();
     ((Graphics2D) g).setStroke(strokeOrig);
     
     // Fill the rectangle with the background color
-    g.setColor(CHART_BACKGROUND);
+    g.setColor(chart.getBackgroundColor());
     g.fillRect(CHART_HPADDING, yBase, chartWidth, chartHeight - CHART_SEPARATOR - 1);
     
     // Draw the rectangle
-    g.setColor(CHART_RECT);
+    g.setColor(chart.getRectColor());
     g.drawRect(CHART_HPADDING, yBase, chartWidth, chartHeight - CHART_SEPARATOR - 1);
     
     // Draw the label
@@ -104,7 +100,7 @@ public class ChartRenderer {
       
       switch(panel.getDateFrequency()) {
       case Panel.DATE_FREQUENCY_DAYS:
-        g.setColor(CHART_LINE);
+        g.setColor(chart.getLineColor());
         g.drawLine(x, yBase + 1, x, yBase + chartHeight - CHART_SEPARATOR - 1);
 
         if (withMonthLegend) {
@@ -119,7 +115,7 @@ public class ChartRenderer {
 
       case Panel.DATE_FREQUENCY_MONTHS:
         if (month != monthPrev) {
-          g.setColor(CHART_LINE);
+          g.setColor(chart.getLineColor());
           g.drawLine(x, yBase + 1, x, yBase + chartHeight - CHART_SEPARATOR - 1);
 
           if (withMonthLegend) {
@@ -131,7 +127,7 @@ public class ChartRenderer {
         
       case Panel.DATE_FREQUENCY_YEARS:
         if (year != yearPrev) {
-          g.setColor(CHART_LINE);
+          g.setColor(chart.getLineColor());
           g.drawLine(x, yBase + 1, x, yBase + chartHeight - CHART_SEPARATOR - 1);
 
           if (withMonthLegend) {
@@ -150,7 +146,7 @@ public class ChartRenderer {
     }
   }
   
-  public void drawLegend(Chart chart, Map<Point, Series> mapLegend) {
+  public void drawLegend(Map<Point, Series> mapLegend) {
     for (int i = 0; i < chart.getSeries().size(); i++) {
       Series series = chart.getSeries().get(i);
       g.setColor(series.getColor());
@@ -199,14 +195,14 @@ public class ChartRenderer {
       int y1 = Utils.transform(gridLine, yBase + chartHeight - CHART_SEPARATOR - 1, yBase, pair.getMinValue(), pair.getMaxValue());
       int x2 = x1 + chartWidth - 1;
       int y2 = y1;
-      g.setColor(CHART_LINE);
+      g.setColor(chart.getLineColor());
       g.drawLine(x1, y1, x2, y2);
       g.setColor(panel.getFontColor());
       g.drawString(df.format(gridLine), x2 + CHART_HPADDING, y2);
     }
   }
   
-  public void drawSeries(Chart chart, MinMaxPair pair, int idxBase) {
+  public void drawSeries(MinMaxPair pair, int idxBase) {
     for (Series series: chart.getSeries()) {
       TimeSeries timeSeries = Utils.normalize(timeSeriesCollapsed, series.getTimeSeries());
       g.setColor(series.getColor());

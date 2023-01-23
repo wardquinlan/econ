@@ -130,17 +130,17 @@ public class ChartsPanel extends JPanel {
       }
       
       // draw the chart background
-      r.drawChartBackground(chart, i == 0, idxBase);
+      r.drawChartBackground(i == 0, idxBase);
       
       // draw the horizontal gridlines
       r.drawHorizontalGridlines(gridLines, pair);
       
       // draw the series themselves
       ((Graphics2D) g).setStroke(strokeOrig);
-      r.drawSeries(chart, pair, idxBase);
+      r.drawSeries(pair, idxBase);
       
       // draw the legend
-      r.drawLegend(chart, mapLegend);
+      r.drawLegend(mapLegend);
       
       // advance to the next chart
       yBase += chartHeight;

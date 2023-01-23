@@ -1,11 +1,15 @@
 package econ;
 
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Map;
 
 import econ.parser.Symbol;
 
 public class Chart extends GUIObject {
+  private Color backgroundColor;
+  private Color lineColor;
+  private Color rectColor;
   private String label;
   private int span = 100;
   private ArrayList<Float> gridlines = new ArrayList<>();
@@ -13,6 +17,9 @@ public class Chart extends GUIObject {
   
   public Chart(Map<String, Symbol> symbolTable) {
     super(symbolTable);
+    backgroundColor = new Color((int) symbolTable.get("defaults.chart.backgroundcolor").getValue());
+    lineColor = new Color((int) symbolTable.get("defaults.chart.linecolor").getValue());
+    rectColor = new Color((int) symbolTable.get("defaults.chart.rectcolor").getValue());
   }
   
   public String getLabel() {
@@ -37,5 +44,29 @@ public class Chart extends GUIObject {
 
   public void setSpan(int span) {
     this.span = span;
+  }
+
+  public Color getBackgroundColor() {
+    return backgroundColor;
+  }
+
+  public void setBackgroundColor(Color backgroundColor) {
+    this.backgroundColor = backgroundColor;
+  }
+
+  public Color getLineColor() {
+    return lineColor;
+  }
+
+  public void setLineColor(Color lineColor) {
+    this.lineColor = lineColor;
+  }
+
+  public Color getRectColor() {
+    return rectColor;
+  }
+
+  public void setRectColor(Color rectColor) {
+    this.rectColor = rectColor;
   }
 }

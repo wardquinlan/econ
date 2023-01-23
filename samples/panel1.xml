@@ -8,7 +8,10 @@
     fontsize="14"
     datefrequency="years">
     
-    <chart label="S&amp;P 500" span="70">
+    <chart label="S&amp;P 500" span="70"
+      backgroundcolor="Green"
+      linecolor="Orange"
+      rectcolor="Red">
       <series ref="SPX" color="Gray"/>
     </chart>
     <chart label="Selected Treasury benchmark rates" span="30">

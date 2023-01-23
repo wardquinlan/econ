@@ -5,3 +5,7 @@ defaults.panel.fontname = "Dialog.plain";
 defaults.panel.fontcolor = DimGray;
 defaults.panel.fontsize = 12;
 defaults.panel.datefrequency = DATE_FREQUENCY_YEARS;
+
+defaults.chart.backgroundcolor = Ivory;
+defaults.chart.linecolor = DimGray;
+defaults.chart.rectcolor = DimGray;
