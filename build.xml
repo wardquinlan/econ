@@ -47,7 +47,7 @@
     </copy>
   	<copy tofile="${output}/.econ.ec" file="${output}/../.econ.ec"/>
   	<copy todir="${output}/includes" file="${resources}/settings.ec"/>
-  	<copy todir="${output}/includes" file="${resources}/colors.ec"/>
+  	<copy todir="${output}/includes" file="${resources}/constants.ec"/>
   	<copy todir="${output}/includes" file="${resources}/defaults.ec"/>
     <chmod file="${output}/econ.sh" perm="755"/>
   	<chmod file="${output}/import.sh" perm="755"/>

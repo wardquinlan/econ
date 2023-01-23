@@ -24,6 +24,8 @@ settings.loaded = 1;
 
 print("Running Econ '" + settings.version + "'");
 print();
+print("For color definitions refer to: https://htmlcolorcodes.com/color-names");
+print();
 print("Type 'help();' to list all commands");
 print("Type 'help(\"command\");' to display help for a specific command");
 print();

@@ -1,5 +1,4 @@
-print("loading colors...");
-print("(@see: https://htmlcolorcodes.com/color-names)");
+-- @see: https://htmlcolorcodes.com/color-names
 
 const IndianRed=#CD5C5C;
 const LightCoral=#F08080;
