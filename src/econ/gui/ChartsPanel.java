@@ -34,7 +34,6 @@ public class ChartsPanel extends JPanel {
   private final Panel panel;
   private final Map<Point, Series> mapLegend = new HashMap<>();
   private final int CHART_LEGEND_SIZE;
-  private final Color PANEL_BACKGROUND;
   private final int CHART_SEPARATOR;
   private final int DXINCR;
   private final int CHART_HPADDING;
@@ -79,7 +78,6 @@ public class ChartsPanel extends JPanel {
       }
     });
     CHART_LEGEND_SIZE = (int) ctx.get("settings.chart.legend.size");
-    PANEL_BACKGROUND = new Color((int) ctx.get("settings.panel.background.color"));
     CHART_SEPARATOR = (int) ctx.get("settings.chart.separator");
     DXINCR = (int) ctx.get("settings.panel.dxincr");
     CHART_HPADDING = (int) ctx.get("settings.chart.hpadding");
@@ -106,7 +104,7 @@ public class ChartsPanel extends JPanel {
     }
     
     // set up the background panel and save the stroke
-    setBackground(PANEL_BACKGROUND);
+    setBackground(panel.getBackgroundColor());
     Stroke strokeOrig = ((Graphics2D) g).getStroke();
 
     // iterate through the charts
