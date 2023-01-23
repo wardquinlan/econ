@@ -33,7 +33,6 @@ public class ChartRenderer {
   final private int CHART_HPADDING;
   final private int CHART_VPADDING;
   final private int CHART_LEGEND_SIZE;
-  final private int CHART_GRIDLINES;
   final private int chartWidth;
   final private int chartHeight;
   final private JComponent component;
@@ -56,7 +55,6 @@ public class ChartRenderer {
     CHART_SEPARATOR = (int) ctx.get("settings.chart.separator");
     CHART_HPADDING = (int) ctx.get("settings.chart.hpadding");
     CHART_VPADDING = (int) ctx.get("settings.chart.vpadding");
-    CHART_GRIDLINES = (int) ctx.get("settings.chart.gridlines");
     CHART_LEGEND_SIZE = (int) ctx.get("settings.chart.legend.size");
     
     chartWidth = component.getWidth() - 1 - 2 * CHART_HPADDING - panel.getGridLineTextWidth();
@@ -159,19 +157,19 @@ public class ChartRenderer {
   }
   
   public float[] calculateGridlines(MinMaxPair pair) throws Exception {
-    float gridLines[] = new float[CHART_GRIDLINES];
-    float dyGridLines = Utils.findDYGridLines(CHART_GRIDLINES, pair);
+    float gridLines[] = new float[chart.getNGridLines()];
+    float dyGridLines = Utils.findDYGridLines(chart.getNGridLines(), pair);
     log.debug("dyGridLines=" + dyGridLines);
     float yGridLine = (float) Math.ceil(pair.getMinValue() / dyGridLines) * dyGridLines;
     int count = 0; 
-    while (count < CHART_GRIDLINES) {
+    while (count < chart.getNGridLines()) {
       log.debug("yGridLine=" + yGridLine);
       gridLines[count] = yGridLine;
       yGridLine += dyGridLines;
       count++;
     }
-    if (gridLines[CHART_GRIDLINES - 1] > pair.getMaxValue()) {
-      pair.setMaxValue(gridLines[CHART_GRIDLINES - 1]);
+    if (gridLines[chart.getNGridLines() - 1] > pair.getMaxValue()) {
+      pair.setMaxValue(gridLines[chart.getNGridLines() - 1]);
     }
     return gridLines;
   }

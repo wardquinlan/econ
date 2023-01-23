@@ -173,6 +173,8 @@ public class XMLParser {
         chart.setLineColor(parseColorAttribute(attribute));
       } else if (attribute.getNodeName().equals("rectcolor")) {
         chart.setRectColor(parseColorAttribute(attribute));
+      } else if (attribute.getNodeName().equals("ngridlines")) {
+        chart.setNGridLines(parseIntAttribute(attribute));
       } else if (attribute.getNodeName().equals("span")) {
         int span = parseIntAttribute(attribute);
         if (span < 1 || span > 100) {

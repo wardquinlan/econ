@@ -9,3 +9,4 @@ defaults.panel.datefrequency = DATE_FREQUENCY_YEARS;
 defaults.chart.backgroundcolor = Ivory;
 defaults.chart.linecolor = DimGray;
 defaults.chart.rectcolor = DimGray;
+defaults.chart.ngridlines = 10;

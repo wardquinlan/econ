@@ -11,6 +11,7 @@ public class Chart extends GUIObject {
   private Color lineColor;
   private Color rectColor;
   private String label;
+  private int nGridLines;
   private int span = 100;
   private ArrayList<Float> gridlines = new ArrayList<>();
   private ArrayList<Series> series = new ArrayList<>();
@@ -20,6 +21,7 @@ public class Chart extends GUIObject {
     backgroundColor = new Color((int) symbolTable.get("defaults.chart.backgroundcolor").getValue());
     lineColor = new Color((int) symbolTable.get("defaults.chart.linecolor").getValue());
     rectColor = new Color((int) symbolTable.get("defaults.chart.rectcolor").getValue());
+    nGridLines = (int) symbolTable.get("defaults.chart.ngridlines").getValue();
   }
   
   public String getLabel() {
@@ -68,5 +70,13 @@ public class Chart extends GUIObject {
 
   public void setRectColor(Color rectColor) {
     this.rectColor = rectColor;
+  }
+
+  public int getNGridLines() {
+    return nGridLines;
+  }
+
+  public void setNGridLines(int nGridLines) {
+    this.nGridLines = nGridLines;
   }
 }

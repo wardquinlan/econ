@@ -46,7 +46,7 @@ Panel Attributes
   backgroundcolor       int     defaults.chart.backgroundcolor    chart.getBackgroundColor()
   linecolor             int     defaults.chart.linecolor          chart.getLineColor()
   rectcolor             int     defaults.chart.rectcolor          chart.getRectColor()
-  gridlines             int     defaults.chart.gridlines          chart.getGridlines()
+  ngridlines            int     defaults.chart.ngridlines         chart.getNGridLines()
   label                 String  N/A                               chart.getLabel()
   span                  int     N/A                               chart.getSpan()
   
