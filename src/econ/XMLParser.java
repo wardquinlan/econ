@@ -115,7 +115,9 @@ public class XMLParser {
       if (attribute.getNodeName().equals("label")) {
         panel.setLabel(attribute.getNodeValue());
       } else if (attribute.getNodeName().equals("backgroundcolor")) {
-          panel.setBackgroundColor(parseColor(attribute.getNodeValue()));
+        panel.setBackgroundColor(parseColorAttribute(attribute));
+      } else if (attribute.getNodeName().equals("dxincr")) {
+        panel.setDxIncr(parseIntAttribute(attribute));
       } else {
         throw new Exception("unexpected panel attribute: " + attribute.getNodeName());
       }
@@ -156,15 +158,11 @@ public class XMLParser {
       if (attribute.getNodeName().equals("label")) {
         chart.setLabel(attribute.getNodeValue());
       } else if (attribute.getNodeName().equals("span")) {
-        try {
-          int span = Integer.parseInt(attribute.getNodeValue());
-          if (span < 1 || span > 100) {
-            throw new Exception("chart span attribute out of bounds: " + span);
-          }
-          chart.setSpan(span);
-        } catch(NumberFormatException e) {
-          throw new Exception("invalid chart span attribute: " + attribute.getNodeValue());
+        int span = parseIntAttribute(attribute);
+        if (span < 1 || span > 100) {
+          throw new Exception("chart span attribute out of bounds: " + span);
         }
+        chart.setSpan(span);
       } else {
         throw new Exception("unexpected chart attribute: " + attribute.getNodeName());
       }
@@ -208,7 +206,7 @@ public class XMLParser {
         }
         series.setTimeSeries((TimeSeries) symbol.getValue());
       } else if (attribute.getNodeName().equals("color")) {
-        series.setColor(parseColor(attribute.getNodeValue()));
+        series.setColor(parseColorAttribute(attribute));
       }
     }
     
@@ -222,25 +220,38 @@ public class XMLParser {
     return series;
   }
   
-  private Color parseColor(String color) throws Exception {
+  private int parseIntAttribute(Node attribute) throws Exception {
+    try {
+      return Integer.parseInt(attribute.getNodeValue());
+    } catch(NumberFormatException e) {
+      throw new Exception(generateAttributeExceptionString(attribute));
+    }
+  }
+  
+  private Color parseColorAttribute(Node attribute) throws Exception {
+    String color = attribute.getNodeValue();
     if (color.length() == 0) {
-      throw new Exception("invalid color attribute (empty)");
+      throw new Exception(generateAttributeExceptionString(attribute));
     }
     char ch = color.charAt(0);
     if (ch == '#') {
       if (color.length() == 1 || color.length() > 7) {
-        throw new Exception("invalid color attribute: " + color);
+        throw new Exception(generateAttributeExceptionString(attribute));
       }
       return new Color(Utils.parseHex(color.substring(1)));
     } else {
       Symbol symbol = symbolTable.get(color);
       if (symbol == null) {
-        throw new Exception("color attribute not found: " + color);
+        throw new Exception(generateAttributeExceptionString(attribute));
       }
       if (!(symbol.getValue() instanceof Integer)) {
-        throw new Exception("invalid color attribute: " + color);
+        throw new Exception(generateAttributeExceptionString(attribute));
       }
       return new Color((Integer) symbol.getValue());
     }
+  }
+  
+  private String generateAttributeExceptionString(Node attribute) {
+    return "invalid attribute: " + attribute.getNodeName() + "=" + attribute.getNodeValue();
   }
 }
