@@ -55,7 +55,7 @@ public class ChartRenderer {
     CHART_SEPARATOR = (int) ctx.get("settings.chart.separator");
     CHART_HPADDING = (int) ctx.get("settings.chart.hpadding");
     CHART_VPADDING = (int) ctx.get("settings.chart.vpadding");
-    CHART_LEGEND_SIZE = (int) ctx.get("settings.chart.legend.size");
+    CHART_LEGEND_SIZE = (int) ctx.get("settings.chart.legendsize");
     
     chartWidth = component.getWidth() - 1 - 2 * CHART_HPADDING - panel.getGridLineTextWidth();
     chartHeight = (component.getHeight() - CHART_SEPARATOR) * chart.getSpan() / 100;

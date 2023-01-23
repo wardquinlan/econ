@@ -75,7 +75,7 @@ public class ChartsPanel extends JPanel {
         }
       }
     });
-    CHART_LEGEND_SIZE = (int) ctx.get("settings.chart.legend.size");
+    CHART_LEGEND_SIZE = (int) ctx.get("settings.chart.legendsize");
     CHART_SEPARATOR = (int) ctx.get("settings.chart.separator");
     CHART_HPADDING = (int) ctx.get("settings.chart.hpadding");
     TOOLTIPS_MAXLINE = (int) ctx.get("settings.tooltips.maxline");
