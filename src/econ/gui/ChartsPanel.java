@@ -35,7 +35,6 @@ public class ChartsPanel extends JPanel {
   private final Map<Point, Series> mapLegend = new HashMap<>();
   private final int CHART_LEGEND_SIZE;
   private final int CHART_SEPARATOR;
-  private final int DXINCR;
   private final int CHART_HPADDING;
   private final int TOOLTIPS_MAXLINE;
   private final TimeSeries timeSeriesCollapsed;
@@ -78,7 +77,6 @@ public class ChartsPanel extends JPanel {
     });
     CHART_LEGEND_SIZE = (int) ctx.get("settings.chart.legend.size");
     CHART_SEPARATOR = (int) ctx.get("settings.chart.separator");
-    DXINCR = (int) ctx.get("settings.panel.dxincr");
     CHART_HPADDING = (int) ctx.get("settings.chart.hpadding");
     TOOLTIPS_MAXLINE = (int) ctx.get("settings.tooltips.maxline");
 
@@ -98,7 +96,7 @@ public class ChartsPanel extends JPanel {
     if (firstInvokation) {
       firstInvokation = false;
       int chartWidth = getWidth() - 1 - 2 * CHART_HPADDING - panel.getGridLineTextWidth();
-      idxBase = Math.max(timeSeriesCollapsed.size() - chartWidth / DXINCR, 0);    
+      idxBase = Math.max(timeSeriesCollapsed.size() - chartWidth / panel.getDxIncr(), 0);    
     }
     
     // set up the background panel and save the stroke
@@ -151,14 +149,14 @@ public class ChartsPanel extends JPanel {
 
   private void keyLeft() {
     int chartWidth = getWidth() - 1 - 2 * CHART_HPADDING - panel.getGridLineTextWidth();
-    int idxIncr = (chartWidth / DXINCR) / 8;
+    int idxIncr = (chartWidth / panel.getDxIncr()) / 8;
     idxBase = Math.max(idxBase - idxIncr, 0);
     repaint();
   }
   
   private void keyRight() {
     int chartWidth = getWidth() - 1 - 2 * CHART_HPADDING - panel.getGridLineTextWidth();
-    int idxIncr = (chartWidth / DXINCR) / 8;
+    int idxIncr = (chartWidth / panel.getDxIncr()) / 8;
     idxBase = Math.min(idxBase + idxIncr, timeSeriesCollapsed.size() - 1);
     repaint();
   }
@@ -170,7 +168,7 @@ public class ChartsPanel extends JPanel {
   
   private void keyEnd() {
     int chartWidth = getWidth() - 1 - 2 * CHART_HPADDING - panel.getGridLineTextWidth();
-    idxBase = Math.max(timeSeriesCollapsed.size() - chartWidth / DXINCR, 0);
+    idxBase = Math.max(timeSeriesCollapsed.size() - chartWidth / panel.getDxIncr(), 0);
     repaint();
   }
 

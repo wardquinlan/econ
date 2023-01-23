@@ -27,6 +27,7 @@ import econ.Utils;
 public class ChartRenderer {
   final private static Log log = LogFactory.getFactory().getInstance(ChartRenderer.class);
   final private static DecimalFormat df = new DecimalFormat("#.###");
+  final private Panel panel;
   final private Color CHART_BACKGROUND;
   final private Color CHART_RECT;
   final private Color CHART_LINE;
@@ -37,7 +38,6 @@ public class ChartRenderer {
   final private int CHART_HPADDING;
   final private int CHART_VPADDING;
   final private int CHART_LEGEND_SIZE;
-  final private int DXINCR;
   final private int CHART_GRIDLINES;
   final private int chartWidth;
   final private int chartHeight;
@@ -49,6 +49,7 @@ public class ChartRenderer {
   final private int yBase;
   
   public ChartRenderer(Panel panel, Chart chart, JComponent component, TimeSeries timeSeriesCollapsed, Graphics g, Context ctx, int yBase) {
+    this.panel = panel;
     this.component = component;
     this.timeSeriesCollapsed = timeSeriesCollapsed;
     this.strokeGridlines = new BasicStroke(1, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 0, new float[] {1f, 2f}, 0);
@@ -65,7 +66,6 @@ public class ChartRenderer {
     CHART_SEPARATOR = (int) ctx.get("settings.chart.separator");
     CHART_HPADDING = (int) ctx.get("settings.chart.hpadding");
     CHART_VPADDING = (int) ctx.get("settings.chart.vpadding");
-    DXINCR = (int) ctx.get("settings.panel.dxincr");
     CHART_GRIDLINES = (int) ctx.get("settings.chart.gridlines");
     CHART_LEGEND_SIZE = (int) ctx.get("settings.chart.legend.size");
     
@@ -100,9 +100,9 @@ public class ChartRenderer {
     // Draw the vertical grid lines
     ((Graphics2D) g).setStroke(strokeGridlines);
 
-    int idxMax = Math.min(idxBase + chartWidth / DXINCR, timeSeriesCollapsed.size());
+    int idxMax = Math.min(idxBase + chartWidth / panel.getDxIncr(), timeSeriesCollapsed.size());
     for (int idx = idxBase + 1; idx < idxMax; idx++) {
-      int x = CHART_HPADDING + (idx - idxBase) * DXINCR;
+      int x = CHART_HPADDING + (idx - idxBase) * panel.getDxIncr();
       cal.setTime(timeSeriesCollapsed.get(idx - 1).getDate());
       int monthPrev = cal.get(Calendar.MONTH);
 
@@ -152,7 +152,7 @@ public class ChartRenderer {
   }
 
   public MinMaxPair calculateMinMax(MinMaxPair pair, Context ctx, TimeSeries timeSeries, TimeSeries timeSeriesCollapsed, int idxBase) {
-    int idxMax = Math.min(idxBase + chartWidth / DXINCR, timeSeriesCollapsed.size());
+    int idxMax = Math.min(idxBase + chartWidth / panel.getDxIncr(), timeSeriesCollapsed.size());
     for (int idx = idxBase; idx < idxMax; idx++) {
       if (timeSeries.get(idx).getValue() != null && timeSeries.get(idx).getValue() < pair.getMinValue()) {
         pair.setMinValue(timeSeries.get(idx).getValue());
@@ -181,13 +181,13 @@ public class ChartRenderer {
     for (Series series: chart.getSeries()) {
       TimeSeries timeSeries = Utils.normalize(timeSeriesCollapsed, series.getTimeSeries());
       g.setColor(series.getColor());
-      int idxMax = Math.min(idxBase + chartWidth / DXINCR, timeSeriesCollapsed.size());
+      int idxMax = Math.min(idxBase + chartWidth / panel.getDxIncr(), timeSeriesCollapsed.size());
       for (int idx = idxBase + 1; idx < idxMax; idx++) {
-        int x = CHART_HPADDING + (idx - idxBase) * DXINCR;
+        int x = CHART_HPADDING + (idx - idxBase) * panel.getDxIncr();
         if (timeSeries.get(idx - 1).getValue() != null) {
           int v1 = Utils.transform(timeSeries.get(idx - 1).getValue(), yBase + chartHeight - CHART_SEPARATOR - 1, yBase, pair.getMinValue(), pair.getMaxValue());
           int v2 = Utils.transform(timeSeries.get(idx).getValue(), yBase + chartHeight - CHART_SEPARATOR - 1, yBase, pair.getMinValue(), pair.getMaxValue());
-          g.drawLine(x - DXINCR, v1, x, v2);
+          g.drawLine(x - panel.getDxIncr(), v1, x, v2);
         }
       }
     }

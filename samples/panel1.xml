@@ -1,7 +1,7 @@
 <context>
   <panel label="S&amp;P 500 vs Selected Treasury benchmark Rates"
     backgroundcolor="LightSlateGray"
-    dxincr="20"
+    dxincr="1"
     gridlinetextwidth="100"
     fontname="Serif.italic"
     fontcolor="#0f0f0f"
