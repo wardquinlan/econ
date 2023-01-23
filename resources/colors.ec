@@ -1,4 +1,5 @@
--- @see: https://htmlcolorcodes.com/color-names
+print("loading colors...");
+print("(@see: https://htmlcolorcodes.com/color-names)");
 
 const IndianRed=#CD5C5C;
 const LightCoral=#F08080;
@@ -142,4 +143,7 @@ const SlateGray=#708090;
 const DarkSlateGray=#2F4F4F;
 const Black=#000000;
 
---print("colors loaded");
+const DATE_FREQUENCY_NONE = 0;
+const DATE_FREQUENCY_DAYS = 1;
+const DATE_FREQUENCY_MONTHS = 2;
+const DATE_FREQUENCY_YEARS = 3;

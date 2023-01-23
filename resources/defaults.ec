@@ -4,4 +4,4 @@ defaults.panel.gridlinetextwidth = 40;
 defaults.panel.fontname = "Dialog.plain";
 defaults.panel.fontcolor = DimGray;
 defaults.panel.fontsize = 12;
-defaults.panel.datefrequency = 3; -- years
+defaults.panel.datefrequency = DATE_FREQUENCY_YEARS;
