@@ -67,16 +67,15 @@ public class PlotCommand implements Command {
       series.setType(Series.LINE); // TODO: in theory could support bar series - can look at series data type
       series.setTimeSeries(timeSeries);
       series.setColor(new Color((int) symbolTable.get("settings.chart.line.color").getValue()));
-      Chart chart = new Chart();
+      Chart chart = new Chart(symbolTable);
       chart.setSpan(100);
       chart.setLabel(Utils.stringWithNULL(timeSeries.getName()));
       chart.getSeries().add(series);
-      Panel panel = new Panel();
+      Panel panel = new Panel(symbolTable);
       panel.setLabel(Utils.stringWithNULL(timeSeries.getName()));
       panel.getCharts().add(chart);
-      ctx = new Context();
+      ctx = new Context(symbolTable);
       ctx.getPanels().add(panel);
-      ctx.getSymbolTable().putAll(symbolTable);
     } else {
       throw new Exception("invalid argument: " + params.get(0));
     }

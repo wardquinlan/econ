@@ -6,18 +6,17 @@ import java.util.Map;
 
 import econ.parser.Symbol;
 
-public class Context {
+public class Context extends GUIObject {
   private ArrayList<Panel> panels = new ArrayList<>();
-  private Map<String, Symbol> symbolTable = new HashMap<>();
 
+  public Context(Map<String, Symbol> symbolTable) {
+    super(symbolTable);
+  }
+  
   public ArrayList<Panel> getPanels() {
     return panels;
   }
 
-  public Map<String, Symbol> getSymbolTable() {
-    return symbolTable;
-  }
-  
   public Object get(String id) {
     if (symbolTable.get(id) == null) {
       return null;

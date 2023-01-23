@@ -44,7 +44,7 @@ public class XMLParser {
       throw new Exception("unexpected root node: " + root.getNodeName());
     }
     
-    Context ctx = new Context();
+    Context ctx = new Context(symbolTable);
     NamedNodeMap map = doc.getDocumentElement().getAttributes();
     if (map.getLength() > 0) {
       throw new Exception("unexpected context attribute(s)");
@@ -71,7 +71,6 @@ public class XMLParser {
     if (symbol == null || !symbol.getValue().equals(1)) {
       throw new Exception("settings not loaded");
     }
-    ctx.getSymbolTable().putAll(symbolTable);
     return ctx;
   }
   
@@ -109,7 +108,7 @@ public class XMLParser {
   }
   
   private Panel parsePanel(Node node) throws Exception {
-    Panel panel = new Panel();
+    Panel panel = new Panel(symbolTable);
     NamedNodeMap map = node.getAttributes();
     for (int i = 0; i < map.getLength(); i++) {
       Node attribute = map.item(i);
@@ -148,7 +147,7 @@ public class XMLParser {
   }
   
   private Chart parseChart(Node node) throws Exception {
-    Chart chart = new Chart();
+    Chart chart = new Chart(symbolTable);
     NamedNodeMap map = node.getAttributes();
     for (int i = 0; i < map.getLength(); i++) {
       Node attribute = map.item(i);
