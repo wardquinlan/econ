@@ -196,7 +196,10 @@ public class ChartRenderer {
       int x2 = x1 + chartWidth - 1;
       int y2 = y1;
       g.setColor(chart.getLineColor());
-      g.drawLine(x1, y1, x2, y2);
+      if (gridLine < pair.getMaxValue()) {
+        // don't draw top gridline because the RECT will take care of it
+        g.drawLine(x1, y1, x2, y2);
+      }
       g.setColor(panel.getFontColor());
       g.drawString(df.format(gridLine), x2 + CHART_HPADDING, y2);
     }

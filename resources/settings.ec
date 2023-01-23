@@ -1,6 +1,4 @@
-settings.chart.background.color = Ivory;
 settings.chart.line.color = DimGray;
-settings.chart.rect.color = Red;
 settings.chart.gridlines=12;
 settings.chart.legend.size=14;
 settings.chart.separator = 32;

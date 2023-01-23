@@ -167,6 +167,12 @@ public class XMLParser {
       Node attribute = map.item(i);
       if (attribute.getNodeName().equals("label")) {
         chart.setLabel(attribute.getNodeValue());
+      } else if (attribute.getNodeName().equals("backgroundcolor")) {
+        chart.setBackgroundColor(parseColorAttribute(attribute));
+      } else if (attribute.getNodeName().equals("linecolor")) {
+        chart.setLineColor(parseColorAttribute(attribute));
+      } else if (attribute.getNodeName().equals("rectcolor")) {
+        chart.setRectColor(parseColorAttribute(attribute));
       } else if (attribute.getNodeName().equals("span")) {
         int span = parseIntAttribute(attribute);
         if (span < 1 || span > 100) {
