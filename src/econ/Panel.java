@@ -25,6 +25,7 @@ public class Panel extends GUIObject {
   public Panel(Map<String, Symbol> symbolTable) {
     super(symbolTable);
     backgroundColor = new Color((int) symbolTable.get("defaults.panel.backgroundcolor").getValue());
+    fontColor = new Color((int) symbolTable.get("defaults.panel.fontcolor").getValue());
     dxIncr = (int) symbolTable.get("defaults.panel.dxincr").getValue();
     gridLineTextWidth = (int) symbolTable.get("defaults.panel.gridlinetextwidth").getValue();
     fontName = (String) symbolTable.get("defaults.panel.fontname").getValue();
