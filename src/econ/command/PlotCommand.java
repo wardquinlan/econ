@@ -66,7 +66,6 @@ public class PlotCommand implements Command {
       Series series = new Series(symbolTable);
       series.setType(Series.LINE); // TODO: in theory could support bar series - can look at series data type
       series.setTimeSeries(timeSeries);
-      series.setColor(new Color((int) symbolTable.get("settings.chart.line.color").getValue()));
       Chart chart = new Chart(symbolTable);
       chart.setSpan(100);
       chart.setLabel(Utils.stringWithNULL(timeSeries.getName()));

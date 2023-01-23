@@ -228,6 +228,10 @@ public class XMLParser {
       }
     }
     
+    if (series.getTimeSeries() == null) {
+      throw new Exception("missing series ref attribute");
+    }
+    
     NodeList nodeList = node.getChildNodes();
     for (int i = 0; i < nodeList.getLength(); i++) {
       Node node2 = nodeList.item(i);
