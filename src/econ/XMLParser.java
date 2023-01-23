@@ -206,7 +206,7 @@ public class XMLParser {
   }
   
   private Series parseSeries(Node node) throws Exception {
-    Series series = new Series();
+    Series series = new Series(symbolTable);
     NamedNodeMap map = node.getAttributes();
     for (int i = 0; i < map.getLength(); i++) {
       Node attribute = map.item(i);

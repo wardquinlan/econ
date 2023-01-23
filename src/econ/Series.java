@@ -1,8 +1,11 @@
 package econ;
 
 import java.awt.Color;
+import java.util.Map;
 
-public class Series {
+import econ.parser.Symbol;
+
+public class Series extends GUIObject {
   public static final int LINE = 1;
   public static final int BACKGROUND = 2;
   
@@ -10,6 +13,10 @@ public class Series {
   private int type;
   private Color color;
 
+  public Series(Map<String, Symbol> symbolTable) {
+    super(symbolTable);
+  }
+  
   public TimeSeries getTimeSeries() {
     return timeSeries;
   }

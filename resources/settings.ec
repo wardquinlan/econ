@@ -1,5 +1,4 @@
 settings.chart.line.color = DimGray;
-settings.chart.gridlines=12;
 settings.chart.legend.size=14;
 settings.chart.separator = 32;
 settings.chart.hpadding = 6;

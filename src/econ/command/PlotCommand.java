@@ -63,7 +63,7 @@ public class PlotCommand implements Command {
       ctx = xmlParser.parse();
     } else if (params.get(0) instanceof TimeSeries) {
       TimeSeries timeSeries = (TimeSeries) params.get(0);
-      Series series = new Series();
+      Series series = new Series(symbolTable);
       series.setType(Series.LINE); // TODO: in theory could support bar series - can look at series data type
       series.setTimeSeries(timeSeries);
       series.setColor(new Color((int) symbolTable.get("settings.chart.line.color").getValue()));
