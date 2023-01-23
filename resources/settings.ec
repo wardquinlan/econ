@@ -1,9 +1,3 @@
-settings.panel.background.color = LightGray;
-settings.panel.dxincr=5;
-settings.panel.gridlinetextwidth = 40;
-settings.panel.font.name = "Courier";
-settings.panel.font.color = DimGray;
-
 settings.chart.background.color = Ivory;
 settings.chart.line.color = DimGray;
 settings.chart.rect.color = Red;
