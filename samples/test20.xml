@@ -1,0 +1,20 @@
+<context>
+  <panel label="TEST20"
+    backgroundcolor="White"
+    dxincr="200"
+    gridlinetextwidth="50"
+    fontname="Serif.italic"
+    fontcolor="DimGray"
+    fontsize="14"
+    datefrequency="days">
+    
+    <chart label="TEST20"
+      backgroundcolor="White"
+      linecolor="DarkGray"
+      rectcolor="DarkGray">
+      <series ref="T1" color="Red"/>
+      <series ref="T2" color="Green"/>
+      <series ref="T3" color="Blue"/>
+    </chart>
+  </panel>
+</context>
