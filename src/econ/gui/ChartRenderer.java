@@ -31,9 +31,6 @@ public class ChartRenderer {
   final private Color CHART_BACKGROUND;
   final private Color CHART_RECT;
   final private Color CHART_LINE;
-  final private Color PANEL_FONT_COLOR;
-  final private String PANEL_FONT_NAME;
-  final private Integer PANEL_FONT_SIZE;
   final private int CHART_SEPARATOR;
   final private int CHART_HPADDING;
   final private int CHART_VPADDING;
@@ -60,9 +57,6 @@ public class ChartRenderer {
     CHART_BACKGROUND = new Color((int) ctx.get("settings.chart.background.color"));
     CHART_RECT = new Color((int) ctx.get("settings.chart.rect.color"));
     CHART_LINE = new Color((int) ctx.get("settings.chart.line.color"));
-    PANEL_FONT_COLOR = new Color((int) ctx.get("settings.panel.font.color"));
-    PANEL_FONT_NAME = (String) ctx.get("settings.panel.font.name");
-    PANEL_FONT_SIZE = (Integer) ctx.get("settings.panel.font.size");
     CHART_SEPARATOR = (int) ctx.get("settings.chart.separator");
     CHART_HPADDING = (int) ctx.get("settings.chart.hpadding");
     CHART_VPADDING = (int) ctx.get("settings.chart.vpadding");
@@ -72,13 +66,10 @@ public class ChartRenderer {
     chartWidth = component.getWidth() - 1 - 2 * CHART_HPADDING - panel.getGridLineTextWidth();
     chartHeight = (component.getHeight() - CHART_SEPARATOR) * chart.getSpan() / 100;
     
-    if (PANEL_FONT_NAME != null && PANEL_FONT_SIZE != null) {
-      g.setFont(new Font(PANEL_FONT_NAME, Font.PLAIN, PANEL_FONT_SIZE));
-    } else if (PANEL_FONT_NAME != null) {
-      g.setFont(new Font(PANEL_FONT_NAME, Font.PLAIN, g.getFont().getSize()));
-    } else if (PANEL_FONT_SIZE != null) {
-      g.setFont(new Font(g.getFont().getName(), Font.PLAIN, PANEL_FONT_SIZE));
-    }
+    // uncomment to reveal system font name and size
+    // System.out.println("****" + g.getFont().getFontName());
+    // System.out.println("****" + g.getFont().getSize());
+    g.setFont(new Font(panel.getFontName(), Font.PLAIN, panel.getFontSize()));
   }
   
   public void drawChartBackground(Chart chart, boolean withMonthLegend, int idxBase) {
@@ -94,7 +85,7 @@ public class ChartRenderer {
     g.drawRect(CHART_HPADDING, yBase, chartWidth, chartHeight - CHART_SEPARATOR - 1);
     
     // Draw the label
-    g.setColor(PANEL_FONT_COLOR);
+    g.setColor(panel.getFontColor());
     g.drawString(chart.getLabel(), CHART_HPADDING, yBase - CHART_VPADDING);
     
     // Draw the vertical grid lines
@@ -114,7 +105,7 @@ public class ChartRenderer {
         g.drawLine(x, yBase + 1, x, yBase + chartHeight - CHART_SEPARATOR - 1);
 
         if (withMonthLegend) {
-          g.setColor(PANEL_FONT_COLOR);
+          g.setColor(panel.getFontColor());
           g.drawString(Utils.getMonthString(cal), x, component.getHeight() - CHART_SEPARATOR + g.getFontMetrics(g.getFont()).getHeight());
         }
       }
@@ -172,7 +163,7 @@ public class ChartRenderer {
       int y2 = y1;
       g.setColor(CHART_LINE);
       g.drawLine(x1, y1, x2, y2);
-      g.setColor(PANEL_FONT_COLOR);
+      g.setColor(panel.getFontColor());
       g.drawString(df.format(gridLine), x2 + CHART_HPADDING, y2);
     }
   }
