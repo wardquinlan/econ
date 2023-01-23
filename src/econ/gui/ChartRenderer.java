@@ -19,6 +19,7 @@ import org.apache.commons.logging.LogFactory;
 
 import econ.Chart;
 import econ.Context;
+import econ.Panel;
 import econ.Series;
 import econ.TimeSeries;
 import econ.Utils;
@@ -38,7 +39,6 @@ public class ChartRenderer {
   final private int CHART_LEGEND_SIZE;
   final private int DXINCR;
   final private int CHART_GRIDLINES;
-  final private int GRID_LINE_TEXT_WIDTH;
   final private int chartWidth;
   final private int chartHeight;
   final private JComponent component;
@@ -48,7 +48,7 @@ public class ChartRenderer {
   final private Calendar cal;
   final private int yBase;
   
-  public ChartRenderer(Chart chart, JComponent component, TimeSeries timeSeriesCollapsed, Graphics g, Context ctx, int yBase) {
+  public ChartRenderer(Panel panel, Chart chart, JComponent component, TimeSeries timeSeriesCollapsed, Graphics g, Context ctx, int yBase) {
     this.component = component;
     this.timeSeriesCollapsed = timeSeriesCollapsed;
     this.strokeGridlines = new BasicStroke(1, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 0, new float[] {1f, 2f}, 0);
@@ -68,9 +68,8 @@ public class ChartRenderer {
     DXINCR = (int) ctx.get("settings.panel.dxincr");
     CHART_GRIDLINES = (int) ctx.get("settings.chart.gridlines");
     CHART_LEGEND_SIZE = (int) ctx.get("settings.chart.legend.size");
-    GRID_LINE_TEXT_WIDTH = (int) ctx.get("settings.panel.gridlinetextwidth");
     
-    chartWidth = component.getWidth() - 1 - 2 * CHART_HPADDING - GRID_LINE_TEXT_WIDTH;
+    chartWidth = component.getWidth() - 1 - 2 * CHART_HPADDING - panel.getGridLineTextWidth();
     chartHeight = (component.getHeight() - CHART_SEPARATOR) * chart.getSpan() / 100;
     
     if (PANEL_FONT_NAME != null && PANEL_FONT_SIZE != null) {

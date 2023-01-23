@@ -1,5 +1,12 @@
 <context>
-  <panel label="S&amp;P 500 vs Selected Treasury benchmark Rates" dxincr="20">
+  <panel label="S&amp;P 500 vs Selected Treasury benchmark Rates"
+    backgroundcolor="LightSlateGray"
+    dxincr="20"
+    gridlinetextwidth="100"
+    fontname="Serif.italic"
+    fontcolor="#0f0f0f"
+    fontsize="16"
+    datefrequency="days">
     <chart label="S&amp;P 500" span="70">
       <series ref="SPX" color="Gray"/>
     </chart>

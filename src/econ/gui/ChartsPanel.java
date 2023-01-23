@@ -37,7 +37,6 @@ public class ChartsPanel extends JPanel {
   private final int CHART_SEPARATOR;
   private final int DXINCR;
   private final int CHART_HPADDING;
-  private final int GRID_LINE_TEXT_WIDTH;
   private final int TOOLTIPS_MAXLINE;
   private final TimeSeries timeSeriesCollapsed;
   private int idxBase;
@@ -81,7 +80,6 @@ public class ChartsPanel extends JPanel {
     CHART_SEPARATOR = (int) ctx.get("settings.chart.separator");
     DXINCR = (int) ctx.get("settings.panel.dxincr");
     CHART_HPADDING = (int) ctx.get("settings.chart.hpadding");
-    GRID_LINE_TEXT_WIDTH = (int) ctx.get("settings.panel.gridlinetextwidth");
     TOOLTIPS_MAXLINE = (int) ctx.get("settings.tooltips.maxline");
 
     // consolidate all time series into a single list
@@ -99,7 +97,7 @@ public class ChartsPanel extends JPanel {
     // go to end on first invokation
     if (firstInvokation) {
       firstInvokation = false;
-      int chartWidth = getWidth() - 1 - 2 * CHART_HPADDING - GRID_LINE_TEXT_WIDTH;
+      int chartWidth = getWidth() - 1 - 2 * CHART_HPADDING - panel.getGridLineTextWidth();
       idxBase = Math.max(timeSeriesCollapsed.size() - chartWidth / DXINCR, 0);    
     }
     
@@ -115,7 +113,7 @@ public class ChartsPanel extends JPanel {
       
       // create the renderer
       int chartHeight = (getHeight() - CHART_SEPARATOR) * chart.getSpan() / 100;
-      ChartRenderer r = new ChartRenderer(chart, this, timeSeriesCollapsed, g, ctx, yBase);
+      ChartRenderer r = new ChartRenderer(panel, chart, this, timeSeriesCollapsed, g, ctx, yBase);
       
       // calculate the minimum and maximum
       MinMaxPair pair = new MinMaxPair();
@@ -152,14 +150,14 @@ public class ChartsPanel extends JPanel {
   }
 
   private void keyLeft() {
-    int chartWidth = getWidth() - 1 - 2 * CHART_HPADDING - GRID_LINE_TEXT_WIDTH;
+    int chartWidth = getWidth() - 1 - 2 * CHART_HPADDING - panel.getGridLineTextWidth();
     int idxIncr = (chartWidth / DXINCR) / 8;
     idxBase = Math.max(idxBase - idxIncr, 0);
     repaint();
   }
   
   private void keyRight() {
-    int chartWidth = getWidth() - 1 - 2 * CHART_HPADDING - GRID_LINE_TEXT_WIDTH;
+    int chartWidth = getWidth() - 1 - 2 * CHART_HPADDING - panel.getGridLineTextWidth();
     int idxIncr = (chartWidth / DXINCR) / 8;
     idxBase = Math.min(idxBase + idxIncr, timeSeriesCollapsed.size() - 1);
     repaint();
@@ -171,7 +169,7 @@ public class ChartsPanel extends JPanel {
   }
   
   private void keyEnd() {
-    int chartWidth = getWidth() - 1 - 2 * CHART_HPADDING - GRID_LINE_TEXT_WIDTH;
+    int chartWidth = getWidth() - 1 - 2 * CHART_HPADDING - panel.getGridLineTextWidth();
     idxBase = Math.max(timeSeriesCollapsed.size() - chartWidth / DXINCR, 0);
     repaint();
   }
