@@ -228,7 +228,7 @@ public class XMLParser {
     }
     char ch = color.charAt(0);
     if (ch == '#') {
-      if (color.length() == 1) {
+      if (color.length() == 1 || color.length() > 7) {
         throw new Exception("invalid color attribute: " + color);
       }
       return new Color(Utils.parseHex(color.substring(1)));
