@@ -20,10 +20,6 @@ import javax.swing.JPanel;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import econ.Chart;
-import econ.Context;
-import econ.Panel;
-import econ.Series;
 import econ.TimeSeries;
 import econ.Utils;
 

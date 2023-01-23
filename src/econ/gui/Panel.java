@@ -1,4 +1,4 @@
-package econ;
+package econ.gui;
 
 import java.awt.Color;
 import java.util.ArrayList;

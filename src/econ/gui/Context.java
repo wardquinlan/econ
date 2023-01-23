@@ -1,4 +1,4 @@
-package econ;
+package econ.gui;
 
 import java.util.ArrayList;
 import java.util.HashMap;

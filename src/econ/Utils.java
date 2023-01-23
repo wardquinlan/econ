@@ -12,7 +12,10 @@ import java.util.Map;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import econ.gui.Chart;
 import econ.gui.MinMaxPair;
+import econ.gui.Panel;
+import econ.gui.Series;
 
 public class Utils {
   private static Log log = LogFactory.getFactory().getInstance(Utils.class);

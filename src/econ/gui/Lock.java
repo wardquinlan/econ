@@ -1,4 +1,4 @@
-package econ;
+package econ.gui;
 
 public class Lock {
   private static Lock lock = new Lock();

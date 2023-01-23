@@ -11,15 +11,15 @@ import java.util.Map;
 
 import javax.swing.JFrame;
 
-import econ.Chart;
-import econ.Context;
-import econ.Lock;
-import econ.Panel;
-import econ.Series;
 import econ.TimeSeries;
 import econ.Utils;
-import econ.XMLParser;
+import econ.gui.Chart;
+import econ.gui.Context;
 import econ.gui.Frame;
+import econ.gui.Lock;
+import econ.gui.Panel;
+import econ.gui.Series;
+import econ.gui.XMLParser;
 import econ.parser.Symbol;
 
 public class PlotCommand implements Command {
