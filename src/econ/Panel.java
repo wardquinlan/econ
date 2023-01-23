@@ -13,6 +13,7 @@ public class Panel extends GUIObject {
   public static final int DATE_FREQUENCY_YEARS = 3;
   
   private Color backgroundColor;
+  private Color fontColor;
   private int dxIncr;
   private int gridLineTextWidth;
   private String fontName;
@@ -89,5 +90,13 @@ public class Panel extends GUIObject {
 
   public void setDateFrequency(int dateFrequency) {
     this.dateFrequency = dateFrequency;
+  }
+
+  public Color getFontColor() {
+    return fontColor;
+  }
+
+  public void setFontColor(Color fontColor) {
+    this.fontColor = fontColor;
   }
 }

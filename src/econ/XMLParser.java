@@ -118,6 +118,16 @@ public class XMLParser {
         panel.setBackgroundColor(parseColorAttribute(attribute));
       } else if (attribute.getNodeName().equals("dxincr")) {
         panel.setDxIncr(parseIntAttribute(attribute));
+      } else if (attribute.getNodeName().equals("gridlinetextwidth")) {
+        panel.setGridLineTextWidth(parseIntAttribute(attribute));
+      } else if (attribute.getNodeName().equals("fontname")) {
+        panel.setFontName(attribute.getNodeValue());
+      } else if (attribute.getNodeName().equals("fontcolor")) {
+        panel.setFontColor(parseColorAttribute(attribute));
+      } else if (attribute.getNodeName().equals("fontsize")) {
+        panel.setFontSize(parseIntAttribute(attribute));
+      } else if (attribute.getNodeName().equals("datefrequency")) {
+        panel.setDateFrequency(parseDateFrequencyAttribute(attribute));
       } else {
         throw new Exception("unexpected panel attribute: " + attribute.getNodeName());
       }
@@ -224,34 +234,49 @@ public class XMLParser {
     try {
       return Integer.parseInt(attribute.getNodeValue());
     } catch(NumberFormatException e) {
-      throw new Exception(generateAttributeExceptionString(attribute));
+      throw generateAttributeException(attribute);
     }
   }
   
   private Color parseColorAttribute(Node attribute) throws Exception {
     String color = attribute.getNodeValue();
     if (color.length() == 0) {
-      throw new Exception(generateAttributeExceptionString(attribute));
+      throw generateAttributeException(attribute);
     }
     char ch = color.charAt(0);
     if (ch == '#') {
       if (color.length() == 1 || color.length() > 7) {
-        throw new Exception(generateAttributeExceptionString(attribute));
+        throw generateAttributeException(attribute);
       }
       return new Color(Utils.parseHex(color.substring(1)));
     } else {
       Symbol symbol = symbolTable.get(color);
       if (symbol == null) {
-        throw new Exception(generateAttributeExceptionString(attribute));
+        throw generateAttributeException(attribute);
       }
       if (!(symbol.getValue() instanceof Integer)) {
-        throw new Exception(generateAttributeExceptionString(attribute));
+        throw generateAttributeException(attribute);
       }
       return new Color((Integer) symbol.getValue());
     }
   }
   
-  private String generateAttributeExceptionString(Node attribute) {
-    return "invalid attribute: " + attribute.getNodeName() + "=" + attribute.getNodeValue();
+  private int parseDateFrequencyAttribute(Node attribute) throws Exception {
+    switch(attribute.getNodeValue()) {
+    case "none":
+      return Panel.DATE_FREQUENCY_NONE;
+    case "days":
+      return Panel.DATE_FREQUENCY_DAYS;
+    case "months":
+      return Panel.DATE_FREQUENCY_MONTHS;
+    case "years":
+      return Panel.DATE_FREQUENCY_YEARS;
+    default:
+      throw generateAttributeException(attribute);
+    }
+  }
+  
+  private Exception generateAttributeException(Node attribute) {
+    return new Exception("invalid attribute: " + attribute.getNodeName() + "=" + attribute.getNodeValue());
   }
 }
