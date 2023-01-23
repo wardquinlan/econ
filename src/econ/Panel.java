@@ -1,5 +1,6 @@
 package econ;
 
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Map;
 
@@ -11,7 +12,7 @@ public class Panel extends GUIObject {
   public static final int DATE_FREQUENCY_MONTHS = 2;
   public static final int DATE_FREQUENCY_YEARS = 3;
   
-  private int backgroundColor;
+  private Color backgroundColor;
   private int dxIncr;
   private int gridLineTextWidth;
   private String fontName;
@@ -22,7 +23,7 @@ public class Panel extends GUIObject {
 
   public Panel(Map<String, Symbol> symbolTable) {
     super(symbolTable);
-    backgroundColor = (int) symbolTable.get("defaults.panel.backgroundcolor").getValue();
+    backgroundColor = new Color((int) symbolTable.get("defaults.panel.backgroundcolor").getValue());
     dxIncr = (int) symbolTable.get("defaults.panel.dxincr").getValue();
     gridLineTextWidth = (int) symbolTable.get("defaults.panel.gridlinetextwidth").getValue();
     fontName = (String) symbolTable.get("defaults.panel.fontname").getValue();
@@ -42,11 +43,11 @@ public class Panel extends GUIObject {
     return charts;
   }
 
-  public int getBackgroundColor() {
+  public Color getBackgroundColor() {
     return backgroundColor;
   }
 
-  public void setBackgroundColor(int backgroundColor) {
+  public void setBackgroundColor(Color backgroundColor) {
     this.backgroundColor = backgroundColor;
   }
 

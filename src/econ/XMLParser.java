@@ -114,6 +114,8 @@ public class XMLParser {
       Node attribute = map.item(i);
       if (attribute.getNodeName().equals("label")) {
         panel.setLabel(attribute.getNodeValue());
+      } else if (attribute.getNodeName().equals("backgroundcolor")) {
+          panel.setBackgroundColor(parseColor(attribute.getNodeValue()));
       } else {
         throw new Exception("unexpected panel attribute: " + attribute.getNodeName());
       }
@@ -206,26 +208,7 @@ public class XMLParser {
         }
         series.setTimeSeries((TimeSeries) symbol.getValue());
       } else if (attribute.getNodeName().equals("color")) {
-        String color = attribute.getNodeValue();
-        if (color.length() == 0) {
-          throw new Exception("invalid series color attribute (empty)");
-        }
-        char ch = color.charAt(0);
-        if (ch == '#') {
-          if (color.length() == 1) {
-            throw new Exception("invalid series color attribute: " + color);
-          }
-          series.setColor(new Color(Utils.parseHex(color.substring(1))));
-        } else {
-          Symbol symbol = symbolTable.get(color);
-          if (symbol == null) {
-            throw new Exception("series color attribute not found: " + color);
-          }
-          if (!(symbol.getValue() instanceof Integer)) {
-            throw new Exception("invalid series color attribute: " + color);
-          }
-          series.setColor(new Color((Integer) symbol.getValue()));
-        }
+        series.setColor(parseColor(attribute.getNodeValue()));
       }
     }
     
@@ -237,5 +220,27 @@ public class XMLParser {
       }
     }
     return series;
+  }
+  
+  private Color parseColor(String color) throws Exception {
+    if (color.length() == 0) {
+      throw new Exception("invalid color attribute (empty)");
+    }
+    char ch = color.charAt(0);
+    if (ch == '#') {
+      if (color.length() == 1) {
+        throw new Exception("invalid color attribute: " + color);
+      }
+      return new Color(Utils.parseHex(color.substring(1)));
+    } else {
+      Symbol symbol = symbolTable.get(color);
+      if (symbol == null) {
+        throw new Exception("color attribute not found: " + color);
+      }
+      if (!(symbol.getValue() instanceof Integer)) {
+        throw new Exception("invalid color attribute: " + color);
+      }
+      return new Color((Integer) symbol.getValue());
+    }
   }
 }
