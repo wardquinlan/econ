@@ -96,18 +96,56 @@ public class ChartRenderer {
       int x = CHART_HPADDING + (idx - idxBase) * panel.getDxIncr();
       cal.setTime(timeSeriesCollapsed.get(idx - 1).getDate());
       int monthPrev = cal.get(Calendar.MONTH);
+      int yearPrev = cal.get(Calendar.YEAR);
 
       cal.setTime(timeSeriesCollapsed.get(idx).getDate());
       int month = cal.get(Calendar.MONTH);
+      int year = cal.get(Calendar.YEAR);
       
-      if (month != monthPrev) {
+      switch(panel.getDateFrequency()) {
+      case Panel.DATE_FREQUENCY_DAYS:
         g.setColor(CHART_LINE);
         g.drawLine(x, yBase + 1, x, yBase + chartHeight - CHART_SEPARATOR - 1);
 
         if (withMonthLegend) {
           g.setColor(panel.getFontColor());
-          g.drawString(Utils.getMonthString(cal), x, component.getHeight() - CHART_SEPARATOR + g.getFontMetrics(g.getFont()).getHeight());
+          if (month != monthPrev) {
+            g.drawString(Utils.getMonthString(cal, false), x, component.getHeight() - CHART_SEPARATOR + g.getFontMetrics(g.getFont()).getHeight());
+          } else {
+            g.drawString(Utils.getDayString(cal), x, component.getHeight() - CHART_SEPARATOR + g.getFontMetrics(g.getFont()).getHeight());
+          }
         }
+        break;
+
+      case Panel.DATE_FREQUENCY_MONTHS:
+        if (month != monthPrev) {
+          g.setColor(CHART_LINE);
+          g.drawLine(x, yBase + 1, x, yBase + chartHeight - CHART_SEPARATOR - 1);
+
+          if (withMonthLegend) {
+            g.setColor(panel.getFontColor());
+            g.drawString(Utils.getMonthString(cal, true), x, component.getHeight() - CHART_SEPARATOR + g.getFontMetrics(g.getFont()).getHeight());
+          }
+        }
+        break;
+        
+      case Panel.DATE_FREQUENCY_YEARS:
+        if (year != yearPrev) {
+          g.setColor(CHART_LINE);
+          g.drawLine(x, yBase + 1, x, yBase + chartHeight - CHART_SEPARATOR - 1);
+
+          if (withMonthLegend) {
+            g.setColor(panel.getFontColor());
+            g.drawString(Utils.getYearString(cal), x, component.getHeight() - CHART_SEPARATOR + g.getFontMetrics(g.getFont()).getHeight());
+          }
+        }
+        break;
+        
+      case Panel.DATE_FREQUENCY_NONE:
+        break;
+        
+      default:
+        Utils.ASSERT(false, "invalid date frequency: " + panel.getDateFrequency());
       }
     }
   }

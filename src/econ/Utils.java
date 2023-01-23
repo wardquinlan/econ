@@ -18,6 +18,7 @@ public class Utils {
   private static Log log = LogFactory.getFactory().getInstance(Utils.class);
   public static final Map<Integer, String> MONTHS = new HashMap<Integer, String>();
   static {
+    MONTHS.put(0, "J");
     MONTHS.put(1, "F");
     MONTHS.put(2, "M");
     MONTHS.put(3, "A");
@@ -60,12 +61,20 @@ public class Utils {
     }
   }
   
-  public static String getMonthString(Calendar cal) {
+  public static String getMonthString(Calendar cal, boolean withYear) {
     int month = cal.get(Calendar.MONTH);
-    if (month > 0) {
+    if (!withYear || month > 0) {
       return MONTHS.get(month);
     }
     return Integer.toString(cal.get(Calendar.YEAR)).substring(2);
+  }
+  
+  public static String getDayString(Calendar cal) {
+    return Integer.toString(cal.get(Calendar.DAY_OF_MONTH));
+  }
+  
+  public static String getYearString(Calendar cal) {
+    return Integer.toString(cal.get(Calendar.YEAR));
   }
   
   public static int parseHex(String string) throws Exception {
