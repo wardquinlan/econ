@@ -6,8 +6,8 @@ import java.util.Map;
 
 public class Token {
   public static final int SYMBOL   = 0;  // some_symbol
-  public static final int INTEGER  = 1;  // 3.14159
-  public static final int REAL     = 2;
+  public static final int INTEGER  = 1;  // 10
+  public static final int REAL     = 2;  // 3.14159
   public static final int STRING   = 3;  // "hello"
   public static final int LPAREN   = 4;  // (
   public static final int RPAREN   = 5;  // )
@@ -31,6 +31,8 @@ public class Token {
   public static final int INC      = 23; // include
   public static final int FUNC     = 24; // function()
   public static final int CONST    = 25; // const
+  public static final int AND      = 26; // &&
+  public static final int OR       = 27; // ||
   
   public static Map<Integer, String> map = new HashMap<Integer, String>();
   static {

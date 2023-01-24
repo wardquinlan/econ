@@ -93,6 +93,30 @@ public class Parser {
   }
   
   private Object expression(Token tk, TokenIterator itr) throws Exception {
+    Object val1 = expressionL2(tk, itr);
+    while (true) {
+      if (!itr.hasNext()) {
+        return val1;
+      }
+      if (itr.peek().getType() == Token.AND) {
+        itr.next();
+        if (!itr.hasNext()) {
+          log.error("missing RHS on AND");
+          throw new Exception("syntax error");
+        }
+        tk = itr.next();
+        Object val2 = expressionL2(tk, itr);
+      } else if (itr.peek().getType() == Token.OR) {
+        
+      } else {
+        break;
+      }
+    }
+    
+    return val1;
+  }
+  
+  private Object expressionL2(Token tk, TokenIterator itr) throws Exception {
     Object val1 = simpleExpression(tk, itr);
     if (!itr.hasNext()) {
       return val1;
