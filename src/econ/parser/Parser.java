@@ -92,9 +92,28 @@ public class Parser {
     symbolTable.put(symbolName, new Symbol(val, true));
   }
   
-  // I believe COND goes right here, before expression
-  
   private Object expression(Token tk, TokenIterator itr) throws Exception {
+    Object val1 = simpleExpression(tk, itr);
+    if (!itr.hasNext()) {
+      return val1;
+    }
+    
+    if (itr.peek().getType() == Token.EQ) {
+      itr.next();
+      if (!itr.hasNext()) {
+        log.error("missing RHS on EQ");
+        throw new Exception("syntax error");
+      }
+      tk = itr.next();
+      Object val2 = simpleExpression(tk, itr);
+      val1 = (val1.equals(val2));
+    } else if (itr.peek().getType() == Token.NE) {
+      
+    }
+    return val1;
+  }
+  
+  private Object simpleExpression(Token tk, TokenIterator itr) throws Exception {
     Object val1 = term(tk, itr);
     while (true) {
       if (!itr.hasNext()) {

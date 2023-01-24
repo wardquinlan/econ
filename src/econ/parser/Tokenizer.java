@@ -126,15 +126,19 @@ public class Tokenizer {
           tk.setValue(sb.toString());
           list.add(tk);
         } else if (val == '=' && rdr.peek() == '=') {
+          rdr.read();
           Token tk = new Token(Token.EQ);
           list.add(tk);
         } else if (val == '!' && rdr.peek() == '=') {
+          rdr.read();
           Token tk = new Token(Token.NE);
           list.add(tk);
         } else if (val == '<' && rdr.peek() == '=') {
+          rdr.read();
           Token tk = new Token(Token.LTE);
           list.add(tk);
         } else if (val == '>' && rdr.peek() == '=') {
+          rdr.read();
           Token tk = new Token(Token.GTE);
           list.add(tk);
         } else if (val == '^') {
