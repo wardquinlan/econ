@@ -3,9 +3,9 @@
     backgroundcolor="White"
     dxincr="200"
     gridlinetextwidth="50"
-    fontname="Serif.italic"
+    fontname="SansSerif.plain"
     fontcolor="DimGray"
-    fontsize="14"
+    fontsize="12"
     datefrequency="days">
     
     <chart label="TEST20"
