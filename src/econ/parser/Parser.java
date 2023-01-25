@@ -130,9 +130,16 @@ public class Parser {
       }
       tk = itr.next();
       Object val2 = simpleExpression(tk, itr);
-      val1 = (val1.equals(val2));
+      val1 = val1.equals(val2);
     } else if (itr.peek().getType() == Token.NE) {
-      
+      itr.next();
+      if (!itr.hasNext()) {
+        log.error("missing RHS on EQ");
+        throw new Exception("syntax error");
+      }
+      tk = itr.next();
+      Object val2 = simpleExpression(tk, itr);
+      val1 = !val1.equals(val2);
     }
     return val1;
   }
