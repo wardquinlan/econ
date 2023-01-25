@@ -140,6 +140,26 @@ public class Parser {
       tk = itr.next();
       Object val2 = simpleExpression(tk, itr);
       val1 = !val1.equals(val2);
+    } else if (itr.peek().getType() == Token.LT) {
+      itr.next();
+      if (!itr.hasNext()) {
+        log.error("missing RHS on LT");
+        throw new Exception("syntax error");
+      }
+      tk = itr.next();
+      Object val2 = simpleExpression(tk, itr);
+      if (val1 instanceof Integer && val2 instanceof Integer) {
+        val1 = ((Integer) val1 < (Integer) val2);
+      } else if (val1 instanceof Integer && val2 instanceof Float) {
+        val1 = ((Integer) val1 < (Float) val2);
+      } else if (val1 instanceof Float && val2 instanceof Integer) {
+        val1 = ((Float) val1 < (Integer) val2);
+      } else if (val1 instanceof Float && val2 instanceof Float) {
+        val1 = ((Float) val1 < (Float) val2);
+      } else {
+        log.error("invalid LT operation");
+        throw new Exception("syntax error");
+      }
     }
     return val1;
   }
