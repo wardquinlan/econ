@@ -297,7 +297,7 @@ public class Parser {
   }
   
   private Object primary(Token tk, TokenIterator itr) throws Exception {
-    if (tk.getType() == Token.INTEGER || tk.getType() == Token.REAL || tk.getType() == Token.STRING) {
+    if (tk.getType() == Token.INTEGER || tk.getType() == Token.REAL || tk.getType() == Token.STRING || tk.getType() == Token.BOOLEAN) {
       return tk.getValue();
     }
     if (tk.getType() == Token.PLUS) {
