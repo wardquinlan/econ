@@ -67,10 +67,22 @@ public class Tokenizer {
           } else if (functionCaller.isFunction(sb.toString())) {
             tk = new Token(Token.FUNC);
             tk.setFile(file); // set the file so that the XML parser is able to calculate the relative path
+          } else if (sb.toString().equals("and")) {
+            tk = new Token(Token.AND);
+          } else if (sb.toString().equals("or")) {
+            tk = new Token(Token.OR);
+          } else if (sb.toString().equals("false")) {
+            tk = new Token(Token.BOOLEAN);
+            tk.setValue(false);
+          } else if (sb.toString().equals("true")) {
+            tk = new Token(Token.BOOLEAN);
+            tk.setValue(true);
           } else {
             tk = new Token(Token.SYMBOL);
           }
-          tk.setValue(sb.toString());
+          if (tk.getType() != Token.BOOLEAN) { 
+            tk.setValue(sb.toString());
+          }
           list.add(tk);
         } else if (val == '.' || Character.isDigit(val)) {
           StringBuffer sb = new StringBuffer();

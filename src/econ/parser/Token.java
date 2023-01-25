@@ -31,8 +31,9 @@ public class Token {
   public static final int INC      = 23; // include
   public static final int FUNC     = 24; // function()
   public static final int CONST    = 25; // const
-  public static final int AND      = 26; // &&
-  public static final int OR       = 27; // ||
+  public static final int AND      = 26; // and
+  public static final int OR       = 27; // or
+  public static final int BOOLEAN  = 28; // Boolean
   
   public static Map<Integer, String> map = new HashMap<Integer, String>();
   static {
@@ -62,6 +63,9 @@ public class Token {
     map.put(INC,     "INC");
     map.put(FUNC,    "FUNC");
     map.put(CONST,   "CONST");
+    map.put(AND,     "AND");
+    map.put(OR,      "OR");
+    map.put(BOOLEAN, "BOOLEAN");
   }
   
   private int type;

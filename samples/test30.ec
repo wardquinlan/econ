@@ -1,1 +1,1 @@
-print(3 == 4);
+false;
