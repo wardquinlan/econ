@@ -106,6 +106,12 @@ public class Parser {
         }
         tk = itr.next();
         Object val2 = expressionL2(tk, itr);
+        if (val1 instanceof Boolean && val2 instanceof Boolean) {
+          val1 = ((Boolean) val1) && ((Boolean) val2);
+        } else {
+          log.error("invalid AND operation");
+          throw new Exception("syntax error");
+        }
       } else if (itr.peek().getType() == Token.OR) {
         
       } else {
