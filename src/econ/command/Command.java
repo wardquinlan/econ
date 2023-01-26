@@ -7,7 +7,6 @@ import java.util.Map;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import econ.parser.FunctionCaller;
 import econ.parser.Symbol;
 
 /*
