@@ -39,7 +39,7 @@ public class InsertCommand implements Command {
     if (params.size() > 3) {
       throw new Exception("too many arguments");
     }
-    if (params.size() == 0) {
+    if (params.size() < 3) {
       throw new Exception("missing arguments");
     }
 
