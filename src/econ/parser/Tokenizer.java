@@ -198,6 +198,8 @@ public class Tokenizer {
         } else if (val == '/') {
           Token tk = new Token(Token.DIV);
           list.add(tk);
+        } else if (!Character.isWhitespace(val)) {
+          throw new Exception("unrecognized symbol: " + (char) val);
         }
       }
     } finally {
