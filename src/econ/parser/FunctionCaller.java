@@ -1,18 +1,11 @@
 package econ.parser;
 
-import java.awt.Font;
-import java.awt.GraphicsEnvironment;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 import java.io.File;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
-
-import javax.swing.JFrame;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -36,6 +29,7 @@ import econ.command.MetaCommand;
 import econ.command.NormalizeCommand;
 import econ.command.PlotCommand;
 import econ.command.PrintCommand;
+import econ.command.SizeCommand;
 
 public class FunctionCaller {
   private static Log log = LogFactory.getFactory().getInstance(FunctionCaller.class);
@@ -60,6 +54,7 @@ public class FunctionCaller {
     commandMap.put("insert", new InsertCommand());
     commandMap.put("collapse", new CollapseCommand());
     commandMap.put("normalize", new NormalizeCommand());
+    commandMap.put("size", new SizeCommand());
   }
   
   public boolean isFunction(String funcName) {
