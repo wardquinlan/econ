@@ -43,7 +43,7 @@ public class SizeCommand implements Command {
     }
     
     if (!(params.get(0) instanceof TimeSeries)) {
-      throw new Exception("'series' is not a series");
+      throw new Exception("'series' is not a Series");
     }
 
     TimeSeries timeSeries;

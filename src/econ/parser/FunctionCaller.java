@@ -13,6 +13,7 @@ import org.apache.commons.logging.LogFactory;
 import econ.TimeSeries;
 import econ.TimeSeriesDAO;
 import econ.Utils;
+import econ.command.AssertCommand;
 import econ.command.CatCommand;
 import econ.command.CollapseCommand;
 import econ.command.Command;
@@ -55,6 +56,7 @@ public class FunctionCaller {
     commandMap.put("collapse", new CollapseCommand());
     commandMap.put("normalize", new NormalizeCommand());
     commandMap.put("size", new SizeCommand());
+    commandMap.put("assert", new AssertCommand());
   }
   
   public boolean isFunction(String funcName) {
