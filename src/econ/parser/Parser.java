@@ -141,6 +141,11 @@ public class Parser {
     }
     
     // NOTE: could implement LT, LTE, GT, GTE for Strings, too (using String.compareTo())
+    // NOTE: all of these are the same level of precedence.  This differs from Java -
+    //       see https://introcs.cs.princeton.edu/java/11precedence/
+    //
+    //       We could probably put LT, LTE, GT and GTE into a 'expressionL3()' which I think would fix this.
+    // NOTE: My implementation of AND and OR is also slightly different from Java; see above web site.
     if (itr.peek().getType() == Token.EQ) {
       itr.next();
       if (!itr.hasNext()) {
