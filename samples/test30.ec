@@ -1,7 +1,15 @@
 . "test30a.ec";
 
-.3;
-a. = 5;
-print(a.);
+print(3 < 4);
+print(3 <= 4);
+print(4 > 3);
+print(4 >= 3);
+print(4 == 4);
+print(4 != 3);
 
-print("done");
+print(3 > 4);
+print(3 >= 4);
+print(4 < 3);
+print(4 <= 3);
+print(4 != 4);
+print(4 == 3);

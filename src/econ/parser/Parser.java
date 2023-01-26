@@ -140,6 +140,7 @@ public class Parser {
       return val1;
     }
     
+    // NOTE: could implement LT, LTE, GT, GTE for Strings, too (using String.compareTo())
     if (itr.peek().getType() == Token.EQ) {
       itr.next();
       if (!itr.hasNext()) {
@@ -174,10 +175,68 @@ public class Parser {
         val1 = ((Float) val1 < (Integer) val2);
       } else if (val1 instanceof Float && val2 instanceof Float) {
         val1 = ((Float) val1 < (Float) val2);
-        
-      // NOTE: could implement for Strings, too (using String.compareTo())
       } else {
         log.error("invalid LT operation");
+        throw new Exception("syntax error");
+      }
+    } else if (itr.peek().getType() == Token.GT) {
+      itr.next();
+      if (!itr.hasNext()) {
+        log.error("missing RHS on GT");
+        throw new Exception("syntax error");
+      }
+      tk = itr.next();
+      Object val2 = simpleExpression(tk, itr);
+      if (val1 instanceof Integer && val2 instanceof Integer) {
+        val1 = ((Integer) val1 > (Integer) val2);
+      } else if (val1 instanceof Integer && val2 instanceof Float) {
+        val1 = ((Integer) val1 > (Float) val2);
+      } else if (val1 instanceof Float && val2 instanceof Integer) {
+        val1 = ((Float) val1 > (Integer) val2);
+      } else if (val1 instanceof Float && val2 instanceof Float) {
+        val1 = ((Float) val1 > (Float) val2);
+      } else {
+        log.error("invalid GT operation");
+        throw new Exception("syntax error");
+      }
+    } else if (itr.peek().getType() == Token.LTE) {
+      itr.next();
+      if (!itr.hasNext()) {
+        log.error("missing RHS on LTE");
+        throw new Exception("syntax error");
+      }
+      tk = itr.next();
+      Object val2 = simpleExpression(tk, itr);
+      if (val1 instanceof Integer && val2 instanceof Integer) {
+        val1 = ((Integer) val1 < (Integer) val2);
+      } else if (val1 instanceof Integer && val2 instanceof Float) {
+        val1 = ((Integer) val1 < (Float) val2);
+      } else if (val1 instanceof Float && val2 instanceof Integer) {
+        val1 = ((Float) val1 < (Integer) val2);
+      } else if (val1 instanceof Float && val2 instanceof Float) {
+        val1 = ((Float) val1 < (Float) val2);
+      } else {
+        log.error("invalid LTE operation");
+        throw new Exception("syntax error");
+      }
+    } else if (itr.peek().getType() == Token.GTE) {
+      itr.next();
+      if (!itr.hasNext()) {
+        log.error("missing RHS on GTE");
+        throw new Exception("syntax error");
+      }
+      tk = itr.next();
+      Object val2 = simpleExpression(tk, itr);
+      if (val1 instanceof Integer && val2 instanceof Integer) {
+        val1 = ((Integer) val1 > (Integer) val2);
+      } else if (val1 instanceof Integer && val2 instanceof Float) {
+        val1 = ((Integer) val1 > (Float) val2);
+      } else if (val1 instanceof Float && val2 instanceof Integer) {
+        val1 = ((Float) val1 > (Integer) val2);
+      } else if (val1 instanceof Float && val2 instanceof Float) {
+        val1 = ((Float) val1 > (Float) val2);
+      } else {
+        log.error("invalid GTE operation");
         throw new Exception("syntax error");
       }
     }
