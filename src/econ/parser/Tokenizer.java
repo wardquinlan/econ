@@ -53,6 +53,9 @@ public class Tokenizer {
               break;
             }
           }
+        } else if (val == '.' && Character.isWhitespace(rdr.peek())) {
+          Token tk = new Token(Token.INC);
+          list.add(tk);
         } else if (Character.isLetter(val)) {
           Token tk = null;
           StringBuffer sb = new StringBuffer();
