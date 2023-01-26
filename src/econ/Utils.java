@@ -228,6 +228,7 @@ public class Utils {
     sb.append("<p><strong>" + "Name:</strong> " + (timeSeries.getName() == null ? "NULL" : timeSeries.getName()) + "</p>");
     sb.append("<p><strong>" + "Source:</strong> " + (timeSeries.getSource() == null ? "NULL" : timeSeries.getSource()) + "</p>");
     sb.append("<p><strong>" + "Source Id:</strong> " + (timeSeries.getSourceId() == null ? "NULL" : timeSeries.getSourceId()) + "</p>");
+    sb.append("<p><strong>" + "Size:</strong> " + timeSeries.size() + "</p>");
     if (timeSeries.getNotes() != null) {
       sb.append("<p></p>");
       sb.append("<p>" + splitHTML(timeSeries.getNotes(), maxline) + "</p>");
