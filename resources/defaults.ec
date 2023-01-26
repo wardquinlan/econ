@@ -4,7 +4,7 @@ defaults.panel.gridlinetextwidth = 40;
 defaults.panel.fontname = "SansSerif.plain";
 defaults.panel.fontcolor = Black;
 defaults.panel.fontsize = 12;
-defaults.panel.datefrequency = DATE_FREQUENCY_MONTHS;
+defaults.panel.datefrequency = DATE_FREQUENCY_YEARS;
 
 defaults.chart.backgroundcolor = White;
 defaults.chart.linecolor = LightGray;
