@@ -1,0 +1,23 @@
+<context>
+  <panel label="S&amp;P 500 vs Selected Treasury benchmark Rates"
+    backgroundcolor="LightGray"
+    dxincr="2"
+    gridlinetextwidth="50"
+    fontname="Serif.italic"
+    fontcolor="DimGray"
+    fontsize="14"
+    datefrequency="years">
+    
+    <chart label="S&amp;P 500" span="70"
+      backgroundcolor="Green"
+      linecolor="Orange"
+      rectcolor="Red">
+      <series ref="SPX" color="Gray"/>
+    </chart>
+    <chart label="Selected Treasury benchmark rates" span="30">
+      <series ref="TBILL3" color="Red"/>
+      <series ref="TBOND2" color="Green"/>
+      <series ref="TBOND10" color="Blue"/>
+    </chart>
+  </panel>
+</context>
