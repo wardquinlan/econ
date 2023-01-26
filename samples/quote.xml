@@ -1,23 +1,17 @@
 <context>
-  <panel label="S&amp;P 500 vs Selected Treasury benchmark Rates"
-    backgroundcolor="LightGray"
-    dxincr="2"
-    gridlinetextwidth="50"
-    fontname="Serif.italic"
-    fontcolor="DimGray"
-    fontsize="14"
-    datefrequency="years">
-    
-    <chart label="S&amp;P 500" span="70"
-      backgroundcolor="Green"
-      linecolor="Orange"
-      rectcolor="Red">
-      <series ref="SPX" color="Gray"/>
+  <panel label="3-Month Yield Curve">
+    <chart label="S&amp;P 500" 
+           span="80">
+
+      <series ref="SP500"/>
     </chart>
-    <chart label="Selected Treasury benchmark rates" span="30">
-      <series ref="TBILL3" color="Red"/>
-      <series ref="TBOND2" color="Green"/>
-      <series ref="TBOND10" color="Blue"/>
+
+    <chart label="10-Year Treasury Constant Maturity - 3-Month Treasury Constant Maturity" 
+           ngridlines="6"
+           span="20">
+
+      <series ref="T10Y3M" color="Red"/>
     </chart>
   </panel>
 </context>
+

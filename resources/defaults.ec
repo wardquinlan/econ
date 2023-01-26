@@ -3,7 +3,7 @@ defaults.panel.dxincr = 1;
 defaults.panel.gridlinetextwidth = 40;
 defaults.panel.fontname = "SansSerif.plain";
 defaults.panel.fontcolor = Black;
-defaults.panel.fontsize = 10;
+defaults.panel.fontsize = 12;
 defaults.panel.datefrequency = DATE_FREQUENCY_MONTHS;
 
 defaults.chart.backgroundcolor = White;

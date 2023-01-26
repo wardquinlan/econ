@@ -1,3 +1,4 @@
 SP500 = import("QDB", DBPATH + "/" + "SPX:US.txt");
-plot(SP500);
+T10Y3M = import("QTEMPLATE", TPFILE, "T10Y3M");
+plot("quote.xml");
 
