@@ -113,7 +113,19 @@ public class Parser {
           throw new Exception("syntax error");
         }
       } else if (itr.peek().getType() == Token.OR) {
-        
+        itr.next();
+        if (!itr.hasNext()) {
+          log.error("missing RHS on OR");
+          throw new Exception("syntax error");
+        }
+        tk = itr.next();
+        Object val2 = expressionL2(tk, itr);
+        if (val1 instanceof Boolean && val2 instanceof Boolean) {
+          val1 = ((Boolean) val1) || ((Boolean) val2);
+        } else {
+          log.error("invalid OR operation");
+          throw new Exception("syntax error");
+        }
       } else {
         break;
       }
@@ -162,6 +174,8 @@ public class Parser {
         val1 = ((Float) val1 < (Integer) val2);
       } else if (val1 instanceof Float && val2 instanceof Float) {
         val1 = ((Float) val1 < (Float) val2);
+        
+      // NOTE: could implement for Strings, too (using String.compareTo())
       } else {
         log.error("invalid LT operation");
         throw new Exception("syntax error");
