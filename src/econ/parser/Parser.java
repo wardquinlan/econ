@@ -406,6 +406,7 @@ public class Parser {
     if (tk.getType() == Token.INTEGER || tk.getType() == Token.REAL || tk.getType() == Token.STRING || tk.getType() == Token.BOOLEAN) {
       return tk.getValue();
     }
+    // NOTE: could probably implement NOT here if needed
     if (tk.getType() == Token.PLUS) {
       tk = itr.next();
       Object val = primary(tk, itr);
