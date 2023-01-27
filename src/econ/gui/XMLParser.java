@@ -183,6 +183,8 @@ public class XMLParser {
           throw new Exception("chart span attribute out of bounds: " + span);
         }
         chart.setSpan(span);
+      } else if (attribute.getNodeName().equals("scale")) {
+        chart.setScale(parseScaleAttribute(attribute));
       } else {
         throw new Exception("unexpected chart attribute: " + attribute.getNodeName());
       }
@@ -273,6 +275,17 @@ public class XMLParser {
       }
       return new Color((Integer) symbol.getValue());
     }
+  }
+  
+  private int parseScaleAttribute(Node attribute) throws Exception {
+    switch(attribute.getNodeValue()) {
+    case "linear":
+      return Chart.SCALE_LINEAR;
+    case "log":
+      return Chart.SCALE_LOG;
+    default:
+      throw generateAttributeException(attribute);
+      }
   }
   
   private int parseDateFrequencyAttribute(Node attribute) throws Exception {

@@ -7,12 +7,16 @@ import java.util.Map;
 import econ.parser.Symbol;
 
 public class Chart extends GUIObject {
+  public static final int SCALE_LINEAR = 0;
+  public static final int SCALE_LOG = 1;
+  
   private Color backgroundColor;
   private Color lineColor;
   private Color rectColor;
   private String label;
   private int nGridLines;
   private int span = 100;
+  private int scale = SCALE_LINEAR;
   private ArrayList<Float> gridlines = new ArrayList<>();
   private ArrayList<Series> series = new ArrayList<>();
   
@@ -78,5 +82,13 @@ public class Chart extends GUIObject {
 
   public void setNGridLines(int nGridLines) {
     this.nGridLines = nGridLines;
+  }
+
+  public int getScale() {
+    return scale;
+  }
+
+  public void setScale(int scale) {
+    this.scale = scale;
   }
 }
