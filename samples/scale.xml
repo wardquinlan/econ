@@ -1,0 +1,11 @@
+<context>
+  <panel label="T1">
+    <chart label="T1" span="50">
+      <series ref="T1" color="Red"/>
+    </chart>
+    
+    <chart label="T1" span="50">
+      <series ref="T1" color="Blue"/>
+    </chart>
+  </panel>
+</context>

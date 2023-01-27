@@ -183,7 +183,7 @@ public class ChartRenderer {
     return pair;
   }
   
-  public void drawHorizontalGridlines(float gridLines[], MinMaxPair pair) {
+  public void drawHorizontalGridlines(float gridLines[], MinMaxPair pair) throws Exception {
     for (float gridLine: gridLines) {
       int x1 = CHART_HPADDING + 1;
       int y1 = Utils.transform(gridLine, yBase + chartHeight - CHART_SEPARATOR - 1, yBase, pair.getMinValue(), pair.getMaxValue());
@@ -199,7 +199,7 @@ public class ChartRenderer {
     }
   }
   
-  public void drawSeries(MinMaxPair pair, int idxBase) {
+  public void drawSeries(MinMaxPair pair, int idxBase) throws Exception {
     for (Series series: chart.getSeries()) {
       TimeSeries timeSeries = Utils.normalize(timeSeriesCollapsed, series.getTimeSeries());
       g.setColor(series.getColor());
