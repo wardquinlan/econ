@@ -10,9 +10,6 @@ import java.util.TreeMap;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import econ.TimeSeries;
-import econ.TimeSeriesDAO;
-import econ.Utils;
 import econ.command.AssertCommand;
 import econ.command.CatCommand;
 import econ.command.CollapseCommand;
@@ -31,6 +28,9 @@ import econ.command.NormalizeCommand;
 import econ.command.PlotCommand;
 import econ.command.PrintCommand;
 import econ.command.SizeCommand;
+import econ.core.TimeSeries;
+import econ.core.TimeSeriesDAO;
+import econ.core.Utils;
 
 public class FunctionCaller {
   private static Log log = LogFactory.getFactory().getInstance(FunctionCaller.class);

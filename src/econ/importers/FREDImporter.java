@@ -19,9 +19,9 @@ import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
-import econ.TimeSeries;
-import econ.TimeSeriesData;
-import econ.Utils;
+import econ.core.TimeSeries;
+import econ.core.TimeSeriesData;
+import econ.core.Utils;
 import econ.parser.Symbol;
 
 public class FREDImporter implements Importer {

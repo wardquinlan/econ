@@ -3,7 +3,7 @@ package econ.gui;
 import java.awt.Color;
 import java.util.Map;
 
-import econ.TimeSeries;
+import econ.core.TimeSeries;
 import econ.parser.Symbol;
 
 public class Series extends GUIObject {

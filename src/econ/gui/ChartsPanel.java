@@ -20,8 +20,8 @@ import javax.swing.JPanel;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import econ.TimeSeries;
-import econ.Utils;
+import econ.core.TimeSeries;
+import econ.core.Utils;
 
 public class ChartsPanel extends JPanel {
   private static final long serialVersionUID = 8263376302676172047L;

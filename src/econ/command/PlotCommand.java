@@ -10,8 +10,8 @@ import java.util.Map;
 
 import javax.swing.JFrame;
 
-import econ.TimeSeries;
-import econ.Utils;
+import econ.core.TimeSeries;
+import econ.core.Utils;
 import econ.gui.Chart;
 import econ.gui.Context;
 import econ.gui.Frame;

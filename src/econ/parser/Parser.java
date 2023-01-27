@@ -9,7 +9,7 @@ import java.util.Map;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import econ.Utils;
+import econ.core.Utils;
 
 public class Parser {
   private static final Log log = LogFactory.getFactory().getInstance(Parser.class);

@@ -7,7 +7,7 @@ import java.util.Map;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import econ.TimeSeries;
+import econ.core.TimeSeries;
 import econ.parser.Symbol;
 
 public interface Importer {

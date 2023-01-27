@@ -12,9 +12,9 @@ import java.util.Map;
 import java.util.Set;
 import java.util.StringTokenizer;
 
-import econ.TimeSeries;
-import econ.TimeSeriesData;
-import econ.Utils;
+import econ.core.TimeSeries;
+import econ.core.TimeSeriesData;
+import econ.core.Utils;
 import econ.parser.Symbol;
 
 public class QTemplateImporter implements Importer {

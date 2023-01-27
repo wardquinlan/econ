@@ -5,8 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import econ.TimeSeries;
-import econ.Utils;
+import econ.core.TimeSeries;
+import econ.core.Utils;
 import econ.parser.Symbol;
 
 public class MetaCommand implements Command {

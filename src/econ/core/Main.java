@@ -1,4 +1,4 @@
-package econ;
+package econ.core;
 
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
