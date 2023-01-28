@@ -6,7 +6,7 @@
     fontname="SansSerif.plain"
     fontcolor="DimGray"
     fontsize="12"
-    datefrequency="days">
+    frequency="days">
     
     <chart label="TEST20"
       backgroundcolor="White"

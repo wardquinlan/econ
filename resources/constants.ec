@@ -142,7 +142,7 @@ const SlateGray=#708090;
 const DarkSlateGray=#2F4F4F;
 const Black=#000000;
 
-const DATE_FREQUENCY_NONE = 0;
-const DATE_FREQUENCY_DAYS = 1;
-const DATE_FREQUENCY_MONTHS = 2;
-const DATE_FREQUENCY_YEARS = 3;
+const FREQUENCY_NONE = 0;
+const FREQUENCY_DAYS = 1;
+const FREQUENCY_MONTHS = 2;
+const FREQUENCY_YEARS = 3;

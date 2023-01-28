@@ -1,5 +1,7 @@
 <context>
-  <panel label="3-Month Yield Curve" datefrequency="months">
+  <panel label="3-Month Yield Curve"
+         frequency="months">
+         
     <chart label="S&amp;P 500"
            scale="log" 
            span="80">

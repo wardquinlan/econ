@@ -131,8 +131,8 @@ public class XMLParser {
         panel.setFontColor(parseColorAttribute(attribute));
       } else if (attribute.getNodeName().equals("fontsize")) {
         panel.setFontSize(parseIntAttribute(attribute));
-      } else if (attribute.getNodeName().equals("datefrequency")) {
-        panel.setDateFrequency(parseDateFrequencyAttribute(attribute));
+      } else if (attribute.getNodeName().equals("frequency")) {
+        panel.setFrequency(parseFrequencyAttribute(attribute));
       } else {
         throw new Exception("unexpected panel attribute: " + attribute.getNodeName());
       }
@@ -291,16 +291,16 @@ public class XMLParser {
       }
   }
   
-  private int parseDateFrequencyAttribute(Node attribute) throws Exception {
+  private int parseFrequencyAttribute(Node attribute) throws Exception {
     switch(attribute.getNodeValue()) {
     case "none":
-      return Panel.DATE_FREQUENCY_NONE;
+      return Panel.FREQUENCY_NONE;
     case "days":
-      return Panel.DATE_FREQUENCY_DAYS;
+      return Panel.FREQUENCY_DAYS;
     case "months":
-      return Panel.DATE_FREQUENCY_MONTHS;
+      return Panel.FREQUENCY_MONTHS;
     case "years":
-      return Panel.DATE_FREQUENCY_YEARS;
+      return Panel.FREQUENCY_YEARS;
     default:
       throw generateAttributeException(attribute);
     }
