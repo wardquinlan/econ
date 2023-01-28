@@ -4,19 +4,18 @@ import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Map;
 
+import econ.core.LinearScaler;
+import econ.core.Scaler;
 import econ.parser.Symbol;
 
 public class Chart extends GUIObject {
-  public static final int SCALE_LINEAR = 0;
-  public static final int SCALE_LOG = 1;
-  
   private Color backgroundColor;
   private Color lineColor;
   private Color rectColor;
   private String label;
   private int nGridLines;
   private int span = 100;
-  private int scale = SCALE_LINEAR;
+  private Scaler scaler = new LinearScaler();
   private ArrayList<Float> gridlines = new ArrayList<>();
   private ArrayList<Series> series = new ArrayList<>();
   
@@ -84,11 +83,11 @@ public class Chart extends GUIObject {
     this.nGridLines = nGridLines;
   }
 
-  public int getScale() {
-    return scale;
+  public Scaler getScaler() {
+    return scaler;
   }
 
-  public void setScale(int scale) {
-    this.scale = scale;
+  public void setScaler(Scaler scaler) {
+    this.scaler = scaler;
   }
 }

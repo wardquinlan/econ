@@ -93,8 +93,8 @@ public class ChartRenderer {
       int month = cal.get(Calendar.MONTH);
       int year = cal.get(Calendar.YEAR);
       
-      switch(panel.getDateFrequency()) {
-      case Panel.DATE_FREQUENCY_DAYS:
+      switch(panel.getFrequency()) {
+      case Panel.FREQUENCY_DAYS:
         g.setColor(chart.getLineColor());
         g.drawLine(x, yBase + 1, x, yBase + chartHeight - CHART_SEPARATOR - 1);
 
@@ -108,7 +108,7 @@ public class ChartRenderer {
         }
         break;
 
-      case Panel.DATE_FREQUENCY_MONTHS:
+      case Panel.FREQUENCY_MONTHS:
         if (month != monthPrev) {
           g.setColor(chart.getLineColor());
           g.drawLine(x, yBase + 1, x, yBase + chartHeight - CHART_SEPARATOR - 1);
@@ -120,7 +120,7 @@ public class ChartRenderer {
         }
         break;
         
-      case Panel.DATE_FREQUENCY_YEARS:
+      case Panel.FREQUENCY_YEARS:
         if (year != yearPrev) {
           g.setColor(chart.getLineColor());
           g.drawLine(x, yBase + 1, x, yBase + chartHeight - CHART_SEPARATOR - 1);
@@ -132,11 +132,11 @@ public class ChartRenderer {
         }
         break;
         
-      case Panel.DATE_FREQUENCY_NONE:
+      case Panel.FREQUENCY_NONE:
         break;
         
       default:
-        Utils.ASSERT(false, "invalid date frequency: " + panel.getDateFrequency());
+        Utils.ASSERT(false, "invalid date frequency: " + panel.getFrequency());
       }
     }
   }
