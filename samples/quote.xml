@@ -1,6 +1,7 @@
 <context>
-  <panel label="3-Month Yield Curve">
-    <chart label="S&amp;P 500" 
+  <panel label="3-Month Yield Curve" datefrequency="months">
+    <chart label="S&amp;P 500"
+           scale="log" 
            span="80">
 
       <series ref="SP500"/>
@@ -8,6 +9,7 @@
 
     <chart label="10-Year Treasury Constant Maturity - 3-Month Treasury Constant Maturity" 
            ngridlines="6"
+           scale="linear"
            span="20">
 
       <series ref="T10Y3M" color="Red"/>

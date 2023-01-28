@@ -14,6 +14,9 @@ import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
+import econ.core.LinearScaler;
+import econ.core.LogScaler;
+import econ.core.Scaler;
 import econ.core.TimeSeries;
 import econ.core.Utils;
 import econ.parser.Symbol;
@@ -184,7 +187,7 @@ public class XMLParser {
         }
         chart.setSpan(span);
       } else if (attribute.getNodeName().equals("scale")) {
-        chart.setScale(parseScaleAttribute(attribute));
+        chart.setScaler(parseScaleAttribute(attribute));
       } else {
         throw new Exception("unexpected chart attribute: " + attribute.getNodeName());
       }
@@ -277,12 +280,12 @@ public class XMLParser {
     }
   }
   
-  private int parseScaleAttribute(Node attribute) throws Exception {
+  private Scaler parseScaleAttribute(Node attribute) throws Exception {
     switch(attribute.getNodeValue()) {
     case "linear":
-      return Chart.SCALE_LINEAR;
+      return new LinearScaler();
     case "log":
-      return Chart.SCALE_LOG;
+      return new LogScaler();
     default:
       throw generateAttributeException(attribute);
       }

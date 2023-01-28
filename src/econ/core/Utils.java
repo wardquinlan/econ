@@ -105,19 +105,12 @@ public class Utils {
   * 
   * f(s) = S * (s - s1) + y1
   */
-  public static int transform(Float s, int y1, int y2, Float s1, Float s2) throws Exception {
+  public static int transform(Scaler scaler, Float s, int y1, int y2, Float s1, Float s2) throws Exception {
     log.debug("transform called: s=" + s + ", y1=" + y1 + ", y2=" + y2 + ", s1=" + s1 + ", s2=" + s2);
-    Float S = (y2 - y1) / (scale(s2) - scale(s1));
-    Float ret =  S * (scale(s) - scale(s1)) + y1;
+    Float S = (y2 - y1) / (scaler.scale(s2) - scaler.scale(s1));
+    Float ret =  S * (scaler.scale(s) - scaler.scale(s1)) + y1;
     log.debug("transform returning: " + ret);
     return ret.intValue();
-  }
-  
-  private static float scale(float value) throws Exception {
-    if (value <= 0) {
-      throw new Exception("can't scale zero or negative values");
-    }
-    return (float) Math.log((float) value);
   }
   
   public static List<TimeSeries> consolidate(Panel panel) {

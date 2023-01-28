@@ -125,11 +125,11 @@ public class ChartsPanel extends JPanel {
         r.drawChartBackground(i == 0, idxBase);
         
         // draw the horizontal gridlines
-        r.drawHorizontalGridlines(gridLines, pair);
+        r.drawHorizontalGridlines(chart.getScaler(), gridLines, pair);
         
         // draw the series themselves
         ((Graphics2D) g).setStroke(strokeOrig);
-        r.drawSeries(pair, idxBase);
+        r.drawSeries(chart.getScaler(), pair, idxBase);
 
         // draw the legend
         r.drawLegend(mapLegend);

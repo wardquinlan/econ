@@ -17,6 +17,7 @@ import javax.swing.JComponent;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import econ.core.Scaler;
 import econ.core.TimeSeries;
 import econ.core.Utils;
 
@@ -183,10 +184,10 @@ public class ChartRenderer {
     return pair;
   }
   
-  public void drawHorizontalGridlines(float gridLines[], MinMaxPair pair) throws Exception {
+  public void drawHorizontalGridlines(Scaler scaler, float gridLines[], MinMaxPair pair) throws Exception {
     for (float gridLine: gridLines) {
       int x1 = CHART_HPADDING + 1;
-      int y1 = Utils.transform(gridLine, yBase + chartHeight - CHART_SEPARATOR - 1, yBase, pair.getMinValue(), pair.getMaxValue());
+      int y1 = Utils.transform(scaler, gridLine, yBase + chartHeight - CHART_SEPARATOR - 1, yBase, pair.getMinValue(), pair.getMaxValue());
       int x2 = x1 + chartWidth - 1;
       int y2 = y1;
       g.setColor(chart.getLineColor());
@@ -199,7 +200,7 @@ public class ChartRenderer {
     }
   }
   
-  public void drawSeries(MinMaxPair pair, int idxBase) throws Exception {
+  public void drawSeries(Scaler scaler, MinMaxPair pair, int idxBase) throws Exception {
     for (Series series: chart.getSeries()) {
       TimeSeries timeSeries = Utils.normalize(timeSeriesCollapsed, series.getTimeSeries());
       g.setColor(series.getColor());
@@ -207,8 +208,8 @@ public class ChartRenderer {
       for (int idx = idxBase + 1; idx < idxMax; idx++) {
         int x = CHART_HPADDING + (idx - idxBase) * panel.getDxIncr();
         if (timeSeries.get(idx - 1).getValue() != null) {
-          int v1 = Utils.transform(timeSeries.get(idx - 1).getValue(), yBase + chartHeight - CHART_SEPARATOR - 1, yBase, pair.getMinValue(), pair.getMaxValue());
-          int v2 = Utils.transform(timeSeries.get(idx).getValue(), yBase + chartHeight - CHART_SEPARATOR - 1, yBase, pair.getMinValue(), pair.getMaxValue());
+          int v1 = Utils.transform(scaler, timeSeries.get(idx - 1).getValue(), yBase + chartHeight - CHART_SEPARATOR - 1, yBase, pair.getMinValue(), pair.getMaxValue());
+          int v2 = Utils.transform(scaler, timeSeries.get(idx).getValue(), yBase + chartHeight - CHART_SEPARATOR - 1, yBase, pair.getMinValue(), pair.getMaxValue());
           g.drawLine(x - panel.getDxIncr(), v1, x, v2);
         }
       }
