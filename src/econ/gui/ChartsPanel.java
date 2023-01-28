@@ -116,27 +116,27 @@ public class ChartsPanel extends JPanel {
         pair = r.calculateMinMax(pair, ctx, timeSeries, timeSeriesCollapsed, idxBase);
       }
       
-      // calculate the gridlines
       float gridLines[];
       try {
+        // calculate the gridlines
         gridLines = r.calculateGridlines(pair);
+        
+        // draw the chart background
+        r.drawChartBackground(i == 0, idxBase);
+        
+        // draw the horizontal gridlines
+        r.drawHorizontalGridlines(gridLines, pair);
+        
+        // draw the series themselves
+        ((Graphics2D) g).setStroke(strokeOrig);
+        r.drawSeries(pair, idxBase);
+
+        // draw the legend
+        r.drawLegend(mapLegend);
       } catch(Exception ex) {
-        log.error("dyGridLines overflowed, not displaying panel: " + panel.getLabel());
+        log.error("exception occurred while displaying panel " + panel.getLabel() + ": " +  ex);
         return;
       }
-      
-      // draw the chart background
-      r.drawChartBackground(i == 0, idxBase);
-      
-      // draw the horizontal gridlines
-      r.drawHorizontalGridlines(gridLines, pair);
-      
-      // draw the series themselves
-      ((Graphics2D) g).setStroke(strokeOrig);
-      r.drawSeries(pair, idxBase);
-      
-      // draw the legend
-      r.drawLegend(mapLegend);
       
       // advance to the next chart
       yBase += chartHeight;
