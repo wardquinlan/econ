@@ -44,6 +44,7 @@ public class ConnectCommand implements Command {
     }
     
     TimeSeriesDAO.getInstance().connect((String) params.get(0), (String) params.get(1), (String) params.get(2), (String) params.get(3));
+    System.out.println("connected to datastore");
     return 0;
   }
 }

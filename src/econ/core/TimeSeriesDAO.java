@@ -24,6 +24,9 @@ public class TimeSeriesDAO {
   }
   
   public void connect(String host, String database, String username, String password) throws Exception {
+    if (conn != null) {
+      throw new Exception("already connected to datastore");
+    }
     Class.forName("org.postgresql.Driver");
     String url = "jdbc:postgresql://" + host + "/" + database + "?user=" + username + "&password=" + password;
     conn = DriverManager.getConnection(url);  
@@ -50,6 +53,9 @@ public class TimeSeriesDAO {
   }
 
   public void insertSeriesData(int id, Date date, float value) throws Exception {
+    if (conn == null) {
+      throw new Exception("not connected to datatore");
+    }
     java.sql.Date sqlDate = new java.sql.Date(date.getTime());
     PreparedStatement ps = conn.prepareStatement("insert into time_series_data(id, datestamp, value) values(?, ?, ?)");
     ps.setInt(1, id);
@@ -59,6 +65,9 @@ public class TimeSeriesDAO {
   }
   
   public void deleteSeries(int id) throws Exception {
+    if (conn == null) {
+      throw new Exception("not connected to datatore");
+    }
     PreparedStatement ps = conn.prepareStatement("delete from time_series_data where id = ?");
     ps.setInt(1, id);
     ps.executeUpdate();
@@ -68,6 +77,9 @@ public class TimeSeriesDAO {
   }
 
   public void deleteSeriesData(int id, Date date) throws Exception {
+    if (conn == null) {
+      throw new Exception("not connected to datatore");
+    }
     java.sql.Date sqlDate = new java.sql.Date(date.getTime());
     PreparedStatement ps = conn.prepareStatement("delete from time_series_data where id = ? and datestamp = ?");
     ps.setInt(1, id);
@@ -76,6 +88,9 @@ public class TimeSeriesDAO {
   }
   
   public void createSeries(TimeSeries timeSeries) throws Exception {
+    if (conn == null) {
+      throw new Exception("not connected to datatore");
+    }
     PreparedStatement ps = conn.prepareStatement("insert into time_series(id, name, title, source_org, source_name) values(?,?,?,?,?)");
     ps.setInt(1, timeSeries.getId());
     ps.setString(2, timeSeries.getName());
@@ -86,6 +101,9 @@ public class TimeSeriesDAO {
   }
   
   public TimeSeries loadSeriesById(int id) throws Exception {
+    if (conn == null) {
+      throw new Exception("not connected to datatore");
+    }
     PreparedStatement ps = conn.prepareStatement("select id, name, title, source_org, source_name, notes from time_series where id = ?");
     ps.setInt(1, id);
     ResultSet resultSet = ps.executeQuery();
@@ -116,6 +134,9 @@ public class TimeSeriesDAO {
   }
   
   public TimeSeries loadSeriesByName(String name) throws Exception {
+    if (conn == null) {
+      throw new Exception("not connected to datatore");
+    }
     PreparedStatement ps = conn.prepareStatement("select id, name, title, source_org, source_name, notes from time_series where name = ?");
     ps.setString(1, name);
     ResultSet resultSet = ps.executeQuery();
@@ -146,6 +167,9 @@ public class TimeSeriesDAO {
   }
   
   public void close() {
+    if (conn == null) {
+      return;
+    }
     try {
       conn.close();
     } catch(Exception e) {
