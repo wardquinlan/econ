@@ -28,11 +28,7 @@ I have also considered new functions:
   - takes a date or an index
   - connect()
   - could take parameters to connect
-  - disconnect()
-  - disconnect current connection, if connected
-  - maybe.  Note sure I need this.
-  - can maybe only ever allow either 0 or 1 connection per instance, and it is automatically disconnected
-  - note that we might want to let the user connect, so that Econ can run without a database at all
+  - will only ever allow either 0 or 1 connection per instance, and it is automatically disconnected
   - Object getXXXX(Series);
   - Object setXXXX(Series, Object);
   - XXXX is one of: {Id, Name, Title, Source, SourceId, Notes}
@@ -42,9 +38,6 @@ I have also considered new functions:
 Series will have to support BOOLs for conditions.  But we probably don't have to save these to the datastore  
 
 - may want to use a HATCH pattern to draw a chart with invalid data e.g. log scaling
-
-- may want to use the "'" character rather than the """ character for strings
-  => update test cases
 
 - may want to replace Float with Double everywhere
 

@@ -19,6 +19,8 @@ assert(3.0 >= 3.0, "3.0 >= 3.0");
 print("testing String conditions");
 assert("abc" == "abc", "abc == abc");
 assert("abc" != "def", "abc != def");
+assert('abc' == "abc", 'abc == abc');
+assert("abc" != 'def', 'abc != def');
 
 print("testing Boolean conditions");
 assert(true == true, "true == true");
