@@ -30,6 +30,9 @@ public class TimeSeriesDAO {
   }
 
   public List<TimeSeries> listSeries() throws Exception {
+    if (conn == null) {
+      throw new Exception("not connected to datatore");
+    }
     List<TimeSeries> list = new ArrayList<>();
     PreparedStatement ps = conn.prepareStatement("select id, name, title, source_org, source_name, notes from time_series order by id");
     ResultSet resultSet = ps.executeQuery();
