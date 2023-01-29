@@ -29,6 +29,7 @@ import econ.command.NormalizeCommand;
 import econ.command.PlotCommand;
 import econ.command.PrintCommand;
 import econ.command.SaveCommand;
+import econ.command.SetIdCommand;
 import econ.command.SizeCommand;
 import econ.core.TimeSeries;
 import econ.core.TimeSeriesDAO;
@@ -61,6 +62,7 @@ public class FunctionCaller {
     commandMap.put("assert", new AssertCommand());
     commandMap.put("connect", new ConnectCommand());
     commandMap.put("save", new SaveCommand());
+    commandMap.put("setId", new SetIdCommand());
   }
   
   public boolean isFunction(String funcName) {
