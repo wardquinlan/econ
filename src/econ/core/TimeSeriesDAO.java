@@ -54,6 +54,14 @@ public class TimeSeriesDAO {
     }
     return list;
   }
+  
+  public int size(TimeSeries timeSeries) throws Exception {
+    PreparedStatement ps = conn.prepareStatement("select count(*) from time_series_data where id = ?");
+    ps.setInt(1, timeSeries.getId());
+    ResultSet resultSet = ps.executeQuery();
+    resultSet.next();
+    return resultSet.getInt(1);
+  }
 
   public void saveSeries(TimeSeries timeSeries) throws Exception {
     if (conn == null) {
