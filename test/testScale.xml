@@ -1,10 +1,10 @@
 <context>
   <panel label="T1">
-    <chart label="T1" span="50">
+    <chart label="T1" span="50" scale="log">
       <series ref="T1" color="Red"/>
     </chart>
     
-    <chart label="T1" span="50">
+    <chart label="T1" span="50" scale="linear">
       <series ref="T1" color="Blue"/>
     </chart>
   </panel>
