@@ -34,6 +34,7 @@ I have also considered new functions:
   - XXXX is one of: {Id, Name, Title, Source, SourceId, Notes}
   - String timestamp();
   - size(Series);
+    => need to support series on database
       
 Series will have to support BOOLs for conditions.  But we probably don't have to save these to the datastore  
 
