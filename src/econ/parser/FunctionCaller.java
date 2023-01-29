@@ -30,6 +30,7 @@ import econ.command.PlotCommand;
 import econ.command.PrintCommand;
 import econ.command.SaveCommand;
 import econ.command.SetIdCommand;
+import econ.command.SetTitleCommand;
 import econ.command.SizeCommand;
 import econ.core.TimeSeries;
 import econ.core.TimeSeriesDAO;
@@ -63,6 +64,7 @@ public class FunctionCaller {
     commandMap.put("connect", new ConnectCommand());
     commandMap.put("save", new SaveCommand());
     commandMap.put("setId", new SetIdCommand());
+    commandMap.put("setTitle", new SetTitleCommand());
   }
   
   public boolean isFunction(String funcName) {

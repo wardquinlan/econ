@@ -67,6 +67,7 @@ public class InsertCommand implements Command {
       throw new Exception("'value' is neither an int nor a  float");
     }
     TimeSeriesData timeSeriesData = new TimeSeriesData();
+    timeSeriesData.setId(timeSeries.getId());
     timeSeriesData.setDate(date);
     timeSeriesData.setValue(value);
     timeSeries.add(timeSeriesData);
