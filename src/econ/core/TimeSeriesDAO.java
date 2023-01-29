@@ -59,17 +59,24 @@ public class TimeSeriesDAO {
     if (conn == null) {
       throw new Exception("not connected to datatore");
     }
-    if (timeSeries.getId() == null) {
-      throw new Exception("id is null");
+    try {
+      conn.setAutoCommit(false);
+      if (timeSeries.getId() == null) {
+        throw new Exception("id is null");
+      }
+      PreparedStatement ps = conn.prepareStatement("insert into time_series(id, name, title, source, source_id, notes) values (?, ?, ?, ?, ?, ?)");
+      ps.setInt(1, timeSeries.getId());
+      ps.setString(2, timeSeries.getName());
+      ps.setString(3, timeSeries.getTitle());
+      ps.setString(4, timeSeries.getSource());
+      ps.setString(5, timeSeries.getSourceId());
+      ps.setString(6, timeSeries.getNotes());
+      ps.executeUpdate();
+      conn.commit();
+    } catch(Exception ex) {
+      conn.rollback();
+      throw ex;
     }
-    PreparedStatement ps = conn.prepareStatement("insert into time_series(id, name, title, source, source_id, notes) values (?, ?, ?, ?, ?, ?)");
-    ps.setInt(1, timeSeries.getId());
-    ps.setString(2, timeSeries.getName());
-    ps.setString(3, timeSeries.getTitle());
-    ps.setString(4, timeSeries.getSource());
-    ps.setString(5, timeSeries.getSourceId());
-    ps.setString(6, timeSeries.getNotes());
-    ps.executeUpdate();
   }
   
   public void insertSeriesData(int id, Date date, float value) throws Exception {
