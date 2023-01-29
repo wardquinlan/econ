@@ -60,6 +60,9 @@ public class MetaCommand implements Command {
     System.out.println("Source   : " + Utils.stringWithNULL(timeSeries.getSource()));
     System.out.println("Source Id: " + Utils.stringWithNULL(timeSeries.getSourceId()));
     System.out.println("Size     : " + timeSeries.size());
+    if (timeSeries.getTimeSeriesDataList().size() > 0) {
+      System.out.println("Last     : " + timeSeries.getTimeSeriesDataList().get(timeSeries.getTimeSeriesDataList().size() - 1).getValue());
+    }
     if (timeSeries.getNotes() != null) {
       System.out.println();
       System.out.println(timeSeries.getNotes());
