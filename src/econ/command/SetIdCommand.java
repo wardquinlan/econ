@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import econ.core.TimeSeries;
+import econ.core.TimeSeriesData;
 import econ.parser.Symbol;
 
 public class SetIdCommand implements Command {
@@ -46,6 +47,9 @@ public class SetIdCommand implements Command {
     TimeSeries timeSeries = (TimeSeries) params.get(0);
     Integer id = (Integer) params.get(1);
     timeSeries.setId(id);
+    for (TimeSeriesData timeSeriesData: timeSeries.getTimeSeriesDataList()) {
+      timeSeriesData.setId(id);
+    }
     return 0;
   }
 }

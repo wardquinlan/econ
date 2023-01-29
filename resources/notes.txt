@@ -48,3 +48,6 @@ Series will have to support BOOLs for conditions.  But we probably don't have to
 
 - may want to introduce '!' operator
 
+- "#" => "0x"
+
+- "--" => "#"

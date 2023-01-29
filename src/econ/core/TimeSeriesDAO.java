@@ -72,6 +72,14 @@ public class TimeSeriesDAO {
       ps.setString(5, timeSeries.getSourceId());
       ps.setString(6, timeSeries.getNotes());
       ps.executeUpdate();
+      
+      for (TimeSeriesData timeSeriesData: timeSeries.getTimeSeriesDataList()) {
+        ps = conn.prepareStatement("insert into time_series_data(id, datestamp, value) values (?, ?, ?)");
+        ps.setInt(1, timeSeriesData.getId());
+        ps.setDate(2, new java.sql.Date(timeSeriesData.getDate().getTime()));
+        ps.setFloat(3, timeSeriesData.getValue());
+        ps.executeUpdate();
+      }
       conn.commit();
     } catch(Exception ex) {
       conn.rollback();
