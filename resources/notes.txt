@@ -43,3 +43,8 @@ Series will have to support BOOLs for conditions.  But we probably don't have to
 - may want to replace Float with Double everywhere
 
 - may want to get rid of Deprecation warnings in Parser.java (JDK 1.17)
+
+- may want to have 2 different orders of precedence for == and <, etc
+
+- may want to introduce '!' operator
+
