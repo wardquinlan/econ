@@ -119,11 +119,11 @@ public class Tokenizer {
           }
           tk.setValue(Integer.parseInt(sb.toString(), 16));
           list.add(tk);
-        } else if (val == '"') {
+        } else if (val == '"' || val == '\'') {
           Token tk = new Token(Token.STRING);
           StringBuffer sb = new StringBuffer();
           while (true) {
-            if (rdr.peek() == '"') {
+            if (rdr.peek() == val) {
               rdr.read();
               break;
             }
