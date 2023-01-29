@@ -11,7 +11,7 @@ import econ.parser.Symbol;
 public class ConnectCommand implements Command {
   @Override
   public String getSummary() {
-    return "int connect(String host, String database, String username[, String password])";
+    return "int    connect(String host, String database, String username[, String password])";
   }
   
   @Override

@@ -12,7 +12,7 @@ import econ.parser.Symbol;
 public class SetIdCommand implements Command {
   @Override
   public String getSummary() {
-    return "int setId(Series series, int id);";
+    return "int    setId(Series series, int id);";
   }
   
   @Override

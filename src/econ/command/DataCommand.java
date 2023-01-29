@@ -15,7 +15,7 @@ public class DataCommand implements Command {
   
   @Override
   public String getSummary() {
-    return "int data(Object object);";
+    return "int    data(Object object);";
   }
   
   @Override

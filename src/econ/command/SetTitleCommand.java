@@ -12,7 +12,7 @@ import econ.parser.Symbol;
 public class SetTitleCommand implements Command {
   @Override
   public String getSummary() {
-    return "int setTitle(Series series, String title);";
+    return "int    setTitle(Series series, String title);";
   }
   
   @Override

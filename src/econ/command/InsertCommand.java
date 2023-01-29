@@ -15,7 +15,7 @@ import econ.parser.Symbol;
 public class InsertCommand implements Command {
   @Override
   public String getSummary() {
-    return "float insert(Series series, String date, float value);";
+    return "float  insert(Series series, String date, float value);";
   }
   
   @Override

@@ -12,7 +12,7 @@ import econ.parser.Symbol;
 public class FontsCommand implements Command {
   @Override
   public String getSummary() {
-    return "int fonts();";
+    return "int    fonts();";
   }
   
   @Override

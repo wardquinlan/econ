@@ -12,7 +12,7 @@ import econ.parser.Symbol;
 public class AssertCommand implements Command {
   @Override
   public String getSummary() {
-    return "int assert(Boolean condition[, String message]);";
+    return "int    assert(Boolean condition[, String message]);";
   }
   
   @Override

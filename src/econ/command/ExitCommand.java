@@ -10,7 +10,7 @@ import econ.parser.Symbol;
 public class ExitCommand implements Command {
   @Override
   public String getSummary() {
-    return "int exit([int code]);";
+    return "int    exit([int code]);";
   }
   
   @Override

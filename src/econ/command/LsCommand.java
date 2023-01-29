@@ -15,7 +15,7 @@ public class LsCommand implements Command {
   
   @Override
   public String getSummary() {
-    return "int ls();";
+    return "int    ls();";
   }
   
   @Override

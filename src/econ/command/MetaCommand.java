@@ -12,7 +12,7 @@ import econ.parser.Symbol;
 public class MetaCommand implements Command {
   @Override
   public String getSummary() {
-    return "int meta(Object object);";
+    return "int    meta(Object object);";
   }
   
   @Override

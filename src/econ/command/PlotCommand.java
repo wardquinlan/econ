@@ -24,7 +24,7 @@ import econ.parser.Symbol;
 public class PlotCommand implements Command {
   @Override
   public String getSummary() {
-    return "int plot(String filename);";
+    return "int    plot(String filename);";
   }
   
   @Override

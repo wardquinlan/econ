@@ -11,7 +11,7 @@ import econ.parser.Symbol;
 public class HelpCommand implements Command {
   @Override
   public String getSummary() {
-    return "int help([String command]);";
+    return "int    help([String command]);";
   }
   
   @Override

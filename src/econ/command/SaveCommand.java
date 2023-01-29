@@ -12,7 +12,7 @@ import econ.parser.Symbol;
 public class SaveCommand implements Command {
   @Override
   public String getSummary() {
-    return "int save(Series series);";
+    return "int    save(Series series);";
   }
   
   @Override
