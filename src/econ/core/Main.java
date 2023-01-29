@@ -25,30 +25,12 @@ public class Main {
       log.error("ECON_HOME not set");
       System.exit(1);
     }
-    if (System.getenv("ECON_HOST") == null) {
-      log.error("ECON_HOST not set");
-      System.exit(1);
-    }
-    if (System.getenv("ECON_DATABASE") == null) {
-      log.error("ECON_DATABASE not set");
-      System.exit(1);
-    }
-    if (System.getenv("ECON_USERNAME") == null) {
-      log.error("ECON_USERNAME not set");
-      System.exit(1);
-    }
-    if (System.getenv("ECON_PASSWORD") == null) {
-      log.error("ECON_PASSWORD not set");
-      System.exit(1);
-    }
     if (args.length > 1) {
       log.error("usage: econ.Main [<script.ec>]");
       System.exit(1);
     }
     
     try {
-      // Initialize the instance before we get too far
-      TimeSeriesDAO.getInstance();
       Runtime.getRuntime().addShutdownHook(new Thread() {
         public void run() {
           log.info("shutting down...");

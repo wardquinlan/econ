@@ -14,6 +14,7 @@ import econ.command.AssertCommand;
 import econ.command.CatCommand;
 import econ.command.CollapseCommand;
 import econ.command.Command;
+import econ.command.ConnectCommand;
 import econ.command.CreateCommand;
 import econ.command.DataCommand;
 import econ.command.ExitCommand;
@@ -57,6 +58,7 @@ public class FunctionCaller {
     commandMap.put("normalize", new NormalizeCommand());
     commandMap.put("size", new SizeCommand());
     commandMap.put("assert", new AssertCommand());
+    commandMap.put("connect", new ConnectCommand());
   }
   
   public boolean isFunction(String funcName) {

@@ -14,24 +14,18 @@ import org.apache.commons.logging.LogFactory;
 public class TimeSeriesDAO {
   private static Log log = LogFactory.getFactory().getInstance(TimeSeriesDAO.class);
   private Connection conn;
-  private static TimeSeriesDAO instance;
+  private static TimeSeriesDAO instance = new TimeSeriesDAO();
+  
+  private TimeSeriesDAO() {
+  }
   
   public static TimeSeriesDAO getInstance() throws Exception {
-    if (instance == null) {
-      instance = new TimeSeriesDAO();
-    }
     return instance;
   }
   
-  private TimeSeriesDAO() throws Exception {
+  public void connect(String host, String database, String username, String password) throws Exception {
     Class.forName("org.postgresql.Driver");
-    log.debug("attempting to connect to database with host=" + System.getenv("ECON_HOST") + 
-              ", name=" + System.getenv("ECON_DATABASE") +
-              ", username=" + System.getenv("ECON_USERNAME"));
-    String url = "jdbc:postgresql://" + System.getenv("ECON_HOST") +  
-                 "/" + System.getenv("ECON_DATABASE") + 
-                 "?user=" + System.getenv("ECON_USERNAME") +
-                 "&password=" + System.getenv("ECON_PASSWORD");
+    String url = "jdbc:postgresql://" + host + "/" + database + "?user=" + username + "&password=" + password;
     conn = DriverManager.getConnection(url);  
   }
 
