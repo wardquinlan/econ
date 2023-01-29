@@ -28,7 +28,10 @@ public class TimeSeriesDAO {
       throw new Exception("already connected to datastore");
     }
     Class.forName("org.postgresql.Driver");
-    String url = "jdbc:postgresql://" + host + "/" + database + "?user=" + username + "&password=" + password;
+    String url = "jdbc:postgresql://" + host + "/" + database + "?user=" + username;
+    if (password != null) {
+      url = url + "&password=" + password;
+    }
     conn = DriverManager.getConnection(url);  
   }
 

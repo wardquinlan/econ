@@ -11,7 +11,7 @@ import econ.parser.Symbol;
 public class ConnectCommand implements Command {
   @Override
   public String getSummary() {
-    return "int connect(String host, String database, String username, String password)";
+    return "int connect(String host, String database, String username[, String password])";
   }
   
   @Override
@@ -32,18 +32,18 @@ public class ConnectCommand implements Command {
       throw new Exception("too many arguments");
     }
     
-    if (params.size() < 4) {
+    if (params.size() < 3) {
       throw new Exception("missing arguments");
     }
     
     if (!(params.get(0) instanceof String) ||
         !(params.get(1) instanceof String) ||
         !(params.get(2) instanceof String) ||
-        !(params.get(3) instanceof String)) {
+        (params.size() == 4 && !(params.get(3) instanceof String))) {
       throw new Exception("argument(s) is/are not of type String");
     }
     
-    TimeSeriesDAO.getInstance().connect((String) params.get(0), (String) params.get(1), (String) params.get(2), (String) params.get(3));
+    TimeSeriesDAO.getInstance().connect((String) params.get(0), (String) params.get(1), (String) params.get(2), params.size() == 3 ? null : (String) params.get(3));
     System.out.println("connected to datastore");
     return 0;
   }
