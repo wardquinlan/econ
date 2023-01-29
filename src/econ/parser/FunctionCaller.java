@@ -32,6 +32,7 @@ import econ.command.SaveCommand;
 import econ.command.SetIdCommand;
 import econ.command.SetTitleCommand;
 import econ.command.SizeCommand;
+import econ.command.TodayCommand;
 import econ.core.TimeSeries;
 import econ.core.TimeSeriesDAO;
 import econ.core.Utils;
@@ -65,6 +66,7 @@ public class FunctionCaller {
     commandMap.put("save", new SaveCommand());
     commandMap.put("setId", new SetIdCommand());
     commandMap.put("setTitle", new SetTitleCommand());
+    commandMap.put("today", new TodayCommand());
   }
   
   public boolean isFunction(String funcName) {
