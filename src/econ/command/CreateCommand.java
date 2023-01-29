@@ -42,6 +42,7 @@ public class CreateCommand implements Command {
     
     TimeSeries timeSeries = new TimeSeries();
     timeSeries.setName((String) params.get(0));
+    timeSeries.setSource("USER");
     return timeSeries;
   }
 }
