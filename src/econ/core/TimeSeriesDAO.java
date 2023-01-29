@@ -40,7 +40,7 @@ public class TimeSeriesDAO {
       throw new Exception("not connected to datatore");
     }
     List<TimeSeries> list = new ArrayList<>();
-    PreparedStatement ps = conn.prepareStatement("select id, name, title, source_org, source_name, notes from time_series order by id");
+    PreparedStatement ps = conn.prepareStatement("select id, name, title, source, source_id, notes from time_series order by id");
     ResultSet resultSet = ps.executeQuery();
     while (resultSet.next()) {
       TimeSeries series = new TimeSeries();
@@ -111,7 +111,7 @@ public class TimeSeriesDAO {
     if (conn == null) {
       throw new Exception("not connected to datatore");
     }
-    PreparedStatement ps = conn.prepareStatement("insert into time_series(id, name, title, source_org, source_name) values(?,?,?,?,?)");
+    PreparedStatement ps = conn.prepareStatement("insert into time_series(id, name, title, source, source_id) values(?,?,?,?,?)");
     ps.setInt(1, timeSeries.getId());
     ps.setString(2, timeSeries.getName());
     ps.setString(3, timeSeries.getTitle());
@@ -124,7 +124,7 @@ public class TimeSeriesDAO {
     if (conn == null) {
       throw new Exception("not connected to datatore");
     }
-    PreparedStatement ps = conn.prepareStatement("select id, name, title, source_org, source_name, notes from time_series where id = ?");
+    PreparedStatement ps = conn.prepareStatement("select id, name, title, source, source_id, notes from time_series where id = ?");
     ps.setInt(1, id);
     ResultSet resultSet = ps.executeQuery();
     if (!resultSet.next()) {
@@ -157,7 +157,7 @@ public class TimeSeriesDAO {
     if (conn == null) {
       throw new Exception("not connected to datatore");
     }
-    PreparedStatement ps = conn.prepareStatement("select id, name, title, source_org, source_name, notes from time_series where name = ?");
+    PreparedStatement ps = conn.prepareStatement("select id, name, title, source, source_id, notes from time_series where name = ?");
     ps.setString(1, name);
     ResultSet resultSet = ps.executeQuery();
     if (!resultSet.next()) {
