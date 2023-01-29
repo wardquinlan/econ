@@ -42,7 +42,7 @@ public class Utils {
        1f,    2f,    3f,    4f,    5f,    6f,    7f,    8f,    9f,
       10f,   20f,   30f,   40f,   50f,   60f,   70f,   80f,   90f,
      100f,  200f,  300f,  400f,  500f,  600f,  700f,  800f,  900f,
-    1000f, 2000f, 3000f, 4000f, 5000f, 6000f, 7000f, 8000f, 900f
+    1000f, 2000f, 3000f, 4000f, 5000f, 6000f, 7000f, 8000f, 9000f
   };
   
   public static float findDYGridLines(int nGridLines, MinMaxPair pair) throws Exception {
@@ -229,6 +229,9 @@ public class Utils {
     sb.append("<p><strong>" + "Source:</strong> " + (timeSeries.getSource() == null ? "NULL" : timeSeries.getSource()) + "</p>");
     sb.append("<p><strong>" + "Source Id:</strong> " + (timeSeries.getSourceId() == null ? "NULL" : timeSeries.getSourceId()) + "</p>");
     sb.append("<p><strong>" + "Size:</strong> " + timeSeries.size() + "</p>");
+    if (timeSeries.getTimeSeriesDataList().size() > 0) {
+      sb.append("<p><strong>" + "Last:</strong> " + timeSeries.getTimeSeriesDataList().get(timeSeries.getTimeSeriesDataList().size() - 1).getValue() + "</p>");
+    }
     if (timeSeries.getNotes() != null) {
       sb.append("<p></p>");
       sb.append("<p>" + splitHTML(timeSeries.getNotes(), maxline) + "</p>");
