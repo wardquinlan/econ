@@ -5,7 +5,6 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Point;
-import java.awt.Stroke;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
@@ -95,9 +94,8 @@ public class ChartsPanel extends JPanel {
       idxBase = Math.max(timeSeriesCollapsed.size() - chartWidth / panel.getDxIncr(), 0);    
     }
     
-    // set up the background panel and save the stroke
+    // set up the background panel
     setBackground(panel.getBackgroundColor());
-    Stroke strokeOrig = ((Graphics2D) g).getStroke();
 
     // iterate through the charts
     int yBase = CHART_SEPARATOR;
@@ -107,7 +105,7 @@ public class ChartsPanel extends JPanel {
       
       // create the renderer
       int chartHeight = (getHeight() - CHART_SEPARATOR) * chart.getSpan() / 100;
-      ChartRenderer r = new ChartRenderer(panel, chart, this, timeSeriesCollapsed, g, ctx, yBase);
+      ChartRenderer r = new ChartRenderer(panel, chart, this, timeSeriesCollapsed, (Graphics2D) g, ctx, yBase);
       
       // calculate the minimum and maximum
       MinMaxPair pair = new MinMaxPair();
@@ -128,14 +126,15 @@ public class ChartsPanel extends JPanel {
         r.drawHorizontalGridlines(chart.getScaler(), gridLines, pair);
         
         // draw the series themselves
-        ((Graphics2D) g).setStroke(strokeOrig);
         r.drawSeries(chart.getScaler(), pair, idxBase);
 
         // draw the legend
         r.drawLegend(mapLegend);
       } catch(Exception ex) {
         log.error("exception occurred while displaying panel " + panel.getLabel() + ": " +  ex);
-        return;
+        // advance to the next chart
+        yBase += chartHeight;
+        continue;
       }
       
       // advance to the next chart

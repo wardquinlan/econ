@@ -35,16 +35,18 @@ public class ChartRenderer {
   final private JComponent component;
   final private TimeSeries timeSeriesCollapsed;
   final private Stroke strokeGridlines;
-  final private Graphics g;
+  final private Stroke strokeMain;
+  final private Graphics2D g;
   final private Calendar cal;
   final private int yBase;
   
-  public ChartRenderer(Panel panel, Chart chart, JComponent component, TimeSeries timeSeriesCollapsed, Graphics g, Context ctx, int yBase) {
+  public ChartRenderer(Panel panel, Chart chart, JComponent component, TimeSeries timeSeriesCollapsed, Graphics2D g, Context ctx, int yBase) {
     this.panel = panel;
     this.chart = chart;
     this.component = component;
     this.timeSeriesCollapsed = timeSeriesCollapsed;
     this.strokeGridlines = new BasicStroke(1, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 0, new float[] {1f, 2f}, 0);
+    this.strokeMain = new BasicStroke(1);
     this.g = g;
     this.yBase = yBase;
     this.cal = new GregorianCalendar();
@@ -64,14 +66,12 @@ public class ChartRenderer {
   }
   
   public void drawChartBackground(boolean withMonthLegend, int idxBase) {
-    Stroke strokeOrig = ((Graphics2D) g).getStroke();
-    ((Graphics2D) g).setStroke(strokeOrig);
-    
     // Fill the rectangle with the background color
     g.setColor(chart.getBackgroundColor());
     g.fillRect(CHART_HPADDING, yBase, chartWidth, chartHeight - CHART_SEPARATOR - 1);
     
     // Draw the rectangle
+    g.setStroke(strokeMain);
     g.setColor(chart.getRectColor());
     g.drawRect(CHART_HPADDING, yBase, chartWidth, chartHeight - CHART_SEPARATOR - 1);
     
@@ -80,7 +80,7 @@ public class ChartRenderer {
     g.drawString(chart.getLabel(), CHART_HPADDING, yBase - CHART_VPADDING);
     
     // Draw the vertical grid lines
-    ((Graphics2D) g).setStroke(strokeGridlines);
+    g.setStroke(strokeGridlines);
 
     int idxMax = Math.min(idxBase + chartWidth / panel.getDxIncr(), timeSeriesCollapsed.size());
     for (int idx = idxBase + 1; idx < idxMax; idx++) {
@@ -185,6 +185,7 @@ public class ChartRenderer {
   }
   
   public void drawHorizontalGridlines(Scaler scaler, float gridLines[], MinMaxPair pair) throws Exception {
+    g.setStroke(strokeGridlines);
     for (float gridLine: gridLines) {
       int x1 = CHART_HPADDING + 1;
       int y1 = Utils.transform(scaler, gridLine, yBase + chartHeight - CHART_SEPARATOR - 1, yBase, pair.getMinValue(), pair.getMaxValue());
@@ -201,6 +202,7 @@ public class ChartRenderer {
   }
   
   public void drawSeries(Scaler scaler, MinMaxPair pair, int idxBase) throws Exception {
+    g.setStroke(strokeMain);
     for (Series series: chart.getSeries()) {
       TimeSeries timeSeries = Utils.normalize(timeSeriesCollapsed, series.getTimeSeries());
       g.setColor(series.getColor());
