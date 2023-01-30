@@ -39,6 +39,7 @@ I have also considered new functions:
 Series will have to support BOOLs for conditions.  But we probably don't have to save these to the datastore  
 
 - may want to use a HATCH pattern to draw a chart with invalid data e.g. log scaling
+  => I can make my own just by drawing solid lines
 
 - may want to replace Float with Double everywhere
 
