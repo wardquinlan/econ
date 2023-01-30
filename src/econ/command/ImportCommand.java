@@ -11,6 +11,7 @@ import econ.importers.QDBImporter;
 import econ.importers.QTemplateImporter;
 import econ.parser.Symbol;
 
+@Deprecated
 public class ImportCommand implements Command {
   @Override
   public String getSummary() {

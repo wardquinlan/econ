@@ -9,7 +9,7 @@ settings.tooltips.maxline = 150;
 
 settings.version = "Development Release 0.1";
 
-importers.fred.baseurl = "https://api.stlouisfed.org/fred";
+sources.fred.baseurl = "https://api.stlouisfed.org/fred";
 
 -- used to mark that settings have completed loading
 settings.loaded = 1;

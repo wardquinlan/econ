@@ -1,10 +1,11 @@
-package econ.importers;
+package econ.command;
 
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStreamReader;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
@@ -17,39 +18,56 @@ import econ.core.TimeSeriesData;
 import econ.core.Utils;
 import econ.parser.Symbol;
 
-@Deprecated
-public class QDBImporter implements Importer {
+public class QTPCommand implements Command {
   @Override
-  public TimeSeries run(File file, List<Object> params) throws Exception {
-    if (params.size() < 1) {
+  public String getSummary() {
+    return "Series qtp(String templateFilePath, String sourceId);";
+  }
+  
+  @Override
+  public List<String> getDetails() {
+    List<String> list = new ArrayList<>();
+    list.add("Imports a series from the Quote template file, with:");
+    list.add("  'templateFilePath' as the path to Quote's template file");
+    list.add("  'sourceId' as the Quote ID string");
+    return list;
+  }
+  
+  @Override
+  public String getReturns() {
+    return "Imported series from the Quote template file";
+  }
+  
+  @Override
+  public Object run(Map<String, Symbol> symbolTable, File file, List<Object> params) throws Exception {
+    if (params.size() < 2) {
       throw new Exception("missing argument(s)");
     }
     
-    if (params.size() > 1) {
+    if (params.size() > 2) {
       throw new Exception("too many arguments");
     }
     
-    if (!(params.get(0) instanceof String)) {
+    if (!(params.get(0) instanceof String) || !(params.get(1) instanceof String)) {
       throw new Exception("argument not a string");
     }
     
-    String dbFilePath = (String) params.get(0);
-    File fileDB = new File(dbFilePath);
+    String templateFilePath = (String) params.get(0);
+    String name = (String) params.get(1);
     Set<String> duplicateCheckSet = new HashSet<>();
     
-    String fileBase = Utils.getFileBaseName(Paths.get(fileDB.getAbsolutePath()).getFileName().toString()).toUpperCase();
     TimeSeries timeSeries = new TimeSeries();
-    timeSeries.setSource(("QDB"));
-    timeSeries.setSourceId(fileBase);
-    timeSeries.setName(fileBase);
-    timeSeries.setTitle(fileBase);
+    timeSeries.setSource(("QTEMPLATE"));
+    timeSeries.setSourceId(name);
+    timeSeries.setName(name);
+    timeSeries.setTitle(name);
     BufferedReader reader = null;
     try {
-      if (Paths.get(dbFilePath).isAbsolute()) {
-        reader = new BufferedReader(new InputStreamReader(new FileInputStream(dbFilePath)));
+      if (Paths.get(templateFilePath).isAbsolute()) {
+        reader = new BufferedReader(new InputStreamReader(new FileInputStream(templateFilePath)));
       } else {
         String basename = Paths.get(file.getAbsolutePath()).getParent().toString();
-        reader = new BufferedReader(new InputStreamReader(new FileInputStream(basename + File.separator + dbFilePath)));
+        reader = new BufferedReader(new InputStreamReader(new FileInputStream(basename + File.separator + templateFilePath)));
       }
 
       String line;
@@ -69,31 +87,24 @@ public class QDBImporter implements Importer {
           log.warn("ignoring incomplete line: " + line);
           continue;
         }
-        st.nextToken();
-
-        if (!st.hasMoreTokens()) {
-          log.warn("ignoring incomplete line: " + line);
-          continue;
-        }
+        // ignore scope
         st.nextToken();
         
         if (!st.hasMoreTokens()) {
           log.warn("ignoring incomplete line: " + line);
           continue;
         }
-        st.nextToken();
-
-        if (!st.hasMoreTokens()) {
-          log.warn("ignoring incomplete line: " + line);
+        String label = st.nextToken();
+        if (!name.equals(label)) {
+          log.debug("ignoring unmatched label: " + label);
           continue;
         }
-        String close = st.nextToken();
         
         if (!st.hasMoreTokens()) {
           log.warn("ignoring incomplete line: " + line);
           continue;
         }
-        st.nextToken();
+        String value = st.nextToken();
         
         if (st.hasMoreTokens()) {
           log.warn("ignoring invalid line: " + line);
@@ -108,7 +119,7 @@ public class QDBImporter implements Importer {
         try {
           TimeSeriesData timeSeriesData = new TimeSeriesData();
           timeSeriesData.setDate(Utils.DATE_FORMAT.parse(date));
-          timeSeriesData.setValue(Float.parseFloat(close));
+          timeSeriesData.setValue(Float.parseFloat(value));
           timeSeries.add(timeSeriesData);
           duplicateCheckSet.add(date);
         } catch(Exception e) {

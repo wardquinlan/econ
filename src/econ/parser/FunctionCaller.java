@@ -18,6 +18,7 @@ import econ.command.ConnectCommand;
 import econ.command.CreateCommand;
 import econ.command.DataCommand;
 import econ.command.ExitCommand;
+import econ.command.FREDCommand;
 import econ.command.HelpCommand;
 import econ.command.ImportCommand;
 import econ.command.InsertCommand;
@@ -28,6 +29,8 @@ import econ.command.MetaCommand;
 import econ.command.NormalizeCommand;
 import econ.command.PlotCommand;
 import econ.command.PrintCommand;
+import econ.command.QDBCommand;
+import econ.command.QTPCommand;
 import econ.command.SaveCommand;
 import econ.command.SetIdCommand;
 import econ.command.SetTitleCommand;
@@ -55,7 +58,6 @@ public class FunctionCaller {
     commandMap.put("data", new DataCommand());
     commandMap.put("meta", new MetaCommand());
     commandMap.put("cat", new CatCommand());
-    commandMap.put("import", new ImportCommand());
     commandMap.put("create", new CreateCommand());
     commandMap.put("insert", new InsertCommand());
     commandMap.put("collapse", new CollapseCommand());
@@ -67,6 +69,9 @@ public class FunctionCaller {
     commandMap.put("setId", new SetIdCommand());
     commandMap.put("setTitle", new SetTitleCommand());
     commandMap.put("today", new TodayCommand());
+    commandMap.put("fred", new FREDCommand());
+    commandMap.put("qdb", new QDBCommand());
+    commandMap.put("qtp", new QTPCommand());
   }
   
   public boolean isFunction(String funcName) {

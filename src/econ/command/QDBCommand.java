@@ -1,10 +1,11 @@
-package econ.importers;
+package econ.command;
 
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStreamReader;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
@@ -17,10 +18,27 @@ import econ.core.TimeSeriesData;
 import econ.core.Utils;
 import econ.parser.Symbol;
 
-@Deprecated
-public class QDBImporter implements Importer {
+public class QDBCommand implements Command {
   @Override
-  public TimeSeries run(File file, List<Object> params) throws Exception {
+  public String getSummary() {
+    return "Series qdb(String dbFilePath);";
+  }
+  
+  @Override
+  public List<String> getDetails() {
+    List<String> list = new ArrayList<>();
+    list.add("Imports a series from the Quote database file, with:");
+    list.add("  'dbFilePath' as the path to Quote's database file");
+    return list;
+  }
+  
+  @Override
+  public String getReturns() {
+    return "Imported series from the Quote database file";
+  }
+  
+  @Override
+  public Object run(Map<String, Symbol> symbolTable, File file, List<Object> params) throws Exception {
     if (params.size() < 1) {
       throw new Exception("missing argument(s)");
     }

@@ -1,10 +1,11 @@
-package econ.importers;
+package econ.command;
 
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -24,25 +25,48 @@ import econ.core.TimeSeriesData;
 import econ.core.Utils;
 import econ.parser.Symbol;
 
-@Deprecated
-public class FREDImporter implements Importer {
-  private final String BASEURL;
-  private final String APIKEY;
+public class FREDCommand implements Command {
+  private String BASEURL;
+  private String APIKEY;
   
-  public FREDImporter(Map<String, Symbol> symbolTable) throws Exception {
-    if (symbolTable.get("importers.fred.baseurl") == null) {
-      throw new Exception("importers.fred.baseurl not defined");
-    }
-    if (symbolTable.get("importers.fred.apikey") == null) {
-      throw new Exception("importers.fred.apikey not defined");
-    }
-    
-    BASEURL = (String) symbolTable.get("importers.fred.baseurl").getValue();
-    APIKEY = (String) symbolTable.get("importers.fred.apikey").getValue();
+  @Override
+  public String getSummary() {
+    return "Series fred(String sourceId[, String units]);";
   }
   
   @Override
-  public TimeSeries run(File file, List<Object> params) throws Exception {
+  public List<String> getDetails() {
+    List<String> list = new ArrayList<>();
+    list.add("Imports a series from the FRED database, with:");
+    list.add("  'sourceId' as the FRED source id");
+    list.add("  'units' as the FRED unit string");
+    list.add("");
+    list.add("@see: https://fred.stlouisfed.org/docs/api/fred/series_observations.html#units for additional information on units");
+    list.add("");
+    list.add("Also note that the following settings must be defined:");
+    list.add("");
+    list.add("sources.fred.baseurl - must point to the base URL of FRED");
+    list.add("sources.fred.apikey - must point to the FRED-issued developer API key");
+    return list;
+  }
+  
+  @Override
+  public String getReturns() {
+    return "Imported series from FRED";
+  }
+  
+  @Override
+  public Object run(Map<String, Symbol> symbolTable, File file, List<Object> params) throws Exception {
+    if (symbolTable.get("sources.fred.baseurl") == null) {
+      throw new Exception("sources.fred.baseurl not defined");
+    }
+    if (symbolTable.get("sources.fred.apikey") == null) {
+      throw new Exception("sources.fred.apikey not defined");
+    }
+    
+    BASEURL = (String) symbolTable.get("sources.fred.baseurl").getValue();
+    APIKEY = (String) symbolTable.get("sources.fred.apikey").getValue();
+
     if (params.size() < 1) {
       throw new Exception("missing argument(s)");
     }

@@ -17,6 +17,7 @@ import econ.core.TimeSeriesData;
 import econ.core.Utils;
 import econ.parser.Symbol;
 
+@Deprecated
 public class QTemplateImporter implements Importer {
   @Override
   public TimeSeries run(File file, List<Object> params) throws Exception {
