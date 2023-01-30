@@ -52,7 +52,11 @@ Series will have to support BOOLs for conditions.  But we probably don't have to
 
 - "--" => "#"
 
-- int merge(int id, Series series[, Boolean withMetaData]);
+- int merge(Object object, Series series[, Boolean withMetaData]);
+  => where object is an id or a name (but not a symbol)
+  => validates that series does not have an id attached
+  => validates that series name == name loaded from data store
+  
 
 - include series name beside legend (so we know when we do screen captures)
 
@@ -62,6 +66,26 @@ Series will have to support BOOLs for conditions.  But we probably don't have to
   
   chart.legend.rectcolor or maybe chart.legend.linecolor
   
-- defaults() can show default values
+- defaults() can show default values. Maybe.  It won't show the colour names though, only their hex values, so this might be of limited use.
+- alternatively defaults() can display the contents of the defaults file.
 
 - screen capture
+
+- Main should test for arglength >= 2 ...
+
+- Boolean if(Boolean condition, String scriptName);
+- int while(Boolean condition, String scriptName);
+
+BETTER APPROACH
+
+- Alternatively could introduce IF / WHILE / FOR Token Types like this.  Each of these tokens would store a (sub) token list, but this list would only be sent through the parser if the
+  condition was true.
+  
+  Main point is that the tokens within the IF / WHILE / FOR block are not part of the main token sequence.  But they do contain a sub token block that is sent through the parser
+  if the condition evaluates to true.
+  
+if (condition) {
+  // These tokens are stored inside the IF token but are not added to the main token chain
+  // if the body contains additional if statements, these will be handled recursively
+  ...
+}    
