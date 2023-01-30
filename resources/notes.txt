@@ -51,3 +51,17 @@ Series will have to support BOOLs for conditions.  But we probably don't have to
 - "#" => "0x"
 
 - "--" => "#"
+
+- int merge(int id, Series series[, Boolean withMetaData]);
+
+- include series name beside legend (so we know when we do screen captures)
+
+- paint a rectangle around legend (so it shows up for conditional series)
+
+- probably need a new param for the rectangle around the legend:
+  
+  chart.legend.rectcolor or maybe chart.legend.linecolor
+  
+- defaults() can show default values
+
+- screen capture
