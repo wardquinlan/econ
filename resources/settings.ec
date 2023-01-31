@@ -2,6 +2,7 @@ settings.chart.legendsize = 14;
 settings.chart.separator = 32;
 settings.chart.hpadding = 6;
 settings.chart.vpadding = 2;
+settings.chart.hatches = 10;
 
 settings.tooltips.initialdelay = 200;
 settings.tooltips.dismissdelay = 3600 * 1000;

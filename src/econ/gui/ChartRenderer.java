@@ -30,6 +30,7 @@ public class ChartRenderer {
   final private int CHART_HPADDING;
   final private int CHART_VPADDING;
   final private int CHART_LEGEND_SIZE;
+  final private int CHART_HATCHES;
   final private int chartWidth;
   final private int chartHeight;
   final private JComponent component;
@@ -55,6 +56,7 @@ public class ChartRenderer {
     CHART_HPADDING = (int) ctx.get("settings.chart.hpadding");
     CHART_VPADDING = (int) ctx.get("settings.chart.vpadding");
     CHART_LEGEND_SIZE = (int) ctx.get("settings.chart.legendsize");
+    CHART_HATCHES = (int) ctx.get("settings.chart.hatches");
     
     chartWidth = component.getWidth() - 1 - 2 * CHART_HPADDING - panel.getGridLineTextWidth();
     chartHeight = (component.getHeight() - CHART_SEPARATOR) * chart.getSpan() / 100;
@@ -63,6 +65,30 @@ public class ChartRenderer {
     // System.out.println("****" + g.getFont().getFontName());
     // System.out.println("****" + g.getFont().getSize());
     g.setFont(new Font(panel.getFontName(), Font.PLAIN, panel.getFontSize()));
+  }
+  
+  public void drawUnavailableChart() {
+    // Fill the rectangle with the background color
+    g.setColor(chart.getBackgroundColor());
+    g.fillRect(CHART_HPADDING, yBase, chartWidth, chartHeight - CHART_SEPARATOR - 1);
+    
+    // Draw the rectangle
+    g.setStroke(strokeMain);
+    g.setColor(chart.getRectColor());
+    g.drawRect(CHART_HPADDING, yBase, chartWidth, chartHeight - CHART_SEPARATOR - 1);
+    
+    // Draw the label
+    g.setColor(panel.getFontColor());
+    g.drawString(chart.getLabel(), CHART_HPADDING, yBase - CHART_VPADDING);
+    
+    g.setColor(chart.getRectColor());
+    for (int y = yBase + CHART_HATCHES; y < yBase + chartHeight - CHART_SEPARATOR - 1; y += CHART_HATCHES) {
+      g.drawLine(CHART_HPADDING, y, CHART_HPADDING + chartWidth, y);
+    }
+    
+    for (int x = CHART_HPADDING + CHART_HATCHES; x < CHART_HPADDING + chartWidth; x += CHART_HATCHES) {
+      g.drawLine(x, yBase, x, yBase + chartHeight - CHART_SEPARATOR - 1);
+    }
   }
   
   public void drawChartBackground(boolean withMonthLegend, int idxBase) {

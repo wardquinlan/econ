@@ -132,6 +132,8 @@ public class ChartsPanel extends JPanel {
         r.drawLegend(mapLegend);
       } catch(Exception ex) {
         log.error("exception occurred while displaying panel " + panel.getLabel() + ": " +  ex);
+        r.drawUnavailableChart();
+        
         // advance to the next chart
         yBase += chartHeight;
         continue;
