@@ -24,13 +24,15 @@ import econ.parser.Symbol;
 public class PlotCommand implements Command {
   @Override
   public String getSummary() {
-    return "int    plot(String filename);";
+    return "int    plot(Object object);";
   }
   
   @Override
   public List<String> getDetails() {
     List<String> list = new ArrayList<>();
-    list.add("Plots series as defined in the context file 'filename'");
+    list.add("Plots a series or a context, where 'object' is:");
+    list.add("  - a Series");
+    list.add("  - a context file name");
     return list;
   }
   
