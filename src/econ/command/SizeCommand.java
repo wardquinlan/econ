@@ -42,10 +42,6 @@ public class SizeCommand implements Command {
       throw new Exception("missing arguments");
     }
     
-    if (!(params.get(0) instanceof TimeSeries)) {
-      throw new Exception("'series' is not a Series");
-    }
-
     TimeSeries timeSeries;
     Object object = params.get(0);
     if (object instanceof TimeSeries) {
