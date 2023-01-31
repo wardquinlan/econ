@@ -34,6 +34,7 @@ import econ.command.SaveCommand;
 import econ.command.SetIdCommand;
 import econ.command.SetTitleCommand;
 import econ.command.SizeCommand;
+import econ.command.Timestamp;
 import econ.command.TodayCommand;
 import econ.core.TimeSeries;
 import econ.core.TimeSeriesDAO;
@@ -71,6 +72,7 @@ public class FunctionCaller {
     commandMap.put("fred", new FREDCommand());
     commandMap.put("qdb", new QDBCommand());
     commandMap.put("qtp", new QTPCommand());
+    commandMap.put("timestamp", new Timestamp());
   }
   
   public boolean isFunction(String funcName) {
