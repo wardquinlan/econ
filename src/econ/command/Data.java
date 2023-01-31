@@ -10,7 +10,7 @@ import econ.core.TimeSeriesData;
 import econ.core.Utils;
 import econ.parser.Symbol;
 
-public class DataCommand implements Command {
+public class Data implements Command {
   private static final int TIME_SERIES_DATA_COL_WIDTHS[] = {8, 5, 10, 10};
   
   @Override

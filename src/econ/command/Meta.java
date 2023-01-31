@@ -9,7 +9,7 @@ import econ.core.TimeSeries;
 import econ.core.Utils;
 import econ.parser.Symbol;
 
-public class MetaCommand implements Command {
+public class Meta implements Command {
   @Override
   public String getSummary() {
     return "int    meta(Object object);";
