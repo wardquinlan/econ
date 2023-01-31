@@ -9,16 +9,16 @@ import econ.core.TimeSeries;
 import econ.core.TimeSeriesData;
 import econ.parser.Symbol;
 
-public class SetIdCommand implements Command {
+public class SetTitle implements Command {
   @Override
   public String getSummary() {
-    return "int    setId(Series series, int id);";
+    return "int    setTitle(Series series, String title);";
   }
   
   @Override
   public List<String> getDetails() {
     List<String> list = new ArrayList<>();
-    list.add("Sets a series id to 'id'");
+    list.add("Sets a series title to 'title'");
     return list;
   }
   
@@ -40,16 +40,13 @@ public class SetIdCommand implements Command {
       throw new Exception("'series' is not a Series");
     }
     
-    if (!(params.get(1) instanceof Integer)) {
-      throw new Exception("'id' is not an int");
+    if (!(params.get(1) instanceof String)) {
+      throw new Exception("'title' is not a title");
     }
     
     TimeSeries timeSeries = (TimeSeries) params.get(0);
-    Integer id = (Integer) params.get(1);
-    timeSeries.setId(id);
-    for (TimeSeriesData timeSeriesData: timeSeries.getTimeSeriesDataList()) {
-      timeSeriesData.setId(id);
-    }
+    String title = (String) params.get(1);
+    timeSeries.setTitle(title);
     return 0;
   }
 }
