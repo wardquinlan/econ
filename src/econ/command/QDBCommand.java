@@ -7,10 +7,10 @@ import java.io.InputStreamReader;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashSet;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.StringTokenizer;
 
 import econ.core.TimeSeries;
@@ -27,8 +27,8 @@ public class QDBCommand implements Command {
   @Override
   public List<String> getDetails() {
     List<String> list = new ArrayList<>();
-    list.add("Imports a series from the Quote database file, with:");
-    list.add("  'dbFilePath' as the path to Quote's database file");
+    list.add("Imports a series from a Quote database file, with:");
+    list.add("  'dbFilePath' as the path to the database file");
     return list;
   }
   
@@ -53,7 +53,7 @@ public class QDBCommand implements Command {
     
     String dbFilePath = (String) params.get(0);
     File fileDB = new File(dbFilePath);
-    Set<String> duplicateCheckSet = new HashSet<>();
+    Map<Date, Float> map = new HashMap<>();
     
     String fileBase = Utils.getFileBaseName(Paths.get(fileDB.getAbsolutePath()).getFileName().toString()).toUpperCase();
     TimeSeries timeSeries = new TimeSeries();
@@ -118,17 +118,13 @@ public class QDBCommand implements Command {
           continue;
         }
 
-        if (duplicateCheckSet.contains(date)) {
-          log.warn("ignoring duplicate line: " + line);
-          continue;
-        }
-        
         try {
-          TimeSeriesData timeSeriesData = new TimeSeriesData();
-          timeSeriesData.setDate(Utils.DATE_FORMAT.parse(date));
-          timeSeriesData.setValue(Float.parseFloat(close));
-          timeSeries.add(timeSeriesData);
-          duplicateCheckSet.add(date);
+          Date d = Utils.DATE_FORMAT.parse(date);
+          if (map.get(d) != null) {
+            log.warn("value for " + date + " already exists; overwriting");
+          }
+          Float v = Float.parseFloat(close);
+          map.put(d, v);
         } catch(Exception e) {
           log.warn("ignoring invalid line: " + line);
           continue;
@@ -138,6 +134,13 @@ public class QDBCommand implements Command {
       if (reader != null) {
         reader.close();
       }
+    }
+    
+    for (Date d: map.keySet()) {
+      TimeSeriesData timeSeriesData = new TimeSeriesData();
+      timeSeriesData.setDate(d);
+      timeSeriesData.setValue(map.get(d));
+      timeSeries.add(timeSeriesData);
     }
     Collections.sort(timeSeries.getTimeSeriesDataList());
     return timeSeries;

@@ -27,8 +27,8 @@ public class QTPCommand implements Command {
   @Override
   public List<String> getDetails() {
     List<String> list = new ArrayList<>();
-    list.add("Imports a series from the Quote template file, with:");
-    list.add("  'templateFilePath' as the path to Quote's template file");
+    list.add("Imports a series from a Quote template file, with:");
+    list.add("  'templateFilePath' as the path to the template file");
     list.add("  'sourceId' as the Quote ID string");
     return list;
   }
