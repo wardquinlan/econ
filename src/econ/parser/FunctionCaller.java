@@ -18,7 +18,7 @@ import econ.command.Connect;
 import econ.command.CreateCommand;
 import econ.command.Data;
 import econ.command.Exit;
-import econ.command.FREDCommand;
+import econ.command.FRED;
 import econ.command.HelpCommand;
 import econ.command.InsertCommand;
 import econ.command.LsCommand;
@@ -28,8 +28,8 @@ import econ.command.Meta;
 import econ.command.NormalizeCommand;
 import econ.command.PlotCommand;
 import econ.command.PrintCommand;
-import econ.command.QDBCommand;
-import econ.command.QTPCommand;
+import econ.command.QDB;
+import econ.command.QTP;
 import econ.command.SaveCommand;
 import econ.command.SetIdCommand;
 import econ.command.SetTitleCommand;
@@ -69,9 +69,9 @@ public class FunctionCaller {
     commandMap.put("setId", new SetIdCommand());
     commandMap.put("setTitle", new SetTitleCommand());
     commandMap.put("today", new TodayCommand());
-    commandMap.put("fred", new FREDCommand());
-    commandMap.put("qdb", new QDBCommand());
-    commandMap.put("qtp", new QTPCommand());
+    commandMap.put("fred", new FRED());
+    commandMap.put("qdb", new QDB());
+    commandMap.put("qtp", new QTP());
     commandMap.put("timestamp", new Timestamp());
   }
   

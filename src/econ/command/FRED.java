@@ -25,7 +25,7 @@ import econ.core.TimeSeriesData;
 import econ.core.Utils;
 import econ.parser.Symbol;
 
-public class FREDCommand implements Command {
+public class FRED implements Command {
   private String BASEURL;
   private String APIKEY;
   

@@ -18,56 +18,56 @@ import econ.core.TimeSeriesData;
 import econ.core.Utils;
 import econ.parser.Symbol;
 
-public class QDBCommand implements Command {
+public class QTP implements Command {
   @Override
   public String getSummary() {
-    return "Series qdb(String dbFilePath);";
+    return "Series qtp(String templateFilePath, String sourceId);";
   }
   
   @Override
   public List<String> getDetails() {
     List<String> list = new ArrayList<>();
-    list.add("Imports a series from a Quote database file, with:");
-    list.add("  'dbFilePath' as the path to the database file");
+    list.add("Imports a series from a Quote template file, with:");
+    list.add("  'templateFilePath' as the path to the template file");
+    list.add("  'sourceId' as the Quote ID string");
     return list;
   }
   
   @Override
   public String getReturns() {
-    return "Imported series from the Quote database file";
+    return "Imported series from the Quote template file";
   }
   
   @Override
   public Object run(Map<String, Symbol> symbolTable, File file, List<Object> params) throws Exception {
-    if (params.size() < 1) {
+    if (params.size() < 2) {
       throw new Exception("missing argument(s)");
     }
     
-    if (params.size() > 1) {
+    if (params.size() > 2) {
       throw new Exception("too many arguments");
     }
     
-    if (!(params.get(0) instanceof String)) {
+    if (!(params.get(0) instanceof String) || !(params.get(1) instanceof String)) {
       throw new Exception("argument not a string");
     }
     
-    String dbFilePath = (String) params.get(0);
-    File fileDB = new File(dbFilePath);
+    String templateFilePath = (String) params.get(0);
+    String name = (String) params.get(1);
     Map<Date, Float> map = new HashMap<>();
     
-    String fileBase = Utils.getFileBaseName(Paths.get(fileDB.getAbsolutePath()).getFileName().toString()).toUpperCase();
     TimeSeries timeSeries = new TimeSeries();
-    timeSeries.setSource(("QDB"));
-    timeSeries.setSourceId(fileBase);
-    timeSeries.setName(fileBase);
-    timeSeries.setTitle(fileBase);
+    timeSeries.setSource(("QTEMPLATE"));
+    timeSeries.setSourceId(name);
+    timeSeries.setName(name);
+    timeSeries.setTitle(name);
     BufferedReader reader = null;
     try {
-      if (Paths.get(dbFilePath).isAbsolute()) {
-        reader = new BufferedReader(new InputStreamReader(new FileInputStream(dbFilePath)));
+      if (Paths.get(templateFilePath).isAbsolute()) {
+        reader = new BufferedReader(new InputStreamReader(new FileInputStream(templateFilePath)));
       } else {
         String basename = Paths.get(file.getAbsolutePath()).getParent().toString();
-        reader = new BufferedReader(new InputStreamReader(new FileInputStream(basename + File.separator + dbFilePath)));
+        reader = new BufferedReader(new InputStreamReader(new FileInputStream(basename + File.separator + templateFilePath)));
       }
 
       String line;
@@ -87,31 +87,24 @@ public class QDBCommand implements Command {
           log.warn("ignoring incomplete line: " + line);
           continue;
         }
-        st.nextToken();
-
-        if (!st.hasMoreTokens()) {
-          log.warn("ignoring incomplete line: " + line);
-          continue;
-        }
+        // ignore scope
         st.nextToken();
         
         if (!st.hasMoreTokens()) {
           log.warn("ignoring incomplete line: " + line);
           continue;
         }
-        st.nextToken();
-
-        if (!st.hasMoreTokens()) {
-          log.warn("ignoring incomplete line: " + line);
+        String label = st.nextToken();
+        if (!name.equals(label)) {
+          log.debug("ignoring unmatched label: " + label);
           continue;
         }
-        String close = st.nextToken();
         
         if (!st.hasMoreTokens()) {
           log.warn("ignoring incomplete line: " + line);
           continue;
         }
-        st.nextToken();
+        String value = st.nextToken();
         
         if (st.hasMoreTokens()) {
           log.warn("ignoring invalid line: " + line);
@@ -123,7 +116,7 @@ public class QDBCommand implements Command {
           if (map.get(d) != null) {
             log.warn("value for " + date + " already exists; overwriting");
           }
-          Float v = Float.parseFloat(close);
+          Float v = Float.parseFloat(value);
           map.put(d, v);
         } catch(Exception e) {
           log.warn("ignoring invalid line: " + line);
@@ -135,7 +128,7 @@ public class QDBCommand implements Command {
         reader.close();
       }
     }
-    
+
     for (Date d: map.keySet()) {
       TimeSeriesData timeSeriesData = new TimeSeriesData();
       timeSeriesData.setDate(d);
