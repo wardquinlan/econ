@@ -90,3 +90,7 @@ if (condition) {
   // if the body contains additional if statements, these will be handled recursively
   ...
 }    
+
+setId() should only be allowed once.  Might want a warning as well...
+
+drop() command

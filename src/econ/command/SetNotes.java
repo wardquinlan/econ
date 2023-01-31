@@ -6,19 +6,18 @@ import java.util.List;
 import java.util.Map;
 
 import econ.core.TimeSeries;
-import econ.core.TimeSeriesData;
 import econ.parser.Symbol;
 
-public class SetTitle implements Command {
+public class SetNotes implements Command {
   @Override
   public String getSummary() {
-    return "int    setTitle(Series series, String title);";
+    return "int    setNotes(Series series, String notes);";
   }
   
   @Override
   public List<String> getDetails() {
     List<String> list = new ArrayList<>();
-    list.add("Sets a series title to 'title'");
+    list.add("Sets a series notes to 'notes'");
     return list;
   }
   
@@ -41,12 +40,12 @@ public class SetTitle implements Command {
     }
     
     if (!(params.get(1) instanceof String)) {
-      throw new Exception("'title' is not a String");
+      throw new Exception("'notes' is not a String");
     }
     
     TimeSeries timeSeries = (TimeSeries) params.get(0);
-    String title = (String) params.get(1);
-    timeSeries.setTitle(title);
+    String notes = (String) params.get(1);
+    timeSeries.setNotes(notes);
     return 0;
   }
 }

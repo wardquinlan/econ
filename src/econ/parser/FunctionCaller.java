@@ -32,6 +32,7 @@ import econ.command.QDB;
 import econ.command.QTP;
 import econ.command.SaveCommand;
 import econ.command.SetId;
+import econ.command.SetNotes;
 import econ.command.SetTitle;
 import econ.command.SizeCommand;
 import econ.command.Timestamp;
@@ -68,6 +69,7 @@ public class FunctionCaller {
     commandMap.put("save", new SaveCommand());
     commandMap.put("setId", new SetId());
     commandMap.put("setTitle", new SetTitle());
+    commandMap.put("setNotes", new SetNotes());
     commandMap.put("today", new TodayCommand());
     commandMap.put("fred", new FRED());
     commandMap.put("qdb", new QDB());
