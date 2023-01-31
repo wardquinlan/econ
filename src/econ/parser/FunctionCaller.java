@@ -14,15 +14,15 @@ import econ.command.AssertCommand;
 import econ.command.CatCommand;
 import econ.command.CollapseCommand;
 import econ.command.Command;
-import econ.command.ConnectCommand;
+import econ.command.Connect;
 import econ.command.CreateCommand;
 import econ.command.Data;
-import econ.command.ExitCommand;
+import econ.command.Exit;
 import econ.command.FREDCommand;
 import econ.command.HelpCommand;
 import econ.command.InsertCommand;
 import econ.command.LsCommand;
-import econ.command.FontsCommand;
+import econ.command.Fonts;
 import econ.command.LoadCommand;
 import econ.command.Meta;
 import econ.command.NormalizeCommand;
@@ -48,9 +48,9 @@ public class FunctionCaller {
   static final int TIME_SERIES_DATA_COL_WIDTHS[] = {5, 10, 10};
 
   public FunctionCaller() {
-    commandMap.put("exit", new ExitCommand());
+    commandMap.put("exit", new Exit());
     commandMap.put("print", new PrintCommand());
-    commandMap.put("fonts", new FontsCommand());
+    commandMap.put("fonts", new Fonts());
     commandMap.put("help", new HelpCommand());
     commandMap.put("load", new LoadCommand());
     commandMap.put("plot", new PlotCommand());
@@ -64,7 +64,7 @@ public class FunctionCaller {
     commandMap.put("normalize", new NormalizeCommand());
     commandMap.put("size", new SizeCommand());
     commandMap.put("assert", new AssertCommand());
-    commandMap.put("connect", new ConnectCommand());
+    commandMap.put("connect", new Connect());
     commandMap.put("save", new SaveCommand());
     commandMap.put("setId", new SetIdCommand());
     commandMap.put("setTitle", new SetTitleCommand());

@@ -8,7 +8,7 @@ import java.util.Map;
 import econ.core.TimeSeriesDAO;
 import econ.parser.Symbol;
 
-public class ConnectCommand implements Command {
+public class Connect implements Command {
   @Override
   public String getSummary() {
     return "int    connect(String host, String database, String username[, String password])";
