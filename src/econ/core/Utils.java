@@ -185,7 +185,7 @@ public class Utils {
     return collapse(timeSeriesList);
   }
   
-  private static TimeSeries collapse(TimeSeries timeSeries1, TimeSeries timeSeries2) {
+  public static TimeSeries collapse(TimeSeries timeSeries1, TimeSeries timeSeries2) {
     TimeSeries timeSeries = new TimeSeries();
     int index1 = 0;
     int index2 = 0;
