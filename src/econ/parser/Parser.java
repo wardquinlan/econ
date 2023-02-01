@@ -275,9 +275,7 @@ public class Parser {
         } else if (val1 instanceof Float && val2 instanceof Float) {
           val1 = new Float((Float) val1 + (Float) val2);
         } else if (val1 instanceof TimeSeries && val2 instanceof Integer) {
-          List<TimeSeries> list = new ArrayList<>();
-          list.add((TimeSeries) val1);
-          TimeSeries timeSeriesCollapsed = Utils.collapse(list);
+          TimeSeries timeSeriesCollapsed = Utils.collapse((TimeSeries) val1);
           TimeSeries timeSeries = Utils.normalize(timeSeriesCollapsed, (TimeSeries) val1);
           for (TimeSeriesData timeSeriesData: timeSeries.getTimeSeriesDataList()) {
             timeSeriesData.setValue(timeSeriesData.getValue() + (Integer) val2);

@@ -157,6 +157,12 @@ public class Utils {
     return timeSeriesNormalized;
   }
   
+  public static TimeSeries collapse(TimeSeries timeSeries) {
+    List<TimeSeries> list = new ArrayList<>();
+    list.add(timeSeries);
+    return Utils.collapse(list);
+  }
+  
   public static TimeSeries collapse(List<TimeSeries> timeSeriesList) {
     if (timeSeriesList.size() == 0) {
       return new TimeSeries();
