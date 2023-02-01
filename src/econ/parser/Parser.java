@@ -306,14 +306,15 @@ public class Parser {
           TimeSeries timeSeriesCollapsed = Utils.collapse((TimeSeries) val1, (TimeSeries) val2);
           TimeSeries timeSeries1 = Utils.normalize(timeSeriesCollapsed, (TimeSeries) val1);
           TimeSeries timeSeries2 = Utils.normalize(timeSeriesCollapsed, (TimeSeries) val2);
+          TimeSeries timeSeries = Utils.normalize(timeSeriesCollapsed, new TimeSeries());
           for (int i = 0; i < timeSeries1.getTimeSeriesDataList().size(); i++) {
             TimeSeriesData timeSeriesData1 = timeSeries1.getTimeSeriesDataList().get(i);
             TimeSeriesData timeSeriesData2 = timeSeries2.getTimeSeriesDataList().get(i);
             if (timeSeriesData1.getValue() != null && timeSeriesData2.getValue() != null) {
-              timeSeriesData1.setValue(timeSeriesData1.getValue() + timeSeriesData2.getValue());
+              timeSeries.getTimeSeriesDataList().get(i).setValue(timeSeriesData1.getValue() + timeSeriesData2.getValue());
             }
           }
-          return timeSeries1;
+          return timeSeries;
         } else {
           log.error("invalid PLUS operation");
           throw new Exception("syntax error");
