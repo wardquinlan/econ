@@ -9,6 +9,8 @@ import java.util.Map;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import econ.core.TimeSeries;
+import econ.core.TimeSeriesData;
 import econ.core.Utils;
 
 public class Parser {
@@ -272,6 +274,15 @@ public class Parser {
           val1 = new Float((Float) val1 + (Integer) val2);
         } else if (val1 instanceof Float && val2 instanceof Float) {
           val1 = new Float((Float) val1 + (Float) val2);
+        } else if (val1 instanceof TimeSeries && val2 instanceof Integer) {
+          List<TimeSeries> list = new ArrayList<>();
+          list.add((TimeSeries) val1);
+          TimeSeries timeSeriesCollapsed = Utils.collapse(list);
+          TimeSeries timeSeries = Utils.normalize(timeSeriesCollapsed, (TimeSeries) val1);
+          for (TimeSeriesData timeSeriesData: timeSeries.getTimeSeriesDataList()) {
+            timeSeriesData.setValue(timeSeriesData.getValue() + (Integer) val2);
+          }
+          return timeSeries;
         } else {
           log.error("invalid PLUS operation");
           throw new Exception("syntax error");
