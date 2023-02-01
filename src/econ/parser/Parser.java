@@ -281,6 +281,13 @@ public class Parser {
             timeSeriesData.setValue(timeSeriesData.getValue() + (Integer) val2);
           }
           return timeSeries;
+        } else if (val1 instanceof Integer && val2 instanceof TimeSeries) {
+          TimeSeries timeSeriesCollapsed = Utils.collapse((TimeSeries) val2);
+          TimeSeries timeSeries = Utils.normalize(timeSeriesCollapsed, (TimeSeries) val2);
+          for (TimeSeriesData timeSeriesData: timeSeries.getTimeSeriesDataList()) {
+            timeSeriesData.setValue(timeSeriesData.getValue() + (Integer) val1);
+          }
+          return timeSeries;
         } else {
           log.error("invalid PLUS operation");
           throw new Exception("syntax error");
