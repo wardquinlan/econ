@@ -129,9 +129,11 @@ public class Utils {
     int index = 0;
     
     if (timeSeries.size() == 0) {
+      // Note: can consider new TimeSeries();
       return timeSeriesCollapsed;
     }
     
+    // Note: can consider setDate(new Date(oldDate.getTime()));
     while (timeSeriesCollapsed.get(indexCollapsed).compareTo(timeSeries.get(index)) < 0) {
       TimeSeriesData timeSeriesData = new TimeSeriesData();
       timeSeriesData.setDate(timeSeriesCollapsed.get(indexCollapsed).getDate());

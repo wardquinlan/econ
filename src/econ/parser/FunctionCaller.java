@@ -61,10 +61,7 @@ public class FunctionCaller {
     commandMap.put("cat", new CatCommand());
     commandMap.put("create", new CreateCommand());
     commandMap.put("insert", new InsertCommand());
-    commandMap.put("collapse", new CollapseCommand());
-    commandMap.put("normalize", new NormalizeCommand());
     commandMap.put("size", new SizeCommand());
-    commandMap.put("assert", new AssertCommand());
     commandMap.put("connect", new Connect());
     commandMap.put("save", new SaveCommand());
     commandMap.put("setId", new SetId());
@@ -75,6 +72,11 @@ public class FunctionCaller {
     commandMap.put("qdb", new QDB());
     commandMap.put("qtp", new QTP());
     commandMap.put("timestamp", new Timestamp());
+    if ("true".equals(System.getProperty("econ.test"))) {
+      commandMap.put("collapse", new CollapseCommand());
+      commandMap.put("normalize", new NormalizeCommand());
+      commandMap.put("assert", new AssertCommand());
+    }
   }
   
   public boolean isFunction(String funcName) {

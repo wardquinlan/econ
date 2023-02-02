@@ -93,4 +93,21 @@ if (condition) {
 
 setId() should only be allowed once.  Might want a warning as well...
 
-drop() command
+And setId() should check to see if that id is already being used.
+Same for setName()
+... but what if we are not connected to the datastore??
+
+drop() command - or delete() function
+
+need a "testing framework" - add test commands somehow if something is set
+-> setTestMode(true);
+-> or simply use a Java property .. very simple
+
+
+new commands will include:
+
+- get(Series series, Object object); - either index or date
+- offset(Series) - returns index of first non-null value
+- size(Series)
+
+
