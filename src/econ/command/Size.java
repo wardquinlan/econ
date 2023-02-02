@@ -12,7 +12,7 @@ import econ.parser.Symbol;
 public class Size implements Command {
   @Override
   public String getSummary() {
-    return "int    size(Series series);";
+    return "int    size(Object object);";
   }
   
   @Override

@@ -6,25 +6,24 @@ import java.util.List;
 import java.util.Map;
 
 import econ.core.TimeSeries;
-import econ.core.TimeSeriesDAO;
 import econ.parser.Symbol;
 
-public class SaveCommand implements Command {
+public class Offset implements Command {
   @Override
   public String getSummary() {
-    return "int    save(Series series);";
+    return "int    offset(Series series);";
   }
   
   @Override
   public List<String> getDetails() {
     List<String> list = new ArrayList<>();
-    list.add("Saves a series into the datastore");
+    list.add("Returns offset of 'series'");
     return list;
   }
   
   @Override
   public String getReturns() {
-    return "0";
+    return "Series offset if it exists, otherwise returns -1";
   }
   
   @Override
@@ -33,7 +32,7 @@ public class SaveCommand implements Command {
       throw new Exception("too many arguments");
     }
     if (params.size() == 0) {
-      throw new Exception("missing argument");
+      throw new Exception("missing arguments");
     }
     
     if (!(params.get(0) instanceof TimeSeries)) {
@@ -41,7 +40,11 @@ public class SaveCommand implements Command {
     }
     
     TimeSeries timeSeries = (TimeSeries) params.get(0);
-    TimeSeriesDAO.getInstance().saveSeries(timeSeries);
-    return 0;
+    for (int i = 0; i < timeSeries.size(); i++) {
+      if (timeSeries.get(i).getValue() != null) {
+        return i;
+      }
+    }
+    return -1;
   }
 }

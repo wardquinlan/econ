@@ -26,11 +26,12 @@ import econ.command.Fonts;
 import econ.command.LoadCommand;
 import econ.command.Meta;
 import econ.command.Normalize;
+import econ.command.Offset;
 import econ.command.PlotCommand;
 import econ.command.PrintCommand;
 import econ.command.QDB;
 import econ.command.QTP;
-import econ.command.SaveCommand;
+import econ.command.Save;
 import econ.command.SetId;
 import econ.command.SetNotes;
 import econ.command.SetTitle;
@@ -63,7 +64,7 @@ public class FunctionCaller {
     commandMap.put("insert", new InsertCommand());
     commandMap.put("size", new Size());
     commandMap.put("connect", new Connect());
-    commandMap.put("save", new SaveCommand());
+    commandMap.put("save", new Save());
     commandMap.put("setId", new SetId());
     commandMap.put("setTitle", new SetTitle());
     commandMap.put("setNotes", new SetNotes());
@@ -76,6 +77,7 @@ public class FunctionCaller {
       commandMap.put("collapse", new Collapse());
       commandMap.put("normalize", new Normalize());
       commandMap.put("assert", new Assert());
+      commandMap.put("offset", new Offset());
     }
   }
   
