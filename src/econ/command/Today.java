@@ -9,7 +9,7 @@ import java.util.Map;
 import econ.core.Utils;
 import econ.parser.Symbol;
 
-public class TodayCommand implements Command {
+public class Today implements Command {
   @Override
   public String getSummary() {
     return "String today();";

@@ -21,7 +21,7 @@ import econ.gui.Series;
 import econ.gui.XMLParser;
 import econ.parser.Symbol;
 
-public class PlotCommand implements Command {
+public class Plot implements Command {
   @Override
   public String getSummary() {
     return "int    plot(Object object);";
