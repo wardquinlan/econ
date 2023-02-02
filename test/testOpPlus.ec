@@ -18,4 +18,10 @@ assert(offset(S) == 0);
 assert(get(S, 0) == 15.0);
 assert(get(S, 2) == 35.0);
 
+S = S1 + S2;
+assert(offset(S) == 3);
+assert(get(S, 3) == 40.0);
+assert(get(S, 4) == 50.0);
+assert(get(S, 5) == 60.0);
+
 print("TEST PASSED");
