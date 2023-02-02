@@ -9,7 +9,7 @@ import econ.core.TimeSeries;
 import econ.core.Utils;
 import econ.parser.Symbol;
 
-public class AssertCommand implements Command {
+public class Assert implements Command {
   @Override
   public String getSummary() {
     return "int    assert(Boolean condition[, String message]);";

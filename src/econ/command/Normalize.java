@@ -9,7 +9,7 @@ import econ.core.TimeSeries;
 import econ.core.Utils;
 import econ.parser.Symbol;
 
-public class NormalizeCommand implements Command {
+public class Normalize implements Command {
   @Override
   public String getSummary() {
     return "Series normalize(Series seriesCollapsed, Series series);";

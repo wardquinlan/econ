@@ -9,7 +9,7 @@ import econ.core.TimeSeries;
 import econ.core.Utils;
 import econ.parser.Symbol;
 
-public class CollapseCommand implements Command {
+public class Collapse implements Command {
   @Override
   public String getSummary() {
     return "Series collapse([Series series, ...]);";

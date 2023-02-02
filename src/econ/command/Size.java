@@ -9,7 +9,7 @@ import econ.core.TimeSeries;
 import econ.core.Utils;
 import econ.parser.Symbol;
 
-public class SizeCommand implements Command {
+public class Size implements Command {
   @Override
   public String getSummary() {
     return "int    size(Series series);";

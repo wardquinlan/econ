@@ -10,9 +10,9 @@ import java.util.TreeMap;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import econ.command.AssertCommand;
+import econ.command.Assert;
 import econ.command.CatCommand;
-import econ.command.CollapseCommand;
+import econ.command.Collapse;
 import econ.command.Command;
 import econ.command.Connect;
 import econ.command.CreateCommand;
@@ -25,7 +25,7 @@ import econ.command.LsCommand;
 import econ.command.Fonts;
 import econ.command.LoadCommand;
 import econ.command.Meta;
-import econ.command.NormalizeCommand;
+import econ.command.Normalize;
 import econ.command.PlotCommand;
 import econ.command.PrintCommand;
 import econ.command.QDB;
@@ -34,7 +34,7 @@ import econ.command.SaveCommand;
 import econ.command.SetId;
 import econ.command.SetNotes;
 import econ.command.SetTitle;
-import econ.command.SizeCommand;
+import econ.command.Size;
 import econ.command.Timestamp;
 import econ.command.TodayCommand;
 import econ.core.TimeSeries;
@@ -61,7 +61,7 @@ public class FunctionCaller {
     commandMap.put("cat", new CatCommand());
     commandMap.put("create", new CreateCommand());
     commandMap.put("insert", new InsertCommand());
-    commandMap.put("size", new SizeCommand());
+    commandMap.put("size", new Size());
     commandMap.put("connect", new Connect());
     commandMap.put("save", new SaveCommand());
     commandMap.put("setId", new SetId());
@@ -73,9 +73,9 @@ public class FunctionCaller {
     commandMap.put("qtp", new QTP());
     commandMap.put("timestamp", new Timestamp());
     if ("true".equals(System.getProperty("econ.test"))) {
-      commandMap.put("collapse", new CollapseCommand());
-      commandMap.put("normalize", new NormalizeCommand());
-      commandMap.put("assert", new AssertCommand());
+      commandMap.put("collapse", new Collapse());
+      commandMap.put("normalize", new Normalize());
+      commandMap.put("assert", new Assert());
     }
   }
   
