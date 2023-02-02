@@ -23,6 +23,7 @@ import econ.command.HelpCommand;
 import econ.command.InsertCommand;
 import econ.command.LsCommand;
 import econ.command.Fonts;
+import econ.command.Get;
 import econ.command.LoadCommand;
 import econ.command.Meta;
 import econ.command.Normalize;
@@ -78,6 +79,7 @@ public class FunctionCaller {
       commandMap.put("normalize", new Normalize());
       commandMap.put("assert", new Assert());
       commandMap.put("offset", new Offset());
+      commandMap.put("get", new Get());
     }
   }
   
