@@ -30,4 +30,17 @@ assert(get(S, 3) == 40.0);
 assert(get(S, 4) == 50.0);
 assert(get(S, 5) == 60.0);
 
+S3 = create('S3');
+insert(S3, '2022-12-08', 5);
+insert(S3, '2022-12-11', 17);
+insert(S3, '2022-12-15', 18);
+
+S = S2 + S3;
+print('S2:');
+data(S2);
+print('S3:');
+data(S3);
+print('S = S2 + S3:');
+data(S);
+
 print("TEST PASSED");
