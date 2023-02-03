@@ -275,34 +275,31 @@ public class Parser {
         } else if (val1 instanceof Float && val2 instanceof Float) {
           val1 = new Float((Float) val1 + (Float) val2);
         } else if (val1 instanceof TimeSeries && val2 instanceof Integer) {
-          TimeSeries timeSeriesCollapsed = Utils.collapse((TimeSeries) val1);
-          TimeSeries timeSeries = Utils.normalize(timeSeriesCollapsed, (TimeSeries) val1);
+          TimeSeries timeSeries = (TimeSeries) val1;
           for (TimeSeriesData timeSeriesData: timeSeries.getTimeSeriesDataList()) {
             timeSeriesData.setValue(timeSeriesData.getValue() + (Integer) val2);
           }
           return timeSeries;
         } else if (val1 instanceof Integer && val2 instanceof TimeSeries) {
-          TimeSeries timeSeriesCollapsed = Utils.collapse((TimeSeries) val2);
-          TimeSeries timeSeries = Utils.normalize(timeSeriesCollapsed, (TimeSeries) val2);
+          TimeSeries timeSeries = (TimeSeries) val2;
           for (TimeSeriesData timeSeriesData: timeSeries.getTimeSeriesDataList()) {
             timeSeriesData.setValue(timeSeriesData.getValue() + (Integer) val1);
           }
           return timeSeries;
         } else if (val1 instanceof TimeSeries && val2 instanceof Float) {
-          TimeSeries timeSeriesCollapsed = Utils.collapse((TimeSeries) val1);
-          TimeSeries timeSeries = Utils.normalize(timeSeriesCollapsed, (TimeSeries) val1);
+          TimeSeries timeSeries = (TimeSeries) val1;
           for (TimeSeriesData timeSeriesData: timeSeries.getTimeSeriesDataList()) {
             timeSeriesData.setValue(timeSeriesData.getValue() + (Float) val2);
           }
           return timeSeries;
         } else if (val1 instanceof Float && val2 instanceof TimeSeries) {
-          TimeSeries timeSeriesCollapsed = Utils.collapse((TimeSeries) val2);
-          TimeSeries timeSeries = Utils.normalize(timeSeriesCollapsed, (TimeSeries) val2);
+          TimeSeries timeSeries = (TimeSeries) val2;
           for (TimeSeriesData timeSeriesData: timeSeries.getTimeSeriesDataList()) {
             timeSeriesData.setValue(timeSeriesData.getValue() + (Float) val1);
           }
           return timeSeries;
         } else if (val1 instanceof TimeSeries && val2 instanceof TimeSeries) {
+          
           TimeSeries timeSeriesCollapsed = Utils.collapse((TimeSeries) val1, (TimeSeries) val2);
           TimeSeries timeSeries1 = Utils.normalize(timeSeriesCollapsed, (TimeSeries) val1);
           TimeSeries timeSeries2 = Utils.normalize(timeSeriesCollapsed, (TimeSeries) val2);
