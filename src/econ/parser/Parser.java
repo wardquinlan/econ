@@ -299,16 +299,19 @@ public class Parser {
           }
           return timeSeries;
         } else if (val1 instanceof TimeSeries && val2 instanceof TimeSeries) {
-          
           TimeSeries timeSeriesCollapsed = Utils.collapse((TimeSeries) val1, (TimeSeries) val2);
           TimeSeries timeSeries1 = Utils.normalize(timeSeriesCollapsed, (TimeSeries) val1);
           TimeSeries timeSeries2 = Utils.normalize(timeSeriesCollapsed, (TimeSeries) val2);
-          TimeSeries timeSeries = Utils.normalize(timeSeriesCollapsed, new TimeSeries());
-          for (int i = 0; i < timeSeries1.getTimeSeriesDataList().size(); i++) {
+          TimeSeries timeSeries = new TimeSeries();
+          for (int i = 0; i < timeSeriesCollapsed.getTimeSeriesDataList().size(); i++) {
             TimeSeriesData timeSeriesData1 = timeSeries1.getTimeSeriesDataList().get(i);
             TimeSeriesData timeSeriesData2 = timeSeries2.getTimeSeriesDataList().get(i);
             if (timeSeriesData1.getValue() != null && timeSeriesData2.getValue() != null) {
-              timeSeries.getTimeSeriesDataList().get(i).setValue(timeSeriesData1.getValue() + timeSeriesData2.getValue());
+              Utils.ASSERT(timeSeriesData1.getDate().equals(timeSeriesData2.getDate()), "invalid dates after normalize");
+              TimeSeriesData timeSeriesData = new TimeSeriesData();
+              timeSeriesData.setDate(timeSeriesData1.getDate());
+              timeSeriesData.setValue(timeSeriesData1.getValue() + timeSeriesData2.getValue());
+              timeSeries.add(timeSeriesData);
             }
           }
           return timeSeries;
