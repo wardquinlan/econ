@@ -16,6 +16,7 @@ import econ.gui.Chart;
 import econ.gui.MinMaxPair;
 import econ.gui.Panel;
 import econ.gui.Series;
+import econ.parser.Operator;
 
 public class Utils {
   private static Log log = LogFactory.getFactory().getInstance(Utils.class);
@@ -111,6 +112,25 @@ public class Utils {
     Float ret =  S * (scaler.scale(s) - scaler.scale(s1)) + y1;
     log.debug("transform returning: " + ret);
     return ret.intValue();
+  }
+
+  public static TimeSeries execOp(TimeSeries timeSeries1, TimeSeries timeSeries2, Operator operator) {
+    TimeSeries timeSeriesCollapsed = Utils.collapse(timeSeries1, timeSeries2);
+    timeSeries1 = Utils.normalize(timeSeriesCollapsed, timeSeries1);
+    timeSeries2 = Utils.normalize(timeSeriesCollapsed, timeSeries2);
+    TimeSeries timeSeries = new TimeSeries();
+    for (int i = 0; i < timeSeriesCollapsed.getTimeSeriesDataList().size(); i++) {
+      TimeSeriesData timeSeriesData1 = timeSeries1.getTimeSeriesDataList().get(i);
+      TimeSeriesData timeSeriesData2 = timeSeries2.getTimeSeriesDataList().get(i);
+      if (timeSeriesData1.getValue() != null && timeSeriesData2.getValue() != null) {
+        Utils.ASSERT(timeSeriesData1.getDate().equals(timeSeriesData2.getDate()), "invalid dates after normalize");
+        TimeSeriesData timeSeriesData = new TimeSeriesData();
+        timeSeriesData.setDate(timeSeriesData1.getDate());
+        timeSeriesData.setValue(operator.exec(timeSeriesData1.getValue(), timeSeriesData2.getValue()));
+        timeSeries.add(timeSeriesData);
+      }
+    }
+    return timeSeries;
   }
   
   public static List<TimeSeries> consolidate(Panel panel) {
