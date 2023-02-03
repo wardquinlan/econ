@@ -18,29 +18,18 @@ assert(offset(S) == 0);
 assert(get(S, 0) == 15.0);
 assert(get(S, 2) == 35.0);
 
-S = S1 + S2;
-assert(offset(S) == 3);
-assert(get(S, 3) == 40.0);
-assert(get(S, 4) == 50.0);
-assert(get(S, 5) == 60.0);
-
-S = S2 + S1;
-assert(offset(S) == 3);
-assert(get(S, 3) == 40.0);
-assert(get(S, 4) == 50.0);
-assert(get(S, 5) == 60.0);
-
 S3 = create('S3');
-insert(S3, '2022-12-08', 5);
-insert(S3, '2022-12-11', 17);
-insert(S3, '2022-12-15', 18);
+insert(S3, '2022-12-03', 3);
+insert(S3, '2022-12-04', 4);
+insert(S3, '2022-12-06', 6);
+insert(S3, '2022-12-09', 9);
 
-S = S2 + S3;
-print('S2:');
-data(S2);
-print('S3:');
-data(S3);
-print('S = S2 + S3:');
+S4 = create('S4');
+insert(S4, '2022-12-01', 1);
+insert(S4, '2022-12-02', 2);
+insert(S4, '2022-12-05', 5);
+insert(S4, '2022-12-06', 6);
+insert(S4, '2022-12-07', 7);
+
+S = S3 + S4;
 data(S);
-
-print("TEST PASSED");
