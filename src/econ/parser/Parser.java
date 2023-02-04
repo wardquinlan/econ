@@ -264,26 +264,27 @@ public class Parser {
         }
         tk = itr.next();
         Object val2 = term(tk, itr);
+        OpExecutor executor = new OpExecutor(new Plus());
         if (val1 instanceof String) {
           val1 = val1 + val2.toString();
         } else if (val1 instanceof Integer && val2 instanceof Integer) {
           val1 = new Integer((Integer) val1 + (Integer) val2);
         } else if (val1 instanceof Integer && val2 instanceof Float) {
-          val1 = Utils.execOp((Integer) val1, (Float) val2, new Plus());
+          val1 = executor.exec((Integer) val1, (Float) val2);
         } else if (val1 instanceof Float && val2 instanceof Integer) {
-          return Utils.execOp((Float) val1, (Integer) val2, new Plus());
+          return executor.exec((Float) val1, (Integer) val2);
         } else if (val1 instanceof Float && val2 instanceof Float) {
-          val1 = Utils.execOp((Float) val1, (Float) val2, new Plus());
+          val1 = executor.exec((Float) val1, (Float) val2);
         } else if (val1 instanceof TimeSeries && val2 instanceof Integer) {
-          val1 = Utils.execOp((TimeSeries) val1, (Integer) val2, new Plus());
+          val1 = executor.exec((TimeSeries) val1, (Integer) val2);
         } else if (val1 instanceof Integer && val2 instanceof TimeSeries) {
-          val1 = Utils.execOp((Integer) val1, (TimeSeries) val2, new Plus());
+          val1 = executor.exec((Integer) val1, (TimeSeries) val2);
         } else if (val1 instanceof TimeSeries && val2 instanceof Float) {
-          val1 = Utils.execOp((TimeSeries) val1, (Float) val2, new Plus());
+          val1 = executor.exec((TimeSeries) val1, (Float) val2);
         } else if (val1 instanceof Float && val2 instanceof TimeSeries) {
-          val1 = Utils.execOp((Float) val1, (TimeSeries) val2, new Plus());
+          val1 = executor.exec((Float) val1, (TimeSeries) val2);
         } else if (val1 instanceof TimeSeries && val2 instanceof TimeSeries) {
-          return Utils.execOp((TimeSeries) val1, (TimeSeries) val2, new Plus());
+          val1 = executor.exec((TimeSeries) val1, (TimeSeries) val2);
         } else {
           log.error("invalid PLUS operation");
           throw new Exception("syntax error");
