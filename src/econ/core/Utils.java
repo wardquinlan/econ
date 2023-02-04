@@ -136,6 +136,39 @@ public class Utils {
     }
     return timeSeries;
   }
+
+  public static TimeSeries execOp(Integer val, TimeSeries timeSeries1, Operator operator) {
+    TimeSeries timeSeries = new TimeSeries();
+    for (TimeSeriesData timeSeriesData1: timeSeries1.getTimeSeriesDataList()) {
+      TimeSeriesData timeSeriesData = new TimeSeriesData();
+      timeSeriesData.setDate(timeSeriesData1.getDate());
+      timeSeriesData.setValue(operator.exec(val.floatValue(), timeSeriesData1.getValue()));
+      timeSeries.add(timeSeriesData);
+    }
+    return timeSeries;
+  }
+
+  public static TimeSeries execOp(TimeSeries timeSeries1, Float val, Operator operator) {
+    TimeSeries timeSeries = new TimeSeries();
+    for (TimeSeriesData timeSeriesData1: timeSeries1.getTimeSeriesDataList()) {
+      TimeSeriesData timeSeriesData = new TimeSeriesData();
+      timeSeriesData.setDate(timeSeriesData1.getDate());
+      timeSeriesData.setValue(operator.exec(timeSeriesData1.getValue(), val));
+      timeSeries.add(timeSeriesData);
+    }
+    return timeSeries;
+  }
+
+  public static TimeSeries execOp(Float val, TimeSeries timeSeries1, Operator operator) {
+    TimeSeries timeSeries = new TimeSeries();
+    for (TimeSeriesData timeSeriesData1: timeSeries1.getTimeSeriesDataList()) {
+      TimeSeriesData timeSeriesData = new TimeSeriesData();
+      timeSeriesData.setDate(timeSeriesData1.getDate());
+      timeSeriesData.setValue(operator.exec(val, timeSeriesData1.getValue()));
+      timeSeries.add(timeSeriesData);
+    }
+    return timeSeries;
+  }
   
   public static TimeSeries execOp(TimeSeries timeSeries1, TimeSeries timeSeries2, Operator operator) {
     TimeSeries timeSeriesCollapsed = Utils.collapse(timeSeries1, timeSeries2);

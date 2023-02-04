@@ -277,23 +277,11 @@ public class Parser {
         } else if (val1 instanceof TimeSeries && val2 instanceof Integer) {
           val1 = Utils.execOp((TimeSeries) val1, (Integer) val2, new Plus());
         } else if (val1 instanceof Integer && val2 instanceof TimeSeries) {
-          TimeSeries timeSeries = (TimeSeries) val2;
-          for (TimeSeriesData timeSeriesData: timeSeries.getTimeSeriesDataList()) {
-            timeSeriesData.setValue(timeSeriesData.getValue() + (Integer) val1);
-          }
-          return timeSeries;
+          val1 = Utils.execOp((Integer) val1, (TimeSeries) val2, new Plus());
         } else if (val1 instanceof TimeSeries && val2 instanceof Float) {
-          TimeSeries timeSeries = (TimeSeries) val1;
-          for (TimeSeriesData timeSeriesData: timeSeries.getTimeSeriesDataList()) {
-            timeSeriesData.setValue(timeSeriesData.getValue() + (Float) val2);
-          }
-          return timeSeries;
+          val1 = Utils.execOp((TimeSeries) val1, (Float) val2, new Plus());
         } else if (val1 instanceof Float && val2 instanceof TimeSeries) {
-          TimeSeries timeSeries = (TimeSeries) val2;
-          for (TimeSeriesData timeSeriesData: timeSeries.getTimeSeriesDataList()) {
-            timeSeriesData.setValue(timeSeriesData.getValue() + (Float) val1);
-          }
-          return timeSeries;
+          val1 = Utils.execOp((Float) val1, (TimeSeries) val2, new Plus());
         } else if (val1 instanceof TimeSeries && val2 instanceof TimeSeries) {
           return Utils.execOp((TimeSeries) val1, (TimeSeries) val2, new Plus());
         } else {
