@@ -45,8 +45,8 @@ public class Main {
       
       Map<String, Symbol> symbolTable = new HashMap<String, Symbol>();
       File file = new File(System.getenv("ECON_HOME") + File.separator + ".econ.ec");
-      if (file.exists()) {
-        log.debug("found .econ.ec...");
+      if (file.exists() && !"true".equals(System.getProperty("econ.suppressautoload"))) {
+        log.info("found .econ.ec; loading...");
         Tokenizer tokenizer = new Tokenizer(file, 0);
         TokenIterator itr = tokenizer.tokenize();
         if (itr.hasNext()) {
@@ -55,7 +55,7 @@ public class Main {
           parser.parse(tk, itr);
         }
       } else {
-        log.warn(".econ.ec does not exist, skipping");
+        log.warn("skipping the loading of .econ.ec...");
       }
       
       if (args.length == 1) {
