@@ -114,6 +114,29 @@ public class Utils {
     return ret.intValue();
   }
 
+  public static Float execOp(Integer val1, Float val2, Operator operator) {
+    return operator.exec(val1.floatValue(), val2);
+  }
+  
+  public static Float execOp(Float val1, Integer val2, Operator operator) {
+    return operator.exec(val1, val2.floatValue());
+  }
+  
+  public static Float execOp(Float val1, Float val2, Operator operator) {
+    return operator.exec(val1, val2);
+  }
+  
+  public static TimeSeries execOp(TimeSeries timeSeries1, Integer val, Operator operator) {
+    TimeSeries timeSeries = new TimeSeries();
+    for (TimeSeriesData timeSeriesData1: timeSeries1.getTimeSeriesDataList()) {
+      TimeSeriesData timeSeriesData = new TimeSeriesData();
+      timeSeriesData.setDate(timeSeriesData1.getDate());
+      timeSeriesData.setValue(operator.exec(timeSeriesData1.getValue(), val.floatValue()));
+      timeSeries.add(timeSeriesData);
+    }
+    return timeSeries;
+  }
+  
   public static TimeSeries execOp(TimeSeries timeSeries1, TimeSeries timeSeries2, Operator operator) {
     TimeSeries timeSeriesCollapsed = Utils.collapse(timeSeries1, timeSeries2);
     timeSeries1 = Utils.normalize(timeSeriesCollapsed, timeSeries1);
