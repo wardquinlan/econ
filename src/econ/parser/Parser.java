@@ -15,6 +15,11 @@ import econ.core.Utils;
 
 public class Parser {
   private static final Log log = LogFactory.getFactory().getInstance(Parser.class);
+  private static final Map<Integer, Operator> operatorMap = new HashMap<>();
+  static {
+    operatorMap.put(Token.PLUS, new Plus());
+    operatorMap.put(Token.MINUS, new Minus());
+  }
   private FunctionCaller functionCaller = new FunctionCaller();
   private Map<String, Symbol> symbolTable;
 
@@ -256,16 +261,17 @@ public class Parser {
       if (!itr.hasNext()) {
         break;
       }
-      if (itr.peek().getType() == Token.PLUS) {
+      if (itr.peek().getType() == Token.PLUS || itr.peek().getType() == Token.MINUS) {
+        int tokenType = itr.peek().getType();
         itr.next();
         if (!itr.hasNext()) {
-          log.error("missing RHS on PLUS");
+          log.error("missing RHS");
           throw new Exception("syntax error");
         }
         tk = itr.next();
         Object val2 = term(tk, itr);
-        OpExecutor executor = new OpExecutor(new Plus());
-        if (val1 instanceof String) {
+        OpExecutor executor = new OpExecutor(operatorMap.get(tokenType));
+        if (val1 instanceof String && tokenType == Token.PLUS) {
           val1 = val1 + val2.toString();
         } else if (val1 instanceof Integer && val2 instanceof Integer) {
           val1 = new Integer((Integer) val1 + (Integer) val2);
@@ -286,29 +292,7 @@ public class Parser {
         } else if (val1 instanceof TimeSeries && val2 instanceof TimeSeries) {
           val1 = executor.exec((TimeSeries) val1, (TimeSeries) val2);
         } else {
-          log.error("invalid PLUS operation");
-          throw new Exception("syntax error");
-        }
-      } else if (itr.peek().getType() == Token.MINUS) {
-        itr.next();
-        if (!itr.hasNext()) {
-          log.error("missing RHS on MINUS");
-          throw new Exception("syntax error");
-        }
-        tk = itr.next();
-        Object val2 = term(tk, itr);
-        if (val1 instanceof String) {
-          throw new Exception("unsupported string operation: " + val1);
-        } else if (val1 instanceof Integer && val2 instanceof Integer) {
-          val1 = new Integer((Integer) val1 - (Integer) val2);
-        } else if (val1 instanceof Integer && val2 instanceof Float) {
-          val1 = new Float((Integer) val1 - (Float) val2);
-        } else if (val1 instanceof Float && val2 instanceof Integer) {
-          val1 = new Float((Float) val1 - (Integer) val2);
-        } else if (val1 instanceof Float && val2 instanceof Float) {
-          val1 = new Float((Float) val1 - (Float) val2);
-        } else {
-          log.error("invalid MINUS operation");
+          log.error("invalid expression");
           throw new Exception("syntax error");
         }
       } else {
