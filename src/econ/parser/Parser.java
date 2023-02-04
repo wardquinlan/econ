@@ -19,6 +19,8 @@ public class Parser {
   static {
     operatorMap.put(Token.PLUS, new Plus());
     operatorMap.put(Token.MINUS, new Minus());
+    operatorMap.put(Token.MULT, new Mult());
+    operatorMap.put(Token.DIV, new Div());
   }
   private FunctionCaller functionCaller = new FunctionCaller();
   private Map<String, Symbol> symbolTable;
@@ -262,7 +264,7 @@ public class Parser {
         break;
       }
       if (itr.peek().getType() == Token.PLUS || itr.peek().getType() == Token.MINUS) {
-        int tokenType = itr.peek().getType();
+        OpExecutor executor = new OpExecutor(operatorMap.get(itr.peek().getType()));
         itr.next();
         if (!itr.hasNext()) {
           log.error("missing RHS");
@@ -270,31 +272,7 @@ public class Parser {
         }
         tk = itr.next();
         Object val2 = term(tk, itr);
-        OpExecutor executor = new OpExecutor(operatorMap.get(tokenType));
-        if (val1 instanceof String && tokenType == Token.PLUS) {
-          val1 = val1 + val2.toString();
-        } else if (val1 instanceof Integer && val2 instanceof Integer) {
-          val1 = new Integer((Integer) val1 + (Integer) val2);
-        } else if (val1 instanceof Integer && val2 instanceof Float) {
-          val1 = executor.exec((Integer) val1, (Float) val2);
-        } else if (val1 instanceof Float && val2 instanceof Integer) {
-          return executor.exec((Float) val1, (Integer) val2);
-        } else if (val1 instanceof Float && val2 instanceof Float) {
-          val1 = executor.exec((Float) val1, (Float) val2);
-        } else if (val1 instanceof TimeSeries && val2 instanceof Integer) {
-          val1 = executor.exec((TimeSeries) val1, (Integer) val2);
-        } else if (val1 instanceof Integer && val2 instanceof TimeSeries) {
-          val1 = executor.exec((Integer) val1, (TimeSeries) val2);
-        } else if (val1 instanceof TimeSeries && val2 instanceof Float) {
-          val1 = executor.exec((TimeSeries) val1, (Float) val2);
-        } else if (val1 instanceof Float && val2 instanceof TimeSeries) {
-          val1 = executor.exec((Float) val1, (TimeSeries) val2);
-        } else if (val1 instanceof TimeSeries && val2 instanceof TimeSeries) {
-          val1 = executor.exec((TimeSeries) val1, (TimeSeries) val2);
-        } else {
-          log.error("invalid expression");
-          throw new Exception("syntax error");
-        }
+        val1 = executor.exec(val1, val2);
       } else {
         break;
       }
@@ -308,62 +286,16 @@ public class Parser {
       if (!itr.hasNext()) {
         break;
       }
-      if (itr.peek().getType() == Token.MULT) {
+      if (itr.peek().getType() == Token.MULT || itr.peek().getType() == Token.DIV) {
+        OpExecutor executor = new OpExecutor(operatorMap.get(itr.peek().getType()));
         itr.next();
         if (!itr.hasNext()) {
-          log.error("missing RHS on MULT");
+          log.error("missing RHS");
           throw new Exception("syntax error");
         }
         tk = itr.next();
         Object val2 = exp(tk, itr);
-        if (val1 instanceof Integer && val2 instanceof Integer) {
-          val1 = new Integer((Integer) val1 * (Integer) val2);
-        } else if (val1 instanceof Integer && val2 instanceof Float) {
-          val1 = new Float((Integer) val1 * (Float) val2);
-        } else if (val1 instanceof Float && val2 instanceof Integer) {
-          val1 = new Float((Float) val1 * (Integer) val2);
-        } else if (val1 instanceof Float && val2 instanceof Float) {
-          val1 = new Float((Float) val1 * (Float) val2);
-        } else {
-          log.error("invalid MULT operation");
-          throw new Exception("syntax error");
-        }
-      } else if (itr.peek().getType() == Token.DIV) {
-        itr.next();
-        if (!itr.hasNext()) {
-          log.error("missing RHS on DIV");
-          throw new Exception("syntax error");
-        }
-        tk = itr.next();
-        Object val2 = exp(tk, itr);
-        if (val1 instanceof Integer && val2 instanceof Integer) {
-          if ((Integer) val2 == 0) {
-            throw new Exception("divide by 0 error");
-          }
-          if ((Integer) val1 % (Integer) val2 == 0) {
-            val1 = new Integer((Integer) val1 / (Integer) val2);
-          } else {
-            val1 = new Float(((Integer) val1).floatValue() / ((Integer) val2).floatValue());
-          }
-        } else if (val1 instanceof Integer && val2 instanceof Float) {
-          if ((Float) val2 == 0f) {
-            throw new Exception("divide by 0 error");
-          }
-          val1 = new Float((Integer) val1 / (Float) val2);
-        } else if (val1 instanceof Float && val2 instanceof Integer) {
-          if ((Integer) val2 == 0) {
-            throw new Exception("divide by 0 error");
-          }
-          val1 = new Float((Float) val1 / (Integer) val2);
-        } else if (val1 instanceof Float && val2 instanceof Float) {
-          val1 = new Float((Float) val1 / (Float) val2);
-          if ((Float) val2 == 0f) {
-            throw new Exception("divide by 0 error");
-          }
-        } else {
-          log.error("invalid DIV operation");
-          throw new Exception("syntax error");
-        }
+        val1 = executor.exec(val1, val2);
       } else {
         break;
       }
