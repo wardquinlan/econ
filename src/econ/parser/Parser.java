@@ -24,6 +24,12 @@ public class Parser {
     operatorMap.put(Token.EXP, new Exp());
     operatorMap.put(Token.AND, new And());
     operatorMap.put(Token.OR, new Or());
+    operatorMap.put(Token.EQ, new Eq());
+    operatorMap.put(Token.NE, new Ne());
+    operatorMap.put(Token.LT, new Lt());
+    operatorMap.put(Token.LTE, new Lte());
+    operatorMap.put(Token.GT, new Gt());
+    operatorMap.put(Token.GTE, new Gte());
   }
   private FunctionCaller functionCaller = new FunctionCaller();
   private Map<String, Symbol> symbolTable;
@@ -118,7 +124,7 @@ public class Parser {
           throw new Exception("syntax error");
         }
         tk = itr.next();
-        Object val2 = term(tk, itr);
+        Object val2 = expressionL2(tk, itr);
         val1 = executor.exec(val1, val2);
       } else {
         break;
@@ -139,106 +145,27 @@ public class Parser {
     //
     //       We could probably put LT, LTE, GT and GTE into a 'expressionL3()' which I think would fix this.
     // NOTE: My implementation of AND and OR is also slightly different from Java; see above web site.
-    if (itr.peek().getType() == Token.EQ) {
-      itr.next();
-      if (!itr.hasNext()) {
-        log.error("missing RHS on EQ");
-        throw new Exception("syntax error");
-      }
-      tk = itr.next();
-      Object val2 = simpleExpression(tk, itr);
-      val1 = val1.equals(val2);
-    } else if (itr.peek().getType() == Token.NE) {
-      itr.next();
-      if (!itr.hasNext()) {
-        log.error("missing RHS on EQ");
-        throw new Exception("syntax error");
-      }
-      tk = itr.next();
-      Object val2 = simpleExpression(tk, itr);
-      val1 = !val1.equals(val2);
-    } else if (itr.peek().getType() == Token.LT) {
-      itr.next();
-      if (!itr.hasNext()) {
-        log.error("missing RHS on LT");
-        throw new Exception("syntax error");
-      }
-      tk = itr.next();
-      Object val2 = simpleExpression(tk, itr);
-      if (val1 instanceof Integer && val2 instanceof Integer) {
-        val1 = ((Integer) val1 < (Integer) val2);
-      } else if (val1 instanceof Integer && val2 instanceof Float) {
-        val1 = ((Integer) val1 < (Float) val2);
-      } else if (val1 instanceof Float && val2 instanceof Integer) {
-        val1 = ((Float) val1 < (Integer) val2);
-      } else if (val1 instanceof Float && val2 instanceof Float) {
-        val1 = ((Float) val1 < (Float) val2);
+    while (true) {
+      if (itr.peek().getType() == Token.EQ  || 
+          itr.peek().getType() == Token.NE  ||
+          itr.peek().getType() == Token.LT  ||
+          itr.peek().getType() == Token.LTE ||
+          itr.peek().getType() == Token.GT  ||
+          itr.peek().getType() == Token.GTE) {
+        OpExecutor executor = new OpExecutor(operatorMap.get(itr.peek().getType()));
+        itr.next();
+        if (!itr.hasNext()) {
+          log.error("missing RHS");
+          throw new Exception("syntax error");
+        }
+        tk = itr.next();
+        Object val2 = simpleExpression(tk, itr);
+        val1 = executor.exec(val1, val2);
       } else {
-        log.error("invalid LT operation");
-        throw new Exception("syntax error");
-      }
-    } else if (itr.peek().getType() == Token.GT) {
-      itr.next();
-      if (!itr.hasNext()) {
-        log.error("missing RHS on GT");
-        throw new Exception("syntax error");
-      }
-      tk = itr.next();
-      Object val2 = simpleExpression(tk, itr);
-      if (val1 instanceof Integer && val2 instanceof Integer) {
-        val1 = ((Integer) val1 > (Integer) val2);
-      } else if (val1 instanceof Integer && val2 instanceof Float) {
-        val1 = ((Integer) val1 > (Float) val2);
-      } else if (val1 instanceof Float && val2 instanceof Integer) {
-        val1 = ((Float) val1 > (Integer) val2);
-      } else if (val1 instanceof Float && val2 instanceof Float) {
-        val1 = ((Float) val1 > (Float) val2);
-      } else {
-        log.error("invalid GT operation");
-        throw new Exception("syntax error");
-      }
-    } else if (itr.peek().getType() == Token.LTE) {
-      itr.next();
-      if (!itr.hasNext()) {
-        log.error("missing RHS on LTE");
-        throw new Exception("syntax error");
-      }
-      tk = itr.next();
-      Object val2 = simpleExpression(tk, itr);
-      if (val1 instanceof Integer && val2 instanceof Integer) {
-        val1 = ((Integer) val1 <= (Integer) val2);
-      } else if (val1 instanceof Integer && val2 instanceof Float) {
-        val1 = ((Integer) val1 <= (Float) val2);
-      } else if (val1 instanceof Float && val2 instanceof Integer) {
-        val1 = ((Float) val1 <= (Integer) val2);
-      } else if (val1 instanceof Float && val2 instanceof Float) {
-        val1 = ((Float) val1 <= (Float) val2);
-      } else {
-        log.error("invalid LTE operation");
-        throw new Exception("syntax error");
-      }
-    } else if (itr.peek().getType() == Token.GTE) {
-      itr.next();
-      if (!itr.hasNext()) {
-        log.error("missing RHS on GTE");
-        throw new Exception("syntax error");
-      }
-      tk = itr.next();
-      Object val2 = simpleExpression(tk, itr);
-      if (val1 instanceof Integer && val2 instanceof Integer) {
-        val1 = ((Integer) val1 >= (Integer) val2);
-      } else if (val1 instanceof Integer && val2 instanceof Float) {
-        val1 = ((Integer) val1 >= (Float) val2);
-      } else if (val1 instanceof Float && val2 instanceof Integer) {
-        val1 = ((Float) val1 >= (Integer) val2);
-      } else if (val1 instanceof Float && val2 instanceof Float) {
-        val1 = ((Float) val1 >= (Float) val2);
-      } else {
-        log.error("invalid GTE operation");
-        throw new Exception("syntax error");
+        break;
       }
     }
-    return val1;
+      return val1;
   }
   
   private Object simpleExpression(Token tk, TokenIterator itr) throws Exception {
