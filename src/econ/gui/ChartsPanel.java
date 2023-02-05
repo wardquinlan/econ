@@ -124,11 +124,14 @@ public class ChartsPanel extends JPanel {
         // draw the chart background
         r.drawChartBackground(i == 0, idxBase);
         
+        // draw boolean series
+        r.drawBooleanSeries(idxBase);
+        
         // draw the horizontal gridlines
         r.drawHorizontalGridlines(chart.getScaler(), gridLines, pair);
         
-        // draw the series themselves
-        r.drawSeries(chart.getScaler(), pair, idxBase);
+        // draw float series
+        r.drawFloatSeries(chart.getScaler(), pair, idxBase);
 
         // draw the legend
         r.drawLegend(mapLegend);

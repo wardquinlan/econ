@@ -228,37 +228,38 @@ public class ChartRenderer {
     }
   }
   
-  public void drawSeries(Scaler scaler, MinMaxPair pair, int idxBase) throws Exception {
+  public void drawFloatSeries(Scaler scaler, MinMaxPair pair, int idxBase) throws Exception {
     g.setStroke(strokeMain);
     for (Series series: chart.getSeries()) {
       TimeSeries timeSeries = Utils.normalize(timeSeriesCollapsed, series.getTimeSeries());
       g.setColor(series.getColor());
-      switch(timeSeries.getType()) {
-      case TimeSeries.TYPE_FLOAT:
-        drawFloatSeries(timeSeries, scaler, pair, idxBase);
-        break;
-      case TimeSeries.TYPE_BOOLEAN:
-        drawBooleanSeries();
-        break;
-      default:
-        Utils.ASSERT(false, "drawSeries: unsupported series: " + series);
+      if (timeSeries.getType() == TimeSeries.TYPE_FLOAT) {
+        int idxMax = Math.min(idxBase + chartWidth / panel.getDxIncr(), timeSeriesCollapsed.size());
+        for (int idx = idxBase + 1; idx < idxMax; idx++) {
+          int x = CHART_HPADDING + (idx - idxBase) * panel.getDxIncr();
+          if (timeSeries.get(idx - 1).getValue() != null) {
+            int v1 = Utils.transform(scaler, (Float) timeSeries.get(idx - 1).getValue(), yBase + chartHeight - CHART_SEPARATOR - 1, yBase, pair.getMinValue(), pair.getMaxValue());
+            int v2 = Utils.transform(scaler, (Float) timeSeries.get(idx).getValue(), yBase + chartHeight - CHART_SEPARATOR - 1, yBase, pair.getMinValue(), pair.getMaxValue());
+            g.drawLine(x - panel.getDxIncr(), v1, x, v2);
+          }
+        }
       }
     }
   }
   
-  private void drawFloatSeries(TimeSeries timeSeries, Scaler scaler, MinMaxPair pair, int idxBase) throws Exception {
-    int idxMax = Math.min(idxBase + chartWidth / panel.getDxIncr(), timeSeriesCollapsed.size());
-    for (int idx = idxBase + 1; idx < idxMax; idx++) {
-      int x = CHART_HPADDING + (idx - idxBase) * panel.getDxIncr();
-      if (timeSeries.get(idx - 1).getValue() != null) {
-        int v1 = Utils.transform(scaler, (Float) timeSeries.get(idx - 1).getValue(), yBase + chartHeight - CHART_SEPARATOR - 1, yBase, pair.getMinValue(), pair.getMaxValue());
-        int v2 = Utils.transform(scaler, (Float) timeSeries.get(idx).getValue(), yBase + chartHeight - CHART_SEPARATOR - 1, yBase, pair.getMinValue(), pair.getMaxValue());
-        g.drawLine(x - panel.getDxIncr(), v1, x, v2);
+  public void drawBooleanSeries(int idxBase) {
+    for (Series series: chart.getSeries()) {
+      TimeSeries timeSeries = Utils.normalize(timeSeriesCollapsed, series.getTimeSeries());
+      g.setColor(series.getColor());
+      if (timeSeries.getType() == TimeSeries.TYPE_BOOLEAN) {
+        int idxMax = Math.min(idxBase + chartWidth / panel.getDxIncr(), timeSeriesCollapsed.size());
+        for (int idx = idxBase + 1; idx < idxMax; idx++) {
+          int x = CHART_HPADDING + (idx - idxBase) * panel.getDxIncr();
+          if ((Boolean) timeSeries.get(idx - 1).getValue()) {
+            g.fillRect(x - panel.getDxIncr(), yBase, x, chartHeight - CHART_SEPARATOR - 1);
+          }
+        }
       }
     }
-  }
-  
-  private void drawBooleanSeries() {
-    // TODO
   }
 }
