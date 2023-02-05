@@ -9,8 +9,6 @@ import java.util.Map;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import econ.core.TimeSeries;
-import econ.core.TimeSeriesData;
 import econ.core.Utils;
 
 public class Parser {
@@ -145,30 +143,23 @@ public class Parser {
     //
     //       We could probably put LT, LTE, GT and GTE into a 'expressionL3()' which I think would fix this.
     // NOTE: My implementation of AND and OR is also slightly different from Java; see above web site.
-    while (true) {
+    if (itr.peek().getType() == Token.EQ  || 
+        itr.peek().getType() == Token.NE  ||
+        itr.peek().getType() == Token.LT  ||
+        itr.peek().getType() == Token.LTE ||
+        itr.peek().getType() == Token.GT  ||
+        itr.peek().getType() == Token.GTE) {
+      OpExecutor executor = new OpExecutor(operatorMap.get(itr.peek().getType()));
+      itr.next();
       if (!itr.hasNext()) {
-        break;
+        log.error("missing RHS");
+        throw new Exception("syntax error");
       }
-      if (itr.peek().getType() == Token.EQ  || 
-          itr.peek().getType() == Token.NE  ||
-          itr.peek().getType() == Token.LT  ||
-          itr.peek().getType() == Token.LTE ||
-          itr.peek().getType() == Token.GT  ||
-          itr.peek().getType() == Token.GTE) {
-        OpExecutor executor = new OpExecutor(operatorMap.get(itr.peek().getType()));
-        itr.next();
-        if (!itr.hasNext()) {
-          log.error("missing RHS");
-          throw new Exception("syntax error");
-        }
-        tk = itr.next();
-        Object val2 = simpleExpression(tk, itr);
-        val1 = executor.exec(val1, val2);
-      } else {
-        break;
-      }
+      tk = itr.next();
+      Object val2 = simpleExpression(tk, itr);
+      val1 = executor.exec(val1, val2);
     }
-      return val1;
+    return val1;
   }
   
   private Object simpleExpression(Token tk, TokenIterator itr) throws Exception {
