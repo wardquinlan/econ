@@ -22,6 +22,8 @@ public class Parser {
     operatorMap.put(Token.MULT, new Mult());
     operatorMap.put(Token.DIV, new Div());
     operatorMap.put(Token.EXP, new Exp());
+    operatorMap.put(Token.AND, new And());
+    operatorMap.put(Token.OR, new Or());
   }
   private FunctionCaller functionCaller = new FunctionCaller();
   private Map<String, Symbol> symbolTable;
@@ -108,39 +110,20 @@ public class Parser {
       if (!itr.hasNext()) {
         return val1;
       }
-      if (itr.peek().getType() == Token.AND) {
+      if (itr.peek().getType() == Token.AND || itr.peek().getType() == Token.OR) {
+        OpExecutor executor = new OpExecutor(operatorMap.get(itr.peek().getType()));
         itr.next();
         if (!itr.hasNext()) {
-          log.error("missing RHS on AND");
+          log.error("missing RHS");
           throw new Exception("syntax error");
         }
         tk = itr.next();
-        Object val2 = expressionL2(tk, itr);
-        if (val1 instanceof Boolean && val2 instanceof Boolean) {
-          val1 = ((Boolean) val1) && ((Boolean) val2);
-        } else {
-          log.error("invalid AND operation");
-          throw new Exception("syntax error");
-        }
-      } else if (itr.peek().getType() == Token.OR) {
-        itr.next();
-        if (!itr.hasNext()) {
-          log.error("missing RHS on OR");
-          throw new Exception("syntax error");
-        }
-        tk = itr.next();
-        Object val2 = expressionL2(tk, itr);
-        if (val1 instanceof Boolean && val2 instanceof Boolean) {
-          val1 = ((Boolean) val1) || ((Boolean) val2);
-        } else {
-          log.error("invalid OR operation");
-          throw new Exception("syntax error");
-        }
+        Object val2 = term(tk, itr);
+        val1 = executor.exec(val1, val2);
       } else {
         break;
       }
     }
-    
     return val1;
   }
   
