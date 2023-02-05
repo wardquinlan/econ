@@ -170,12 +170,14 @@ public class ChartRenderer {
   public void drawLegend(Map<Point, Series> mapLegend) {
     for (int i = 0; i < chart.getSeries().size(); i++) {
       Series series = chart.getSeries().get(i);
-      g.setColor(series.getColor());
       int x = CHART_HPADDING + CHART_HPADDING + i * (CHART_LEGEND_SIZE + CHART_HPADDING);
       int y = yBase + CHART_VPADDING + CHART_VPADDING;
       Point point = new Point(x, y);
       mapLegend.put(point, series);
+      g.setColor(series.getColor());
       g.fillRect(x, y, CHART_LEGEND_SIZE, CHART_LEGEND_SIZE);
+      g.setColor(chart.getLineColor());
+      g.drawRect(x, y, CHART_LEGEND_SIZE, CHART_LEGEND_SIZE);
     }
   }
   
