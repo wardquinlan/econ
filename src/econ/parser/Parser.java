@@ -21,6 +21,7 @@ public class Parser {
     operatorMap.put(Token.MINUS, new Minus());
     operatorMap.put(Token.MULT, new Mult());
     operatorMap.put(Token.DIV, new Div());
+    operatorMap.put(Token.EXP, new Exp());
   }
   private FunctionCaller functionCaller = new FunctionCaller();
   private Map<String, Symbol> symbolTable;
@@ -310,25 +311,15 @@ public class Parser {
         break;
       }
       if (itr.peek().getType() == Token.EXP) {
+        OpExecutor executor = new OpExecutor(operatorMap.get(itr.peek().getType()));
         itr.next();
         if (!itr.hasNext()) {
-          log.error("missing RHS on EXP");
+          log.error("missing RHS");
           throw new Exception("syntax error");
         }
         tk = itr.next();
         Object val2 = primary(tk, itr);
-        if (val1 instanceof Integer) {
-          val1 = ((Integer) val1).floatValue();
-        }
-        if (val2 instanceof Integer) {
-          val2 = ((Integer) val2).floatValue();
-        }
-        if (!(val1 instanceof Float) || !(val2 instanceof Float)) {
-          log.error("exponentials must be real");
-          throw new Exception("syntax error");
-        }
-        val1 = Math.pow((Float) val1, (Float) val2);
-        val1 = ((Double) val1).floatValue();
+        val1 = executor.exec(val1, val2);
       } else {
         break;
       }
