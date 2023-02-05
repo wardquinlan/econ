@@ -15,6 +15,7 @@
            span="20">
 
       <series ref="T10Y3M" color="Red"/>
+      <series ref="INV" color="Yellow"/>
     </chart>
   </panel>
 </context>

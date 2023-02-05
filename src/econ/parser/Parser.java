@@ -146,6 +146,9 @@ public class Parser {
     //       We could probably put LT, LTE, GT and GTE into a 'expressionL3()' which I think would fix this.
     // NOTE: My implementation of AND and OR is also slightly different from Java; see above web site.
     while (true) {
+      if (!itr.hasNext()) {
+        break;
+      }
       if (itr.peek().getType() == Token.EQ  || 
           itr.peek().getType() == Token.NE  ||
           itr.peek().getType() == Token.LT  ||
