@@ -110,4 +110,5 @@ new commands will include:
 - offset(Series) - returns index of first non-null value
 - size(Series)
 
+- unary operators with TimeSeries
 
