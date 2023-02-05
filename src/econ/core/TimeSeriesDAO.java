@@ -96,41 +96,6 @@ public class TimeSeriesDAO {
     }
   }
   
-  public void insertSeriesData(int id, Date date, float value) throws Exception {
-    if (conn == null) {
-      throw new Exception("not connected to datatore");
-    }
-    java.sql.Date sqlDate = new java.sql.Date(date.getTime());
-    PreparedStatement ps = conn.prepareStatement("insert into time_series_data(id, datestamp, value) values(?, ?, ?)");
-    ps.setInt(1, id);
-    ps.setDate(2, sqlDate);
-    ps.setFloat(3, value);
-    ps.executeUpdate();
-  }
-  
-  public void deleteSeries(int id) throws Exception {
-    if (conn == null) {
-      throw new Exception("not connected to datatore");
-    }
-    PreparedStatement ps = conn.prepareStatement("delete from time_series_data where id = ?");
-    ps.setInt(1, id);
-    ps.executeUpdate();
-    ps = conn.prepareStatement("delete from time_series where id = ?");
-    ps.setInt(1, id);
-    ps.executeUpdate();
-  }
-
-  public void deleteSeriesData(int id, Date date) throws Exception {
-    if (conn == null) {
-      throw new Exception("not connected to datatore");
-    }
-    java.sql.Date sqlDate = new java.sql.Date(date.getTime());
-    PreparedStatement ps = conn.prepareStatement("delete from time_series_data where id = ? and datestamp = ?");
-    ps.setInt(1, id);
-    ps.setDate(2, sqlDate);
-    ps.executeUpdate();
-  }
-  
   public TimeSeries loadSeriesById(int id) throws Exception {
     if (conn == null) {
       throw new Exception("not connected to datatore");
