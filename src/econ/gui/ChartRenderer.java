@@ -256,7 +256,7 @@ public class ChartRenderer {
         for (int idx = idxBase + 1; idx < idxMax; idx++) {
           int x = CHART_HPADDING + (idx - idxBase) * panel.getDxIncr();
           if ((Boolean) timeSeries.get(idx - 1).getValue()) {
-            g.fillRect(x - panel.getDxIncr(), yBase, x, chartHeight - CHART_SEPARATOR - 1);
+            g.fillRect(x - panel.getDxIncr(), yBase + 1, panel.getDxIncr(), chartHeight - CHART_SEPARATOR - 1);
           }
         }
       }
