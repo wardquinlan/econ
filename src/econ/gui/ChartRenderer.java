@@ -91,7 +91,7 @@ public class ChartRenderer {
     }
   }
   
-  public void drawChartBackground(boolean withMonthLegend, int idxBase) {
+  public void drawChartBackground(int idxBase) {
     // Fill the rectangle with the background color
     g.setColor(chart.getBackgroundColor());
     g.fillRect(CHART_HPADDING, yBase, chartWidth, chartHeight - CHART_SEPARATOR - 1);
@@ -104,10 +104,10 @@ public class ChartRenderer {
     // Draw the label
     g.setColor(panel.getFontColor());
     g.drawString(chart.getLabel(), CHART_HPADDING, yBase - CHART_VPADDING);
-    
-    // Draw the vertical grid lines
+  }
+  
+  public void drawVerticalGridlines(boolean withMonthLegend, int idxBase) {
     g.setStroke(strokeGridlines);
-
     int idxMax = Math.min(idxBase + chartWidth / panel.getDxIncr(), timeSeriesCollapsed.size());
     for (int idx = idxBase + 1; idx < idxMax; idx++) {
       int x = CHART_HPADDING + (idx - idxBase) * panel.getDxIncr();

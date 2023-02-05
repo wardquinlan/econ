@@ -118,22 +118,12 @@ public class ChartsPanel extends JPanel {
       
       float gridLines[];
       try {
-        // calculate the gridlines
         gridLines = r.calculateGridlines(pair);
-        
-        // draw the chart background
-        r.drawChartBackground(i == 0, idxBase);
-        
-        // draw boolean series
+        r.drawChartBackground(idxBase);
         r.drawBooleanSeries(idxBase);
-        
-        // draw the horizontal gridlines
+        r.drawVerticalGridlines(i == 0, idxBase);
         r.drawHorizontalGridlines(chart.getScaler(), gridLines, pair);
-        
-        // draw float series
         r.drawFloatSeries(chart.getScaler(), pair, idxBase);
-
-        // draw the legend
         r.drawLegend(mapLegend);
       } catch(Exception ex) {
         log.error("exception occurred while displaying panel " + panel.getLabel() + ": " +  ex);
