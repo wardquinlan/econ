@@ -16,17 +16,7 @@ public class OpExecutor {
   }
   
   public Object exec(Object val1, Object val2) throws Exception {
-    if (val1 instanceof String) {
-      return exec((String) val1, val2);
-    } else if (val1 instanceof Integer && val2 instanceof Integer) {
-      return exec((Integer) val1, (Integer) val2);
-    } else if (val1 instanceof Integer && val2 instanceof Float) {
-      return exec((Integer) val1, (Float) val2);
-    } else if (val1 instanceof Float && val2 instanceof Integer) {
-      return exec((Float) val1, (Integer) val2);
-    } else if (val1 instanceof Float && val2 instanceof Float) {
-      return exec((Float) val1, (Float) val2);
-    } else if (val1 instanceof TimeSeries && val2 instanceof Integer) {
+    if (val1 instanceof TimeSeries && val2 instanceof Integer) {
       return exec((TimeSeries) val1, (Integer) val2);
     } else if (val1 instanceof Integer && val2 instanceof TimeSeries) {
       return exec((Integer) val1, (TimeSeries) val2);
@@ -37,33 +27,12 @@ public class OpExecutor {
     } else if (val1 instanceof TimeSeries && val2 instanceof TimeSeries) {
       return exec((TimeSeries) val1, (TimeSeries) val2);
     } else {
-      log.error("invalid expression");
-      throw new Exception("syntax error");
+      return operator.exec(val1, val2);
     }
   }
   
-  private Object exec(String val1, Object val2) throws Exception {
-    return operator.exec(val1, val2);
-  }
-  
-  private Object exec(Integer val1, Integer val2) throws Exception {
-    return operator.exec(val1, val2);
-  }
-  
-  private Object exec(Integer val1, Float val2) throws Exception {
-    return operator.exec(val1.floatValue(), val2);
-  }
-  
-  private Object exec(Float val1, Integer val2) throws Exception {
-    return operator.exec(val1, val2.floatValue());
-  }
-  
-  private Object exec(Float val1, Float val2) throws Exception {
-    return operator.exec(val1, val2);
-  }
-  
   private Object exec(TimeSeries timeSeries1, Integer val) throws Exception {
-    TimeSeries timeSeries = new TimeSeries();
+    TimeSeries timeSeries = new TimeSeries(operator.getAssociatedSeriesType());
     for (TimeSeriesData timeSeriesData1: timeSeries1.getTimeSeriesDataList()) {
       TimeSeriesData timeSeriesData = new TimeSeriesData();
       timeSeriesData.setDate(timeSeriesData1.getDate());
@@ -74,7 +43,7 @@ public class OpExecutor {
   }
 
   private Object exec(Integer val, TimeSeries timeSeries1) throws Exception {
-    TimeSeries timeSeries = new TimeSeries();
+    TimeSeries timeSeries = new TimeSeries(operator.getAssociatedSeriesType());
     for (TimeSeriesData timeSeriesData1: timeSeries1.getTimeSeriesDataList()) {
       TimeSeriesData timeSeriesData = new TimeSeriesData();
       timeSeriesData.setDate(timeSeriesData1.getDate());
@@ -85,7 +54,7 @@ public class OpExecutor {
   }
 
   private Object exec(TimeSeries timeSeries1, Float val) throws Exception {
-    TimeSeries timeSeries = new TimeSeries();
+    TimeSeries timeSeries = new TimeSeries(operator.getAssociatedSeriesType());
     for (TimeSeriesData timeSeriesData1: timeSeries1.getTimeSeriesDataList()) {
       TimeSeriesData timeSeriesData = new TimeSeriesData();
       timeSeriesData.setDate(timeSeriesData1.getDate());
@@ -96,7 +65,7 @@ public class OpExecutor {
   }
 
   private Object exec(Float val, TimeSeries timeSeries1) throws Exception {
-    TimeSeries timeSeries = new TimeSeries();
+    TimeSeries timeSeries = new TimeSeries(operator.getAssociatedSeriesType());
     for (TimeSeriesData timeSeriesData1: timeSeries1.getTimeSeriesDataList()) {
       TimeSeriesData timeSeriesData = new TimeSeriesData();
       timeSeriesData.setDate(timeSeriesData1.getDate());
@@ -110,7 +79,7 @@ public class OpExecutor {
     TimeSeries timeSeriesCollapsed = Utils.collapse(timeSeries1, timeSeries2);
     timeSeries1 = Utils.normalize(timeSeriesCollapsed, timeSeries1);
     timeSeries2 = Utils.normalize(timeSeriesCollapsed, timeSeries2);
-    TimeSeries timeSeries = new TimeSeries();
+    TimeSeries timeSeries = new TimeSeries(operator.getAssociatedSeriesType());
     for (int i = 0; i < timeSeriesCollapsed.getTimeSeriesDataList().size(); i++) {
       TimeSeriesData timeSeriesData1 = timeSeries1.getTimeSeriesDataList().get(i);
       TimeSeriesData timeSeriesData2 = timeSeries2.getTimeSeriesDataList().get(i);

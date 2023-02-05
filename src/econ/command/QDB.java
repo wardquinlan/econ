@@ -56,7 +56,7 @@ public class QDB implements Command {
     Map<Date, Float> map = new HashMap<>();
     
     String fileBase = Utils.getFileBaseName(Paths.get(fileDB.getAbsolutePath()).getFileName().toString()).toUpperCase();
-    TimeSeries timeSeries = new TimeSeries();
+    TimeSeries timeSeries = new TimeSeries(TimeSeries.TYPE_FLOAT);
     timeSeries.setSource(("QDB"));
     timeSeries.setSourceId(fileBase);
     timeSeries.setName(fileBase);

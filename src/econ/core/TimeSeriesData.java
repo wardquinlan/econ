@@ -5,7 +5,7 @@ import java.util.Date;
 public class TimeSeriesData implements Comparable<TimeSeriesData> {
   private Integer id;
   private Date date;
-  private Float value;
+  private Object value;
   
   @Override
   public int compareTo(TimeSeriesData timeSeriesData) {
@@ -28,11 +28,11 @@ public class TimeSeriesData implements Comparable<TimeSeriesData> {
     this.date = date;
   }
   
-  public Float getValue() {
+  public Object getValue() {
     return value;
   }
   
-  public void setValue(Float value) {
+  public void setValue(Object value) {
     this.value = value;
   }
   

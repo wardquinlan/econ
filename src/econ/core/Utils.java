@@ -125,7 +125,7 @@ public class Utils {
   }
   
   public static TimeSeries normalize(TimeSeries timeSeriesCollapsed, TimeSeries timeSeries) {
-    TimeSeries timeSeriesNormalized = new TimeSeries();
+    TimeSeries timeSeriesNormalized = new TimeSeries(timeSeries.getType());
     int indexCollapsed = 0;
     int index = 0;
     
@@ -142,7 +142,7 @@ public class Utils {
       indexCollapsed++;
     }
     
-    Float valueLast = null;
+    Object valueLast = null;
     while (indexCollapsed < timeSeriesCollapsed.size()) {
       if (index == timeSeries.size()) {
         Utils.ASSERT(valueLast != null, "valueLast not expected to be NULL");
@@ -159,20 +159,20 @@ public class Utils {
     
     return timeSeriesNormalized;
   }
-  
+  /*
   public static TimeSeries collapse(TimeSeries timeSeries) {
     List<TimeSeries> list = new ArrayList<>();
     list.add(timeSeries);
     return Utils.collapse(list);
   }
-  
+  */
   public static TimeSeries collapse(List<TimeSeries> timeSeriesList) {
     if (timeSeriesList.size() == 0) {
-      return new TimeSeries();
+      return new TimeSeries(TimeSeries.TYPE_NULL);
     }
     
     if (timeSeriesList.size() == 1) {
-      TimeSeries timeSeries = new TimeSeries();
+      TimeSeries timeSeries = new TimeSeries(TimeSeries.TYPE_NULL);
       for (TimeSeriesData timeSeriesData: timeSeriesList.get(0).getTimeSeriesDataList()) {
         TimeSeriesData data = new TimeSeriesData();
         data.setDate(timeSeriesData.getDate());
@@ -189,7 +189,7 @@ public class Utils {
   }
   
   public static TimeSeries collapse(TimeSeries timeSeries1, TimeSeries timeSeries2) {
-    TimeSeries timeSeries = new TimeSeries();
+    TimeSeries timeSeries = new TimeSeries(TimeSeries.TYPE_NULL);
     int index1 = 0;
     int index2 = 0;
     while (index1 < timeSeries1.size() && index2 < timeSeries2.size()) {

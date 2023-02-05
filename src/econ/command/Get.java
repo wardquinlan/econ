@@ -52,11 +52,6 @@ public class Get implements Command {
       throw new Exception("out of bounds: " + index);
     }
     
-    Float value = timeSeries.get(index).getValue();
-    if (value == null) {
-      return -1f;
-    }
-    
-    return value;
+    return timeSeries.get(index).getValue();
   }
 }

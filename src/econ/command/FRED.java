@@ -85,7 +85,7 @@ public class FRED implements Command {
       units = (String) params.get(1);
     }
     
-    TimeSeries timeSeries = new TimeSeries();
+    TimeSeries timeSeries = new TimeSeries(TimeSeries.TYPE_FLOAT);
     timeSeries.setSource("FRED");
     meta(timeSeries, sourceId);
     data(timeSeries, sourceId, units);

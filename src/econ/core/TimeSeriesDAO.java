@@ -43,7 +43,7 @@ public class TimeSeriesDAO {
     PreparedStatement ps = conn.prepareStatement("select id, name, title, source, source_id, notes from time_series order by id");
     ResultSet resultSet = ps.executeQuery();
     while (resultSet.next()) {
-      TimeSeries series = new TimeSeries();
+      TimeSeries series = new TimeSeries(TimeSeries.TYPE_NULL);
       series.setId(resultSet.getInt(1));
       series.setName(resultSet.getString(2));
       series.setTitle(resultSet.getString(3));
@@ -64,6 +64,7 @@ public class TimeSeriesDAO {
   }
 
   public void saveSeries(TimeSeries timeSeries) throws Exception {
+    Utils.ASSERT(timeSeries.getType() == TimeSeries.TYPE_FLOAT, "series must be of type float");
     if (conn == null) {
       throw new Exception("not connected to datatore");
     }
@@ -85,7 +86,7 @@ public class TimeSeriesDAO {
         ps = conn.prepareStatement("insert into time_series_data(id, datestamp, value) values (?, ?, ?)");
         ps.setInt(1, timeSeriesData.getId());
         ps.setDate(2, new java.sql.Date(timeSeriesData.getDate().getTime()));
-        ps.setFloat(3, timeSeriesData.getValue());
+        ps.setFloat(3, (Float) timeSeriesData.getValue());
         ps.executeUpdate();
       }
       conn.commit();
@@ -130,19 +131,6 @@ public class TimeSeriesDAO {
     ps.executeUpdate();
   }
   
-  public void createSeries(TimeSeries timeSeries) throws Exception {
-    if (conn == null) {
-      throw new Exception("not connected to datatore");
-    }
-    PreparedStatement ps = conn.prepareStatement("insert into time_series(id, name, title, source, source_id) values(?,?,?,?,?)");
-    ps.setInt(1, timeSeries.getId());
-    ps.setString(2, timeSeries.getName());
-    ps.setString(3, timeSeries.getTitle());
-    ps.setString(4, timeSeries.getSource());
-    ps.setString(5, timeSeries.getSourceId());
-    ps.executeUpdate();    
-  }
-  
   public TimeSeries loadSeriesById(int id) throws Exception {
     if (conn == null) {
       throw new Exception("not connected to datatore");
@@ -154,7 +142,7 @@ public class TimeSeriesDAO {
       // not found
       return null;
     }
-    TimeSeries series = new TimeSeries();
+    TimeSeries series = new TimeSeries(TimeSeries.TYPE_FLOAT);
     series.setId(resultSet.getInt(1));
     series.setName(resultSet.getString(2));
     series.setTitle(resultSet.getString(3));
@@ -187,7 +175,7 @@ public class TimeSeriesDAO {
       // not found
       return null;
     }
-    TimeSeries series = new TimeSeries();
+    TimeSeries series = new TimeSeries(TimeSeries.TYPE_FLOAT);
     series.setId(resultSet.getInt(1));
     series.setName(resultSet.getString(2));
     series.setTitle(resultSet.getString(3));

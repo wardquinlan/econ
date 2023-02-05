@@ -198,13 +198,14 @@ public class ChartRenderer {
   }
 
   public MinMaxPair calculateMinMax(MinMaxPair pair, Context ctx, TimeSeries timeSeries, TimeSeries timeSeriesCollapsed, int idxBase) {
+    Utils.ASSERT(timeSeries.getType() == TimeSeries.TYPE_FLOAT, "series must be of type float");
     int idxMax = Math.min(idxBase + chartWidth / panel.getDxIncr(), timeSeriesCollapsed.size());
     for (int idx = idxBase; idx < idxMax; idx++) {
-      if (timeSeries.get(idx).getValue() != null && timeSeries.get(idx).getValue() < pair.getMinValue()) {
-        pair.setMinValue(timeSeries.get(idx).getValue());
+      if (timeSeries.get(idx).getValue() != null && (Float) timeSeries.get(idx).getValue() < pair.getMinValue()) {
+        pair.setMinValue((Float) timeSeries.get(idx).getValue());
       }
-      if (timeSeries.get(idx).getValue() != null && timeSeries.get(idx).getValue() > pair.getMaxValue()) {
-        pair.setMaxValue(timeSeries.get(idx).getValue());
+      if (timeSeries.get(idx).getValue() != null && (Float) timeSeries.get(idx).getValue() > pair.getMaxValue()) {
+        pair.setMaxValue((Float) timeSeries.get(idx).getValue());
       }
     }
     return pair;
@@ -232,15 +233,32 @@ public class ChartRenderer {
     for (Series series: chart.getSeries()) {
       TimeSeries timeSeries = Utils.normalize(timeSeriesCollapsed, series.getTimeSeries());
       g.setColor(series.getColor());
-      int idxMax = Math.min(idxBase + chartWidth / panel.getDxIncr(), timeSeriesCollapsed.size());
-      for (int idx = idxBase + 1; idx < idxMax; idx++) {
-        int x = CHART_HPADDING + (idx - idxBase) * panel.getDxIncr();
-        if (timeSeries.get(idx - 1).getValue() != null) {
-          int v1 = Utils.transform(scaler, timeSeries.get(idx - 1).getValue(), yBase + chartHeight - CHART_SEPARATOR - 1, yBase, pair.getMinValue(), pair.getMaxValue());
-          int v2 = Utils.transform(scaler, timeSeries.get(idx).getValue(), yBase + chartHeight - CHART_SEPARATOR - 1, yBase, pair.getMinValue(), pair.getMaxValue());
-          g.drawLine(x - panel.getDxIncr(), v1, x, v2);
-        }
+      switch(timeSeries.getType()) {
+      case TimeSeries.TYPE_FLOAT:
+        drawFloatSeries(timeSeries, scaler, pair, idxBase);
+        break;
+      case TimeSeries.TYPE_BOOLEAN:
+        drawBooleanSeries();
+        break;
+      default:
+        Utils.ASSERT(false, "drawSeries: unsupported series: " + series);
       }
     }
+  }
+  
+  private void drawFloatSeries(TimeSeries timeSeries, Scaler scaler, MinMaxPair pair, int idxBase) throws Exception {
+    int idxMax = Math.min(idxBase + chartWidth / panel.getDxIncr(), timeSeriesCollapsed.size());
+    for (int idx = idxBase + 1; idx < idxMax; idx++) {
+      int x = CHART_HPADDING + (idx - idxBase) * panel.getDxIncr();
+      if (timeSeries.get(idx - 1).getValue() != null) {
+        int v1 = Utils.transform(scaler, (Float) timeSeries.get(idx - 1).getValue(), yBase + chartHeight - CHART_SEPARATOR - 1, yBase, pair.getMinValue(), pair.getMaxValue());
+        int v2 = Utils.transform(scaler, (Float) timeSeries.get(idx).getValue(), yBase + chartHeight - CHART_SEPARATOR - 1, yBase, pair.getMinValue(), pair.getMaxValue());
+        g.drawLine(x - panel.getDxIncr(), v1, x, v2);
+      }
+    }
+  }
+  
+  private void drawBooleanSeries() {
+    // TODO
   }
 }

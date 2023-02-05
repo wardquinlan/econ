@@ -3,6 +3,11 @@ package econ.core;
 import java.util.ArrayList;
 
 public class TimeSeries {
+  public static final int TYPE_NULL = 0;
+  public static final int TYPE_FLOAT = 1;
+  public static final int TYPE_BOOLEAN = 2;
+  
+  private int type;
   private Integer id;
   private String name;
   private String title;
@@ -10,6 +15,14 @@ public class TimeSeries {
   private String sourceId;
   private String notes;
   private ArrayList<TimeSeriesData> timeSeriesDataList = new ArrayList<>();
+  
+  public TimeSeries(int type) {
+    this.type = type;
+  }
+  
+  public int getType() {
+    return type;
+  }
   
   public int size() {
     return timeSeriesDataList.size();
