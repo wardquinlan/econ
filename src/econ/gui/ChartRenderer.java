@@ -255,7 +255,7 @@ public class ChartRenderer {
         int idxMax = Math.min(idxBase + chartWidth / panel.getDxIncr(), timeSeriesCollapsed.size());
         for (int idx = idxBase + 1; idx < idxMax; idx++) {
           int x = CHART_HPADDING + (idx - idxBase) * panel.getDxIncr();
-          if ((Boolean) timeSeries.get(idx - 1).getValue()) {
+          if ((Boolean) timeSeries.get(idx - 1).getValue() != null && (Boolean) timeSeries.get(idx - 1).getValue()) {
             g.fillRect(x - panel.getDxIncr(), yBase + 1, panel.getDxIncr(), chartHeight - CHART_SEPARATOR - 1);
           }
         }
