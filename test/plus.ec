@@ -40,6 +40,13 @@ assert(get(T, 3) == get(T1, 3) + 1);
 include 'T2.ec';
 
 T = T1 + T2;
-data(T);
+assert(size(T) == 6);
+assert(offset(T) == 0);
+assert(get(T, 0) == 5);
+assert(get(T, 1) == 6);
+assert(get(T, 2) == 9);
+assert(get(T, 3) == 12);
+assert(get(T, 4) == 13);
+assert(get(T, 5) == 16);
 
 print('PLUS TESTS PASSED');
