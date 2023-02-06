@@ -6,6 +6,7 @@ assert(1.0 + 1 == 2);
 assert(1.0 + 1.0 == 2);
 assert("1" + 0 == "10");
 assert(1 + 1 + 1 == 3);
+assert(1 + 2 - 5 - 7 == -9);
 
 include 'T1.ec';
 
