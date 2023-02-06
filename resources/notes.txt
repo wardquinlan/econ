@@ -112,3 +112,4 @@ new commands will include:
 
 - unary operators with TimeSeries
 
+- may introduce a 'filename' and/or 'filepath' command, showing current file
