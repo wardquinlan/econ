@@ -8,3 +8,4 @@ include 'lte.ec';
 include 'gte.ec';
 include 'lt.ec';
 include 'gt.ec';
+include 'ne.ec';
