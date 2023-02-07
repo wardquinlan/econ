@@ -243,35 +243,19 @@ public class Parser {
       Executor executor = new Executor(uPlus);
       tk = itr.next();
       Object val = primary(tk, itr);
-      if (!(val instanceof Integer) && !(val instanceof Float)) {
-        log.error("invalid unary plus");
-        throw new Exception("syntax error");
-      }
-      return val;
+      return executor.exec(val);
     }
     if (tk.getType() == Token.MINUS) {
       Executor executor = new Executor(uMinus);
       tk = itr.next();
       Object val = primary(tk, itr);
-      if (val instanceof Integer) {
-        return new Integer(-(Integer) val);
-      } else if (val instanceof Float) {
-        return new Float(-(Float) val);
-      } else {
-        log.error("invalid unary minus");
-        throw new Exception("syntax error");
-      }
+      return executor.exec(val);
     }
     if (tk.getType() == Token.NOT) {
       Executor executor = new Executor(uNot);
       tk = itr.next();
       Object val = primary(tk, itr);
-      if (val instanceof Boolean) {
-        return !((Boolean) val);
-      } else {
-        log.error("invalid not");
-        throw new Exception("syntax error");
-      }
+      return executor.exec(val);
     }
     if (tk.getType() == Token.SYMBOL) {
       String symbolName = (String) tk.getValue();
