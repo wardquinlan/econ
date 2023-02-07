@@ -15,7 +15,7 @@ import econ.parser.Symbol;
 public class InsertCommand implements Command {
   @Override
   public String getSummary() {
-    return "float  insert(Series series, String date, float value);";
+    return "float  insert(Series series, String date, Object value);";
   }
   
   @Override
@@ -25,7 +25,7 @@ public class InsertCommand implements Command {
     list.add("");
     list.add("  - 'series' is the series in question");
     list.add("  - 'date' is the date, in the format yyyy-mm-dd");
-    list.add("  - 'value' is the value");
+    list.add("  - 'value' is the value (must be an int, a float, or a boolean");
     return list;
   }
   
@@ -51,6 +51,9 @@ public class InsertCommand implements Command {
     if (!(params.get(1) instanceof String)) {
       throw new Exception("'date' is not a string");
     }
+    if (((String) params.get(1)).length() != 10) {
+      throw new Exception("'date' must be of the format YYYY-MM-DD");
+    }
     Date date = Utils.DATE_FORMAT.parse((String) params.get(1));
     for(TimeSeriesData timeSeriesData: timeSeries.getTimeSeriesDataList()) {
       if (timeSeriesData.getDate().equals(date)) {
@@ -58,13 +61,15 @@ public class InsertCommand implements Command {
       }
     }
     
-    float value;
+    Object value;
     if (params.get(2) instanceof Integer) {
       value = ((Integer) params.get(2)).floatValue();
     } else if (params.get(2) instanceof Float) {
       value = (Float) params.get(2);
+    } else if (params.get(2) instanceof Boolean) {
+      value = (Boolean) params.get(2);
     } else {
-      throw new Exception("'value' is neither an int nor a  float");
+      throw new Exception("'value' is neither an int, a  float, nor a boolean");
     }
     TimeSeriesData timeSeriesData = new TimeSeriesData();
     timeSeriesData.setId(timeSeries.getId());
