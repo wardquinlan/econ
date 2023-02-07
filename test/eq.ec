@@ -7,4 +7,4 @@ assert(1.0 == 1.0);
 assert(2 + 3 == 7 -2);
 assert("abc" == "abc");
 
-print('EQ TESTS PASSEd');
+print('EQ TESTS PASSED');
