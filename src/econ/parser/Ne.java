@@ -16,6 +16,8 @@ public class Ne extends Operator {
       return ((Float) val1).compareTo((Float) val2) != 0;
     } else if (val1 instanceof String && val2 instanceof String) {
       return ((String) val1).compareTo((String) val2) != 0;
+    } else if (val1 instanceof Boolean && val2 instanceof Boolean) {
+      return !val1.equals(val2);
     } else {
       throw new Exception("syntax error");
     }
