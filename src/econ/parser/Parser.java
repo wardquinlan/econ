@@ -29,6 +29,9 @@ public class Parser {
     operatorMap.put(Token.GT, new Gt());
     operatorMap.put(Token.GTE, new Gte());
   }
+  private static final UnaryOperator uPlus = new UPlus();
+  private static final UnaryOperator uMinus = new UMinus();
+  private static final UnaryOperator uNot = new UNot();
   private FunctionCaller functionCaller = new FunctionCaller();
   private Map<String, Symbol> symbolTable;
 
@@ -237,6 +240,7 @@ public class Parser {
     }
     // NOTE: could probably implement NOT here if needed
     if (tk.getType() == Token.PLUS) {
+      Executor executor = new Executor(uPlus);
       tk = itr.next();
       Object val = primary(tk, itr);
       if (!(val instanceof Integer) && !(val instanceof Float)) {
@@ -246,6 +250,7 @@ public class Parser {
       return val;
     }
     if (tk.getType() == Token.MINUS) {
+      Executor executor = new Executor(uMinus);
       tk = itr.next();
       Object val = primary(tk, itr);
       if (val instanceof Integer) {
@@ -258,6 +263,7 @@ public class Parser {
       }
     }
     if (tk.getType() == Token.NOT) {
+      Executor executor = new Executor(uNot);
       tk = itr.next();
       Object val = primary(tk, itr);
       if (val instanceof Boolean) {
