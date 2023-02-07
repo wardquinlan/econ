@@ -2,7 +2,7 @@ package econ.parser;
 
 import econ.core.TimeSeries;
 
-public class Or extends Operator {
+public class Or extends BinaryOperator {
   @Override
   public Object exec(Object val1, Object val2) throws Exception {
     if (val1 instanceof Boolean && val2 instanceof Boolean) {

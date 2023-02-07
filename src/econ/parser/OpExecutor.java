@@ -9,9 +9,9 @@ import econ.core.Utils;
 
 public class OpExecutor {
   private static final Log log = LogFactory.getFactory().getInstance(OpExecutor.class);
-  private Operator operator;
+  private BinaryOperator operator;
   
-  public OpExecutor(Operator operator) {
+  public OpExecutor(BinaryOperator operator) {
     this.operator = operator;
   }
   

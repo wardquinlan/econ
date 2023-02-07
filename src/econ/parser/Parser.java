@@ -13,7 +13,7 @@ import econ.core.Utils;
 
 public class Parser {
   private static final Log log = LogFactory.getFactory().getInstance(Parser.class);
-  private static final Map<Integer, Operator> operatorMap = new HashMap<>();
+  private static final Map<Integer, BinaryOperator> operatorMap = new HashMap<>();
   static {
     operatorMap.put(Token.PLUS, new Plus());
     operatorMap.put(Token.MINUS, new Minus());

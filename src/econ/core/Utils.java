@@ -16,7 +16,7 @@ import econ.gui.Chart;
 import econ.gui.MinMaxPair;
 import econ.gui.Panel;
 import econ.gui.Series;
-import econ.parser.Operator;
+import econ.parser.BinaryOperator;
 
 public class Utils {
   private static Log log = LogFactory.getFactory().getInstance(Utils.class);
