@@ -6,3 +6,5 @@ include 'exp.ec';
 include 'eq.ec';
 include 'lte.ec';
 include 'gte.ec';
+include 'lt.ec';
+include 'gt.ec';
