@@ -115,7 +115,7 @@ public class Parser {
         return val1;
       }
       if (itr.peek().getType() == Token.AND || itr.peek().getType() == Token.OR) {
-        OpExecutor executor = new OpExecutor(operatorMap.get(itr.peek().getType()));
+        Executor executor = new Executor(operatorMap.get(itr.peek().getType()));
         itr.next();
         if (!itr.hasNext()) {
           log.error("missing RHS");
@@ -149,7 +149,7 @@ public class Parser {
         itr.peek().getType() == Token.LTE ||
         itr.peek().getType() == Token.GT  ||
         itr.peek().getType() == Token.GTE) {
-      OpExecutor executor = new OpExecutor(operatorMap.get(itr.peek().getType()));
+      Executor executor = new Executor(operatorMap.get(itr.peek().getType()));
       itr.next();
       if (!itr.hasNext()) {
         log.error("missing RHS");
@@ -169,7 +169,7 @@ public class Parser {
         break;
       }
       if (itr.peek().getType() == Token.PLUS || itr.peek().getType() == Token.MINUS) {
-        OpExecutor executor = new OpExecutor(operatorMap.get(itr.peek().getType()));
+        Executor executor = new Executor(operatorMap.get(itr.peek().getType()));
         itr.next();
         if (!itr.hasNext()) {
           log.error("missing RHS");
@@ -192,7 +192,7 @@ public class Parser {
         break;
       }
       if (itr.peek().getType() == Token.MULT || itr.peek().getType() == Token.DIV) {
-        OpExecutor executor = new OpExecutor(operatorMap.get(itr.peek().getType()));
+        Executor executor = new Executor(operatorMap.get(itr.peek().getType()));
         itr.next();
         if (!itr.hasNext()) {
           log.error("missing RHS");
@@ -215,7 +215,7 @@ public class Parser {
         break;
       }
       if (itr.peek().getType() == Token.EXP) {
-        OpExecutor executor = new OpExecutor(operatorMap.get(itr.peek().getType()));
+        Executor executor = new Executor(operatorMap.get(itr.peek().getType()));
         itr.next();
         if (!itr.hasNext()) {
           log.error("missing RHS");

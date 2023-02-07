@@ -7,11 +7,11 @@ import econ.core.TimeSeries;
 import econ.core.TimeSeriesData;
 import econ.core.Utils;
 
-public class OpExecutor {
-  private static final Log log = LogFactory.getFactory().getInstance(OpExecutor.class);
+public class Executor {
+  private static final Log log = LogFactory.getFactory().getInstance(Executor.class);
   private BinaryOperator operator;
   
-  public OpExecutor(BinaryOperator operator) {
+  public Executor(BinaryOperator operator) {
     this.operator = operator;
   }
   
