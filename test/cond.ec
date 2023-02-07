@@ -17,4 +17,18 @@ assert(false or (false == !true));
 assert(3 < 2 or 4 > 5 or !!true);
 assert(!(3 < 2 and !(4 < 3)));
 
+include 'T3.ec';
+
+T = !T3;
+assert(get(T3, 0) == !get(T, 0));
+assert(get(T3, 1) == !get(T, 1));
+assert(get(T3, 2) == !get(T, 2));
+assert(get(T3, 3) == !get(T, 3));
+
+T = !!T3;
+assert(get(T3, 0) == get(T, 0));
+assert(get(T3, 1) == get(T, 1));
+assert(get(T3, 2) == get(T, 2));
+assert(get(T3, 3) == get(T, 3));
+
 print('COND TESTS PASSED');
