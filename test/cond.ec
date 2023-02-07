@@ -15,5 +15,6 @@ assert(false == !true);
 assert(true and !(false == true));
 assert(false or (false == !true));
 assert(3 < 2 or 4 > 5 or !!true);
+assert(!(3 < 2 and !(4 < 3)));
 
 print('COND TESTS PASSED');
