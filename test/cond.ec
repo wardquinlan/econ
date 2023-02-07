@@ -9,6 +9,7 @@ assert(false == (false == true));
 assert(true and true);
 assert((true and false) == (false and true));
 assert(true and (false or true) == false or (true and true));
+assert(!(false and (true or false)));
 assert(true == !false);
 assert(false == !true);
 assert(true and !(false == true));
