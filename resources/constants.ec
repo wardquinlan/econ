@@ -146,3 +146,6 @@ const FREQUENCY_NONE = 0;
 const FREQUENCY_DAYS = 1;
 const FREQUENCY_MONTHS = 2;
 const FREQUENCY_YEARS = 3;
+
+const FLOAT = 1;
+const BOOLEAN = 2;

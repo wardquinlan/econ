@@ -62,12 +62,20 @@ public class InsertCommand implements Command {
     }
     
     Object value;
-    if (params.get(2) instanceof Integer) {
-      value = ((Integer) params.get(2)).floatValue();
-    } else if (params.get(2) instanceof Float) {
-      value = (Float) params.get(2);
-    } else if (params.get(2) instanceof Boolean) {
-      value = (Boolean) params.get(2);
+    if (timeSeries.getType() == TimeSeries.TYPE_FLOAT) {
+      if (params.get(2) instanceof Integer) {
+        value = ((Integer) params.get(2)).floatValue();
+      } else if (params.get(2) instanceof Float) {
+        value = (Float) params.get(2);
+      } else {
+        throw new Exception("series has type float; 'value' must be either an int or a  float");
+      }
+    } else if (timeSeries.getType() == TimeSeries.TYPE_BOOLEAN) {
+      if (params.get(2) instanceof Boolean) {
+        value = (Boolean) params.get(2);
+      } else {
+        throw new Exception("series has type boolean; 'value' must be a boolean");
+      }
     } else {
       throw new Exception("'value' is neither an int, a  float, nor a boolean");
     }
