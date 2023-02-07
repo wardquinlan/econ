@@ -9,9 +9,9 @@ import econ.core.Utils;
 
 public class Executor {
   private static final Log log = LogFactory.getFactory().getInstance(Executor.class);
-  private BinaryOperator operator;
+  private Operator operator;
   
-  public Executor(BinaryOperator operator) {
+  public Executor(Operator operator) {
     this.operator = operator;
   }
   
@@ -27,7 +27,7 @@ public class Executor {
     } else if (val1 instanceof TimeSeries && val2 instanceof TimeSeries) {
       return exec((TimeSeries) val1, (TimeSeries) val2);
     } else {
-      return operator.exec(val1, val2);
+      return ((BinaryOperator) operator).exec(val1, val2);
     }
   }
   
@@ -36,7 +36,7 @@ public class Executor {
     for (TimeSeriesData timeSeriesData1: timeSeries1.getTimeSeriesDataList()) {
       TimeSeriesData timeSeriesData = new TimeSeriesData();
       timeSeriesData.setDate(timeSeriesData1.getDate());
-      timeSeriesData.setValue(operator.exec(timeSeriesData1.getValue(), val.floatValue()));
+      timeSeriesData.setValue(((BinaryOperator) operator).exec(timeSeriesData1.getValue(), val.floatValue()));
       timeSeries.add(timeSeriesData);
     }
     return timeSeries;
@@ -47,7 +47,7 @@ public class Executor {
     for (TimeSeriesData timeSeriesData1: timeSeries1.getTimeSeriesDataList()) {
       TimeSeriesData timeSeriesData = new TimeSeriesData();
       timeSeriesData.setDate(timeSeriesData1.getDate());
-      timeSeriesData.setValue(operator.exec(val.floatValue(), timeSeriesData1.getValue()));
+      timeSeriesData.setValue(((BinaryOperator) operator).exec(val.floatValue(), timeSeriesData1.getValue()));
       timeSeries.add(timeSeriesData);
     }
     return timeSeries;
@@ -58,7 +58,7 @@ public class Executor {
     for (TimeSeriesData timeSeriesData1: timeSeries1.getTimeSeriesDataList()) {
       TimeSeriesData timeSeriesData = new TimeSeriesData();
       timeSeriesData.setDate(timeSeriesData1.getDate());
-      timeSeriesData.setValue(operator.exec(timeSeriesData1.getValue(), val));
+      timeSeriesData.setValue(((BinaryOperator) operator).exec(timeSeriesData1.getValue(), val));
       timeSeries.add(timeSeriesData);
     }
     return timeSeries;
@@ -69,7 +69,7 @@ public class Executor {
     for (TimeSeriesData timeSeriesData1: timeSeries1.getTimeSeriesDataList()) {
       TimeSeriesData timeSeriesData = new TimeSeriesData();
       timeSeriesData.setDate(timeSeriesData1.getDate());
-      timeSeriesData.setValue(operator.exec(val, timeSeriesData1.getValue()));
+      timeSeriesData.setValue(((BinaryOperator) operator).exec(val, timeSeriesData1.getValue()));
       timeSeries.add(timeSeriesData);
     }
     return timeSeries;
@@ -87,7 +87,7 @@ public class Executor {
         Utils.ASSERT(timeSeriesData1.getDate().equals(timeSeriesData2.getDate()), "invalid dates after normalize");
         TimeSeriesData timeSeriesData = new TimeSeriesData();
         timeSeriesData.setDate(timeSeriesData1.getDate());
-        timeSeriesData.setValue(operator.exec(timeSeriesData1.getValue(), timeSeriesData2.getValue()));
+        timeSeriesData.setValue(((BinaryOperator) operator).exec(timeSeriesData1.getValue(), timeSeriesData2.getValue()));
         timeSeries.add(timeSeriesData);
       }
     }
