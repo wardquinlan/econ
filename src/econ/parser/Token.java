@@ -11,8 +11,8 @@ public class Token {
   public static final int STRING   = 3;  // "hello"
   public static final int LPAREN   = 4;  // (
   public static final int RPAREN   = 5;  // )
-  public static final int LBRACE   = 6;  // {
-  public static final int RBRACE   = 7;  // }
+  public static final int LBRACE   = 6;  // { NOTE: defined, but not currently supported
+  public static final int RBRACE   = 7;  // } NOTE: defined, but not currently supported
   public static final int ASSIGN   = 8;  // =
   public static final int EQ       = 9;  // ==
   public static final int NE       = 10;  // !=
@@ -34,6 +34,7 @@ public class Token {
   public static final int AND      = 26; // and
   public static final int OR       = 27; // or
   public static final int BOOLEAN  = 28; // Boolean
+  public static final int NOT      = 29; // !
   
   public static Map<Integer, String> map = new HashMap<Integer, String>();
   static {

@@ -257,6 +257,16 @@ public class Parser {
         throw new Exception("syntax error");
       }
     }
+    if (tk.getType() == Token.NOT) {
+      tk = itr.next();
+      Object val = primary(tk, itr);
+      if (val instanceof Boolean) {
+        return !((Boolean) val);
+      } else {
+        log.error("invalid not");
+        throw new Exception("syntax error");
+      }
+    }
     if (tk.getType() == Token.SYMBOL) {
       String symbolName = (String) tk.getValue();
       if (itr.hasNext() && itr.peek().getType() == Token.ASSIGN) {

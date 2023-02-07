@@ -148,6 +148,9 @@ public class Tokenizer {
           rdr.read();
           Token tk = new Token(Token.NE);
           list.add(tk);
+        } else if (val == '!') {
+          Token tk = new Token(Token.NOT);
+          list.add(tk);
         } else if (val == '<' && rdr.peek() == '=') {
           rdr.read();
           Token tk = new Token(Token.LTE);
@@ -164,12 +167,6 @@ public class Tokenizer {
           list.add(tk);
         } else if (val == ')') {
           Token tk = new Token(Token.RPAREN);
-          list.add(tk);
-        } else if (val == '{') {
-          Token tk = new Token(Token.LBRACE);
-          list.add(tk);
-        } else if (val == '}') {
-          Token tk = new Token(Token.RBRACE);
           list.add(tk);
         } else if (val == '=') {
           Token tk = new Token(Token.ASSIGN);
