@@ -309,6 +309,10 @@ public class Parser {
         log.error("expecting left parenthesis: " + funcName);
         throw new Exception("syntax error: " + funcName);
       }
+      if (!itr.hasNext()) {
+        log.error("unexpected end of input: " + funcName);
+        throw new Exception("syntax error: " + funcName);
+      }
       tk = itr.next();
       List<Object> params = new ArrayList<Object>();
       while (tk.getType() != Token.RPAREN) {
@@ -329,6 +333,9 @@ public class Parser {
             log.error("unexpected comma: " + funcName);
             throw new Exception("syntax error: " + funcName);
           }
+        } else if (tk.getType() != Token.RPAREN) {
+          log.error("unexpected token: " + tk);
+          throw new Exception("syntax error: " + funcName);
         }
       }
       Utils.ASSERT(file != null, "file is null");
