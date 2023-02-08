@@ -37,5 +37,24 @@
       <series ref="FC" color="Blue"/>
     </chart>
   </panel>
+
+  <panel label="VIX"
+         frequency="months">
+
+    <chart label="CBOE Volatility Index"
+           scale="log"
+           span="80">
+
+      <series ref="SP500"/>
+      <series ref="VOL" color="Yellow"/>
+    </chart>
+
+    <chart label="VIX"
+           ngridlines="10"
+           span="20">
+
+      <series ref="VIX" color="Red"/>
+    </chart>
+  </panel>
 </context>
 

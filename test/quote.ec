@@ -11,5 +11,9 @@ FC = (100 + TBOND2)^2 / (100 + TBOND1) - 100;
 setTitle(FC, "1-year Forecasted Rate");
 setNotes(FC, "1-year Forecasted Rate defined as: (1 + 2-Year Rate)^2 / (1  + 1-Year Rate) - 1");
 
+VIX = qtp(tp, "VIX");
+setTitle(VIX, "CBOE Volatility Index");
+VOL = VIX > 36;
+
 plot("quote.xml");
 
