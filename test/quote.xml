@@ -1,21 +1,40 @@
 <context>
-  <panel label="3-Month Yield Curve"
+  <panel label="T10Y3M"
          frequency="months">
          
-    <chart label="S&amp;P 500"
+    <chart label="10 Year Treasury Const Maturity - 3 Month Treasury Const Maturity"
            scale="log" 
            span="80">
 
       <series ref="SP500"/>
     </chart>
 
-    <chart label="10-Year Treasury Constant Maturity - 3-Month Treasury Constant Maturity" 
+    <chart label="T10Y3M"
            ngridlines="6"
            scale="linear"
            span="20">
 
       <series ref="T10Y3M" color="Red"/>
       <series ref="INV" color="Yellow"/>
+    </chart>
+  </panel>
+
+  <panel label="TBOND1" 
+         frequency="months">
+
+    <chart label="1 Year Treasury Const Maturity"
+           scale="log"
+           span="80">
+
+      <series ref="SP500"/>
+    </chart>
+
+    <chart label="TBOND1"
+           ngridlines="10"
+           span="20">
+
+      <series ref="TBOND1" color="Red"/>
+      <series ref="FC" color="Blue"/>
     </chart>
   </panel>
 </context>
