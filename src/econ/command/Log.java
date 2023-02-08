@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import econ.core.TimeSeries;
+import econ.core.TimeSeriesData;
 import econ.parser.Symbol;
 
 public class Log implements Command {
@@ -22,7 +23,7 @@ public class Log implements Command {
     list.add("  - a float");
     list.add("  - a series");
     list.add("");
-    list.add("Note that the parameter must be strictly > 0");
+    list.add("Note that the parameter (or all series values) must be strictly > 0");
     return list;
   }
   
@@ -55,7 +56,23 @@ public class Log implements Command {
       }
       return (float) Math.log(value);
     } else if (object instanceof TimeSeries) {
-      return 0;
+      TimeSeries timeSeries = (TimeSeries) object;
+      if (timeSeries.getType() != TimeSeries.TYPE_FLOAT) {
+        throw new Exception("can only take log of series with type float");
+      }
+      TimeSeries timeSeriesLog = new TimeSeries(TimeSeries.TYPE_FLOAT);
+      for (TimeSeriesData timeSeriesData: timeSeries.getTimeSeriesDataList()) {
+        // NOTE: May have to deal with offsets here (not sure)
+        Float value = (Float) timeSeriesData.getValue();
+        if (value <= 0) {
+          throw new Exception("cannot take log values <= 0");
+        }
+        TimeSeriesData timeSeriesDataLog = new TimeSeriesData();
+        timeSeriesDataLog.setDate(timeSeriesData.getDate());
+        timeSeriesDataLog.setValue((float) Math.log(value));
+        timeSeriesLog.add(timeSeriesDataLog);
+      }
+      return timeSeriesLog;
     } else {
       throw new Exception("invalid param: " + object);
     }
