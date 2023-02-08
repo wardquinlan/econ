@@ -125,3 +125,7 @@ data(N + 1);
 => need to think about what to do here
 => similiar problem for log()
 
+-----
+
+if we overflow gridline array, we get an array out of bounds.  Should probably fix this.
+

@@ -93,5 +93,23 @@
     </chart>
   </panel>
 
+  <panel label="QSALES"
+         frequency="months">
+
+    <chart label="Quarterly Sales per Share"
+           scale="log"
+           span="80">
+
+      <series ref="SP500"/>
+    </chart>
+
+    <chart label="Price / Sales"
+           ngridlines="10"
+           span="20">
+
+      <series ref="PS" color="Red"/>
+    </chart>
+  </panel>
+
 </context>
 
