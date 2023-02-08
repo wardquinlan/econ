@@ -74,5 +74,24 @@
       <series ref="MKCAPGDP" color="Red"/>
     </chart>
   </panel>
+
+  <panel label="NFCI"
+         frequency="months">
+
+    <chart label="Chicago Fed National Financial Conditions Index"
+           scale="log"
+           span="80">
+
+      <series ref="SP500"/>
+    </chart>
+
+    <chart label="NFCI"
+           ngridlines="10"
+           span="20">
+
+      <series ref="NFCI" color="Red"/>
+    </chart>
+  </panel>
+
 </context>
 
