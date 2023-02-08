@@ -115,3 +115,13 @@ new commands will include:
 - may introduce a 'filename' and/or 'filepath' command, showing current file
 
 - get(T 0); works?!?
+
+-----
+
+C = collapse(T1, T2);
+N = normalize(C, T1);
+data(N + 1);
+=> syntax error!!
+=> need to think about what to do here
+=> similiar problem for log()
+
