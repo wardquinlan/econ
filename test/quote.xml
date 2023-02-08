@@ -56,5 +56,23 @@
       <series ref="VIX" color="Red"/>
     </chart>
   </panel>
+
+  <panel label="MKCAPGDP"
+         frequency="months">
+
+    <chart label="Market Cap to GDP"
+           scale="log"
+           span="80">
+
+      <series ref="SP500"/>
+    </chart>
+
+    <chart label="MKCAPGDP"
+           ngridlines="10"
+           span="20">
+
+      <series ref="MKCAPGDP" color="Red"/>
+    </chart>
+  </panel>
 </context>
 
