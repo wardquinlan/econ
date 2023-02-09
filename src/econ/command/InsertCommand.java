@@ -36,13 +36,9 @@ public class InsertCommand implements Command {
   
   @Override
   public Object run(Map<String, Symbol> symbolTable, File file, List<Object> params) throws Exception {
-    if (params.size() > 3) {
-      throw new Exception("too many arguments");
+    if (params.size() < 2) {
+      throw new Exception("missing argument(s)");
     }
-    if (params.size() < 3) {
-      throw new Exception("missing arguments");
-    }
-
     if (!(params.get(0) instanceof TimeSeries)) {
       throw new Exception("'series' is not a series");
     }
@@ -61,8 +57,19 @@ public class InsertCommand implements Command {
       }
     }
     
-    Object value;
-    if (timeSeries.getType() == TimeSeries.TYPE_FLOAT) {
+    Object value = null;
+    if (timeSeries.getType() == TimeSeries.TYPE_DATE) {
+      if (params.size() > 2) {
+        throw new Exception("too many arguments");
+      }
+      value = params.get(1);
+    } else if (timeSeries.getType() == TimeSeries.TYPE_FLOAT) {
+      if (params.size() < 3) {
+        throw new Exception("missing argument(s)");
+      }
+      if (params.size() > 3) {
+        throw new Exception("too many arguments");
+      }
       if (params.get(2) instanceof Integer) {
         value = ((Integer) params.get(2)).floatValue();
       } else if (params.get(2) instanceof Float) {
@@ -71,17 +78,25 @@ public class InsertCommand implements Command {
         throw new Exception("series has type float; 'value' must be either an int or a  float");
       }
     } else if (timeSeries.getType() == TimeSeries.TYPE_BOOLEAN) {
+      if (params.size() < 3) {
+        throw new Exception("missing argument(s)");
+      }
+      if (params.size() > 3) {
+        throw new Exception("too many arguments");
+      }
       if (params.get(2) instanceof Boolean) {
         value = (Boolean) params.get(2);
       } else {
         throw new Exception("series has type boolean; 'value' must be a boolean");
       }
     } else {
-      throw new Exception("'value' is neither an int, a  float, nor a boolean");
+      Utils.ASSERT(false, "invalid series type: " + timeSeries.getType());
     }
+
     TimeSeriesData timeSeriesData = new TimeSeriesData();
     timeSeriesData.setId(timeSeries.getId());
     timeSeriesData.setDate(date);
+    Utils.ASSERT(value != null, "value is null");
     timeSeriesData.setValue(value);
     timeSeries.add(timeSeriesData);
     Collections.sort(timeSeries.getTimeSeriesDataList());

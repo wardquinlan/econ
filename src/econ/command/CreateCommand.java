@@ -20,6 +20,7 @@ public class CreateCommand implements Command {
     list.add("Creates a new series with name 'name' and type 'type', where type is one of:");
     list.add("  1 - create a floating point series");
     list.add("  2 - create a boolean series");
+    list.add("  3 - create a date series");
     return list;
   }
   
@@ -47,8 +48,8 @@ public class CreateCommand implements Command {
     }
     
     Integer type = (Integer) params.get(1);
-    if (type != TimeSeries.TYPE_FLOAT && type != TimeSeries.TYPE_BOOLEAN) {
-      throw new Exception("type must be " + TimeSeries.TYPE_FLOAT + " or " + TimeSeries.TYPE_BOOLEAN);
+    if (type != TimeSeries.TYPE_FLOAT && type != TimeSeries.TYPE_BOOLEAN && type != TimeSeries.TYPE_DATE) {
+      throw new Exception("type must be one of " + TimeSeries.TYPE_FLOAT + ", " + TimeSeries.TYPE_BOOLEAN + ", " + TimeSeries.TYPE_DATE);
     }
     
     TimeSeries timeSeries = new TimeSeries(type);

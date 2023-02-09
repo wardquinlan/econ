@@ -6,6 +6,7 @@ public class TimeSeries {
   public static final int TYPE_NULL = 0;
   public static final int TYPE_FLOAT = 1;
   public static final int TYPE_BOOLEAN = 2;
+  public static final int TYPE_DATE = 3;
   
   private int type;
   private Integer id;
