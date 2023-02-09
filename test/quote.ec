@@ -8,6 +8,7 @@ WILL5000 = qtp(tp, "WILL5000");
 GDP = qtp(tp, "GDP");
 NFCI = qtp(tp, "NFCI");
 QSALES = qtp(tps, "QSALES");
+USD = qtp(tp, "USD");
 
 INV = T10Y3M < 0;
 setTitle(INV, "3-Month Yield Curve Inversion");
@@ -33,5 +34,7 @@ setTitle(NFCI, "Chicago Fed National Financial Conditions Index");
 setNotes(NFCI, "The Chicago Fed's National Financial Conditions Index (NFCI) provides a comprehensive weekly update on U.S. financial conditions in money markets, debt and equity markets and the traditional and \"shadow\" banking systems. Positive values of the NFCI indicate financial conditions that are tighter than average, while negative values indicate financial conditions that are looser than average.  For further information, please visit the Federal Reserve Bank of Chicago (http://www.chicagofed.org/webpages/publications/nfci/index.cfm).");
 
 PS = LOGF * SP500 / QSALES / 4;
+
+setTitle(USD, "Nominal Broad U.S. Dollar Index");
 
 print("quote data loading complete at " + timestamp());

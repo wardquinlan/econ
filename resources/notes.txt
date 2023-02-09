@@ -129,3 +129,4 @@ data(N + 1);
 
 if we overflow gridline array, we get an array out of bounds.  Should probably fix this.
 
+splitHTML() is wonky; see NFCI notes as an example
