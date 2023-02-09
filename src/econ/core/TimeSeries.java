@@ -34,7 +34,7 @@ public class TimeSeries {
     case TYPE_DATE:
       return "Date";
     case TYPE_NULL:
-      return "NULL";
+      return "";
     default:
       Utils.ASSERT(false, "time series has undefined type: " + type);
       return null;
