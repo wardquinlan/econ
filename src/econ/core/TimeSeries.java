@@ -25,6 +25,22 @@ public class TimeSeries {
     return type;
   }
   
+  public String getTypeAsString() {
+    switch(type) {
+    case TYPE_FLOAT:
+      return "Float";
+    case TYPE_BOOLEAN:
+      return "Boolean";
+    case TYPE_DATE:
+      return "Date";
+    case TYPE_NULL:
+      return "NULL";
+    default:
+      Utils.ASSERT(false, "time series has undefined type: " + type);
+      return null;
+    }
+  }
+  
   public int size() {
     return timeSeriesDataList.size();
   }
