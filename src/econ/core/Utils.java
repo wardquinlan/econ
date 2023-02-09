@@ -255,12 +255,15 @@ public class Utils {
     StringBuffer splitHTML = new StringBuffer();
     StringBuffer curr = new StringBuffer();
     while (idx < array.length) {
-      curr.append(array[idx]);
-      curr.append(" ");
-      if (curr.length() > maxline) {
+      if (curr.length() == 0 || curr.length() + array[idx].length() + 1 <= maxline) {
+        curr.append(array[idx]);
+        curr.append(" ");
+      } else {
         splitHTML.append(curr);
         splitHTML.append("<br/>");
         curr = new StringBuffer();
+        curr.append(array[idx]);
+        curr.append(" ");
       }
       idx++;
     }

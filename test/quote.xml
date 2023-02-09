@@ -128,5 +128,23 @@
       <series ref="USD" color="Red"/>
     </chart>
   </panel>
+
+  <panel label="RRP"
+         frequency="months">
+
+    <chart label="Overnight Reverse Repos: Treasury Securities sold by the Federal Reserve"
+           scale="log"
+           span="70">
+
+      <series ref="SP500"/>
+    </chart>
+
+    <chart label="RRP"
+           ngridlines="10"
+           span="30">
+
+      <series ref="RRP" color="Red"/>
+    </chart>
+  </panel>
 </context>
 
