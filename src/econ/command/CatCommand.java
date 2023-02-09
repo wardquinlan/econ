@@ -11,7 +11,7 @@ import econ.core.Utils;
 import econ.parser.Symbol;
 
 public class CatCommand implements Command {
-  private static final int TIME_SERIES_COL_WIDTHS[] = {20, 5, 20, 30, 12, 30, 8};
+  private static final int TIME_SERIES_COL_WIDTHS[] = {20, 5, 20, 30, 8, 12, 30};
   
   @Override
   public String getSummary() {
@@ -35,7 +35,7 @@ public class CatCommand implements Command {
     if (params.size() > 0) {
       throw new Exception("too many arguments");
     }
-    System.out.printf(Utils.generateFormatString(TIME_SERIES_COL_WIDTHS) + "\n", "Symbol", "Id", "Name", "Title", "Source", "Source Id", "Size");
+    System.out.printf(Utils.generateFormatString(TIME_SERIES_COL_WIDTHS) + "\n", "Symbol", "Id", "Name", "Title", "Size", "Source", "Source Id");
     System.out.printf(Utils.generateUnderlineString(TIME_SERIES_COL_WIDTHS) + "\n");
     
     List<String> list = new ArrayList<>();
@@ -52,10 +52,10 @@ public class CatCommand implements Command {
         name,
         timeSeries.getId() == null ? "NULL" : timeSeries.getId().toString(),
         Utils.generateTruncatedData(TIME_SERIES_COL_WIDTHS, 2, Utils.stringWithNULL(timeSeries.getName())), 
-        Utils.generateTruncatedData(TIME_SERIES_COL_WIDTHS, 3, Utils.stringWithNULL(timeSeries.getTitle())), 
-        Utils.generateTruncatedData(TIME_SERIES_COL_WIDTHS, 4, Utils.stringWithNULL(timeSeries.getSource())), 
-        Utils.generateTruncatedData(TIME_SERIES_COL_WIDTHS, 5, Utils.stringWithNULL(timeSeries.getSourceId())),
-        size.toString());
+        Utils.generateTruncatedData(TIME_SERIES_COL_WIDTHS, 3, Utils.stringWithNULL(timeSeries.getTitle())),
+        size.toString(),
+        Utils.generateTruncatedData(TIME_SERIES_COL_WIDTHS, 5, Utils.stringWithNULL(timeSeries.getSource())), 
+        Utils.generateTruncatedData(TIME_SERIES_COL_WIDTHS, 6, Utils.stringWithNULL(timeSeries.getSourceId())));
     }
     return 0;
   }
