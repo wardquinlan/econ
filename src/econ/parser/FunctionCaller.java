@@ -75,6 +75,7 @@ public class FunctionCaller {
     commandMap.put("qtp", new QTP());
     commandMap.put("timestamp", new Timestamp());
     commandMap.put("log", new econ.command.Log());
+    commandMap.put("date", new econ.command.Date());
     if ("true".equals(System.getProperty("econ.test"))) {
       commandMap.put("collapse", new Collapse());
       commandMap.put("normalize", new Normalize());
