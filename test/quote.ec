@@ -11,6 +11,9 @@ QSALES = qtp(tps, "QSALES");
 USD = qtp(tp, "USD");
 RRP = qtp(tp, "RRP");
 
+DT = date(SP500);
+GREAT_RECESSION = DT >= '2008-01-01' and DT <= '2009-06-30';
+
 INV = T10Y3M < 0;
 setTitle(INV, "3-Month Yield Curve Inversion");
 setNotes(INV, "Indicates when the 10-Year / 3-Month yield curve inverts");

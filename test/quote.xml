@@ -7,6 +7,7 @@
            span="70">
 
       <series ref="SP500"/>
+      <series ref="GREAT_RECESSION" color="Orange"/>
     </chart>
 
     <chart label="T10Y3M"
