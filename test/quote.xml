@@ -28,6 +28,7 @@
            span="70">
 
       <series ref="SP500"/>
+      <series ref="RECESSION" color="LightCyan"/>
     </chart>
 
     <chart label="TBOND1"
@@ -47,6 +48,7 @@
            span="70">
 
       <series ref="SP500"/>
+      <series ref="RECESSION" color="LightCyan"/>
       <series ref="VOL" color="Yellow"/>
     </chart>
 
@@ -66,6 +68,7 @@
            span="70">
 
       <series ref="SP500"/>
+      <series ref="RECESSION" color="LightCyan"/>
     </chart>
 
     <chart label="MKCAPGDP"
@@ -84,6 +87,7 @@
            span="70">
 
       <series ref="SP500"/>
+      <series ref="RECESSION" color="LightCyan"/>
     </chart>
 
     <chart label="NFCI"
@@ -102,6 +106,7 @@
            span="70">
 
       <series ref="SP500"/>
+      <series ref="RECESSION" color="LightCyan"/>
     </chart>
 
     <chart label="Price / Sales"
@@ -120,6 +125,7 @@
            span="70">
 
       <series ref="SP500"/>
+      <series ref="RECESSION" color="LightCyan"/>
     </chart>
 
     <chart label="USD"
@@ -138,6 +144,7 @@
            span="70">
 
       <series ref="SP500"/>
+      <series ref="RECESSION" color="LightCyan"/>
     </chart>
 
     <chart label="RRP"
