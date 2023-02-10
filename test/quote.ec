@@ -12,7 +12,14 @@ USD = qtp(tp, "USD");
 RRP = qtp(tp, "RRP");
 
 DT = date(SP500);
-GREAT_RECESSION = DT >= '2008-01-01' and DT <= '2009-06-30';
+R1973 = DT >= '1973-11-01' and DT <= '1975-03-31';
+R1980 = DT >= '1980-01-01' and DT <= '1980-07-31';
+R1981 = DT >= '1981-07-01' and DT <= '1982-11-30';
+R1990 = DT >= '1990-07-01' and DT <= '1991-03-31';
+R2001 = DT >= '2001-03-01' and DT <= '2001-11-30';
+R2007 = DT >= '2007-12-01' and DT <= '2009-06-30';
+R2020 = DT >= '2020-02-01' and DT <= '2020-04-30';
+RECESSION = R1973 or R1980 or R1981 or R1990 or R2001 or R2007 or R2020;
 
 INV = T10Y3M < 0;
 setTitle(INV, "3-Month Yield Curve Inversion");
