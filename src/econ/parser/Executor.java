@@ -42,9 +42,35 @@ public class Executor {
       return exec((Float) val1, (TimeSeries) val2);
     } else if (val1 instanceof TimeSeries && val2 instanceof TimeSeries) {
       return exec((TimeSeries) val1, (TimeSeries) val2);
+    } else if (val1 instanceof TimeSeries && val2 instanceof String) {
+      return exec((TimeSeries) val1, (String) val2);
+    } else if (val1 instanceof String && val2 instanceof TimeSeries) {
+      return exec((String) val1, (TimeSeries) val2); 
     } else {
       return ((BinaryOperator) operator).exec(val1, val2);
     }
+  }
+  
+  private Object exec(TimeSeries timeSeries1, String val) throws Exception {
+    TimeSeries timeSeries = new TimeSeries(operator.getAssociatedSeriesType());
+    for (TimeSeriesData timeSeriesData1: timeSeries1.getTimeSeriesDataList()) {
+      TimeSeriesData timeSeriesData = new TimeSeriesData();
+      timeSeriesData.setDate(timeSeriesData1.getDate());
+      timeSeriesData.setValue(((BinaryOperator) operator).exec(timeSeriesData1.getValue(), val));
+      timeSeries.add(timeSeriesData);
+    }
+    return timeSeries;
+  }
+  
+  private Object exec(String val, TimeSeries timeSeries1) throws Exception {
+    TimeSeries timeSeries = new TimeSeries(operator.getAssociatedSeriesType());
+    for (TimeSeriesData timeSeriesData1: timeSeries1.getTimeSeriesDataList()) {
+      TimeSeriesData timeSeriesData = new TimeSeriesData();
+      timeSeriesData.setDate(timeSeriesData1.getDate());
+      timeSeriesData.setValue(((BinaryOperator) operator).exec(val, timeSeriesData1.getValue()));
+      timeSeries.add(timeSeriesData);
+    }
+    return timeSeries;
   }
   
   private Object exec(TimeSeries timeSeries1, Integer val) throws Exception {
