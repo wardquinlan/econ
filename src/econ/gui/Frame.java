@@ -24,8 +24,6 @@ public class Frame extends JFrame {
     ToolTipManager.sharedInstance().setInitialDelay((int) ctx.get("settings.tooltips.initialdelay"));
     ToolTipManager.sharedInstance().setDismissDelay((int) ctx.get("settings.tooltips.dismissdelay"));
     setVisible(true);
-    if (ctx.getPanels().size() == 1) {
-      tabbedPane.getComponentAt(0).requestFocus();
-    }
+    tabbedPane.getComponentAt(0).requestFocus();
   }
 }
