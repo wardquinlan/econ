@@ -27,6 +27,8 @@ Series will have to support BOOLs for conditions.  But we probably don't have to
 
 - screen capture
 
+- exec()
+
 - Main should test for arglength >= 2 ...
 
 - Alternatively could introduce IF / WHILE / FOR Token Types like this.  Each of these tokens would store a (sub) token list, but this list would only be sent through the parser if the
