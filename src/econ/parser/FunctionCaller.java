@@ -1,14 +1,9 @@
 package econ.parser;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
-
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 
 import econ.command.Assert;
 import econ.command.Cat;
@@ -34,17 +29,14 @@ import econ.command.QDB;
 import econ.command.QTP;
 import econ.command.Save;
 import econ.command.SetId;
+import econ.command.SetName;
 import econ.command.SetNotes;
 import econ.command.SetTitle;
 import econ.command.Size;
 import econ.command.Timestamp;
 import econ.command.Today;
-import econ.core.TimeSeries;
-import econ.core.TimeSeriesDAO;
-import econ.core.Utils;
 
 public class FunctionCaller {
-  private static Log log = LogFactory.getFactory().getInstance(FunctionCaller.class);
   private Map<String, Command> commandMap = new TreeMap<>();
 
   static final int TIME_SERIES_COL_WIDTHS[] = {5, 20, 30, 12, 30};
@@ -69,6 +61,7 @@ public class FunctionCaller {
     commandMap.put("setId", new SetId());
     commandMap.put("setTitle", new SetTitle());
     commandMap.put("setNotes", new SetNotes());
+    commandMap.put("setName", new SetName());
     commandMap.put("today", new Today());
     commandMap.put("fred", new FRED());
     commandMap.put("qdb", new QDB());

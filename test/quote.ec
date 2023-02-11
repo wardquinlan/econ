@@ -20,8 +20,10 @@ R2001 = DT >= '2001-03-01' and DT <= '2001-11-30';
 R2007 = DT >= '2007-12-01' and DT <= '2009-06-30';
 R2020 = DT >= '2020-02-01' and DT <= '2020-04-30';
 RECESSION = R1973 or R1980 or R1981 or R1990 or R2001 or R2007 or R2020;
+setName(RECESSION, "RECESSION");
 
 INV = T10Y3M < 0;
+setName(INV, "INVERSION");
 setTitle(INV, "3-Month Yield Curve Inversion");
 setNotes(INV, "Indicates when the 10-Year / 3-Month yield curve inverts");
 
