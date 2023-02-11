@@ -16,7 +16,7 @@ assert(get(T, 1) == -get(T1, 1));
 assert(get(T, 2) == -get(T1, 2));
 assert(get(T, 3) == -get(T1, 3));
 
-T = - -T1; -- be careful of comments
+T = --T1; # be careful of comments
 assert(size(T) == size(T1));
 assert(get(T, 0) == get(T1, 0));
 assert(get(T, 1) == get(T1, 1));
