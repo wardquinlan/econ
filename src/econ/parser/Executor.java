@@ -1,14 +1,10 @@
 package econ.parser;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-
 import econ.core.TimeSeries;
 import econ.core.TimeSeriesData;
 import econ.core.Utils;
 
 public class Executor {
-  private static final Log log = LogFactory.getFactory().getInstance(Executor.class);
   private Operator operator;
   
   public Executor(Operator operator) {
@@ -20,10 +16,12 @@ public class Executor {
       TimeSeries timeSeries1 = (TimeSeries) val1;
       TimeSeries timeSeries = new TimeSeries(operator.getAssociatedSeriesType());
       for (TimeSeriesData timeSeriesData1: timeSeries1.getTimeSeriesDataList()) {
-        TimeSeriesData timeSeriesData = new TimeSeriesData();
-        timeSeriesData.setDate(timeSeriesData1.getDate());
-        timeSeriesData.setValue(((UnaryOperator) operator).exec(timeSeriesData1.getValue()));
-        timeSeries.add(timeSeriesData);
+        if (timeSeriesData1.getValue() != null) {
+          TimeSeriesData timeSeriesData = new TimeSeriesData();
+          timeSeriesData.setDate(timeSeriesData1.getDate());
+          timeSeriesData.setValue(((UnaryOperator) operator).exec(timeSeriesData1.getValue()));
+          timeSeries.add(timeSeriesData);
+        }
       }
       return timeSeries;
     } else {
@@ -54,10 +52,12 @@ public class Executor {
   private Object exec(TimeSeries timeSeries1, String val) throws Exception {
     TimeSeries timeSeries = new TimeSeries(operator.getAssociatedSeriesType());
     for (TimeSeriesData timeSeriesData1: timeSeries1.getTimeSeriesDataList()) {
-      TimeSeriesData timeSeriesData = new TimeSeriesData();
-      timeSeriesData.setDate(timeSeriesData1.getDate());
-      timeSeriesData.setValue(((BinaryOperator) operator).exec(timeSeriesData1.getValue(), val));
-      timeSeries.add(timeSeriesData);
+      if (timeSeriesData1.getValue() != null) {
+        TimeSeriesData timeSeriesData = new TimeSeriesData();
+        timeSeriesData.setDate(timeSeriesData1.getDate());
+        timeSeriesData.setValue(((BinaryOperator) operator).exec(timeSeriesData1.getValue(), val));
+        timeSeries.add(timeSeriesData);
+      }
     }
     return timeSeries;
   }
@@ -65,10 +65,12 @@ public class Executor {
   private Object exec(String val, TimeSeries timeSeries1) throws Exception {
     TimeSeries timeSeries = new TimeSeries(operator.getAssociatedSeriesType());
     for (TimeSeriesData timeSeriesData1: timeSeries1.getTimeSeriesDataList()) {
-      TimeSeriesData timeSeriesData = new TimeSeriesData();
-      timeSeriesData.setDate(timeSeriesData1.getDate());
-      timeSeriesData.setValue(((BinaryOperator) operator).exec(val, timeSeriesData1.getValue()));
-      timeSeries.add(timeSeriesData);
+      if (timeSeriesData1.getValue() != null) {
+        TimeSeriesData timeSeriesData = new TimeSeriesData();
+        timeSeriesData.setDate(timeSeriesData1.getDate());
+        timeSeriesData.setValue(((BinaryOperator) operator).exec(val, timeSeriesData1.getValue()));
+        timeSeries.add(timeSeriesData);
+      }
     }
     return timeSeries;
   }
@@ -76,10 +78,12 @@ public class Executor {
   private Object exec(TimeSeries timeSeries1, Integer val) throws Exception {
     TimeSeries timeSeries = new TimeSeries(operator.getAssociatedSeriesType());
     for (TimeSeriesData timeSeriesData1: timeSeries1.getTimeSeriesDataList()) {
-      TimeSeriesData timeSeriesData = new TimeSeriesData();
-      timeSeriesData.setDate(timeSeriesData1.getDate());
-      timeSeriesData.setValue(((BinaryOperator) operator).exec(timeSeriesData1.getValue(), val.floatValue()));
-      timeSeries.add(timeSeriesData);
+      if (timeSeriesData1.getValue() != null) {
+        TimeSeriesData timeSeriesData = new TimeSeriesData();
+        timeSeriesData.setDate(timeSeriesData1.getDate());
+        timeSeriesData.setValue(((BinaryOperator) operator).exec(timeSeriesData1.getValue(), val.floatValue()));
+        timeSeries.add(timeSeriesData);
+      }
     }
     return timeSeries;
   }
@@ -87,10 +91,12 @@ public class Executor {
   private Object exec(Integer val, TimeSeries timeSeries1) throws Exception {
     TimeSeries timeSeries = new TimeSeries(operator.getAssociatedSeriesType());
     for (TimeSeriesData timeSeriesData1: timeSeries1.getTimeSeriesDataList()) {
-      TimeSeriesData timeSeriesData = new TimeSeriesData();
-      timeSeriesData.setDate(timeSeriesData1.getDate());
-      timeSeriesData.setValue(((BinaryOperator) operator).exec(val.floatValue(), timeSeriesData1.getValue()));
-      timeSeries.add(timeSeriesData);
+      if (timeSeriesData1.getValue() != null) {
+        TimeSeriesData timeSeriesData = new TimeSeriesData();
+        timeSeriesData.setDate(timeSeriesData1.getDate());
+        timeSeriesData.setValue(((BinaryOperator) operator).exec(val.floatValue(), timeSeriesData1.getValue()));
+        timeSeries.add(timeSeriesData);
+      }
     }
     return timeSeries;
   }
@@ -98,10 +104,12 @@ public class Executor {
   private Object exec(TimeSeries timeSeries1, Float val) throws Exception {
     TimeSeries timeSeries = new TimeSeries(operator.getAssociatedSeriesType());
     for (TimeSeriesData timeSeriesData1: timeSeries1.getTimeSeriesDataList()) {
-      TimeSeriesData timeSeriesData = new TimeSeriesData();
-      timeSeriesData.setDate(timeSeriesData1.getDate());
-      timeSeriesData.setValue(((BinaryOperator) operator).exec(timeSeriesData1.getValue(), val));
-      timeSeries.add(timeSeriesData);
+      if (timeSeriesData1.getValue() != null) {
+        TimeSeriesData timeSeriesData = new TimeSeriesData();
+        timeSeriesData.setDate(timeSeriesData1.getDate());
+        timeSeriesData.setValue(((BinaryOperator) operator).exec(timeSeriesData1.getValue(), val));
+        timeSeries.add(timeSeriesData);
+      }
     }
     return timeSeries;
   }
@@ -109,10 +117,12 @@ public class Executor {
   private Object exec(Float val, TimeSeries timeSeries1) throws Exception {
     TimeSeries timeSeries = new TimeSeries(operator.getAssociatedSeriesType());
     for (TimeSeriesData timeSeriesData1: timeSeries1.getTimeSeriesDataList()) {
-      TimeSeriesData timeSeriesData = new TimeSeriesData();
-      timeSeriesData.setDate(timeSeriesData1.getDate());
-      timeSeriesData.setValue(((BinaryOperator) operator).exec(val, timeSeriesData1.getValue()));
-      timeSeries.add(timeSeriesData);
+      if (timeSeriesData1.getValue() != null) {
+        TimeSeriesData timeSeriesData = new TimeSeriesData();
+        timeSeriesData.setDate(timeSeriesData1.getDate());
+        timeSeriesData.setValue(((BinaryOperator) operator).exec(val, timeSeriesData1.getValue()));
+        timeSeries.add(timeSeriesData);
+      }
     }
     return timeSeries;
   }
