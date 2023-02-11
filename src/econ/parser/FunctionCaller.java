@@ -6,6 +6,7 @@ import java.util.Map;
 import java.util.TreeMap;
 
 import econ.command.Assert;
+import econ.command.Average;
 import econ.command.Cat;
 import econ.command.Collapse;
 import econ.command.Command;
@@ -69,6 +70,7 @@ public class FunctionCaller {
     commandMap.put("timestamp", new Timestamp());
     commandMap.put("log", new econ.command.Log());
     commandMap.put("date", new econ.command.Date());
+    commandMap.put("average", new Average());
     if ("true".equals(System.getProperty("econ.test"))) {
       commandMap.put("collapse", new Collapse());
       commandMap.put("normalize", new Normalize());
