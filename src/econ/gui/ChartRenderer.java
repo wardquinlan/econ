@@ -170,8 +170,8 @@ public class ChartRenderer {
   public void drawLegend(Map<Point, Series> mapLegend) {
     for (int i = 0; i < chart.getSeries().size(); i++) {
       Series series = chart.getSeries().get(i);
-      int x = CHART_HPADDING + CHART_HPADDING + i * (CHART_LEGEND_SIZE + CHART_HPADDING);
-      int y = yBase + CHART_VPADDING + CHART_VPADDING;
+      int x = 2 * CHART_HPADDING;
+      int y = yBase + 2 * CHART_VPADDING + i * (CHART_LEGEND_SIZE + 2 * CHART_VPADDING);
       Point point = new Point(x, y);
       mapLegend.put(point, series);
       g.setColor(series.getColor());
