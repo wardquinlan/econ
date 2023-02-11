@@ -10,3 +10,4 @@ include 'lt.ec';
 include 'gt.ec';
 include 'ne.ec';
 include 'cond.ec';
+include 'average.ec';

@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import econ.core.TimeSeries;
+import econ.core.TimeSeriesData;
 import econ.parser.Symbol;
 
 public class Average implements Command {
@@ -52,6 +53,17 @@ public class Average implements Command {
       throw new Exception("n must be: 0 < n <= size(series)");
     }
     
-    return n;
+    TimeSeries timeSeriesAvg = new TimeSeries(TimeSeries.TYPE_FLOAT);
+    for (int i = 0; i < timeSeries.size() - n + 1; i++) {
+      float sum = 0;
+      for (int j = 0; j < n; j++) {
+        sum += (float) timeSeries.get(i + j).getValue();
+      }
+      TimeSeriesData timeSeriesData = new TimeSeriesData();
+      timeSeriesData.setDate(timeSeries.get(i + n - 1).getDate());
+      timeSeriesData.setValue(sum / n);
+      timeSeriesAvg.add(timeSeriesData);
+    }
+    return timeSeriesAvg;
   }
 }
