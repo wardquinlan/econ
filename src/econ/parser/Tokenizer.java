@@ -46,7 +46,7 @@ public class Tokenizer {
         if (val == -1) {
           break;
         }
-        if (val == '-' && rdr.peek() == '-') {
+        if (val == '#') {
           while (true) {
             val = rdr.read();
             if (val == -1 || val == 0x0a) {
@@ -87,6 +87,18 @@ public class Tokenizer {
             tk.setValue(sb.toString());
           }
           list.add(tk);
+        } else if (val == '0' && rdr.peek() == 'x') {
+          rdr.read();
+          Token tk = new Token(Token.INTEGER);
+          StringBuffer sb = new StringBuffer();
+          while (Character.isDigit(rdr.peek()) || (rdr.peek() >= 'a' && rdr.peek() <= 'f') || (rdr.peek() >= 'A' && rdr.peek() <= 'F')) {
+            sb.append((char) rdr.read());
+          }
+          if (sb.toString().equals("")) {
+            throw new Exception("invalid hex value");
+          }
+          tk.setValue(Integer.parseInt(sb.toString(), 16));
+          list.add(tk);
         } else if (val == '.' || Character.isDigit(val)) {
           StringBuffer sb = new StringBuffer();
           sb.append((char) val);
@@ -108,17 +120,6 @@ public class Tokenizer {
             tk.setValue(Integer.parseInt(sb.toString()));
             list.add(tk);
           }
-        } else if (val == '#') {
-          Token tk = new Token(Token.INTEGER);
-          StringBuffer sb = new StringBuffer();
-          while (Character.isDigit(rdr.peek()) || (rdr.peek() >= 'a' && rdr.peek() <= 'f') || (rdr.peek() >= 'A' && rdr.peek() <= 'F')) {
-            sb.append((char) rdr.read());
-          }
-          if (sb.toString().equals("")) {
-            throw new Exception("invalid hex value");
-          }
-          tk.setValue(Integer.parseInt(sb.toString(), 16));
-          list.add(tk);
         } else if (val == '"' || val == '\'') {
           Token tk = new Token(Token.STRING);
           StringBuffer sb = new StringBuffer();
