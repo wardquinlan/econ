@@ -1,83 +1,33 @@
-Notes
-=====
-
-  - note that ECON_HOME will remain as an environment variable
-  - also note that these will not be checked into GIT
-
 (?) I would like to support Econ --define some-setting=some-value from the command line.  An arbitrary # of them...
 
 Other settings can include:
   - settings.confirm = FALSE | TRUE
   - if TRUE, then prompt a confirmation for "dangerous" functions, such as insert(), delete(), save()
 
-Import() may want to do 2 passes.  1st pass puts everything into a TreeMap.  Which handles overwrites.  Then second pass
-just traverses the tree map.  We also don't have to sort it, either.
-  - only for QTEMPLATE and QDB sources...
-Or: just overwrite the value
-  
-(?) We should use TreeMap rather than HashMap for the symbol table
-
 I have also considered new functions:
   - Object read();
   - reads object from stdin (Integer, Float, Boolean, or String)
-  - save(); --> saves an entire series
   - merge(); --> merges to an existing series
-  - insert();
-  - * this could potentially insert right into the datastore, being consistent with functions like data() and meta()
   - delete();
   - takes a date or an index
-  - connect()
-  - could take parameters to connect
-  - will only ever allow either 0 or 1 connection per instance, and it is automatically disconnected
-  - Object getXXXX(Series);
-  - Object setXXXX(Series, Object);
-  - XXXX is one of: {Id, Name, Title, Source, SourceId, Notes}
-  - String timestamp();
-  - size(Series);
-    => need to support series on database
       
 Series will have to support BOOLs for conditions.  But we probably don't have to save these to the datastore  
 
-- may want to use a HATCH pattern to draw a chart with invalid data e.g. log scaling
-  => I can make my own just by drawing solid lines
-
 - may want to replace Float with Double everywhere
 
-- may want to get rid of Deprecation warnings in Parser.java (JDK 1.17)
-
 - may want to have 2 different orders of precedence for == and <, etc
-
-- may want to introduce '!' operator
-
-- "#" => "0x"
-
-- "--" => "#"
 
 - int merge(Object object, Series series[, Boolean withMetaData]);
   => where object is an id or a name (but not a symbol)
   => validates that series does not have an id attached
   => validates that series name == name loaded from data store
-  
 
-- include series name beside legend (so we know when we do screen captures)
-
-- paint a rectangle around legend (so it shows up for conditional series)
-
-- probably need a new param for the rectangle around the legend:
-  
-  chart.legend.rectcolor or maybe chart.legend.linecolor
-  
 - defaults() can show default values. Maybe.  It won't show the colour names though, only their hex values, so this might be of limited use.
 - alternatively defaults() can display the contents of the defaults file.
 
 - screen capture
 
 - Main should test for arglength >= 2 ...
-
-- Boolean if(Boolean condition, String scriptName);
-- int while(Boolean condition, String scriptName);
-
-BETTER APPROACH
 
 - Alternatively could introduce IF / WHILE / FOR Token Types like this.  Each of these tokens would store a (sub) token list, but this list would only be sent through the parser if the
   condition was true.
@@ -99,34 +49,6 @@ Same for setName()
 
 drop() command - or delete() function
 
-need a "testing framework" - add test commands somehow if something is set
--> setTestMode(true);
--> or simply use a Java property .. very simple
-
-
-new commands will include:
-
-- get(Series series, Object object); - either index or date
-- offset(Series) - returns index of first non-null value
-- size(Series)
-
-- unary operators with TimeSeries
-
 - may introduce a 'filename' and/or 'filepath' command, showing current file
 
-- get(T 0); works?!?
-
------
-
-C = collapse(T1, T2);
-N = normalize(C, T1);
-data(N + 1);
-=> syntax error!!
-=> need to think about what to do here
-=> similiar problem for log()
-
------
-
 if we overflow gridline array, we get an array out of bounds.  Should probably fix this.
-
-splitHTML() is wonky; see NFCI notes as an example
