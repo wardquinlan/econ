@@ -68,6 +68,7 @@
            span="70">
 
       <series ref="SP500"/>
+      <series ref="AVG" color="Red"/>
       <series ref="RECESSION" color="LightCyan"/>
     </chart>
 

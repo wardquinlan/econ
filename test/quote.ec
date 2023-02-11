@@ -11,6 +11,10 @@ QSALES = qtp(tps, "QSALES");
 USD = qtp(tp, "USD");
 RRP = qtp(tp, "RRP");
 
+AVG = average(SP500, 200);
+setName(AVG, "AVG");
+setTitle(AVG, "200-Day Moving Average");
+
 DT = date(SP500);
 R1973 = DT >= '1973-11-01' and DT <= '1975-03-31';
 R1980 = DT >= '1980-01-01' and DT <= '1980-07-31';
@@ -54,3 +58,6 @@ setTitle(RRP, "Overnight Reverse Repurchase Agreements: Treasury Securities Sold
 setNotes(RRP, "This series is constructed as the aggregated daily amount value of the RRP transactions reported by the New York Fed as part of the Temporary Open Market Operations.  Temporary open market operations involve short-term repurchase and reverse repurchase agreements that are designed to temporarily add or drain reserves available to the banking system and influence day-to-day trading in the federal funds market.  A reverse repurchase agreement (known as reverse repo or RRP) is a transaction in which the New York Fed under the authorization and direction of the Federal Open Market Committee sells a security to an eligible counterparty with an agreement to repurchase that same security at a specified price at a specific time in the future. For these transactions, eligible securities are U.S. Treasury instruments, federal agency debt and the mortgage-backed securities issued or fully guaranteed by federal agencies. For more information, see https://www.newyorkfed.org/markets/rrp_faq.html");
 
 print("quote data loading complete at " + timestamp());
+
+plot("quote.xml");
+
