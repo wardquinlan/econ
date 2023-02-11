@@ -178,6 +178,10 @@ public class ChartRenderer {
       g.fillRect(x, y, CHART_LEGEND_SIZE, CHART_LEGEND_SIZE);
       g.setColor(chart.getLineColor());
       g.drawRect(x, y, CHART_LEGEND_SIZE, CHART_LEGEND_SIZE);
+      if (series.getTimeSeries().getName() != null) {
+        g.setColor(panel.getFontColor());
+        g.drawString(series.getTimeSeries().getName(), x + CHART_LEGEND_SIZE + CHART_HPADDING, y + CHART_LEGEND_SIZE);
+      }
     }
   }
   
