@@ -20,4 +20,8 @@ assert(get(B, 0) == 4.5,  "index 0");
 assert(get(B, 1) == 5.75, "index 1");
 assert(get(B, 6) == 6,    "index 6");
 
+assert(get(date(B), 0) == '2022-12-04');
+assert(get(date(B), 1) == '2022-12-05');
+assert(get(date(B), 6) == '2022-12-10');
+
 print('AVERAGE TESTS PASSED');
