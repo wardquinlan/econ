@@ -6,7 +6,7 @@ settings.chart.hatches = 10;
 
 settings.tooltips.initialdelay = 200;
 settings.tooltips.dismissdelay = 3600 * 1000;
-settings.tooltips.maxline = 150;
+settings.tooltips.maxline = 90;
 
 settings.version = "Development Release 0.1";
 

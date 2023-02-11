@@ -232,11 +232,21 @@ public class Utils {
   public static String getToolTipText(TimeSeries timeSeries, int maxline) {
     StringBuffer sb = new StringBuffer();
     sb.append("<html>");
-    sb.append("<h3><strong>" + (timeSeries.getTitle() == null ? "NULL" : timeSeries.getTitle()) + "</strong></h3>");
-    sb.append("<p><strong>" + "Id:</strong> " + (timeSeries.getId() == null ? "NULL" : timeSeries.getId()) + "</p>");
-    sb.append("<p><strong>" + "Name:</strong> " + (timeSeries.getName() == null ? "NULL" : timeSeries.getName()) + "</p>");
-    sb.append("<p><strong>" + "Source:</strong> " + (timeSeries.getSource() == null ? "NULL" : timeSeries.getSource()) + "</p>");
-    sb.append("<p><strong>" + "Source Id:</strong> " + (timeSeries.getSourceId() == null ? "NULL" : timeSeries.getSourceId()) + "</p>");
+    if (timeSeries.getTitle() != null) {
+      sb.append("<h3><strong>" + splitHTML(timeSeries.getTitle(), maxline) + "</strong></h3>");
+    }
+    if (timeSeries.getId() != null) {
+      sb.append("<p><strong>" + "Id:</strong> " + timeSeries.getId() + "</p>");
+    }
+    if (timeSeries.getName() != null) {
+      sb.append("<p><strong>" + "Name:</strong> " + timeSeries.getName() + "</p>");
+    }
+    if (timeSeries.getSource() != null) {
+      sb.append("<p><strong>" + "Source:</strong> " + timeSeries.getSource() + "</p>");
+    }
+    if (timeSeries.getSourceId() != null) {
+      sb.append("<p><strong>" + "Source Id:</strong> " + timeSeries.getSourceId() + "</p>");
+    }
     sb.append("<p><strong>" + "Size:</strong> " + timeSeries.size() + "</p>");
     if (timeSeries.getTimeSeriesDataList().size() > 0) {
       sb.append("<p><strong>" + "Last:</strong> " + timeSeries.getTimeSeriesDataList().get(timeSeries.getTimeSeriesDataList().size() - 1).getValue() + "</p>");
@@ -320,7 +330,7 @@ public class Utils {
   }
   
   public static String stringWithNULL(String string) {
-    return (string == null ? "NULL" : string);
+    return (string == null ? "" : string);
   }
   
   public static String getFileBaseName(String fileName) {

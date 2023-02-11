@@ -49,7 +49,7 @@ public class Cat implements Command {
       TimeSeries timeSeries = (TimeSeries) symbolTable.get(name).getValue();
       System.out.printf(Utils.generateFormatString(TIME_SERIES_COL_WIDTHS) + "\n", 
         name,
-        timeSeries.getId() == null ? "NULL" : timeSeries.getId().toString(),
+        timeSeries.getId() == null ? "" : timeSeries.getId().toString(),
         Utils.generateTruncatedData(TIME_SERIES_COL_WIDTHS, 2, Utils.stringWithNULL(timeSeries.getName())), 
         Utils.generateTruncatedData(TIME_SERIES_COL_WIDTHS, 3, Utils.stringWithNULL(timeSeries.getTitle())),
         timeSeries.getTypeAsString(),
