@@ -8,7 +8,7 @@ import java.util.Map;
 import econ.core.Utils;
 import econ.parser.Symbol;
 
-public class HelpCommand implements Command {
+public class Help implements Command {
   @Override
   public String getSummary() {
     return "int    help([String command]);";

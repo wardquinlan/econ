@@ -5,26 +5,26 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import econ.core.TimeSeriesDAO;
+import econ.core.Utils;
 import econ.parser.Symbol;
 
-public class PrintCommand implements Command {
+public class Load implements Command {
   @Override
   public String getSummary() {
-    return "Object print([Object object]);";
+    return "Series load(Object object);";
   }
-  
+
   @Override
   public List<String> getDetails() {
     List<String> list = new ArrayList<>();
-    list.add("Prints:");
-    list.add("  - 'object'");
-    list.add("  - an empty line if 'object' not supplied");
+    list.add("Loads a series from the database into memory, using 'object' as either an id or a name");
     return list;
   }
 
   @Override
   public String getReturns() {
-    return "'object', or 0 if 'object' not supplied";
+    return "Series, or null if not found";
   }
   
   @Override
@@ -34,11 +34,8 @@ public class PrintCommand implements Command {
     }
     
     if (params.size() == 0) {
-      System.out.println();
-      return 0;
-    } else {
-      System.out.println(params.get(0).toString());
-      return params.get(0);
+      throw new Exception("missing argument");
     }
+    return Utils.load(params.get(0));
   }
 }

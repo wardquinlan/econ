@@ -8,7 +8,7 @@ import java.util.Map;
 import econ.core.TimeSeries;
 import econ.parser.Symbol;
 
-public class CreateCommand implements Command {
+public class Create implements Command {
   @Override
   public String getSummary() {
     return "Series create(String name, int type);";

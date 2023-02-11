@@ -12,7 +12,7 @@ import econ.core.TimeSeriesData;
 import econ.core.Utils;
 import econ.parser.Symbol;
 
-public class InsertCommand implements Command {
+public class Insert implements Command {
   @Override
   public String getSummary() {
     return "float  insert(Series series, String date, Object value);";

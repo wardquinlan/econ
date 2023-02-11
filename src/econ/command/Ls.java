@@ -10,7 +10,7 @@ import econ.core.TimeSeriesDAO;
 import econ.core.Utils;
 import econ.parser.Symbol;
 
-public class LsCommand implements Command {
+public class Ls implements Command {
   private static final int TIME_SERIES_COL_WIDTHS[] = {5, 20, 30, 12, 30, 8};
   
   @Override
