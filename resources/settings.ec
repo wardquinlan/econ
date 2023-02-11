@@ -12,7 +12,7 @@ settings.version = "Development Release 0.1";
 
 sources.fred.baseurl = "https://api.stlouisfed.org/fred";
 
--- used to mark that settings have completed loading
+# used to mark that settings have completed loading
 settings.loaded = 1;
 
 print("Running Econ '" + settings.version + "'");
