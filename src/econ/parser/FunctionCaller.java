@@ -21,6 +21,7 @@ import econ.command.Ds;
 import econ.command.Fonts;
 import econ.command.Get;
 import econ.command.Load;
+import econ.command.Merge;
 import econ.command.Meta;
 import econ.command.Normalize;
 import econ.command.Offset;
@@ -71,6 +72,7 @@ public class FunctionCaller {
     commandMap.put("log", new econ.command.Log());
     commandMap.put("date", new econ.command.Date());
     commandMap.put("average", new Average());
+    commandMap.put("merge", new Merge());
     if ("true".equals(System.getProperty("econ.test"))) {
       commandMap.put("collapse", new Collapse());
       commandMap.put("normalize", new Normalize());
