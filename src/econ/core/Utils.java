@@ -251,6 +251,10 @@ public class Utils {
     if (timeSeries.getTimeSeriesDataList().size() > 0) {
       sb.append("<p><strong>" + "Last:</strong> " + timeSeries.getTimeSeriesDataList().get(timeSeries.getTimeSeriesDataList().size() - 1).getValue() + "</p>");
     }
+    String change = Utils.change(timeSeries);
+    if (change != null) {
+      sb.append("<p><strong>Change:</strong>" + change + "</p>");
+    }
     if (timeSeries.getNotes() != null) {
       sb.append("<p></p>");
       sb.append("<p>" + splitHTML(timeSeries.getNotes(), maxline) + "</p>");

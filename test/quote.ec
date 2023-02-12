@@ -59,5 +59,3 @@ setNotes(RRP, "This series is constructed as the aggregated daily amount value o
 
 print("quote data loading complete at " + timestamp());
 
-plot("quote.xml");
-
