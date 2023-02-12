@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import econ.core.Utils;
 import econ.parser.Symbol;
 
 public class Merge implements Command {
@@ -27,6 +28,7 @@ public class Merge implements Command {
   
   @Override
   public Object run(Map<String, Symbol> symbolTable, File file, List<Object> params) throws Exception {
+    Utils.validate(params, 1, 1);
     return 0;
   }
 }

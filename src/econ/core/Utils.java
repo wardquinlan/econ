@@ -353,4 +353,14 @@ public class Utils {
     }
     return null;
   }
+  
+  public static void validate(List<Object> params, int min, int max) throws Exception {
+    if (params.size() < min) {
+      throw new Exception("missing argument(s)");
+    }
+    
+    if (params.size() > max) {
+      throw new Exception("too many arguments");
+    }
+  }
 }
