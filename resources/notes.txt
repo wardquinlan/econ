@@ -54,3 +54,32 @@ drop() command - or delete() function
 - may introduce a 'filename' and/or 'filepath' command, showing current file
 
 if we overflow gridline array, we get an array out of bounds.  Should probably fix this.
+
+- rename ECON => ES
+
+- probably want to incorporate Apache CLI, and then can do things like this:
+
+  VALUE = $(jselect ...)
+  es << EOF
+  insert(T1, TODAY(), $VALUE);
+  EOF
+  
+ - candidates for Apache CLI:
+   --suppress-autoload
+   --quiet
+   --test
+
+ Other functions to implement:
+ 
+ update()
+ delete()
+ drop()
+ log()
+ version()
+ settings()
+ 
+ Cancelled functions:
+ 
+ exec()
+ 
+ 
