@@ -188,6 +188,69 @@ public class Utils {
     return collapse(timeSeriesList);
   }
   
+  public static int offset(TimeSeries timeSeries) {
+    for (int i = 0; i < timeSeries.size(); i++) {
+      if (timeSeries.get(i).getValue() != null) {
+        return i;
+      }
+    }
+    return -1;
+  }
+  
+  public static MergeData merge(TimeSeries timeSeriesCat, TimeSeries timeSeriesDS) {
+    MergeData mergeData = new MergeData(); 
+    int indexCat = 0;
+    int indexDS = 0;
+    while (indexCat < timeSeriesCat.size() && indexDS < timeSeriesDS.size()) {
+      Date dateCat = timeSeriesCat.get(indexCat).getDate();
+      float valueCat = (float) timeSeriesCat.get(indexCat).getValue();
+      Date dateDS = timeSeriesDS.get(indexDS).getDate();
+      float valueDS = (float) timeSeriesDS.get(indexDS).getValue();
+      TimeSeriesData data = new TimeSeriesData();
+      if (dateCat.compareTo(dateDS) < 0) {
+        data.setDate(dateCat);
+        data.setValue(valueCat);
+        mergeData.getTimeSeriesInsert().add(data);
+        indexCat++;
+      } else if (dateCat.compareTo(dateDS) > 0) {
+        data.setDate(dateCat);
+        data.setValue(valueCat);
+        mergeData.getTimeSeriesDelete().add(data);
+        indexDS++;
+      } else {
+        if (valueCat != valueDS) {
+          data.setDate(dateCat);
+          data.setValue(valueCat);
+          mergeData.getTimeSeriesUpdate().add(data);
+        }
+        indexCat++;
+        indexDS++;
+      }
+    }
+    
+    while (indexCat < timeSeriesCat.size()) {
+      Date dateCat = timeSeriesCat.get(indexCat).getDate();
+      float valueCat = (float) timeSeriesCat.get(indexCat).getValue();
+      TimeSeriesData data = new TimeSeriesData();
+      data.setDate(dateCat);
+      data.setValue(valueCat);
+      mergeData.getTimeSeriesInsert().add(data);
+      indexCat++;
+    }
+
+    while (indexDS < timeSeriesDS.size()) {
+      Date dateDS = timeSeriesDS.get(indexDS).getDate();
+      float valueDS = (float) timeSeriesDS.get(indexDS).getValue();
+      TimeSeriesData data = new TimeSeriesData();
+      data.setDate(dateDS);
+      data.setValue(valueDS);
+      mergeData.getTimeSeriesDelete().add(data);
+      indexDS++;
+    }
+    
+    return mergeData;
+  }
+  
   public static TimeSeries collapse(TimeSeries timeSeries1, TimeSeries timeSeries2) {
     TimeSeries timeSeries = new TimeSeries(TimeSeries.TYPE_NULL);
     int index1 = 0;

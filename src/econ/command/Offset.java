@@ -35,12 +35,6 @@ public class Offset implements Command {
       throw new Exception("'series' is not a Series");
     }
     
-    TimeSeries timeSeries = (TimeSeries) params.get(0);
-    for (int i = 0; i < timeSeries.size(); i++) {
-      if (timeSeries.get(i).getValue() != null) {
-        return i;
-      }
-    }
-    return -1;
+    return Utils.offset((TimeSeries) params.get(0));
   }
 }

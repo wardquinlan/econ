@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import econ.core.MergeData;
 import econ.core.TimeSeries;
 import econ.core.Utils;
 import econ.parser.Symbol;
@@ -33,14 +34,21 @@ public class Merge implements Command {
     if (!(params.get(0) instanceof TimeSeries)) {
       throw new Exception("'series' is not a Series");
     }
-    TimeSeries timeSeries = (TimeSeries) params.get(0);
-    if (timeSeries.getId() == null) {
+    TimeSeries timeSeriesCat = (TimeSeries) params.get(0);
+    if (timeSeriesCat.getId() == null) {
       throw new Exception("series id not set");
     }
-    TimeSeries timeSeriesDS = Utils.load(timeSeries.getId());
+    if (timeSeriesCat.getType() != TimeSeries.TYPE_FLOAT) {
+      throw new Exception("can only merge float series");
+    }
+    if (timeSeriesCat.size() > 0 && Utils.offset(timeSeriesCat) != 0) {
+      throw new Exception("cannot merge series containing null values");
+    }
+    TimeSeries timeSeriesDS = Utils.load(timeSeriesCat.getId());
     if (timeSeriesDS == null) {
       throw new Exception("series not found");
     }
+    MergeData mergeData = Utils.merge(timeSeriesCat, timeSeriesDS);
     return 0;
   }
 }
