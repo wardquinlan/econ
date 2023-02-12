@@ -43,7 +43,7 @@ public class TimeSeriesDAO {
     PreparedStatement ps = conn.prepareStatement("select id, name, title, source, source_id, notes from time_series order by id");
     ResultSet resultSet = ps.executeQuery();
     while (resultSet.next()) {
-      TimeSeries series = new TimeSeries(TimeSeries.TYPE_NULL);
+      TimeSeries series = new TimeSeries(TimeSeries.NULL);
       series.setId(resultSet.getInt(1));
       series.setName(resultSet.getString(2));
       series.setTitle(resultSet.getString(3));
@@ -64,7 +64,7 @@ public class TimeSeriesDAO {
   }
 
   public void saveSeries(TimeSeries timeSeries) throws Exception {
-    Utils.ASSERT(timeSeries.getType() == TimeSeries.TYPE_FLOAT, "series must be of type float");
+    Utils.ASSERT(timeSeries.getType() == TimeSeries.FLOAT, "series must be of type float");
     if (conn == null) {
       throw new Exception("not connected to datatore");
     }
@@ -107,7 +107,7 @@ public class TimeSeriesDAO {
       // not found
       return null;
     }
-    TimeSeries series = new TimeSeries(TimeSeries.TYPE_FLOAT);
+    TimeSeries series = new TimeSeries(TimeSeries.FLOAT);
     series.setId(resultSet.getInt(1));
     series.setName(resultSet.getString(2));
     series.setTitle(resultSet.getString(3));
@@ -140,7 +140,7 @@ public class TimeSeriesDAO {
       // not found
       return null;
     }
-    TimeSeries series = new TimeSeries(TimeSeries.TYPE_FLOAT);
+    TimeSeries series = new TimeSeries(TimeSeries.FLOAT);
     series.setId(resultSet.getInt(1));
     series.setName(resultSet.getString(2));
     series.setTitle(resultSet.getString(3));

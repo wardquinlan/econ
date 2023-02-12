@@ -16,6 +16,6 @@ public class UMinus implements UnaryOperator {
 
   @Override
   public int getAssociatedSeriesType() {
-    return TimeSeries.TYPE_FLOAT;
+    return TimeSeries.FLOAT;
   }
 }

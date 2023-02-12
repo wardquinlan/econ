@@ -204,7 +204,7 @@ public class ChartRenderer {
   }
 
   public MinMaxPair calculateMinMax(MinMaxPair pair, Context ctx, TimeSeries timeSeries, TimeSeries timeSeriesCollapsed, int idxBase) {
-    Utils.ASSERT(timeSeries.getType() == TimeSeries.TYPE_FLOAT, "series must be of type float");
+    Utils.ASSERT(timeSeries.getType() == TimeSeries.FLOAT, "series must be of type float");
     int idxMax = Math.min(idxBase + chartWidth / panel.getDxIncr(), timeSeriesCollapsed.size());
     for (int idx = idxBase; idx < idxMax; idx++) {
       if (timeSeries.get(idx).getValue() != null && (Float) timeSeries.get(idx).getValue() < pair.getMinValue()) {
@@ -249,7 +249,7 @@ public class ChartRenderer {
     for (Series series: chart.getSeries()) {
       TimeSeries timeSeries = Utils.normalize(timeSeriesCollapsed, series.getTimeSeries());
       g.setColor(series.getColor());
-      if (timeSeries.getType() == TimeSeries.TYPE_FLOAT) {
+      if (timeSeries.getType() == TimeSeries.FLOAT) {
         int idxMax = Math.min(idxBase + chartWidth / panel.getDxIncr(), timeSeriesCollapsed.size());
         for (int idx = idxBase + 1; idx < idxMax; idx++) {
           int x = CHART_HPADDING + (idx - idxBase) * panel.getDxIncr();
@@ -267,7 +267,7 @@ public class ChartRenderer {
     for (Series series: chart.getSeries()) {
       TimeSeries timeSeries = Utils.normalize(timeSeriesCollapsed, series.getTimeSeries());
       g.setColor(series.getColor());
-      if (timeSeries.getType() == TimeSeries.TYPE_BOOLEAN) {
+      if (timeSeries.getType() == TimeSeries.BOOLEAN) {
         int idxMax = Math.min(idxBase + chartWidth / panel.getDxIncr(), timeSeriesCollapsed.size());
         for (int idx = idxBase + 1; idx < idxMax; idx++) {
           int x = CHART_HPADDING + (idx - idxBase) * panel.getDxIncr();

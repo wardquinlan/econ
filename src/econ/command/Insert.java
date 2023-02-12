@@ -58,12 +58,12 @@ public class Insert implements Command {
     }
     
     Object value = null;
-    if (timeSeries.getType() == TimeSeries.TYPE_DATE) {
+    if (timeSeries.getType() == TimeSeries.DATE) {
       if (params.size() > 2) {
         throw new Exception("too many arguments");
       }
       value = params.get(1);
-    } else if (timeSeries.getType() == TimeSeries.TYPE_FLOAT) {
+    } else if (timeSeries.getType() == TimeSeries.FLOAT) {
       Utils.validate(params, 3, 3);
       if (params.get(2) instanceof Integer) {
         value = ((Integer) params.get(2)).floatValue();
@@ -72,7 +72,7 @@ public class Insert implements Command {
       } else {
         throw new Exception("series has type float; 'value' must be either an int or a  float");
       }
-    } else if (timeSeries.getType() == TimeSeries.TYPE_BOOLEAN) {
+    } else if (timeSeries.getType() == TimeSeries.BOOLEAN) {
       Utils.validate(params, 3, 3);
       if (params.get(2) instanceof Boolean) {
         value = (Boolean) params.get(2);

@@ -14,6 +14,6 @@ public class UNot implements UnaryOperator {
   
   @Override
   public int getAssociatedSeriesType() {
-    return TimeSeries.TYPE_BOOLEAN;
+    return TimeSeries.BOOLEAN;
   }
 }

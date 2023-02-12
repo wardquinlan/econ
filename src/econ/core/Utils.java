@@ -168,11 +168,11 @@ public class Utils {
   */
   public static TimeSeries collapse(List<TimeSeries> timeSeriesList) {
     if (timeSeriesList.size() == 0) {
-      return new TimeSeries(TimeSeries.TYPE_NULL);
+      return new TimeSeries(TimeSeries.NULL);
     }
     
     if (timeSeriesList.size() == 1) {
-      TimeSeries timeSeries = new TimeSeries(TimeSeries.TYPE_NULL);
+      TimeSeries timeSeries = new TimeSeries(TimeSeries.NULL);
       for (TimeSeriesData timeSeriesData: timeSeriesList.get(0).getTimeSeriesDataList()) {
         TimeSeriesData data = new TimeSeriesData();
         data.setDate(timeSeriesData.getDate());
@@ -252,7 +252,7 @@ public class Utils {
   }
   
   public static TimeSeries collapse(TimeSeries timeSeries1, TimeSeries timeSeries2) {
-    TimeSeries timeSeries = new TimeSeries(TimeSeries.TYPE_NULL);
+    TimeSeries timeSeries = new TimeSeries(TimeSeries.NULL);
     int index1 = 0;
     int index2 = 0;
     while (index1 < timeSeries1.size() && index2 < timeSeries2.size()) {
@@ -409,7 +409,7 @@ public class Utils {
   }
   
   public static String change(TimeSeries timeSeries) {
-    if (timeSeries.getType() == TimeSeries.TYPE_FLOAT && timeSeries.size() > 1) {
+    if (timeSeries.getType() == TimeSeries.FLOAT && timeSeries.size() > 1) {
       float change = (float) timeSeries.get(timeSeries.size() - 1).getValue() - (float) timeSeries.get(timeSeries.size() - 2).getValue();
       float percentChange = change / (float) timeSeries.get(timeSeries.size() - 2).getValue() * 100f;
       return String.format("%f (%.3f%%)", change, percentChange);

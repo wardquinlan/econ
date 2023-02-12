@@ -3,10 +3,10 @@ package econ.core;
 import java.util.ArrayList;
 
 public class TimeSeries {
-  public static final int TYPE_NULL = 0;
-  public static final int TYPE_FLOAT = 1;
-  public static final int TYPE_BOOLEAN = 2;
-  public static final int TYPE_DATE = 3;
+  public static final int NULL = 0;
+  public static final int FLOAT = 1;
+  public static final int BOOLEAN = 2;
+  public static final int DATE = 3;
   
   private int type;
   private Integer id;
@@ -27,13 +27,13 @@ public class TimeSeries {
   
   public String getTypeAsString() {
     switch(type) {
-    case TYPE_FLOAT:
+    case FLOAT:
       return "Float";
-    case TYPE_BOOLEAN:
+    case BOOLEAN:
       return "Boolean";
-    case TYPE_DATE:
+    case DATE:
       return "Date";
-    case TYPE_NULL:
+    case NULL:
       return "";
     default:
       Utils.ASSERT(false, "time series has undefined type: " + type);

@@ -51,10 +51,10 @@ public class Log implements Command {
       return (float) Math.log(value);
     } else if (object instanceof TimeSeries) {
       TimeSeries timeSeries = (TimeSeries) object;
-      if (timeSeries.getType() != TimeSeries.TYPE_FLOAT) {
+      if (timeSeries.getType() != TimeSeries.FLOAT) {
         throw new Exception("can only take log of series with type float");
       }
-      TimeSeries timeSeriesLog = new TimeSeries(TimeSeries.TYPE_FLOAT);
+      TimeSeries timeSeriesLog = new TimeSeries(TimeSeries.FLOAT);
       for (TimeSeriesData timeSeriesData: timeSeries.getTimeSeriesDataList()) {
         // NOTE: May have to deal with offsets here (not sure)
         Float value = (Float) timeSeriesData.getValue();

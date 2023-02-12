@@ -20,6 +20,6 @@ public class Mult implements BinaryOperator {
 
   @Override
   public int getAssociatedSeriesType() {
-    return TimeSeries.TYPE_FLOAT;
+    return TimeSeries.FLOAT;
   }
 }

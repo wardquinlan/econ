@@ -38,7 +38,7 @@ public class Merge implements Command {
     if (timeSeriesCat.getId() == null) {
       throw new Exception("series id not set");
     }
-    if (timeSeriesCat.getType() != TimeSeries.TYPE_FLOAT) {
+    if (timeSeriesCat.getType() != TimeSeries.FLOAT) {
       throw new Exception("can only merge float series");
     }
     if (timeSeriesCat.size() > 0 && Utils.offset(timeSeriesCat) != 0) {

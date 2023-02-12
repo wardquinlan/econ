@@ -23,6 +23,6 @@ public class Gte implements BinaryOperator {
 
   @Override
   public int getAssociatedSeriesType() {
-    return TimeSeries.TYPE_BOOLEAN;
+    return TimeSeries.BOOLEAN;
   }
 }

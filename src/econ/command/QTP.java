@@ -50,7 +50,7 @@ public class QTP implements Command {
     String name = (String) params.get(1);
     Map<Date, Float> map = new HashMap<>();
     
-    TimeSeries timeSeries = new TimeSeries(TimeSeries.TYPE_FLOAT);
+    TimeSeries timeSeries = new TimeSeries(TimeSeries.FLOAT);
     timeSeries.setSource(("QTEMPLATE"));
     timeSeries.setSourceId(name);
     timeSeries.setName(name);

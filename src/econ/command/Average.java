@@ -48,7 +48,7 @@ public class Average implements Command {
       throw new Exception("n must be: 0 < n <= size(series)");
     }
     
-    TimeSeries timeSeriesAvg = new TimeSeries(TimeSeries.TYPE_FLOAT);
+    TimeSeries timeSeriesAvg = new TimeSeries(TimeSeries.FLOAT);
     for (int i = 0; i < timeSeries.size() - n + 1; i++) {
       float sum = 0;
       for (int j = 0; j < n; j++) {

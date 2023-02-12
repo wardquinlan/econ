@@ -37,7 +37,7 @@ public class Date implements Command {
       throw new Exception("argument not a Series");
     }
     TimeSeries timeSeries1 = (TimeSeries) params.get(0);
-    TimeSeries timeSeries = new TimeSeries(TimeSeries.TYPE_DATE);
+    TimeSeries timeSeries = new TimeSeries(TimeSeries.DATE);
     for (TimeSeriesData timeSeriesData1: timeSeries1.getTimeSeriesDataList()) {
       TimeSeriesData timeSeriesData = new TimeSeriesData();
       timeSeriesData.setDate(timeSeriesData1.getDate());
