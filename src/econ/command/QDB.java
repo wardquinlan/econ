@@ -39,13 +39,7 @@ public class QDB implements Command {
   
   @Override
   public Object run(Map<String, Symbol> symbolTable, File file, List<Object> params) throws Exception {
-    if (params.size() < 1) {
-      throw new Exception("missing argument(s)");
-    }
-    
-    if (params.size() > 1) {
-      throw new Exception("too many arguments");
-    }
+    Utils.validate(params, 1, 1);
     
     if (!(params.get(0) instanceof String)) {
       throw new Exception("argument not a string");

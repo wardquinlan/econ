@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import econ.core.Utils;
 import econ.parser.Symbol;
 
 public class Fonts implements Command {
@@ -29,10 +30,7 @@ public class Fonts implements Command {
   
   @Override
   public Object run(Map<String, Symbol> symbolTable, File file, List<Object> params) throws Exception {
-    if (params.size() != 0) {
-      throw new Exception("too many arguments");
-    }
-    
+    Utils.validate(params, 0, 0);
     Font fonts[] = GraphicsEnvironment.getLocalGraphicsEnvironment().getAllFonts();
     for (Font font: fonts) {
       System.out.println(font.getFontName());

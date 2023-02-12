@@ -29,13 +29,7 @@ public class Load implements Command {
   
   @Override
   public Object run(Map<String, Symbol> symbolTable, File file, List<Object> params) throws Exception {
-    if (params.size() > 1) {
-      throw new Exception("too many arguments");
-    }
-    
-    if (params.size() == 0) {
-      throw new Exception("missing argument");
-    }
+    Utils.validate(params, 1, 1);
     return Utils.load(params.get(0));
   }
 }

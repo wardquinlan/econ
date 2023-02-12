@@ -67,13 +67,7 @@ public class FRED implements Command {
     BASEURL = (String) symbolTable.get("sources.fred.baseurl").getValue();
     APIKEY = (String) symbolTable.get("sources.fred.apikey").getValue();
 
-    if (params.size() < 1) {
-      throw new Exception("missing argument(s)");
-    }
-    
-    if (params.size() > 2) {
-      throw new Exception("too many arguments");
-    }
+    Utils.validate(params, 1, 2);
     
     if (!(params.get(0) instanceof String) || (params.size() == 2 && !(params.get(1) instanceof String))) {
       throw new Exception("argument(s) not a string");

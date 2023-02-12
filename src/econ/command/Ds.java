@@ -32,9 +32,7 @@ public class Ds implements Command {
   
   @Override
   public Object run(Map<String, Symbol> symbolTable, File file, List<Object> params) throws Exception {
-    if (params.size() > 0) {
-      throw new Exception("too many arguments");
-    }
+    Utils.validate(params, 0, 0);
     System.out.printf(Utils.generateFormatString(TIME_SERIES_COL_WIDTHS) + "\n", "Id", "Name", "Title", "Source", "Source Id", "Size");
     System.out.printf(Utils.generateUnderlineString(TIME_SERIES_COL_WIDTHS) + "\n");
     List<TimeSeries> list = TimeSeriesDAO.getInstance().listSeries();

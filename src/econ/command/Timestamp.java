@@ -6,6 +6,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import econ.core.Utils;
 import econ.parser.Symbol;
 
 public class Timestamp implements Command {
@@ -28,9 +29,7 @@ public class Timestamp implements Command {
   
   @Override
   public Object run(Map<String, Symbol> symbolTable, File file, List<Object> params) throws Exception {
-    if (params.size() > 0) {
-      throw new Exception("too many arguments");
-    }
+    Utils.validate(params, 0, 0);
     Date date = new Date();
     return date.toString();
   }

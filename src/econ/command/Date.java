@@ -31,13 +31,7 @@ public class Date implements Command {
   
   @Override
   public Object run(Map<String, Symbol> symbolTable, File file, List<Object> params) throws Exception {
-    if (params.size() > 1) {
-      throw new Exception("too many arguments");
-    }
-    
-    if (params.size() < 1) {
-      throw new Exception("missing argument");
-    }
+    Utils.validate(params, 1, 1);
     
     if (!(params.get(0) instanceof TimeSeries)) {
       throw new Exception("argument not a Series");

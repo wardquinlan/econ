@@ -30,13 +30,7 @@ public class Normalize implements Command {
   
   @Override
   public Object run(Map<String, Symbol> symbolTable, File file, List<Object> params) throws Exception {
-    if (params.size() > 2) {
-      throw new Exception("too many arguments");
-    }
-    if (params.size() < 2) {
-      throw new Exception("missing arguments");
-    }
-
+    Utils.validate(params, 2, 2);
     if (!(params.get(0) instanceof TimeSeries) || !(params.get(1) instanceof TimeSeries)) {
       throw new Exception("argument(s) is/are not of type Series");
     }

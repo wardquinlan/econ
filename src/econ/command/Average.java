@@ -7,6 +7,7 @@ import java.util.Map;
 
 import econ.core.TimeSeries;
 import econ.core.TimeSeriesData;
+import econ.core.Utils;
 import econ.parser.Symbol;
 
 public class Average implements Command {
@@ -31,13 +32,7 @@ public class Average implements Command {
   
   @Override
   public Object run(Map<String, Symbol> symbolTable, File file, List<Object> params) throws Exception {
-    if (params.size() > 2) {
-      throw new Exception("too many arguments");
-    }
-    
-    if (params.size() < 2) {
-      throw new Exception("missing argument(s)");
-    }
+    Utils.validate(params, 2, 2);
     
     if (!(params.get(0) instanceof TimeSeries)) {
       throw new Exception("'series' is not a Series");

@@ -43,14 +43,7 @@ public class Plot implements Command {
   
   @Override
   public Object run(Map<String, Symbol> symbolTable, File file, List<Object> params) throws Exception {
-    if (params.size() > 1) {
-      throw new Exception("too many arguments");
-    }
-    
-    if (params.size() == 0) {
-      throw new Exception("missing argument");
-    }
-
+    Utils.validate(params, 1, 1);
     Context ctx;
     if (params.get(0) instanceof String) {
       String filename = (String) params.get(0);

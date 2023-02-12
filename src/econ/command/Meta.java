@@ -35,14 +35,7 @@ public class Meta implements Command {
   
   @Override
   public Object run(Map<String, Symbol> symbolTable, File file, List<Object> params) throws Exception {
-    if (params.size() > 1) {
-      throw new Exception("too many arguments");
-    }
-    
-    if (params.size() == 0) {
-      throw new Exception("missing argument");
-    }
-
+    Utils.validate(params, 1, 1);
     TimeSeries timeSeries;
     Object object = params.get(0);
     if (object instanceof TimeSeries) {

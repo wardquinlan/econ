@@ -30,12 +30,7 @@ public class Assert implements Command {
   
   @Override
   public Object run(Map<String, Symbol> symbolTable, File file, List<Object> params) throws Exception {
-    if (params.size() > 2) {
-      throw new Exception("too many arguments");
-    }
-    if (params.size() < 1) {
-      throw new Exception("missing argument");
-    }
+    Utils.validate(params, 1, 2);
     
     if (!(params.get(0) instanceof Boolean)) {
       throw new Exception("'condition' is not a Boolean");

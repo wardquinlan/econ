@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import econ.core.TimeSeriesDAO;
+import econ.core.Utils;
 import econ.parser.Symbol;
 
 public class Connect implements Command {
@@ -28,13 +29,7 @@ public class Connect implements Command {
   
   @Override
   public Object run(Map<String, Symbol> symbolTable, File file, List<Object> params) throws Exception {
-    if (params.size() > 4) {
-      throw new Exception("too many arguments");
-    }
-    
-    if (params.size() < 3) {
-      throw new Exception("missing arguments");
-    }
+    Utils.validate(params, 3, 4);
     
     if (!(params.get(0) instanceof String) ||
         !(params.get(1) instanceof String) ||

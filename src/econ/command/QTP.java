@@ -40,13 +40,7 @@ public class QTP implements Command {
   
   @Override
   public Object run(Map<String, Symbol> symbolTable, File file, List<Object> params) throws Exception {
-    if (params.size() < 2) {
-      throw new Exception("missing argument(s)");
-    }
-    
-    if (params.size() > 2) {
-      throw new Exception("too many arguments");
-    }
+    Utils.validate(params, 2, 2);
     
     if (!(params.get(0) instanceof String) || !(params.get(1) instanceof String)) {
       throw new Exception("argument not a string");

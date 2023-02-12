@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import econ.core.Utils;
 import econ.parser.Symbol;
 
 public class Exit implements Command {
@@ -27,10 +28,7 @@ public class Exit implements Command {
   
   @Override
   public Object run(Map<String, Symbol> symbolTable, File file, List<Object> params) throws Exception {
-    if (params.size() > 1) {
-      throw new Exception("too many arguments");
-    }
-    
+    Utils.validate(params, 0, 1);
     if (params.size() == 0) {
       System.exit(0);
     }
