@@ -17,7 +17,7 @@ import econ.command.Exit;
 import econ.command.FRED;
 import econ.command.Help;
 import econ.command.Insert;
-import econ.command.Ls;
+import econ.command.Ds;
 import econ.command.Fonts;
 import econ.command.Get;
 import econ.command.Load;
@@ -50,7 +50,7 @@ public class FunctionCaller {
     commandMap.put("help", new Help());
     commandMap.put("load", new Load());
     commandMap.put("plot", new Plot());
-    commandMap.put("ls", new Ls());
+    commandMap.put("ds", new Ds());
     commandMap.put("data", new Data());
     commandMap.put("meta", new Meta());
     commandMap.put("cat", new Cat());
