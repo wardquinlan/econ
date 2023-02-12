@@ -71,7 +71,6 @@ if we overflow gridline array, we get an array out of bounds.  Should probably f
 
  Other functions to implement:
  
- update()
  delete()
  drop()
  log()
@@ -81,5 +80,5 @@ if we overflow gridline array, we get an array out of bounds.  Should probably f
  Cancelled functions:
  
  exec()
- 
+ update() => can simply combine delete() and then insert() for now...
  
