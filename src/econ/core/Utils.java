@@ -340,4 +340,13 @@ public class Utils {
     }
     return fileName;
   }
+  
+  public static String change(TimeSeries timeSeries) {
+    if (timeSeries.getType() == TimeSeries.TYPE_FLOAT && timeSeries.size() > 1) {
+      float change = (float) timeSeries.get(timeSeries.size() - 1).getValue() - (float) timeSeries.get(timeSeries.size() - 2).getValue();
+      float percentChange = change / (float) timeSeries.get(timeSeries.size() - 2).getValue() * 100f;
+      return String.format("%f (%.3f%%)", change, percentChange);
+    }
+    return null;
+  }
 }
