@@ -79,7 +79,7 @@ public class TimeSeriesDAO {
       
       timeSeries = mergeData.getTimeSeriesUpdate();
       for (TimeSeriesData timeSeriesData: timeSeries.getTimeSeriesDataList()) {
-        PreparedStatement ps = conn.prepareStatement("update time_series_data set value = ? where id = ? and date = ?");
+        PreparedStatement ps = conn.prepareStatement("update time_series_data set value = ? where id = ? and datestamp = ?");
         ps.setFloat(1, (Float) timeSeriesData.getValue());
         ps.setInt(2, timeSeries.getId());
         ps.setDate(3, new java.sql.Date(timeSeriesData.getDate().getTime()));
@@ -88,7 +88,7 @@ public class TimeSeriesDAO {
 
       timeSeries = mergeData.getTimeSeriesDelete();
       for (TimeSeriesData timeSeriesData: timeSeries.getTimeSeriesDataList()) {
-        PreparedStatement ps = conn.prepareStatement("delete from time_series_data where id = ? and date = ?");
+        PreparedStatement ps = conn.prepareStatement("delete from time_series_data where id = ? and datestamp = ?");
         ps.setInt(1, timeSeries.getId());
         ps.setDate(2, new java.sql.Date(timeSeriesData.getDate().getTime()));
         ps.executeUpdate();
