@@ -82,3 +82,7 @@ if we overflow gridline array, we get an array out of bounds.  Should probably f
  exec()
  update() => can simply combine delete() and then insert() for now...
  
+ -----
+ 
+ %Change of Negative Numbers is a bit misleading.  Maybe don't show them.
+ 
