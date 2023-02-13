@@ -38,6 +38,7 @@ import econ.command.SetTitle;
 import econ.command.Size;
 import econ.command.Timestamp;
 import econ.command.Today;
+import econ.command.Update;
 
 public class FunctionCaller {
   private Map<String, Command> commandMap = new TreeMap<>();
@@ -75,6 +76,7 @@ public class FunctionCaller {
     commandMap.put("average", new Average());
     commandMap.put("merge", new Merge());
     commandMap.put("delete", new Delete());
+    commandMap.put("update", new Update());
     if ("true".equals(System.getProperty("econ.test"))) {
       commandMap.put("collapse", new Collapse());
       commandMap.put("normalize", new Normalize());
