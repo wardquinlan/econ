@@ -16,7 +16,6 @@ import econ.gui.Chart;
 import econ.gui.MinMaxPair;
 import econ.gui.Panel;
 import econ.gui.Series;
-import econ.parser.BinaryOperator;
 
 public class Utils {
   private static Log log = LogFactory.getFactory().getInstance(Utils.class);
@@ -197,8 +196,11 @@ public class Utils {
     return -1;
   }
   
-  public static MergeData merge(TimeSeries timeSeriesCat, TimeSeries timeSeriesDS) {
-    MergeData mergeData = new MergeData(); 
+  public static MergeData prepareMerge(TimeSeries timeSeriesCat, TimeSeries timeSeriesDS) {
+    MergeData mergeData = new MergeData();
+    mergeData.getTimeSeriesInsert().setId(timeSeriesCat.getId());
+    mergeData.getTimeSeriesUpdate().setId(timeSeriesCat.getId());
+    mergeData.getTimeSeriesDelete().setId(timeSeriesCat.getId());
     int indexCat = 0;
     int indexDS = 0;
     while (indexCat < timeSeriesCat.size() && indexDS < timeSeriesDS.size()) {

@@ -7,6 +7,7 @@ import java.util.Map;
 
 import econ.core.MergeData;
 import econ.core.TimeSeries;
+import econ.core.TimeSeriesDAO;
 import econ.core.Utils;
 import econ.parser.Symbol;
 
@@ -48,7 +49,8 @@ public class Merge implements Command {
     if (timeSeriesDS == null) {
       throw new Exception("series not found");
     }
-    MergeData mergeData = Utils.merge(timeSeriesCat, timeSeriesDS);
+    MergeData mergeData = Utils.prepareMerge(timeSeriesCat, timeSeriesDS);
+    TimeSeriesDAO.getInstance().merge(mergeData);
     return 0;
   }
 }

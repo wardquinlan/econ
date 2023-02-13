@@ -5,7 +5,6 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import org.apache.commons.logging.Log;
@@ -63,6 +62,44 @@ public class TimeSeriesDAO {
     return resultSet.getInt(1);
   }
 
+  public void merge(MergeData mergeData) throws Exception {
+    if (conn == null) {
+      throw new Exception("not connected to datatore");
+    }
+    try {
+      conn.setAutoCommit(false);
+      TimeSeries timeSeries = mergeData.getTimeSeriesInsert();
+      for (TimeSeriesData timeSeriesData: timeSeries.getTimeSeriesDataList()) {
+        PreparedStatement ps = conn.prepareStatement("insert into time_series_data(id, datestamp, value) values (?, ?, ?)");
+        ps.setInt(1, timeSeries.getId());
+        ps.setDate(2, new java.sql.Date(timeSeriesData.getDate().getTime()));
+        ps.setFloat(3, (Float) timeSeriesData.getValue());
+        ps.executeUpdate();
+      }
+      
+      timeSeries = mergeData.getTimeSeriesUpdate();
+      for (TimeSeriesData timeSeriesData: timeSeries.getTimeSeriesDataList()) {
+        PreparedStatement ps = conn.prepareStatement("update time_series_data set value = ? where id = ? and date = ?");
+        ps.setFloat(1, (Float) timeSeriesData.getValue());
+        ps.setInt(2, timeSeries.getId());
+        ps.setDate(3, new java.sql.Date(timeSeriesData.getDate().getTime()));
+        ps.executeUpdate();
+      }
+
+      timeSeries = mergeData.getTimeSeriesDelete();
+      for (TimeSeriesData timeSeriesData: timeSeries.getTimeSeriesDataList()) {
+        PreparedStatement ps = conn.prepareStatement("delete from time_series_data where id = ? and date = ?");
+        ps.setInt(1, timeSeries.getId());
+        ps.setDate(2, new java.sql.Date(timeSeriesData.getDate().getTime()));
+        ps.executeUpdate();
+      }
+      conn.commit();
+    } catch(Exception ex) {
+      conn.rollback();
+      throw ex;
+    }
+  }
+  
   public void saveSeries(TimeSeries timeSeries) throws Exception {
     Utils.ASSERT(timeSeries.getType() == TimeSeries.FLOAT, "series must be of type float");
     if (conn == null) {
