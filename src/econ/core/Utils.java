@@ -215,8 +215,8 @@ public class Utils {
         mergeData.getTimeSeriesInsert().add(data);
         indexCat++;
       } else if (dateCat.compareTo(dateDS) > 0) {
-        data.setDate(dateCat);
-        data.setValue(valueCat);
+        data.setDate(dateDS);
+        data.setValue(valueDS);
         mergeData.getTimeSeriesDelete().add(data);
         indexDS++;
       } else {
