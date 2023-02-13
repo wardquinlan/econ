@@ -8,6 +8,10 @@ settings.tooltips.initialdelay = 200;
 settings.tooltips.dismissdelay = 3600 * 1000;
 settings.tooltips.maxline = 90;
 
+settings.merge.insert = true;
+settings.merge.update = false;
+settings.merge.delete = false;
+
 settings.version = "Development Release 0.1";
 
 sources.fred.baseurl = "https://api.stlouisfed.org/fred";

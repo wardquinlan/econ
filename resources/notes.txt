@@ -86,3 +86,6 @@ if we overflow gridline array, we get an array out of bounds.  Should probably f
  
  %Change of Negative Numbers is a bit misleading.  Maybe don't show them.
  
+ -----
+ 
+settings.auth.drop = false;

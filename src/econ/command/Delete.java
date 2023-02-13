@@ -20,7 +20,7 @@ public class Delete implements Command {
   @Override
   public List<String> getDetails() {
     List<String> list = new ArrayList<>();
-    list.add("Deletes observation at 'date' from 'series");
+    list.add("Deletes observation at 'date' from 'series'");
     return list;
   }
   
