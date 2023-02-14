@@ -49,7 +49,6 @@ public class Create implements Command {
     
     TimeSeries timeSeries = new TimeSeries(type);
     timeSeries.setName((String) params.get(0));
-    timeSeries.setSource("USER");
     timeSeries.setBase(true);
     return timeSeries;
   }

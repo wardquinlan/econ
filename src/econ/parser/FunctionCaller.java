@@ -34,6 +34,8 @@ import econ.command.Save;
 import econ.command.SetId;
 import econ.command.SetName;
 import econ.command.SetNotes;
+import econ.command.SetSource;
+import econ.command.SetSourceId;
 import econ.command.SetTitle;
 import econ.command.Size;
 import econ.command.Timestamp;
@@ -78,6 +80,8 @@ public class FunctionCaller {
     commandMap.put("delete", new Delete());
     commandMap.put("update", new Update());
     commandMap.put("drop", new Drop());
+    commandMap.put("setSourceId", new SetSourceId());
+    commandMap.put("setSource", new SetSource());
     if (Settings.getInstance().testFunctions()) {
       commandMap.put("collapse", new Collapse());
       commandMap.put("normalize", new Normalize());
