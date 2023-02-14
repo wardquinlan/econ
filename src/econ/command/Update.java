@@ -15,7 +15,7 @@ import econ.parser.Symbol;
 public class Update implements Command {
   @Override
   public String getSummary() {
-    return "float  update(Series series, String date, Object value);";
+    return "float  update(Series series, String date[, Object value]);";
   }
   
   @Override
@@ -25,7 +25,7 @@ public class Update implements Command {
     list.add("");
     list.add("  - 'series' is the series in question");
     list.add("  - 'date' is the date, in the format yyyy-mm-dd");
-    list.add("  - 'value' is the value (must be an or a float");
+    list.add("  - 'value' is the value (must be a boolean, an int or a float");
     return list;
   }
   
