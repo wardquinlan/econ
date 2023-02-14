@@ -215,15 +215,19 @@ public class Utils {
         mergeData.getTimeSeriesInsert().add(data);
         indexCat++;
       } else if (dateCat.compareTo(dateDS) > 0) {
-        data.setDate(dateDS);
-        data.setValue(valueDS);
-        mergeData.getTimeSeriesDelete().add(data);
+        if (Settings.getInstance().mergeDeletes()) {
+          data.setDate(dateDS);
+          data.setValue(valueDS);
+          mergeData.getTimeSeriesDelete().add(data);
+        }
         indexDS++;
       } else {
         if (valueCat != valueDS) {
-          data.setDate(dateCat);
-          data.setValue(valueCat);
-          mergeData.getTimeSeriesUpdate().add(data);
+          if (Settings.getInstance().mergeUpdates()) {
+            data.setDate(dateCat);
+            data.setValue(valueCat);
+            mergeData.getTimeSeriesUpdate().add(data);
+          }
         }
         indexCat++;
         indexDS++;
@@ -241,12 +245,14 @@ public class Utils {
     }
 
     while (indexDS < timeSeriesDS.size()) {
-      Date dateDS = timeSeriesDS.get(indexDS).getDate();
-      float valueDS = (float) timeSeriesDS.get(indexDS).getValue();
-      TimeSeriesData data = new TimeSeriesData();
-      data.setDate(dateDS);
-      data.setValue(valueDS);
-      mergeData.getTimeSeriesDelete().add(data);
+      if (Settings.getInstance().mergeDeletes()) {
+        Date dateDS = timeSeriesDS.get(indexDS).getDate();
+        float valueDS = (float) timeSeriesDS.get(indexDS).getValue();
+        TimeSeriesData data = new TimeSeriesData();
+        data.setDate(dateDS);
+        data.setValue(valueDS);
+        mergeData.getTimeSeriesDelete().add(data);
+      }
       indexDS++;
     }
     
