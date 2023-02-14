@@ -8,6 +8,13 @@ import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.apache.commons.cli.CommandLine;
+import org.apache.commons.cli.CommandLineParser;
+import org.apache.commons.cli.DefaultParser;
+import org.apache.commons.cli.HelpFormatter;
+import org.apache.commons.cli.Option;
+import org.apache.commons.cli.Options;
+import org.apache.commons.cli.ParseException;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -25,8 +32,30 @@ public class Main {
       log.error("ECON_HOME not set");
       System.exit(1);
     }
+    
+    Options options = new Options();
+    Option opt = new Option("u", "merge-updates", false, "include updates during merge");
+    options.addOption(opt);
+    opt = new Option("d", "merge-deletes", false, "include deletions during merge");
+    options.addOption(opt);
+    opt = new Option("m", "merge-metadata", false, "include metadata during merge");
+    options.addOption(opt);
+    opt = new Option("s", "suppress-autoload", false, "suppress auto-loading of .es");
+    options.addOption(opt);
+    opt = new Option("t", "test", false, "include test commands");
+    options.addOption(opt);
+    CommandLine cmd = null;
+    try {
+      CommandLineParser parser = new DefaultParser();
+      cmd = parser.parse(options, args);
+    } catch(ParseException e) {
+      HelpFormatter formatter = new HelpFormatter();
+      formatter.printHelp("es", options);
+      System.exit(1);
+    }
+    args = cmd.getArgs();
     if (args.length > 1) {
-      log.error("usage: econ.Main [<script.ec>]");
+      log.error("usage: econ.Main [<script-name.es>]");
       System.exit(1);
     }
     
