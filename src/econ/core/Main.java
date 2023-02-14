@@ -48,11 +48,13 @@ public class Main {
     try {
       CommandLineParser parser = new DefaultParser();
       cmd = parser.parse(options, args);
+      Settings.getInstance().setOptions(cmd);
     } catch(ParseException e) {
       HelpFormatter formatter = new HelpFormatter();
       formatter.printHelp("es", options);
       System.exit(1);
     }
+    
     args = cmd.getArgs();
     if (args.length > 1) {
       log.error("usage: econ.Main [<script-name.es>]");
