@@ -71,8 +71,6 @@ if we overflow gridline array, we get an array out of bounds.  Should probably f
 
  Other functions to implement:
  
- delete()
- drop()
  log()
  version()
  settings()
@@ -86,6 +84,16 @@ if we overflow gridline array, we get an array out of bounds.  Should probably f
  
  %Change of Negative Numbers is a bit misleading.  Maybe don't show them.
  
- -----
+-----
  
 settings.auth.drop = false;
+
+-----
+
+Usage
+
+es --merge-deletes
+es --merge-updates
+es --merge-metadata
+es --test-functions
+es --suppress-autoload
