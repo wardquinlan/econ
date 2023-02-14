@@ -196,7 +196,7 @@ public class Utils {
     return -1;
   }
   
-  public static MergeData prepareMerge(TimeSeries timeSeriesCat, TimeSeries timeSeriesDS) {
+  public static MergeData prepareMerge(TimeSeries timeSeriesCat, TimeSeries timeSeriesDS, boolean mergeUpdates, boolean mergeDeletes, boolean mergeMetaData) {
     MergeData mergeData = new MergeData();
     mergeData.getTimeSeriesInsert().setId(timeSeriesCat.getId());
     mergeData.getTimeSeriesUpdate().setId(timeSeriesCat.getId());
@@ -215,7 +215,7 @@ public class Utils {
         mergeData.getTimeSeriesInsert().add(data);
         indexCat++;
       } else if (dateCat.compareTo(dateDS) > 0) {
-        if (Settings.getInstance().mergeDeletes()) {
+        if (mergeDeletes) {
           data.setDate(dateDS);
           data.setValue(valueDS);
           mergeData.getTimeSeriesDelete().add(data);
@@ -223,7 +223,7 @@ public class Utils {
         indexDS++;
       } else {
         if (valueCat != valueDS) {
-          if (Settings.getInstance().mergeUpdates()) {
+          if (mergeUpdates) {
             data.setDate(dateCat);
             data.setValue(valueCat);
             mergeData.getTimeSeriesUpdate().add(data);
@@ -245,7 +245,7 @@ public class Utils {
     }
 
     while (indexDS < timeSeriesDS.size()) {
-      if (Settings.getInstance().mergeDeletes()) {
+      if (mergeDeletes) {
         Date dateDS = timeSeriesDS.get(indexDS).getDate();
         float valueDS = (float) timeSeriesDS.get(indexDS).getValue();
         TimeSeriesData data = new TimeSeriesData();

@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import econ.core.MergeData;
+import econ.core.Settings;
 import econ.core.TimeSeries;
 import econ.core.TimeSeriesDAO;
 import econ.core.Utils;
@@ -14,13 +15,17 @@ import econ.parser.Symbol;
 public class Merge implements Command {
   @Override
   public String getSummary() {
-    return "int    merge(Series series)";
+    return "int    merge(Series series[, String option[, String option[, String option]]])";
   }
   
   @Override
   public List<String> getDetails() {
     List<String> list = new ArrayList<>();
     list.add("Merges a series in the catalog into the datastore");
+    list.add("3 options are supported as follows:");
+    list.add("  --merge-updates - if set, also merges updates to data");
+    list.add("  --merge-deletes - if set, also merges deletions to data (requires administrative mode)");
+    list.add("  --merge-updates - if set, also merges updates to metadate (requires administrative mode)");
     return list;
   }
   
@@ -31,9 +36,29 @@ public class Merge implements Command {
   
   @Override
   public Object run(Map<String, Symbol> symbolTable, File file, List<Object> params) throws Exception {
-    Utils.validate(params, 1, 1);
+    Utils.validate(params, 1, 4);
     if (!(params.get(0) instanceof TimeSeries)) {
       throw new Exception("'series' is not a Series");
+    }
+    boolean mergeUpdates = false;
+    boolean mergeDeletes = false;
+    boolean mergeMetaData = false;
+    for (int i = 1; i < params.size(); i++) {
+      if (params.get(i).equals("--merge-updates")) {
+        mergeUpdates = true;
+      } else if (params.get(i).equals("--merge-deletes")) {
+        if (!Settings.getInstance().isAdmin()) {
+          throw new Exception("you must be running in administrative mode to merge deletes");
+        }
+        mergeDeletes = true;
+      } else if (params.get(i).equals("--merge-metadata")) {
+        if (!Settings.getInstance().isAdmin()) {
+          throw new Exception("you must be running in administrative mode to merge metadata");
+        }
+        mergeMetaData = true;
+      } else {
+        throw new Exception("unrecognized merge option: " + params.get(i));
+      }
     }
     TimeSeries timeSeriesCat = (TimeSeries) params.get(0);
     if (timeSeriesCat.getId() == null) {
@@ -49,7 +74,7 @@ public class Merge implements Command {
     if (timeSeriesDS == null) {
       throw new Exception("series not found");
     }
-    MergeData mergeData = Utils.prepareMerge(timeSeriesCat, timeSeriesDS);
+    MergeData mergeData = Utils.prepareMerge(timeSeriesCat, timeSeriesDS, mergeUpdates, mergeDeletes, mergeMetaData);
     TimeSeriesDAO.getInstance().merge(mergeData);
     return 0;
   }

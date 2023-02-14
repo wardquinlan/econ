@@ -34,16 +34,11 @@ public class Main {
     }
     
     Options options = new Options();
-    Option opt = new Option("u", "merge-updates", false, "include updates during merge");
-    options.addOption(opt);
-    opt = new Option("d", "merge-deletes", false, "include deletions during merge");
-    options.addOption(opt);
-    opt = new Option("m", "merge-metadata", false, "include metadata during merge");
-    options.addOption(opt);
-    opt = new Option("s", "suppress-autoload", false, "suppress auto-loading of .es");
+    Option opt = new Option("s", "suppress-autoload", false, "suppress auto-loading of .es");
     options.addOption(opt);
     opt = new Option("t", "test", false, "include test commands");
     options.addOption(opt);
+    opt = new Option("a", "admin", false, "run in administrative mode");
     CommandLine cmd = null;
     try {
       CommandLineParser parser = new DefaultParser();
