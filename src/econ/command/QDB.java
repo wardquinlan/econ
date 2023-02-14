@@ -137,6 +137,7 @@ public class QDB implements Command {
       timeSeries.add(timeSeriesData);
     }
     Collections.sort(timeSeries.getTimeSeriesDataList());
+    timeSeries.setBase(true);
     return timeSeries;
   }
 }
