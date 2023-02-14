@@ -39,6 +39,7 @@ public class Main {
     opt = new Option("t", "test", false, "include test commands");
     options.addOption(opt);
     opt = new Option("a", "admin", false, "run in administrative mode");
+    options.addOption(opt);
     CommandLine cmd = null;
     try {
       CommandLineParser parser = new DefaultParser();
