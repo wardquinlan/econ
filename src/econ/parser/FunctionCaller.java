@@ -39,6 +39,7 @@ import econ.command.Size;
 import econ.command.Timestamp;
 import econ.command.Today;
 import econ.command.Update;
+import econ.core.Settings;
 
 public class FunctionCaller {
   private Map<String, Command> commandMap = new TreeMap<>();
@@ -77,7 +78,7 @@ public class FunctionCaller {
     commandMap.put("delete", new Delete());
     commandMap.put("update", new Update());
     commandMap.put("drop", new Drop());
-    if ("true".equals(System.getProperty("econ.test"))) {
+    if (Settings.getInstance().testFunctions()) {
       commandMap.put("collapse", new Collapse());
       commandMap.put("normalize", new Normalize());
       commandMap.put("assert", new Assert());
