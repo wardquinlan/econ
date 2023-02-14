@@ -9,6 +9,8 @@ import java.util.Map;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import econ.core.TimeSeries;
+import econ.core.TimeSeriesData;
 import econ.core.Utils;
 
 public class Parser {
@@ -274,7 +276,20 @@ public class Parser {
         if (symbol != null && symbol.isConstant()) {
           throw new Exception("cannot write to a const: " + symbolName);
         }
-        symbolTable.put(symbolName, new Symbol(val));
+        if (val instanceof TimeSeries) {
+          // need to make a copy of TimeSeries
+          TimeSeries timeSeries1 = (TimeSeries) val;
+          TimeSeries timeSeries = new TimeSeries(timeSeries1.getType());
+          for (TimeSeriesData timeSeriesData1: timeSeries1.getTimeSeriesDataList()) {
+            TimeSeriesData timeSeriesData = new TimeSeriesData();
+            timeSeriesData.setDate(timeSeriesData1.getDate());
+            timeSeriesData.setValue(timeSeriesData1.getValue());
+            timeSeries.add(timeSeriesData);
+          }
+          symbolTable.put(symbolName, new Symbol(timeSeries));
+        } else {
+          symbolTable.put(symbolName, new Symbol(val));
+        }
       }
        
       Symbol symbol = symbolTable.get(symbolName);

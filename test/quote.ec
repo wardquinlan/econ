@@ -1,6 +1,7 @@
 print("loading quote data at " + timestamp() + "...");
 
 SP500 = qdb(db + "/" + "SPX:US.txt");
+setName(SP500, "SP500");
 T10Y3M = qtp(tp, "T10Y3M");
 TBOND1 = qtp(tp, "TBOND1");
 TBOND2 = qtp(tp, "TBOND2");
