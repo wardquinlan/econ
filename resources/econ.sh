@@ -5,8 +5,6 @@ if [ "$ECON_HOME" == "" ]; then
   exit 1
 fi
 
-JAVA_OPTS=-Decon.test=true
-
 CLASSPATH=$ECON_HOME/econ.d
 CLASSPATH=$CLASSPATH:$ECON_HOME/econ.d/econ.jar
 CLASSPATH=$CLASSPATH:$ECON_HOME/econ.d/log4j-1.2.14.jar
