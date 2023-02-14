@@ -12,7 +12,6 @@ import econ.command.Collapse;
 import econ.command.Command;
 import econ.command.Connect;
 import econ.command.Create;
-import econ.command.Data;
 import econ.command.Delete;
 import econ.command.Drop;
 import econ.command.Exit;
@@ -55,7 +54,6 @@ public class FunctionCaller {
     commandMap.put("load", new Load());
     commandMap.put("plot", new Plot());
     commandMap.put("ds", new Ds());
-    commandMap.put("data", new Data());
     commandMap.put("meta", new Meta());
     commandMap.put("cat", new Cat());
     commandMap.put("create", new Create());
