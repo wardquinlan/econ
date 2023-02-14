@@ -14,6 +14,7 @@ import econ.command.Connect;
 import econ.command.Create;
 import econ.command.Data;
 import econ.command.Delete;
+import econ.command.Drop;
 import econ.command.Exit;
 import econ.command.FRED;
 import econ.command.Help;
@@ -77,6 +78,7 @@ public class FunctionCaller {
     commandMap.put("merge", new Merge());
     commandMap.put("delete", new Delete());
     commandMap.put("update", new Update());
+    commandMap.put("drop", new Drop());
     if ("true".equals(System.getProperty("econ.test"))) {
       commandMap.put("collapse", new Collapse());
       commandMap.put("normalize", new Normalize());

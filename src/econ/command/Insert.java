@@ -15,7 +15,7 @@ import econ.parser.Symbol;
 public class Insert implements Command {
   @Override
   public String getSummary() {
-    return "float  insert(Series series, String date, Object value);";
+    return "int    insert(Series series, String date, Object value);";
   }
   
   @Override
@@ -31,7 +31,7 @@ public class Insert implements Command {
   
   @Override
   public String getReturns() {
-    return "float";
+    return "0";
   }
   
   @Override
@@ -90,6 +90,6 @@ public class Insert implements Command {
     timeSeriesData.setValue(value);
     timeSeries.add(timeSeriesData);
     Collections.sort(timeSeries.getTimeSeriesDataList());
-    return timeSeries;
+    return 0;
   }
 }

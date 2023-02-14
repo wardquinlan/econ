@@ -15,7 +15,7 @@ import econ.parser.Symbol;
 public class Update implements Command {
   @Override
   public String getSummary() {
-    return "float  update(Series series, String date[, Object value]);";
+    return "int    update(Series series, String date[, Object value]);";
   }
   
   @Override

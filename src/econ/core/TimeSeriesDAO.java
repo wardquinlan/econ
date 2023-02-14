@@ -62,6 +62,26 @@ public class TimeSeriesDAO {
     return resultSet.getInt(1);
   }
 
+  public void drop(int id) throws Exception {
+    if (conn == null) {
+      throw new Exception("not connected to datatore");
+    }
+    try {
+      conn.setAutoCommit(false);
+      PreparedStatement ps = conn.prepareStatement("delete from time_series_data where id = ?");
+      ps.setInt(1, id);
+      ps.executeUpdate();
+      
+      ps = conn.prepareStatement("delete from time_series where id = ?");
+      ps.setInt(1, id);
+      ps.executeUpdate();
+      conn.commit();
+    } catch(Exception ex) {
+      conn.rollback();
+      throw ex;
+    }
+  }
+  
   public void merge(MergeData mergeData) throws Exception {
     if (conn == null) {
       throw new Exception("not connected to datatore");
