@@ -286,6 +286,15 @@ public class Parser {
             timeSeriesData.setValue(timeSeriesData1.getValue());
             timeSeries.add(timeSeriesData);
           }
+          if (timeSeries1.isBase()) {
+            // copy metadata for 'base' series
+            timeSeries.setId(timeSeries1.getId());
+            timeSeries.setName(timeSeries1.getName());
+            timeSeries.setSource(timeSeries1.getSource());
+            timeSeries.setSourceId(timeSeries1.getSourceId());
+            timeSeries.setNotes(timeSeries1.getNotes());
+            timeSeries.setTitle(timeSeries1.getTitle());
+          }
           symbolTable.put(symbolName, new Symbol(timeSeries));
         } else {
           symbolTable.put(symbolName, new Symbol(val));
