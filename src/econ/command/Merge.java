@@ -15,13 +15,13 @@ import econ.parser.Symbol;
 public class Merge implements Command {
   @Override
   public String getSummary() {
-    return "int    merge(Series series[, String option[, String option[, String option]]])";
+    return "int    merge(Series series[, String option[, String option[, String option]]]);";
   }
   
   @Override
   public List<String> getDetails() {
     List<String> list = new ArrayList<>();
-    list.add("Merges a series in the catalog into the datastore");
+    list.add("Merges 'series' in the catalog into the datastore");
     list.add("3 options are supported as follows:");
     list.add("  --merge-updates - if set, also merges updates to data");
     list.add("  --merge-deletes - if set, also merges deletions to data (requires administrative mode)");
