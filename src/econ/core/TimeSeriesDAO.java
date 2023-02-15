@@ -94,7 +94,6 @@ public class TimeSeriesDAO {
         ps.setInt(1, timeSeries.getId());
         ps.setDate(2, new java.sql.Date(timeSeriesData.getDate().getTime()));
         ps.setFloat(3, (Float) timeSeriesData.getValue());
-        log.info(ps.toString());
         ps.executeUpdate();
       }
       
@@ -104,7 +103,6 @@ public class TimeSeriesDAO {
         ps.setFloat(1, (Float) timeSeriesData.getValue());
         ps.setInt(2, timeSeries.getId());
         ps.setDate(3, new java.sql.Date(timeSeriesData.getDate().getTime()));
-        log.info(ps.toString());
         ps.executeUpdate();
       }
 
@@ -113,7 +111,6 @@ public class TimeSeriesDAO {
         PreparedStatement ps = conn.prepareStatement("delete from time_series_data where id = ? and datestamp = ?");
         ps.setInt(1, timeSeries.getId());
         ps.setDate(2, new java.sql.Date(timeSeriesData.getDate().getTime()));
-        log.info(ps.toString());
         ps.executeUpdate();
       }
       
