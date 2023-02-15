@@ -36,17 +36,11 @@ public class Meta implements Command {
   @Override
   public Object run(Map<String, Symbol> symbolTable, File file, List<Object> params) throws Exception {
     Utils.validate(params, 1, 1);
-    TimeSeries timeSeries;
-    Object object = params.get(0);
-    if (object instanceof TimeSeries) {
-      timeSeries = (TimeSeries) object;
-    } else {
-      timeSeries = Utils.load(params.get(0));
-      if (timeSeries == null) {
-        throw new Exception("time series not found: " + params.get(0));
-      }
+    if (!(params.get(0) instanceof TimeSeries)) {
+      throw new Exception("'series' is not a Series");
     }
-
+    
+    TimeSeries timeSeries = (TimeSeries) params.get(0);
     System.out.println("Id       : " + (timeSeries.getId() == null ? "NULL" : timeSeries.getId()));
     System.out.println("Name     : " + Utils.stringWithNULL(timeSeries.getName()));
     System.out.println("Title    : " + Utils.stringWithNULL(timeSeries.getTitle()));
