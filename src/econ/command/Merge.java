@@ -23,9 +23,9 @@ public class Merge implements Command {
     List<String> list = new ArrayList<>();
     list.add("Merges 'series' in the catalog into the datastore");
     list.add("3 options are supported as follows:");
-    list.add("  --merge-updates - if set, also merges updates to data");
-    list.add("  --merge-deletes - if set, also merges deletions to data (requires administrative mode)");
-    list.add("  --merge-updates - if set, also merges updates to metadate (requires administrative mode)");
+    list.add("  --with-updates - if set, also merges updates to data");
+    list.add("  --with-deletes - if set, also merges deletions to data (requires administrative mode)");
+    list.add("  --with-updates - if set, also merges updates to metadate (requires administrative mode)");
     return list;
   }
   
@@ -44,17 +44,13 @@ public class Merge implements Command {
     boolean mergeDeletes = false;
     boolean mergeMetaData = false;
     for (int i = 1; i < params.size(); i++) {
-      if (params.get(i).equals("--merge-updates")) {
+      if (params.get(i).equals("--with-updates")) {
         mergeUpdates = true;
-      } else if (params.get(i).equals("--merge-deletes")) {
-        if (!Settings.getInstance().isAdmin()) {
-          throw new Exception("you must be running in administrative mode to merge deletes");
-        }
+      } else if (params.get(i).equals("--with-deletes")) {
+        Utils.validateIsAdmin();
         mergeDeletes = true;
-      } else if (params.get(i).equals("--merge-metadata")) {
-        if (!Settings.getInstance().isAdmin()) {
-          throw new Exception("you must be running in administrative mode to merge metadata");
-        }
+      } else if (params.get(i).equals("--with-metadata")) {
+        Utils.validateIsAdmin();
         mergeMetaData = true;
       } else {
         throw new Exception("unrecognized merge option: " + params.get(i));
