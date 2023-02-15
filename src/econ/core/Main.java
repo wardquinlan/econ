@@ -71,9 +71,9 @@ public class Main {
       });
       
       Map<String, Symbol> symbolTable = new HashMap<String, Symbol>();
-      File file = new File(System.getenv("ECON_HOME") + File.separator + ".econ.ec");
+      File file = new File(System.getenv("ECON_HOME") + File.separator + ".es");
       if (file.exists() && !Settings.getInstance().suppressAutoload()) {
-        log.info("found .econ.ec; loading...");
+        log.info("found autoload file '.es'; loading...");
         Tokenizer tokenizer = new Tokenizer(file, 0);
         TokenIterator itr = tokenizer.tokenize();
         if (itr.hasNext()) {
@@ -82,7 +82,7 @@ public class Main {
           parser.parse(tk, itr);
         }
       } else {
-        log.warn("skipping the loading of .econ.ec...");
+        log.warn("skipping the loading of .es...");
       }
       
       if (args.length == 1) {
@@ -97,7 +97,11 @@ public class Main {
         BufferedReader rdr = new BufferedReader(new InputStreamReader(System.in));
         while (true) {
           try {
-            System.out.print("econ> ");
+            if (Settings.getInstance().isAdmin()) {
+              System.out.print("ES # ");
+            } else {
+              System.out.print("ES $ ");
+            }
             String line = rdr.readLine();
             if (line == null) {
               break;

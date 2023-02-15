@@ -46,7 +46,7 @@
     <copy todir="${output}/${appname}.d">
       <fileset dir="${resources}" includes="*.properties"/>
     </copy>
-  	<copy tofile="${output}/.econ.ec" file="${output}/../.econ.ec"/>
+  	<copy tofile="${output}/.es" file="${output}/../.es"/>
   	<copy todir="${output}/includes" file="${resources}/settings.ec"/>
   	<copy todir="${output}/includes" file="${resources}/constants.ec"/>
   	<copy todir="${output}/includes" file="${resources}/defaults.ec"/>
