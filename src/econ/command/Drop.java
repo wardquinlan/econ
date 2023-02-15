@@ -29,6 +29,7 @@ public class Drop implements Command {
   
   @Override
   public Object run(Map<String, Symbol> symbolTable, File file, List<Object> params) throws Exception {
+    Utils.validateIsAdmin();
     Utils.validate(params, 1, 1);
     if (!(params.get(0) instanceof Integer)) {
       throw new Exception("'id' is not an int");

@@ -425,6 +425,12 @@ public class Utils {
     return null;
   }
   
+  public static void validateIsAdmin() throws Exception {
+    if (!Settings.getInstance().isAdmin()) {
+      throw new Exception("you must be running in administrative mode to do this");
+    }
+  }
+  
   public static void validate(List<Object> params, int min, int max) throws Exception {
     if (params.size() < min) {
       throw new Exception("missing argument(s)");
