@@ -116,6 +116,18 @@ public class TimeSeriesDAO {
         log.info(ps.toString());
         ps.executeUpdate();
       }
+      
+      if (mergeData.getTimeSeriesMerge() != null) {
+        PreparedStatement ps = conn.prepareStatement("update time_series set name = ?, title = ?, source = ?, source_id = ?, notes = ? where id = ?");
+        ps.setString(1, mergeData.getTimeSeriesMerge().getName());
+        ps.setString(2, mergeData.getTimeSeriesMerge().getTitle());
+        ps.setString(3, mergeData.getTimeSeriesMerge().getSource());
+        ps.setString(4, mergeData.getTimeSeriesMerge().getSourceId());
+        ps.setString(5, mergeData.getTimeSeriesMerge().getNotes());
+        ps.setInt(6, mergeData.getTimeSeriesMerge().getId());
+        ps.executeUpdate();
+      }
+      
       conn.commit();
     } catch(Exception ex) {
       conn.rollback();

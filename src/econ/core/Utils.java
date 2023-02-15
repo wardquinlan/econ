@@ -196,11 +196,23 @@ public class Utils {
     return -1;
   }
   
-  public static MergeData prepareMerge(TimeSeries timeSeriesCat, TimeSeries timeSeriesDS, boolean mergeUpdates, boolean mergeDeletes, boolean mergeMetaData) {
+  public static MergeData prepareMerge(TimeSeries timeSeriesCat, TimeSeries timeSeriesDS, boolean mergeUpdates, boolean mergeDeletes, boolean mergeMetaData) throws Exception {
     MergeData mergeData = new MergeData();
     mergeData.getTimeSeriesInsert().setId(timeSeriesCat.getId());
     mergeData.getTimeSeriesUpdate().setId(timeSeriesCat.getId());
     mergeData.getTimeSeriesDelete().setId(timeSeriesCat.getId());
+    if (mergeMetaData) {
+      Utils.validateIsAdmin();
+      TimeSeries timeSeriesMerge = new TimeSeries(TimeSeries.NULL);
+      timeSeriesMerge.setId(timeSeriesCat.getId());
+      timeSeriesMerge.setName(timeSeriesCat.getName());
+      timeSeriesMerge.setTitle(timeSeriesCat.getTitle());
+      timeSeriesMerge.setSource(timeSeriesCat.getSource());
+      timeSeriesMerge.setSourceId(timeSeriesCat.getSourceId());
+      timeSeriesMerge.setNotes(timeSeriesCat.getNotes());
+      mergeData.setTimeSeriesMerge(timeSeriesMerge);
+    }
+    
     int indexCat = 0;
     int indexDS = 0;
     while (indexCat < timeSeriesCat.size() && indexDS < timeSeriesDS.size()) {
