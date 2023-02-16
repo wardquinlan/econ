@@ -14,7 +14,7 @@
   <path id="buildpath">
     <pathelement location="${lib}/log4j-1.2.14.jar"/>
     <pathelement location="${lib}/commons-logging-1.1.jar"/>
-  	<pathelement location="${lib}/commons-cli-1.4.jar"/>
+    <pathelement location="${lib}/commons-cli-1.4.jar"/>
   </path>
 
   <target name="init">
