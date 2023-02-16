@@ -28,8 +28,8 @@ public class Main {
   private static final Log log = LogFactory.getFactory().getInstance(Main.class);
   
   public static void main(String[] args) {
-    if (System.getenv("ECON_HOME") == null) {
-      log.error("ECON_HOME not set");
+    if (System.getenv("ES_HOME") == null) {
+      log.error("ES_HOME not set");
       System.exit(1);
     }
     
@@ -71,7 +71,7 @@ public class Main {
       });
       
       Map<String, Symbol> symbolTable = new HashMap<String, Symbol>();
-      File file = new File(System.getenv("ECON_HOME") + File.separator + ".es");
+      File file = new File(System.getenv("ES_HOME") + File.separator + ".es");
       if (file.exists() && !Settings.getInstance().suppressAutoload()) {
         log.info("found autoload file '.es'; loading...");
         Tokenizer tokenizer = new Tokenizer(file, 0);

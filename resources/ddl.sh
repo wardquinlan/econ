@@ -1,12 +1,12 @@
 #!/bin/sh
 
-if [ "$ECON_DATABASE" = "" ]; then
-  echo $0: ECON_DATABASE not defined
+if [ "$ES_DATABASE" = "" ]; then
+  echo $0: ES_DATABASE not defined
   exit 1
 fi
 
-if [ "$ECON_USERNAME" = "" ]; then
-  echo $0: ECON_USERNAME not defined
+if [ "$ES_USERNAME" = "" ]; then
+  echo $0: ES_USERNAME not defined
   exit 1
 fi
 
@@ -20,7 +20,7 @@ if [ "$tt" != "y" ]; then
   exit 1
 fi
 
-psql --username=$ECON_USERNAME $ECON_DATABASE << EOF
+psql --username=$ES_USERNAME $ES_DATABASE << EOF
 
 DROP TABLE IF EXISTS TIME_SERIES_DATA;
 DROP TABLE IF EXISTS TIME_SERIES;

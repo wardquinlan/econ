@@ -1,9 +1,9 @@
-<project name="econ" default="rebuild" basedir=".">
+<project name="es" default="rebuild" basedir=".">
   <description>
-    econ build file
+    es build file
   </description>
 
-  <property name="appname" value="econ"/>
+  <property name="appname" value="es"/>
   <property name="javahome" value="/home/ward/java-se-8u41-ri"/>
   <property name="src" value="src"/>
   <property name="resources" value="resources"/>
@@ -36,8 +36,7 @@
     <mkdir dir="${output}/${appname}.d"/>
   	<mkdir dir="${output}/includes"/>
     <jar jarfile="${output}/${appname}.d/${appname}.jar" basedir="${classes}"/>
-    <copy todir="${output}" file="${resources}/econ.sh"/>
-    <copy todir="${output}" file="${resources}/import.sh"/>
+    <copy todir="${output}" file="${resources}/es.sh"/>
     <copy todir="${output}" file="${resources}/createdb.sh"/>
     <copy todir="${output}" file="${resources}/ddl.sh"/>
     <copy todir="${output}/${appname}.d">
@@ -50,8 +49,7 @@
   	<copy todir="${output}/includes" file="${resources}/settings.ec"/>
   	<copy todir="${output}/includes" file="${resources}/constants.ec"/>
   	<copy todir="${output}/includes" file="${resources}/defaults.ec"/>
-    <chmod file="${output}/econ.sh" perm="755"/>
-  	<chmod file="${output}/import.sh" perm="755"/>
+    <chmod file="${output}/es.sh" perm="755"/>
     <chmod file="${output}/createdb.sh" perm="755"/>
     <chmod file="${output}/ddl.sh" perm="755"/>
   </target>
