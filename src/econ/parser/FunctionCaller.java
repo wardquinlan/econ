@@ -38,9 +38,11 @@ import econ.command.SetSource;
 import econ.command.SetSourceId;
 import econ.command.SetTitle;
 import econ.command.Size;
+import econ.command.Status;
 import econ.command.Timestamp;
 import econ.command.Today;
 import econ.command.Update;
+import econ.command.Version;
 import econ.core.Settings;
 
 public class FunctionCaller {
@@ -82,6 +84,8 @@ public class FunctionCaller {
     commandMap.put("drop", new Drop());
     commandMap.put("setSourceId", new SetSourceId());
     commandMap.put("setSource", new SetSource());
+    commandMap.put("status", new Status());
+    commandMap.put("version", new Version());
     if (Settings.getInstance().testFunctions()) {
       commandMap.put("collapse", new Collapse());
       commandMap.put("normalize", new Normalize());

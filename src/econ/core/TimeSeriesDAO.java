@@ -13,6 +13,7 @@ import org.apache.commons.logging.LogFactory;
 public class TimeSeriesDAO {
   private static Log log = LogFactory.getFactory().getInstance(TimeSeriesDAO.class);
   private Connection conn;
+  private String datastore;
   private static TimeSeriesDAO instance = new TimeSeriesDAO();
   
   private TimeSeriesDAO() {
@@ -32,8 +33,13 @@ public class TimeSeriesDAO {
       url = url + "&password=" + password;
     }
     conn = DriverManager.getConnection(url);  
+    datastore = database;
   }
 
+  public String getDatastore() {
+    return datastore;
+  }
+  
   public List<TimeSeries> listSeries() throws Exception {
     if (conn == null) {
       throw new Exception("not connected to datatore");
