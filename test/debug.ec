@@ -1,1 +1,3 @@
-include "merge.ec";
+print("hello world");
+ds();
+
