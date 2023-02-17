@@ -35,11 +35,11 @@ public class Create implements Command {
     Utils.validate(params, 2, 2);
     
     if (!(params.get(0) instanceof String)) {
-      throw new Exception("argument not a string");
+      throw new Exception(params.get(0) + " is not a string");
     }
     
     if (!(params.get(1) instanceof Integer)) {
-      throw new Exception("argument not an integer");
+      throw new Exception(params.get(1) + " is not an integer");
     }
     
     Integer type = (Integer) params.get(1);

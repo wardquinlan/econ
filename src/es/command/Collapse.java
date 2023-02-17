@@ -33,7 +33,7 @@ public class Collapse implements Command {
     List<TimeSeries> timeSeriesList = new ArrayList<>();
     for (Object object: params) {
       if (!(object instanceof TimeSeries)) {
-        throw new Exception("argument(s) is/are not of type Series");
+        throw new Exception(object + " is not a Series");
       }
       timeSeriesList.add((TimeSeries) object);
     }
