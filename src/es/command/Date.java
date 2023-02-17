@@ -34,7 +34,7 @@ public class Date implements Command {
     Utils.validate(params, 1, 1);
     
     if (!(params.get(0) instanceof TimeSeries)) {
-      throw new Exception("argument not a Series");
+      throw new Exception(params.get(0) + " is not a Series");
     }
     TimeSeries timeSeries1 = (TimeSeries) params.get(0);
     TimeSeries timeSeries = new TimeSeries(TimeSeries.DATE);

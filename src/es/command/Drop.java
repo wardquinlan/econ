@@ -32,7 +32,7 @@ public class Drop implements Command {
     Utils.validateIsAdmin();
     Utils.validate(params, 1, 1);
     if (!(params.get(0) instanceof Integer)) {
-      throw new Exception("'id' is not an int");
+      throw new Exception(params.get(0) + " is not an int");
     }
     int id = (int) params.get(0);
     TimeSeriesDAO.getInstance().drop(id);

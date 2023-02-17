@@ -33,6 +33,9 @@ public class Exit implements Command {
       System.exit(0);
     }
     
+    if (!(params.get(0) instanceof Integer)) {
+      throw new Exception(params.get(0) + " is not an int");
+    }
     int value = Integer.parseInt(params.get(0).toString());
     System.exit(value);
     return 0;
