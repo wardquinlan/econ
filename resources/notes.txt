@@ -106,3 +106,5 @@ es --suppress-autoload
 -----
 
 "merge" options should be options for "merge()", not for the whole program
+
+"qtp" requires an optional 3rd parameter, scope.

@@ -21,7 +21,7 @@ import econ.parser.Symbol;
 public class QTP implements Command {
   @Override
   public String getSummary() {
-    return "Series qtp(String templateFilePath, String sourceId);";
+    return "Series qtp(String templateFilePath, String scope, String sourceId);";
   }
   
   @Override
@@ -29,6 +29,7 @@ public class QTP implements Command {
     List<String> list = new ArrayList<>();
     list.add("Imports a series from a Quote template file, with:");
     list.add("  'templateFilePath' as the path to the template file");
+    list.add("  'scope' as the Quote scope string");
     list.add("  'sourceId' as the Quote ID string");
     return list;
   }
@@ -40,16 +41,20 @@ public class QTP implements Command {
   
   @Override
   public Object run(Map<String, Symbol> symbolTable, File file, List<Object> params) throws Exception {
-    Utils.validate(params, 2, 2);
-    
-    if (!(params.get(0) instanceof String) || !(params.get(1) instanceof String)) {
-      throw new Exception("argument not a string");
+    Utils.validate(params, 3, 3);
+    if (!(params.get(0) instanceof String)) {
+      throw new Exception(params.get(0).toString() + " is not a String");
     }
-    
     String templateFilePath = (String) params.get(0);
-    String name = (String) params.get(1);
+    if (!(params.get(1) instanceof String)) {
+      throw new Exception(params.get(1).toString() + " is not a String");
+    }
+    String scope = (String) params.get(1);
+    if (!(params.get(2) instanceof String)) {
+      throw new Exception(params.get(2).toString() + " is not a String");
+    }
+    String name = (String) params.get(2);
     Map<Date, Float> map = new HashMap<>();
-    
     TimeSeries timeSeries = new TimeSeries(TimeSeries.FLOAT);
     timeSeries.setSource(("QTEMPLATE"));
     timeSeries.setSourceId(name);
@@ -76,30 +81,32 @@ public class QTP implements Command {
           continue;
         }
         date = date.substring(0, 4) + "-" + date.substring(4, 6) + "-" + date.substring(6, 8);
-        
         if (!st.hasMoreTokens()) {
           log.warn("ignoring incomplete line: " + line);
           continue;
         }
-        // ignore scope
-        st.nextToken();
-        
+
+        String token = st.nextToken();
+        if (!token.equals("*") && !token.equals(scope)) {
+          log.debug("ignoring unmatched scope: " + token);
+          continue;
+        }
         if (!st.hasMoreTokens()) {
           log.warn("ignoring incomplete line: " + line);
           continue;
         }
+
         String label = st.nextToken();
         if (!name.equals(label)) {
           log.debug("ignoring unmatched label: " + label);
           continue;
         }
-        
         if (!st.hasMoreTokens()) {
           log.warn("ignoring incomplete line: " + line);
           continue;
         }
+
         String value = st.nextToken();
-        
         if (st.hasMoreTokens()) {
           log.warn("ignoring invalid line: " + line);
           continue;
