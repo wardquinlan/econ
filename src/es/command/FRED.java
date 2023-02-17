@@ -69,8 +69,11 @@ public class FRED implements Command {
 
     Utils.validate(params, 1, 2);
     
-    if (!(params.get(0) instanceof String) || (params.size() == 2 && !(params.get(1) instanceof String))) {
-      throw new Exception("argument(s) not a string");
+    if (!(params.get(0) instanceof String)) {
+      throw new Exception(params.get(0) + " is not a string");
+    }
+    if (params.size() == 2 && !(params.get(1) instanceof String)) {
+      throw new Exception(params.get(1) + " is not a string");
     }
     
     String sourceId = (String) params.get(0);
