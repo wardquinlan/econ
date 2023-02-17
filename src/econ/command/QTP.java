@@ -87,7 +87,7 @@ public class QTP implements Command {
         }
 
         String token = st.nextToken();
-        if (!token.equals("*") && !token.equals(scope)) {
+        if (!scope.equals(token)) {
           log.debug("ignoring unmatched scope: " + token);
           continue;
         }
