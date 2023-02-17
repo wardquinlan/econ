@@ -33,13 +33,13 @@ public class Assert implements Command {
     Utils.validate(params, 1, 2);
     
     if (!(params.get(0) instanceof Boolean)) {
-      throw new Exception("'condition' is not a Boolean");
+      throw new Exception(params.get(0) + " is not a Boolean");
     }
 
     String message;
     if (params.size() == 2) {
       if (!(params.get(1) instanceof String)) {
-        throw new Exception("'message' is not a String");
+        throw new Exception(params.get(1) + " is not a String");
       }
       message = (String) params.get(1);
     } else {
