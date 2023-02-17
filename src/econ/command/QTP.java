@@ -43,15 +43,15 @@ public class QTP implements Command {
   public Object run(Map<String, Symbol> symbolTable, File file, List<Object> params) throws Exception {
     Utils.validate(params, 3, 3);
     if (!(params.get(0) instanceof String)) {
-      throw new Exception(params.get(0).toString() + " is not a String");
+      throw new Exception(params.get(0) + " is not a String");
     }
     String templateFilePath = (String) params.get(0);
     if (!(params.get(1) instanceof String)) {
-      throw new Exception(params.get(1).toString() + " is not a String");
+      throw new Exception(params.get(1) + " is not a String");
     }
     String scope = (String) params.get(1);
     if (!(params.get(2) instanceof String)) {
-      throw new Exception(params.get(2).toString() + " is not a String");
+      throw new Exception(params.get(2) + " is not a String");
     }
     String name = (String) params.get(2);
     Map<Date, Float> map = new HashMap<>();

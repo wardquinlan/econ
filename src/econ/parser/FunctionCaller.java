@@ -12,6 +12,7 @@ import econ.command.Collapse;
 import econ.command.Command;
 import econ.command.Connect;
 import econ.command.Create;
+import econ.command.Data;
 import econ.command.Delete;
 import econ.command.Drop;
 import econ.command.Exit;
@@ -86,6 +87,7 @@ public class FunctionCaller {
     commandMap.put("setSource", new SetSource());
     commandMap.put("status", new Status());
     commandMap.put("version", new Version());
+    commandMap.put("data", new Data());
     if (Settings.getInstance().testFunctions()) {
       commandMap.put("collapse", new Collapse());
       commandMap.put("normalize", new Normalize());

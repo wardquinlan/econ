@@ -12,19 +12,13 @@ import econ.parser.Symbol;
 public class Meta implements Command {
   @Override
   public String getSummary() {
-    return "int    meta(Object object);";
+    return "int    meta(Series series);";
   }
   
   @Override
   public List<String> getDetails() {
     List<String> list = new ArrayList<>();
-    list.add("Shows series metadata associated with 'object', where 'object' is:");
-    list.add("  - an id");
-    list.add("  - a name");
-    list.add("  - a Series");
-    list.add("");
-    list.add("Note that if 'object' is a series, meta() shows series metadata from the catalog; otherwise, meta() shows");
-    list.add("series metadata from the datastore");
+    list.add("Shows series metadata associated with 'series'");
     return list;
   }
   
@@ -37,7 +31,7 @@ public class Meta implements Command {
   public Object run(Map<String, Symbol> symbolTable, File file, List<Object> params) throws Exception {
     Utils.validate(params, 1, 1);
     if (!(params.get(0) instanceof TimeSeries)) {
-      throw new Exception("'series' is not a Series");
+      throw new Exception(params.get(0) + " is not a Series");
     }
     
     TimeSeries timeSeries = (TimeSeries) params.get(0);
