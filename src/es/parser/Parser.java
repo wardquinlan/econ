@@ -282,6 +282,7 @@ public class Parser {
           TimeSeries timeSeries = new TimeSeries(timeSeries1.getType());
           for (TimeSeriesData timeSeriesData1: timeSeries1.getTimeSeriesDataList()) {
             TimeSeriesData timeSeriesData = new TimeSeriesData();
+            timeSeriesData.setId(timeSeriesData1.getId());
             timeSeriesData.setDate(timeSeriesData1.getDate());
             timeSeriesData.setValue(timeSeriesData1.getValue());
             timeSeries.add(timeSeriesData);

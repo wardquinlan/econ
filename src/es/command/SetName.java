@@ -32,13 +32,14 @@ public class SetName implements Command {
     Utils.validate(params, 2, 2);
     
     if (!(params.get(0) instanceof TimeSeries)) {
-      throw new Exception("'series' is not a Series");
+      throw new Exception(params.get(0) + " is not a Series");
     }
     
     if (!(params.get(1) instanceof String)) {
-      throw new Exception("'name' is not a String");
+      throw new Exception(params.get(1) + " is not a String");
     }
     
+    Utils.validateIsAdmin();
     TimeSeries timeSeries = (TimeSeries) params.get(0);
     String name = (String) params.get(1);
     timeSeries.setName(name);

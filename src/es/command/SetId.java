@@ -33,14 +33,18 @@ public class SetId implements Command {
     Utils.validate(params, 2, 2);
     
     if (!(params.get(0) instanceof TimeSeries)) {
-      throw new Exception("'series' is not a Series");
+      throw new Exception(params.get(0) + " is not a Series");
     }
     
     if (!(params.get(1) instanceof Integer)) {
-      throw new Exception("'id' is not an int");
+      throw new Exception(params.get(1) + " is not an int");
     }
     
     TimeSeries timeSeries = (TimeSeries) params.get(0);
+    if (timeSeries.getId() != null) {
+      throw new Exception("cannot reset an id which has already been set");
+    }
+    
     Integer id = (Integer) params.get(1);
     timeSeries.setId(id);
     for (TimeSeriesData timeSeriesData: timeSeries.getTimeSeriesDataList()) {
