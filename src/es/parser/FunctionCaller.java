@@ -103,7 +103,7 @@ public class FunctionCaller {
   
   public Object invokeFunction(String funcName, Map<String, Symbol> symbolTable, File file, List<Object> params) throws Exception {
     if (funcName.equals("help")) {
-      if (params.size() == 1) {
+      if (params.size() == 1 && params.get(0) instanceof String) {
         Command command = commandMap.get(params.get(0));
         if (command != null) {
           System.out.println(command.getSummary());
