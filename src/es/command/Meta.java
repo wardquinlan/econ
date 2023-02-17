@@ -35,7 +35,7 @@ public class Meta implements Command {
     }
     
     TimeSeries timeSeries = (TimeSeries) params.get(0);
-    System.out.println("Id       : " + (timeSeries.getId() == null ? "NULL" : timeSeries.getId()));
+    System.out.println("Id       : " + (timeSeries.getId() == null ? "" : timeSeries.getId()));
     System.out.println("Name     : " + Utils.stringWithNULL(timeSeries.getName()));
     System.out.println("Title    : " + Utils.stringWithNULL(timeSeries.getTitle()));
     System.out.println("Source   : " + Utils.stringWithNULL(timeSeries.getSource()));

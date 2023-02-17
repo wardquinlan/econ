@@ -43,9 +43,9 @@ public class Data implements Command {
       TimeSeriesData timeSeriesData = timeSeries.getTimeSeriesDataList().get(idx);
       System.out.printf(Utils.generateFormatString(TIME_SERIES_DATA_COL_WIDTHS) + "\n",
         idx.toString(),
-        timeSeriesData.getId() == null ? "NULL" : timeSeriesData.getId().toString(), 
+        timeSeriesData.getId() == null ? "" : timeSeriesData.getId().toString(), 
         Utils.generateTruncatedData(TIME_SERIES_DATA_COL_WIDTHS, 2, Utils.DATE_FORMAT.format(timeSeriesData.getDate())), 
-        timeSeriesData.getValue() == null ? "NULL" : timeSeriesData.getValue()); 
+        timeSeriesData.getValue() == null ? "" : timeSeriesData.getValue()); 
     }
     return 0;
   }
