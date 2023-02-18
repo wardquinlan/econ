@@ -1,22 +1,3 @@
-(?) I would like to support Econ --define some-setting=some-value from the command line.  An arbitrary # of them...
-
-Other settings can include:
-  - settings.confirm = FALSE | TRUE
-  - if TRUE, then prompt a confirmation for "dangerous" functions, such as insert(), delete(), save()
-
-I have also considered new functions:
-  - Object read();
-  - reads object from stdin (Integer, Float, Boolean, or String)
-  - merge(); --> merges to an existing series
-  - delete();
-  - takes a date or an index
-      
-Series will have to support BOOLs for conditions.  But we probably don't have to save these to the datastore  
-
-- may want to replace Float with Double everywhere
-
-- may want to have 2 different orders of precedence for == and <, etc
-
 - int merge(Object object, Series series[, Boolean withMetaData]);
   => where object is an id or a name (but not a symbol)
   => validates that series does not have an id attached
@@ -25,17 +6,11 @@ Series will have to support BOOLs for conditions.  But we probably don't have to
 - defaults() can show default values. Maybe.  It won't show the colour names though, only their hex values, so this might be of limited use.
 - alternatively defaults() can display the contents of the defaults file.
 
-- screen capture
-
-- exec()
-
-- Main should test for arglength >= 2 ...
-
 - Alternatively could introduce IF / WHILE / FOR Token Types like this.  Each of these tokens would store a (sub) token list, but this list would only be sent through the parser if the
   condition was true.
   
-  Main point is that the tokens within the IF / WHILE / FOR block are not part of the main token sequence.  But they do contain a sub token block that is sent through the parser
-  if the condition evaluates to true.
+Main point is that the tokens within the IF / WHILE / FOR block are not part of the main token sequence.  But they do contain a sub token block that is sent through the parser
+if the condition evaluates to true.
   
 if (condition) {
   // These tokens are stored inside the IF token but are not added to the main token chain
@@ -43,68 +18,11 @@ if (condition) {
   ...
 }    
 
-setId() should only be allowed once.  Might want a warning as well...
-
 And setId() should check to see if that id is already being used.
 Same for setName()
 ... but what if we are not connected to the datastore??
 
-drop() command - or delete() function
-
-- may introduce a 'filename' and/or 'filepath' command, showing current file
-
 if we overflow gridline array, we get an array out of bounds.  Should probably fix this.
-
-- rename ECON => ES
-
-- probably want to incorporate Apache CLI, and then can do things like this:
-
-  VALUE = $(jselect ...)
-  es << EOF
-  insert(T1, TODAY(), $VALUE);
-  EOF
-  
- - candidates for Apache CLI:
-   --suppress-autoload
-   --quiet
-   --test
-
- Other functions to implement:
- 
- log()
- version()
- settings()
- 
- Cancelled functions:
- 
- exec()
- update() => can simply combine delete() and then insert() for now...
- 
- -----
- 
- %Change of Negative Numbers is a bit misleading.  Maybe don't show them.
- 
------
- 
-settings.auth.drop = false;
-
------
-
-Usage
-
-es --merge-deletes
-es --merge-updates
-es --merge-metadata
-es --test-functions
-es --suppress-autoload
-
------
 
 ** load() also deletes all the metadata in the parser!!!!!!!!!!!
 ** test merge updates / deletes
-
------
-
-"merge" options should be options for "merge()", not for the whole program
-
-"qtp" requires an optional 3rd parameter, scope.

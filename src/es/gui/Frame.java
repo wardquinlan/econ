@@ -11,7 +11,7 @@ public class Frame extends JFrame {
   private static final long serialVersionUID = 4488715210063650680L;
 
   public Frame(Context ctx) throws Exception {
-    super("Econ");
+    super("ES");
     UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
     JTabbedPane tabbedPane = new JTabbedPane();
     for (Panel panel: ctx.getPanels()) {
