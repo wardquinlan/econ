@@ -56,15 +56,16 @@ public class Log implements Command {
       }
       TimeSeries timeSeriesLog = new TimeSeries(TimeSeries.FLOAT);
       for (TimeSeriesData timeSeriesData: timeSeries.getTimeSeriesDataList()) {
-        // NOTE: May have to deal with offsets here (not sure)
         Float value = (Float) timeSeriesData.getValue();
-        if (value <= 0) {
-          throw new Exception("cannot take log values <= 0");
+        if (value != null) {
+          if (value <= 0) {
+            throw new Exception("cannot take log values <= 0");
+          }
+          TimeSeriesData timeSeriesDataLog = new TimeSeriesData();
+          timeSeriesDataLog.setDate(timeSeriesData.getDate());
+          timeSeriesDataLog.setValue((float) Math.log(value));
+          timeSeriesLog.add(timeSeriesDataLog);
         }
-        TimeSeriesData timeSeriesDataLog = new TimeSeriesData();
-        timeSeriesDataLog.setDate(timeSeriesData.getDate());
-        timeSeriesDataLog.setValue((float) Math.log(value));
-        timeSeriesLog.add(timeSeriesDataLog);
       }
       return timeSeriesLog;
     } else {
