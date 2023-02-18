@@ -13,7 +13,7 @@ import es.parser.Symbol;
 public class Average implements Command {
   @Override
   public String getSummary() {
-    return "float  average(Series series, int n);";
+    return "Series average(Series series, int n);";
   }
   
   @Override

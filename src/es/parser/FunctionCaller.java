@@ -55,7 +55,6 @@ public class FunctionCaller {
   public FunctionCaller() {
     commandMap.put("exit", new Exit());
     commandMap.put("print", new Print());
-    commandMap.put("fonts", new Fonts());
     commandMap.put("help", new Help());
     commandMap.put("load", new Load());
     commandMap.put("plot", new Plot());
@@ -94,6 +93,7 @@ public class FunctionCaller {
       commandMap.put("assert", new Assert());
       commandMap.put("offset", new Offset());
       commandMap.put("get", new Get());
+      commandMap.put("fonts", new Fonts());
     }
   }
   
