@@ -14,7 +14,7 @@ public class Cat implements Command {
   
   @Override
   public String getSummary() {
-    return "int    cat()";
+    return "void   cat()";
   }
   
   @Override
@@ -26,7 +26,7 @@ public class Cat implements Command {
   
   @Override
   public String getReturns() {
-    return "0";
+    return null;
   }
   
   @Override
@@ -53,6 +53,6 @@ public class Cat implements Command {
         Utils.generateTruncatedData(TIME_SERIES_COL_WIDTHS, 5, Utils.stringWithNULL(timeSeries.getSource())), 
         Utils.generateTruncatedData(TIME_SERIES_COL_WIDTHS, 6, Utils.stringWithNULL(timeSeries.getSourceId())));
     }
-    return 0;
+    return null;
   }
 }

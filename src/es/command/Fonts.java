@@ -13,7 +13,7 @@ import es.parser.Symbol;
 public class Fonts implements Command {
   @Override
   public String getSummary() {
-    return "int    fonts();";
+    return "void   fonts();";
   }
   
   @Override
@@ -25,7 +25,7 @@ public class Fonts implements Command {
   
   @Override
   public String getReturns() {
-    return "0";
+    return null;
   }
   
   @Override
@@ -35,6 +35,6 @@ public class Fonts implements Command {
     for (Font font: fonts) {
       System.out.println(font.getFontName());
     }  
-    return 0;
+    return null;
   }
 }

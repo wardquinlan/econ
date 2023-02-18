@@ -12,7 +12,7 @@ import es.parser.Symbol;
 public class Connect implements Command {
   @Override
   public String getSummary() {
-    return "int    connect(String host, String database, String username[, String password])";
+    return "void   connect(String host, String database, String username[, String password])";
   }
   
   @Override
@@ -24,7 +24,7 @@ public class Connect implements Command {
   
   @Override
   public String getReturns() {
-    return "0";
+    return null;
   }
   
   @Override
@@ -45,6 +45,6 @@ public class Connect implements Command {
     
     TimeSeriesDAO.getInstance().connect((String) params.get(0), (String) params.get(1), (String) params.get(2), params.size() == 3 ? null : (String) params.get(3));
     System.out.println("connected to datastore '" + params.get(1) + "'");
-    return 0;
+    return null;
   }
 }

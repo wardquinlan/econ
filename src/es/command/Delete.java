@@ -14,7 +14,7 @@ import es.parser.Symbol;
 public class Delete implements Command {
   @Override
   public String getSummary() {
-    return "int    delete(Series series, String date);";
+    return "void   delete(Series series, String date);";
   }
   
   @Override
@@ -26,7 +26,7 @@ public class Delete implements Command {
   
   @Override
   public String getReturns() {
-    return "0";
+    return null;
   }
   
   @Override
@@ -48,6 +48,6 @@ public class Delete implements Command {
       }
     }
     log.warn("date not found in series: " + params.get(1));
-    return 0;
+    return null;
   }
 }

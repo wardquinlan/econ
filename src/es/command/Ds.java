@@ -15,7 +15,7 @@ public class Ds implements Command {
   
   @Override
   public String getSummary() {
-    return "int    ds();";
+    return "void   ds();";
   }
   
   @Override
@@ -27,7 +27,7 @@ public class Ds implements Command {
   
   @Override
   public String getReturns() {
-    return "0";
+    return null;
   }
   
   @Override
@@ -46,6 +46,6 @@ public class Ds implements Command {
         Utils.generateTruncatedData(TIME_SERIES_COL_WIDTHS, 4, Utils.stringWithNULL(timeSeries.getSourceId())),
         size.toString());
     }
-    return 0;
+    return null;
   }
 }

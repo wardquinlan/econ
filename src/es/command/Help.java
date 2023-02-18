@@ -11,7 +11,7 @@ import es.parser.Symbol;
 public class Help implements Command {
   @Override
   public String getSummary() {
-    return "int    help([String command]);";
+    return "void   help([String command]);";
   }
   
   @Override
@@ -23,12 +23,12 @@ public class Help implements Command {
   
   @Override
   public String getReturns() {
-    return "0";
+    return null;
   }
   
   @Override
   public Object run(Map<String, Symbol> symbolTable, File file, List<Object> params) throws Exception {
     Utils.ASSERT(false, "run method of help() invoked");
-    return 0;
+    return null;
   }
 }

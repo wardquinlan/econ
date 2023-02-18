@@ -115,14 +115,14 @@ public class FunctionCaller {
             System.out.println();
             System.out.println("Returns: " + command.getReturns());
           }
-          return 0;
+          return null;
         }
       }
       for (String name: commandMap.keySet()) {
         Command command = commandMap.get(name);
         System.out.println(command.getSummary());
       }
-      return 0;
+      return null;
     }
     return commandMap.get(funcName).run(symbolTable, file, params);
   }
