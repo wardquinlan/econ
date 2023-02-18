@@ -13,7 +13,7 @@ import es.parser.Symbol;
 public class Save implements Command {
   @Override
   public String getSummary() {
-    return "int    save(Series series);";
+    return "void   save(Series series);";
   }
   
   @Override
@@ -25,7 +25,7 @@ public class Save implements Command {
   
   @Override
   public String getReturns() {
-    return "0";
+    return null;
   }
   
   @Override
@@ -41,6 +41,6 @@ public class Save implements Command {
       throw new Exception("cannot save a series which is not of type Float");
     }
     TimeSeriesDAO.getInstance().saveSeries(timeSeries);
-    return 0;
+    return null;
   }
 }

@@ -15,7 +15,7 @@ import es.parser.Symbol;
 public class Merge implements Command {
   @Override
   public String getSummary() {
-    return "int    merge(Series series[, String option[, String option[, String option]]]);";
+    return "void   merge(Series series[, String option[, String option[, String option]]]);";
   }
   
   @Override
@@ -31,7 +31,7 @@ public class Merge implements Command {
   
   @Override
   public String getReturns() {
-    return "0";
+    return null;
   }
   
   @Override
@@ -72,6 +72,6 @@ public class Merge implements Command {
     }
     MergeData mergeData = Utils.prepareMerge(timeSeriesCat, timeSeriesDS, mergeUpdates, mergeDeletes, mergeMetaData);
     TimeSeriesDAO.getInstance().merge(mergeData);
-    return 0;
+    return null;
   }
 }

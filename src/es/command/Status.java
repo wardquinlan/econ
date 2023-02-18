@@ -13,7 +13,7 @@ import es.parser.Symbol;
 public class Status implements Command {
   @Override
   public String getSummary() {
-    return "int    status();";
+    return "void   status();";
   }
   
   @Override
@@ -25,7 +25,7 @@ public class Status implements Command {
   
   @Override
   public String getReturns() {
-    return "0";
+    return null;
   }
   
   @Override
@@ -34,6 +34,6 @@ public class Status implements Command {
     System.out.println("version   : " + Settings.getInstance().getVersion());
     System.out.println("datastore : " + (TimeSeriesDAO.getInstance().getDatastore() == null ? "not connected" : TimeSeriesDAO.getInstance().getDatastore()));
     System.out.println("admin mode: " + Settings.getInstance().isAdmin());
-    return 0;
+    return null;
   }
 }

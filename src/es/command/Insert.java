@@ -15,7 +15,7 @@ import es.parser.Symbol;
 public class Insert implements Command {
   @Override
   public String getSummary() {
-    return "int    insert(Series series, String date, Object value);";
+    return "void   insert(Series series, String date, Object value);";
   }
   
   @Override
@@ -31,7 +31,7 @@ public class Insert implements Command {
   
   @Override
   public String getReturns() {
-    return "0";
+    return null;
   }
   
   @Override
@@ -90,6 +90,6 @@ public class Insert implements Command {
     timeSeriesData.setValue(value);
     timeSeries.add(timeSeriesData);
     Collections.sort(timeSeries.getTimeSeriesDataList());
-    return 0;
+    return null;
   }
 }

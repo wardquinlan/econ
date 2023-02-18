@@ -13,7 +13,7 @@ import es.parser.Symbol;
 public class SetId implements Command {
   @Override
   public String getSummary() {
-    return "int    setId(Series series, int id);";
+    return "void   setId(Series series, int id);";
   }
   
   @Override
@@ -25,7 +25,7 @@ public class SetId implements Command {
   
   @Override
   public String getReturns() {
-    return "0";
+    return null;
   }
   
   @Override
@@ -50,6 +50,6 @@ public class SetId implements Command {
     for (TimeSeriesData timeSeriesData: timeSeries.getTimeSeriesDataList()) {
       timeSeriesData.setId(id);
     }
-    return 0;
+    return null;
   }
 }

@@ -15,7 +15,7 @@ import es.parser.Symbol;
 public class Update implements Command {
   @Override
   public String getSummary() {
-    return "int    update(Series series, String date[, Object value]);";
+    return "void   update(Series series, String date[, Object value]);";
   }
   
   @Override
@@ -31,7 +31,7 @@ public class Update implements Command {
   
   @Override
   public String getReturns() {
-    return "0";
+    return null;
   }
   
   @Override
@@ -83,6 +83,6 @@ public class Update implements Command {
     }
 
     timeSeriesData.setValue(value);
-    return 0;
+    return null;
   }
 }

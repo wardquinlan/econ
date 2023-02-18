@@ -12,7 +12,7 @@ import es.parser.Symbol;
 public class SetSourceId implements Command {
   @Override
   public String getSummary() {
-    return "int    setSourceId(String series, String sourceId);";
+    return "void   setSourceId(String series, String sourceId);";
   }
   
   @Override
@@ -24,7 +24,7 @@ public class SetSourceId implements Command {
   
   @Override
   public String getReturns() {
-    return "0";
+    return null;
   }
   
   @Override
@@ -42,6 +42,6 @@ public class SetSourceId implements Command {
     TimeSeries timeSeries = (TimeSeries) params.get(0);
     String sourceId = (String) params.get(1);
     timeSeries.setSourceId(sourceId);
-    return 0;
+    return null;
   }
 }

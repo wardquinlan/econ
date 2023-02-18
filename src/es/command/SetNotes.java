@@ -12,7 +12,7 @@ import es.parser.Symbol;
 public class SetNotes implements Command {
   @Override
   public String getSummary() {
-    return "int    setNotes(Series series, String notes);";
+    return "void   setNotes(Series series, String notes);";
   }
   
   @Override
@@ -24,7 +24,7 @@ public class SetNotes implements Command {
   
   @Override
   public String getReturns() {
-    return "0";
+    return null;
   }
   
   @Override
@@ -42,6 +42,6 @@ public class SetNotes implements Command {
     TimeSeries timeSeries = (TimeSeries) params.get(0);
     String notes = (String) params.get(1);
     timeSeries.setNotes(notes);
-    return 0;
+    return null;
   }
 }

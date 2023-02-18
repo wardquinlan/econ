@@ -12,7 +12,7 @@ import es.parser.Symbol;
 public class SetName implements Command {
   @Override
   public String getSummary() {
-    return "int    setName(Series series, String name);";
+    return "void   setName(Series series, String name);";
   }
   
   @Override
@@ -24,7 +24,7 @@ public class SetName implements Command {
   
   @Override
   public String getReturns() {
-    return "0";
+    return null;
   }
   
   @Override
@@ -45,6 +45,6 @@ public class SetName implements Command {
     }
     String name = (String) params.get(1);
     timeSeries.setName(name);
-    return 0;
+    return null;
   }
 }

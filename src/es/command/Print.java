@@ -11,7 +11,7 @@ import es.parser.Symbol;
 public class Print implements Command {
   @Override
   public String getSummary() {
-    return "Object print([Object object]);";
+    return "void   print([Object object]);";
   }
   
   @Override
@@ -25,7 +25,7 @@ public class Print implements Command {
 
   @Override
   public String getReturns() {
-    return "'object', or 0 if 'object' not supplied";
+    return null;
   }
   
   @Override
@@ -33,10 +33,9 @@ public class Print implements Command {
     Utils.validate(params, 0, 1);
     if (params.size() == 0) {
       System.out.println();
-      return 0;
     } else {
       System.out.println(params.get(0));
-      return params.get(0);
     }
+    return null;
   }
 }

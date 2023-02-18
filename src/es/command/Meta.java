@@ -12,7 +12,7 @@ import es.parser.Symbol;
 public class Meta implements Command {
   @Override
   public String getSummary() {
-    return "int    meta(Series series);";
+    return "void   meta(Series series);";
   }
   
   @Override
@@ -24,7 +24,7 @@ public class Meta implements Command {
   
   @Override
   public String getReturns() {
-    return "0";
+    return null;
   }
   
   @Override
@@ -52,6 +52,6 @@ public class Meta implements Command {
       System.out.println();
       System.out.println(timeSeries.getNotes());
     }
-    return 0;
+    return null;
   }
 }

@@ -24,7 +24,7 @@ import es.parser.Symbol;
 public class Plot implements Command {
   @Override
   public String getSummary() {
-    return "int    plot(Object object);";
+    return "void   plot(Object object);";
   }
   
   @Override
@@ -38,7 +38,7 @@ public class Plot implements Command {
   
   @Override
   public String getReturns() {
-    return "0";
+    return null;
   }
   
   @Override
@@ -88,6 +88,6 @@ public class Plot implements Command {
       Lock.instance().wait();
     }
     
-    return 0;
+    return null;
   }
 }
