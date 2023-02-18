@@ -12,7 +12,7 @@ import es.parser.Symbol;
 public class Create implements Command {
   @Override
   public String getSummary() {
-    return "Series create(String name, int type);";
+    return "Series create(String name[, int type]);";
   }
   
   @Override
@@ -22,6 +22,8 @@ public class Create implements Command {
     list.add("  1 - create a floating point series");
     list.add("  2 - create a boolean series");
     list.add("  3 - create a date series");
+    list.add("");
+    list.add("If type not supplied, a floating point Series is created");
     return list;
   }
   
@@ -32,17 +34,20 @@ public class Create implements Command {
   
   @Override
   public Object run(Map<String, Symbol> symbolTable, File file, List<Object> params) throws Exception {
-    Utils.validate(params, 2, 2);
+    Utils.validate(params, 1, 2);
     
     if (!(params.get(0) instanceof String)) {
       throw new Exception(params.get(0) + " is not a string");
     }
     
-    if (!(params.get(1) instanceof Integer)) {
-      throw new Exception(params.get(1) + " is not an integer");
+    Integer type = TimeSeries.FLOAT;
+    if (params.size() == 2) {
+      if (!(params.get(1) instanceof Integer)) {
+        throw new Exception(params.get(1) + " is not an integer");
+      }
+      type = (Integer) params.get(1);
     }
     
-    Integer type = (Integer) params.get(1);
     if (type != TimeSeries.FLOAT && type != TimeSeries.BOOLEAN && type != TimeSeries.DATE) {
       throw new Exception("type must be one of " + TimeSeries.FLOAT + ", " + TimeSeries.BOOLEAN + ", " + TimeSeries.DATE);
     }
