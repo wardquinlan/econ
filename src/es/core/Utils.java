@@ -431,14 +431,16 @@ public class Utils {
   
   public static String change(TimeSeries timeSeries) {
     if (timeSeries.getType() == TimeSeries.FLOAT && timeSeries.size() > 1) {
-      float val1 = (float) timeSeries.get(timeSeries.size() - 1).getValue();
-      float val2 = (float) timeSeries.get(timeSeries.size() - 2).getValue();
-      float change = val1 - val2;
-      if (val1 > 0 && val2 > 0) {
-        float percentChange = change / val2 * 100f;
-        return String.format("%f (%.3f%%)", change, percentChange);
-      } else {
-        return String.format("%f", change);
+      Float val1 = (Float) timeSeries.get(timeSeries.size() - 1).getValue();
+      Float val2 = (Float) timeSeries.get(timeSeries.size() - 2).getValue();
+      if (val1 != null && val2 != null) {
+        float change = val1 - val2;
+        if (val1 > 0 && val2 > 0) {
+          float percentChange = change / val2 * 100f;
+          return String.format("%f (%.3f%%)", change, percentChange);
+        } else {
+          return String.format("%f", change);
+        }
       }
     }
     return null;
