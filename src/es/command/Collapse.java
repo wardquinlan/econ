@@ -19,13 +19,12 @@ public class Collapse implements Command {
   public List<String> getDetails() {
     List<String> list = new ArrayList<>();
     list.add("Collapses 0 or more series into a single series");
-    list.add("(Note that this is primarily a test function)");
     return list;
   }
   
   @Override
   public String getReturns() {
-    return "Series";
+    return "The collapsed Series";
   }
   
   @Override

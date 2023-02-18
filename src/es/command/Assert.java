@@ -12,20 +12,19 @@ import es.parser.Symbol;
 public class Assert implements Command {
   @Override
   public String getSummary() {
-    return "int    assert(Boolean condition[, String message]);";
+    return "void   assert(boolean condition[, String message]);";
   }
   
   @Override
   public List<String> getDetails() {
     List<String> list = new ArrayList<>();
     list.add("Asserts 'condition' is true.  If not, throws an exception (with 'message' as text, if given)");
-    list.add("(Note that this is primarily a test function)");
     return list;
   }
   
   @Override
   public String getReturns() {
-    return "0";
+    return null;
   }
   
   @Override
@@ -33,7 +32,7 @@ public class Assert implements Command {
     Utils.validate(params, 1, 2);
     
     if (!(params.get(0) instanceof Boolean)) {
-      throw new Exception(params.get(0) + " is not a Boolean");
+      throw new Exception(params.get(0) + " is not a boolean");
     }
 
     String message;
@@ -47,6 +46,6 @@ public class Assert implements Command {
     }
     
     Utils.ASSERT((Boolean) params.get(0), message);
-    return 0;
+    return null;
   }
 }

@@ -27,7 +27,7 @@ public class Create implements Command {
   
   @Override
   public String getReturns() {
-    return "Series";
+    return "The created Series";
   }
   
   @Override

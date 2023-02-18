@@ -19,13 +19,12 @@ public class Normalize implements Command {
   public List<String> getDetails() {
     List<String> list = new ArrayList<>();
     list.add("Normalizes series against seriesCollapsed, prepending with NULLs as needed");
-    list.add("(Note that this is primarily a test function)");
     return list;
   }
   
   @Override
   public String getReturns() {
-    return "Series";
+    return "The normalized Series";
   }
   
   @Override
