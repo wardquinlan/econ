@@ -12,7 +12,7 @@ import es.parser.Symbol;
 public class Drop implements Command {
   @Override
   public String getSummary() {
-    return "int    drop(int id)";
+    return "void   drop(int id)";
   }
   
   @Override
@@ -24,7 +24,7 @@ public class Drop implements Command {
   
   @Override
   public String getReturns() {
-    return "0";
+    return null;
   }
   
   @Override
@@ -36,6 +36,6 @@ public class Drop implements Command {
     }
     int id = (int) params.get(0);
     TimeSeriesDAO.getInstance().drop(id);
-    return 0;
+    return null;
   }
 }
