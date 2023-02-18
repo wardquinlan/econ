@@ -38,7 +38,7 @@ public class Save implements Command {
     
     TimeSeries timeSeries = (TimeSeries) params.get(0);
     if (timeSeries.getType() != TimeSeries.FLOAT) {
-      throw new Exception("cannot save a series which is not of type Float");
+      throw new Exception("cannot save a series which is not of type float");
     }
     TimeSeriesDAO.getInstance().saveSeries(timeSeries);
     return null;

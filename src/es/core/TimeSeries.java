@@ -39,9 +39,9 @@ public class TimeSeries {
   public String getTypeAsString() {
     switch(type) {
     case FLOAT:
-      return "Float";
+      return "float";
     case BOOLEAN:
-      return "Boolean";
+      return "boolean";
     case DATE:
       return "Date";
     case NULL:

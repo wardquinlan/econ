@@ -42,7 +42,7 @@ public class Update implements Command {
     }
     TimeSeries timeSeries = (TimeSeries) params.get(0);
     if (timeSeries.getType() != TimeSeries.FLOAT && timeSeries.getType() != TimeSeries.BOOLEAN) {
-      throw new Exception("Series must be of type float or Boolean");
+      throw new Exception("Series must be of type float or boolean");
     }
 
     if (!(params.get(1) instanceof String)) {

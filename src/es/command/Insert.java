@@ -77,7 +77,7 @@ public class Insert implements Command {
       if (params.get(2) instanceof Boolean) {
         value = (Boolean) params.get(2);
       } else {
-        throw new Exception("series has type boolean; 'value' must be a Boolean");
+        throw new Exception("series has type boolean; 'value' must be a boolean");
       }
     } else {
       Utils.ASSERT(false, "invalid series type: " + timeSeries.getType());
