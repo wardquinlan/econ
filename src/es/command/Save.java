@@ -33,7 +33,7 @@ public class Save implements Command {
     Utils.validate(params, 1, 1);
     
     if (!(params.get(0) instanceof TimeSeries)) {
-      throw new Exception("'series' is not a Series");
+      throw new Exception(params.get(0) + " is not a Series");
     }
     
     TimeSeries timeSeries = (TimeSeries) params.get(0);

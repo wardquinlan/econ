@@ -38,18 +38,18 @@ public class Update implements Command {
   public Object run(Map<String, Symbol> symbolTable, File file, List<Object> params) throws Exception {
     Utils.validate(params, 3, 3);
     if (!(params.get(0) instanceof TimeSeries)) {
-      throw new Exception("'series' is not a series");
+      throw new Exception(params.get(0) + " is not a Series");
     }
     TimeSeries timeSeries = (TimeSeries) params.get(0);
     if (timeSeries.getType() != TimeSeries.FLOAT && timeSeries.getType() != TimeSeries.BOOLEAN) {
-      throw new Exception("'series' msut be of type float or boolean");
+      throw new Exception("Series must be of type float or Boolean");
     }
 
     if (!(params.get(1) instanceof String)) {
-      throw new Exception("'date' is not a string");
+      throw new Exception(params.get(1) + " is not a string");
     }
     if (((String) params.get(1)).length() != 10) {
-      throw new Exception("'date' must be of the format YYYY-MM-DD");
+      throw new Exception("date must be of the format YYYY-MM-DD");
     }
     Date date = Utils.DATE_FORMAT.parse((String) params.get(1));
     

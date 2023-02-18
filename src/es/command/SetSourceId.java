@@ -32,11 +32,11 @@ public class SetSourceId implements Command {
     Utils.validate(params, 2, 2);
     
     if (!(params.get(0) instanceof TimeSeries)) {
-      throw new Exception("'series' is not a Series");
+      throw new Exception(params.get(0) + " is not a Series");
     }
     
     if (!(params.get(1) instanceof String)) {
-      throw new Exception("'sourceId' is not a String");
+      throw new Exception(params.get(1) + " is not a String");
     }
     
     TimeSeries timeSeries = (TimeSeries) params.get(0);

@@ -36,16 +36,10 @@ public class Size implements Command {
   @Override
   public Object run(Map<String, Symbol> symbolTable, File file, List<Object> params) throws Exception {
     Utils.validate(params, 1, 1);
-    TimeSeries timeSeries;
-    Object object = params.get(0);
-    if (object instanceof TimeSeries) {
-      timeSeries = (TimeSeries) object;
-    } else {
-      timeSeries = Utils.load(params.get(0));
-      if (timeSeries == null) {
-        throw new Exception("time series not found: " + params.get(0));
-      }
+    if (!(params.get(0) instanceof TimeSeries)) {
+      throw new Exception(params.get(0) + " is not a Series");
     }
+    TimeSeries timeSeries = (TimeSeries) params.get(0);
     return timeSeries.size();
   }
 }

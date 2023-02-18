@@ -38,7 +38,7 @@ public class Merge implements Command {
   public Object run(Map<String, Symbol> symbolTable, File file, List<Object> params) throws Exception {
     Utils.validate(params, 1, 4);
     if (!(params.get(0) instanceof TimeSeries)) {
-      throw new Exception("'series' is not a Series");
+      throw new Exception(params.get(0) + " is not a Series");
     }
     boolean mergeUpdates = false;
     boolean mergeDeletes = false;

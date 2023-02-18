@@ -42,7 +42,7 @@ public class QDB implements Command {
     Utils.validate(params, 1, 1);
     
     if (!(params.get(0) instanceof String)) {
-      throw new Exception("argument not a string");
+      throw new Exception(params.get(0) + " is not a string");
     }
     
     String dbFilePath = (String) params.get(0);
