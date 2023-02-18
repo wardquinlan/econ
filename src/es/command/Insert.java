@@ -40,12 +40,12 @@ public class Insert implements Command {
       throw new Exception("missing argument(s)");
     }
     if (!(params.get(0) instanceof TimeSeries)) {
-      throw new Exception("'series' is not a series");
+      throw new Exception(params.get(0) + " is not a Series");
     }
     TimeSeries timeSeries = (TimeSeries) params.get(0);
 
     if (!(params.get(1) instanceof String)) {
-      throw new Exception("'date' is not a string");
+      throw new Exception(params.get(1) + " is not a String");
     }
     if (((String) params.get(1)).length() != 10) {
       throw new Exception("'date' must be of the format YYYY-MM-DD");
@@ -70,14 +70,14 @@ public class Insert implements Command {
       } else if (params.get(2) instanceof Float) {
         value = (Float) params.get(2);
       } else {
-        throw new Exception("series has type float; 'value' must be either an int or a  float");
+        throw new Exception("series has type float; 'value' must be either an int or a float");
       }
     } else if (timeSeries.getType() == TimeSeries.BOOLEAN) {
       Utils.validate(params, 3, 3);
       if (params.get(2) instanceof Boolean) {
         value = (Boolean) params.get(2);
       } else {
-        throw new Exception("series has type boolean; 'value' must be a boolean");
+        throw new Exception("series has type boolean; 'value' must be a Boolean");
       }
     } else {
       Utils.ASSERT(false, "invalid series type: " + timeSeries.getType());
