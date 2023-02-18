@@ -111,8 +111,10 @@ public class FunctionCaller {
           for (String detail: command.getDetails()) {
             System.out.println(detail);
           }
-          System.out.println();
-          System.out.println("Returns: " + command.getReturns());
+          if (command.getReturns() != null) {
+            System.out.println();
+            System.out.println("Returns: " + command.getReturns());
+          }
           return 0;
         }
       }

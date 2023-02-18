@@ -35,7 +35,7 @@ public class Print implements Command {
       System.out.println();
       return 0;
     } else {
-      System.out.println(params.get(0).toString());
+      System.out.println(params.get(0));
       return params.get(0);
     }
   }

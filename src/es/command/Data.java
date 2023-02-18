@@ -15,7 +15,7 @@ public class Data implements Command {
   
   @Override
   public String getSummary() {
-    return "int    data(Series series);";
+    return "void   data(Series series);";
   }
   
   @Override
@@ -27,7 +27,7 @@ public class Data implements Command {
   
   @Override
   public String getReturns() {
-    return "0";
+    return null;
   }
   
   @Override
@@ -47,6 +47,6 @@ public class Data implements Command {
         Utils.generateTruncatedData(TIME_SERIES_DATA_COL_WIDTHS, 2, Utils.DATE_FORMAT.format(timeSeriesData.getDate())), 
         timeSeriesData.getValue() == null ? "" : timeSeriesData.getValue()); 
     }
-    return 0;
+    return null;
   }
 }
