@@ -53,7 +53,7 @@ public class Main {
     
     args = cmd.getArgs();
     if (args.length > 1) {
-      log.error("usage: econ.Main [<script-name.es>]");
+      log.error("usage: es.core.Main [<script-name.es>]");
       System.exit(1);
     }
     
