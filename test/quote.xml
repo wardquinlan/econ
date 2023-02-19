@@ -1,5 +1,6 @@
 <context>
   <panel label="T10Y3M"
+         dxincr="1"
          frequency="months">
          
     <chart label="10 Year Treasury Const Maturity - 3 Month Treasury Const Maturity"
@@ -21,6 +22,7 @@
   </panel>
 
   <panel label="TBOND1" 
+         dxincr="1"
          frequency="months">
 
     <chart label="1 Year Treasury Const Maturity"
@@ -41,6 +43,7 @@
   </panel>
 
   <panel label="VIX"
+         dxincr="1"
          frequency="months">
 
     <chart label="CBOE Volatility Index"
@@ -61,6 +64,7 @@
   </panel>
 
   <panel label="MKCAPGDP"
+         dxincr="1"
          frequency="months">
 
     <chart label="Market Cap to GDP"
@@ -81,6 +85,7 @@
   </panel>
 
   <panel label="NFCI"
+         dxincr="1"
          frequency="months">
 
     <chart label="Chicago Fed National Financial Conditions Index"
@@ -100,6 +105,7 @@
   </panel>
 
   <panel label="QSALES"
+         dxincr="1"
          frequency="months">
 
     <chart label="Quarterly Sales per Share"
@@ -119,6 +125,7 @@
   </panel>
 
   <panel label="USD"
+         dxincr="1"
          frequency="months">
 
     <chart label="Nominal Broad U.S. Dollar Index"
@@ -138,6 +145,7 @@
   </panel>
 
   <panel label="RRP"
+         dxincr="1"
          frequency="months">
 
     <chart label="Overnight Reverse Repos: Treasury Securities sold by the Federal Reserve"

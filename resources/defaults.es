@@ -1,5 +1,5 @@
 defaults.panel.backgroundcolor = White;
-defaults.panel.dxincr = 1;
+defaults.panel.dxincr = 8;
 defaults.panel.gridlinetextwidth = 40;
 defaults.panel.fontname = "SansSerif.plain";
 defaults.panel.fontcolor = Black;
