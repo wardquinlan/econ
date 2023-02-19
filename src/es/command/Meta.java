@@ -42,7 +42,8 @@ public class Meta implements Command {
     System.out.println("Source Id: " + Utils.stringWithNULL(timeSeries.getSourceId()));
     System.out.println("Size     : " + timeSeries.size());
     if (timeSeries.size() > 0) {
-      System.out.println("Last     : " + timeSeries.get(timeSeries.size() - 1).getValue());
+      System.out.println("Last     : " + timeSeries.get(timeSeries.size() - 1).getValue() + " (" +
+        Utils.DATE_FORMAT.format(timeSeries.get(timeSeries.size() - 1).getDate()) + ")");
     }
     String change = Utils.change(timeSeries);
     if (change != null) {
