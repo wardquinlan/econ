@@ -207,6 +207,7 @@ public class Utils {
       timeSeriesMerge.setSourceId(timeSeriesCat.getSourceId());
       timeSeriesMerge.setNotes(timeSeriesCat.getNotes());
       mergeData.setTimeSeriesMerge(timeSeriesMerge);
+      log.info("updating metadata");
     }
     
     int indexCat = 0;

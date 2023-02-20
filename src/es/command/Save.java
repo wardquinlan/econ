@@ -40,7 +40,18 @@ public class Save implements Command {
     if (timeSeries.getType() != TimeSeries.FLOAT) {
       throw new Exception("cannot save a series which is not of type float");
     }
+    if (timeSeries.getId() == null) {
+      throw new Exception("series id is null");
+    }
+    if (timeSeries.getTitle() == null) {
+      throw new Exception("series title is null");
+    }
+    TimeSeries timeSeriesTmp = Utils.load(timeSeries.getId());
+    if (timeSeriesTmp != null) {
+      throw new Exception("series already exists in the datastore: " + timeSeriesTmp.getId());
+    }
     TimeSeriesDAO.getInstance().saveSeries(timeSeries);
+    log.info("series saved");
     return null;
   }
 }

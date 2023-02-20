@@ -145,9 +145,6 @@ public class TimeSeriesDAO {
     }
     try {
       conn.setAutoCommit(false);
-      if (timeSeries.getId() == null) {
-        throw new Exception("id is null");
-      }
       PreparedStatement ps = conn.prepareStatement("insert into time_series(id, name, title, source, source_id, notes) values (?, ?, ?, ?, ?, ?)");
       ps.setInt(1, timeSeries.getId());
       ps.setString(2, timeSeries.getName());

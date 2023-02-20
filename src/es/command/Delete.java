@@ -44,10 +44,11 @@ public class Delete implements Command {
       TimeSeriesData timeSeriesData = timeSeries.get(i);
       if (timeSeriesData.getDate().equals(date)) {
         timeSeries.getTimeSeriesDataList().remove(i);
+        log.info("observation deleted");
         return 0;
       }
     }
-    log.warn("date not found in series: " + params.get(1));
+    log.warn("observation not found: " + params.get(1));
     return null;
   }
 }

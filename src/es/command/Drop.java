@@ -36,6 +36,7 @@ public class Drop implements Command {
     }
     int id = (int) params.get(0);
     TimeSeriesDAO.getInstance().drop(id);
+    log.info("series dropped");
     return null;
   }
 }

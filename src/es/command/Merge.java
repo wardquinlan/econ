@@ -25,7 +25,9 @@ public class Merge implements Command {
     list.add("3 options are supported as follows:");
     list.add("  --with-updates - if set, also merges updates to data");
     list.add("  --with-deletes - if set, also merges deletions to data (requires administrative mode)");
-    list.add("  --with-updates - if set, also merges updates to metadate (requires administrative mode)");
+    list.add("  --with-metadata - if set, also merges updates to metadate (requires administrative mode)");
+    list.add("");
+    list.add("(Note that inserts are automatically merged)");
     return list;
   }
   
@@ -58,7 +60,10 @@ public class Merge implements Command {
     }
     TimeSeries timeSeriesCat = (TimeSeries) params.get(0);
     if (timeSeriesCat.getId() == null) {
-      throw new Exception("series id not set");
+      throw new Exception("series id is null");
+    }
+    if (timeSeriesCat.getName() == null) {
+      throw new Exception("series name is null");
     }
     if (timeSeriesCat.getType() != TimeSeries.FLOAT) {
       throw new Exception("can only merge float series");
@@ -70,8 +75,15 @@ public class Merge implements Command {
     if (timeSeriesDS == null) {
       throw new Exception("series not found");
     }
+    if (!timeSeriesCat.getName().equals(timeSeriesDS.getName())) {
+      throw new Exception("series names not equal: DS=" + timeSeriesDS.getName() + ", CAT=" + timeSeriesCat.getName());
+    }
+    if (mergeMetaData && timeSeriesCat.getTitle() == null) {
+      throw new Exception("series title is null");
+    }
     MergeData mergeData = Utils.prepareMerge(timeSeriesCat, timeSeriesDS, mergeUpdates, mergeDeletes, mergeMetaData);
     TimeSeriesDAO.getInstance().merge(mergeData);
+    log.info("series merged");
     return null;
   }
 }
