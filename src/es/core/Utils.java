@@ -219,14 +219,14 @@ public class Utils {
       float valueDS = (float) timeSeriesDS.get(indexDS).getValue();
       TimeSeriesData data = new TimeSeriesData();
       if (dateCat.compareTo(dateDS) < 0) {
-        log.info("inserting data at " + Utils.DATE_FORMAT.format(dateCat));
+        log.info("[1] inserting data at " + Utils.DATE_FORMAT.format(dateCat));
         data.setDate(dateCat);
         data.setValue(valueCat);
         mergeData.getTimeSeriesInsert().add(data);
         indexCat++;
       } else if (dateCat.compareTo(dateDS) > 0) {
         if (mergeDeletes) {
-          log.info("deleting data at " + Utils.DATE_FORMAT.format(dateDS));
+          log.info("[1] deleting data at " + Utils.DATE_FORMAT.format(dateDS));
           data.setDate(dateDS);
           data.setValue(valueDS);
           mergeData.getTimeSeriesDelete().add(data);
@@ -249,7 +249,7 @@ public class Utils {
     while (indexCat < timeSeriesCat.size()) {
       Date dateCat = timeSeriesCat.get(indexCat).getDate();
       float valueCat = (float) timeSeriesCat.get(indexCat).getValue();
-      log.info("inserting data at " + Utils.DATE_FORMAT.format(dateCat));
+      log.info("[2] inserting data at " + Utils.DATE_FORMAT.format(dateCat));
       TimeSeriesData data = new TimeSeriesData();
       data.setDate(dateCat);
       data.setValue(valueCat);
@@ -261,7 +261,7 @@ public class Utils {
       if (mergeDeletes) {
         Date dateDS = timeSeriesDS.get(indexDS).getDate();
         float valueDS = (float) timeSeriesDS.get(indexDS).getValue();
-        log.info("deleting data at " + Utils.DATE_FORMAT.format(dateDS));
+        log.info("[2] deleting data at " + Utils.DATE_FORMAT.format(dateDS));
         TimeSeriesData data = new TimeSeriesData();
         data.setDate(dateDS);
         data.setValue(valueDS);
