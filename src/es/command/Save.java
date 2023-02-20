@@ -50,6 +50,10 @@ public class Save implements Command {
     if (timeSeriesTmp != null) {
       throw new Exception("series already exists in the datastore: " + timeSeriesTmp.getId());
     }
+    timeSeriesTmp = Utils.load(timeSeries.getName());
+    if (timeSeriesTmp != null) {
+      throw new Exception("series already exists in the datastore: " + timeSeriesTmp.getName());
+    }
     TimeSeriesDAO.getInstance().saveSeries(timeSeries);
     log.info("series saved");
     return null;
