@@ -83,6 +83,7 @@ public class Update implements Command {
     }
 
     timeSeriesData.setValue(value);
+    log.info("observation updated at " + Utils.DATE_FORMAT.format(date));
     return null;
   }
 }

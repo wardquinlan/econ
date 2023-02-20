@@ -53,7 +53,7 @@ public class Insert implements Command {
     Date date = Utils.DATE_FORMAT.parse((String) params.get(1));
     for(TimeSeriesData timeSeriesData: timeSeries.getTimeSeriesDataList()) {
       if (timeSeriesData.getDate().equals(date)) {
-        throw new Exception("that date already exists");
+        throw new Exception("that date already exists: " + Utils.DATE_FORMAT.format(date));
       }
     }
     
@@ -90,6 +90,7 @@ public class Insert implements Command {
     timeSeriesData.setValue(value);
     timeSeries.add(timeSeriesData);
     Collections.sort(timeSeries.getTimeSeriesDataList());
+    log.info("observation inserted at " + Utils.DATE_FORMAT.format(date));
     return null;
   }
 }
