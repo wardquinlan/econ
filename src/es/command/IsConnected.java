@@ -5,39 +5,31 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import es.core.TimeSeriesDAO;
 import es.core.Utils;
 import es.parser.Symbol;
 
-public class Exit implements Command {
+public class IsConnected implements Command {
   @Override
   public String getSummary() {
-    return "void   exit([int code]);";
+    return "boolean isConnected();";
   }
   
   @Override
   public List<String> getDetails() {
     List<String> list = new ArrayList<>();
-    list.add("Exits the application, with exit code 'code' (or 0 if not supplied)");
+    list.add("Determines if a database connection is established");
     return list;
   }
   
   @Override
   public String getReturns() {
-    return null;
+    return "true if a database connection is established; false otherwise";
   }
   
   @Override
   public Object run(Map<String, Symbol> symbolTable, File file, List<Object> params) throws Exception {
-    Utils.validate(params, 0, 1);
-    if (params.size() == 0) {
-      System.exit(0);
-    }
-    
-    if (!(params.get(0) instanceof Integer)) {
-      throw new Exception(params.get(0) + " is not an int");
-    }
-    int value = Integer.parseInt(params.get(0).toString());
-    System.exit(value);
-    return null;
+    Utils.validate(params, 0, 0);
+    return (TimeSeriesDAO.getInstance().getDatastore() != null);
   }
 }

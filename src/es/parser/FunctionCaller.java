@@ -17,11 +17,14 @@ import es.command.Delete;
 import es.command.Drop;
 import es.command.Ds;
 import es.command.Exit;
+import es.command.ExitIf;
 import es.command.FRED;
 import es.command.Fonts;
 import es.command.Get;
 import es.command.Help;
 import es.command.Insert;
+import es.command.IsAdmin;
+import es.command.IsConnected;
 import es.command.Load;
 import es.command.Merge;
 import es.command.Meta;
@@ -87,6 +90,9 @@ public class FunctionCaller {
     commandMap.put("status", new Status());
     commandMap.put("version", new Version());
     commandMap.put("data", new Data());
+    commandMap.put("isConnected", new IsConnected());
+    commandMap.put("exitIf", new ExitIf());
+    commandMap.put("isAdmin", new IsAdmin());
     if (Settings.getInstance().testFunctions()) {
       commandMap.put("collapse", new Collapse());
       commandMap.put("normalize", new Normalize());
