@@ -24,9 +24,7 @@ public class Get implements Command {
   
   @Override
   public String getReturns() {
-    // Note: I hate to introduce concept of NULL in a test function but can
-    // consider if it is needed in real code
-    return "Value of series at given index if found; otherwise -1";
+    return "Value of series at given index";
   }
   
   @Override
