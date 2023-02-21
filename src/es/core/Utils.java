@@ -192,7 +192,7 @@ public class Utils {
     return -1;
   }
   
-  public static MergeData prepareMerge(TimeSeries timeSeriesCat, TimeSeries timeSeriesDS, boolean mergeUpdates, boolean mergeDeletes, boolean mergeMetaData) throws Exception {
+  public static MergeData prepareMerge(TimeSeries timeSeriesCat, TimeSeries timeSeriesDS, boolean mergeInserts, boolean mergeUpdates, boolean mergeDeletes, boolean mergeMetaData) throws Exception {
     MergeData mergeData = new MergeData();
     mergeData.getTimeSeriesInsert().setId(timeSeriesCat.getId());
     mergeData.getTimeSeriesUpdate().setId(timeSeriesCat.getId());
@@ -219,10 +219,12 @@ public class Utils {
       float valueDS = (float) timeSeriesDS.get(indexDS).getValue();
       TimeSeriesData data = new TimeSeriesData();
       if (dateCat.compareTo(dateDS) < 0) {
-        log.info("[1] inserting data at " + Utils.DATE_FORMAT.format(dateCat));
-        data.setDate(dateCat);
-        data.setValue(valueCat);
-        mergeData.getTimeSeriesInsert().add(data);
+        if (mergeInserts) {
+          log.info("[1] inserting data at " + Utils.DATE_FORMAT.format(dateCat));
+          data.setDate(dateCat);
+          data.setValue(valueCat);
+          mergeData.getTimeSeriesInsert().add(data);
+        }
         indexCat++;
       } else if (dateCat.compareTo(dateDS) > 0) {
         if (mergeDeletes) {
@@ -247,13 +249,15 @@ public class Utils {
     }
     
     while (indexCat < timeSeriesCat.size()) {
-      Date dateCat = timeSeriesCat.get(indexCat).getDate();
-      float valueCat = (float) timeSeriesCat.get(indexCat).getValue();
-      log.info("[2] inserting data at " + Utils.DATE_FORMAT.format(dateCat));
-      TimeSeriesData data = new TimeSeriesData();
-      data.setDate(dateCat);
-      data.setValue(valueCat);
-      mergeData.getTimeSeriesInsert().add(data);
+      if (mergeInserts) {
+        Date dateCat = timeSeriesCat.get(indexCat).getDate();
+        float valueCat = (float) timeSeriesCat.get(indexCat).getValue();
+        log.info("[2] inserting data at " + Utils.DATE_FORMAT.format(dateCat));
+        TimeSeriesData data = new TimeSeriesData();
+        data.setDate(dateCat);
+        data.setValue(valueCat);
+        mergeData.getTimeSeriesInsert().add(data);
+      }
       indexCat++;
     }
 

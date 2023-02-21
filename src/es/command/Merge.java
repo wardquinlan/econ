@@ -22,12 +22,11 @@ public class Merge implements Command {
   public List<String> getDetails() {
     List<String> list = new ArrayList<>();
     list.add("Merges 'series' in the catalog into the datastore");
-    list.add("3 options are supported as follows:");
-    list.add("  --with-updates - if set, also merges updates to data");
-    list.add("  --with-deletes - if set, also merges deletions to data (requires administrative mode)");
-    list.add("  --with-metadata - if set, also merges updates to metadate (requires administrative mode)");
-    list.add("");
-    list.add("(Note that inserts are automatically merged)");
+    list.add("4 options are supported as follows:");
+    list.add("  --with-inserts - if set, merges inserts to data");
+    list.add("  --with-updates - if set, merges updates to data");
+    list.add("  --with-deletes - if set, merges deletions to data (requires administrative mode)");
+    list.add("  --with-metadata - if set, merges updates to metadate (requires administrative mode)");
     return list;
   }
   
@@ -38,15 +37,18 @@ public class Merge implements Command {
   
   @Override
   public Object run(Map<String, Symbol> symbolTable, File file, List<Object> params) throws Exception {
-    Utils.validate(params, 1, 4);
+    Utils.validate(params, 1, 5);
     if (!(params.get(0) instanceof TimeSeries)) {
       throw new Exception(params.get(0) + " is not a Series");
     }
+    boolean mergeInserts = false;
     boolean mergeUpdates = false;
     boolean mergeDeletes = false;
     boolean mergeMetaData = false;
     for (int i = 1; i < params.size(); i++) {
-      if (params.get(i).equals("--with-updates")) {
+      if (params.get(i).equals("--with-inserts")) {
+        mergeInserts = true;
+      } else if (params.get(i).equals("--with-updates")) {
         mergeUpdates = true;
       } else if (params.get(i).equals("--with-deletes")) {
         Utils.validateIsAdmin();
@@ -81,7 +83,7 @@ public class Merge implements Command {
     if (mergeMetaData && timeSeriesCat.getTitle() == null) {
       throw new Exception("series title is null");
     }
-    MergeData mergeData = Utils.prepareMerge(timeSeriesCat, timeSeriesDS, mergeUpdates, mergeDeletes, mergeMetaData);
+    MergeData mergeData = Utils.prepareMerge(timeSeriesCat, timeSeriesDS, mergeInserts, mergeUpdates, mergeDeletes, mergeMetaData);
     TimeSeriesDAO.getInstance().merge(mergeData);
     log.info("series merged");
     return null;
