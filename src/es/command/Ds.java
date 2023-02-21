@@ -15,7 +15,7 @@ public class Ds implements Command {
   
   @Override
   public String getSummary() {
-    return "void   ds();";
+    return "void    ds();";
   }
   
   @Override

@@ -13,7 +13,7 @@ import es.parser.Symbol;
 public class Save implements Command {
   @Override
   public String getSummary() {
-    return "void   save(Series series);";
+    return "void    save(Series series);";
   }
   
   @Override

@@ -13,7 +13,7 @@ import es.parser.Symbol;
 public class Fonts implements Command {
   @Override
   public String getSummary() {
-    return "void   fonts();";
+    return "void    fonts();";
   }
   
   @Override

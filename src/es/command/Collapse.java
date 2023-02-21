@@ -12,7 +12,7 @@ import es.parser.Symbol;
 public class Collapse implements Command {
   @Override
   public String getSummary() {
-    return "Series collapse([Series series, ...]);";
+    return "Series  collapse([Series series, ...]);";
   }
   
   @Override

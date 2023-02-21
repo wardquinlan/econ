@@ -12,7 +12,7 @@ import es.parser.Symbol;
 public class Timestamp implements Command {
   @Override
   public String getSummary() {
-    return "String timestamp();";
+    return "String  timestamp();";
   }
   
   @Override

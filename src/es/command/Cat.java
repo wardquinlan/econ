@@ -14,7 +14,7 @@ public class Cat implements Command {
   
   @Override
   public String getSummary() {
-    return "void   cat()";
+    return "void    cat()";
   }
   
   @Override

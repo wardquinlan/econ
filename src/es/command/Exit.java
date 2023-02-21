@@ -11,7 +11,7 @@ import es.parser.Symbol;
 public class Exit implements Command {
   @Override
   public String getSummary() {
-    return "void   exit([int code]);";
+    return "void    exit([int code]);";
   }
   
   @Override

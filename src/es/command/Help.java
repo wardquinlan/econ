@@ -11,7 +11,7 @@ import es.parser.Symbol;
 public class Help implements Command {
   @Override
   public String getSummary() {
-    return "void   help([String command]);";
+    return "void    help([String command]);";
   }
   
   @Override

@@ -12,7 +12,7 @@ import es.parser.Symbol;
 public class Get implements Command {
   @Override
   public String getSummary() {
-    return "float  get(Series series, int index);";
+    return "float   get(Series series, int index);";
   }
   
   @Override

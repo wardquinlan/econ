@@ -12,7 +12,7 @@ import es.parser.Symbol;
 public class Offset implements Command {
   @Override
   public String getSummary() {
-    return "int    offset(Series series);";
+    return "int     offset(Series series);";
   }
   
   @Override

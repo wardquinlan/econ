@@ -12,7 +12,7 @@ import es.parser.Symbol;
 public class Meta implements Command {
   @Override
   public String getSummary() {
-    return "void   meta(Series series);";
+    return "void    meta(Series series);";
   }
   
   @Override

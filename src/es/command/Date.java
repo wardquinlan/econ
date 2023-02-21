@@ -14,7 +14,7 @@ import es.parser.Symbol;
 public class Date implements Command {
   @Override
   public String getSummary() {
-    return "Series date(Series series);";
+    return "Series  date(Series series);";
   }
   
   @Override

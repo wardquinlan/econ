@@ -12,7 +12,7 @@ import es.parser.Symbol;
 public class Assert implements Command {
   @Override
   public String getSummary() {
-    return "void   assert(boolean condition[, String message]);";
+    return "void    assert(boolean condition[, String message]);";
   }
   
   @Override

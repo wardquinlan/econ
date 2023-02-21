@@ -12,7 +12,7 @@ import es.parser.Symbol;
 public class Today implements Command {
   @Override
   public String getSummary() {
-    return "String today();";
+    return "String  today();";
   }
   
   @Override

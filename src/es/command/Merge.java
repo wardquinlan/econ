@@ -15,7 +15,7 @@ import es.parser.Symbol;
 public class Merge implements Command {
   @Override
   public String getSummary() {
-    return "void   merge(Series series[, String option[, String option[, String option]]]);";
+    return "void    merge(Series series[, String option[, String option[, String option]]]);";
   }
   
   @Override

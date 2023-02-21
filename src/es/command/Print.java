@@ -11,7 +11,7 @@ import es.parser.Symbol;
 public class Print implements Command {
   @Override
   public String getSummary() {
-    return "void   print([Object object]);";
+    return "void    print([Object object]);";
   }
   
   @Override

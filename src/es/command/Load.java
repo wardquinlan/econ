@@ -12,7 +12,7 @@ import es.parser.Symbol;
 public class Load implements Command {
   @Override
   public String getSummary() {
-    return "Series load(Object object);";
+    return "Series  load(Object object);";
   }
 
   @Override

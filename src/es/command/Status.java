@@ -13,7 +13,7 @@ import es.parser.Symbol;
 public class Status implements Command {
   @Override
   public String getSummary() {
-    return "void   status();";
+    return "void    status();";
   }
   
   @Override

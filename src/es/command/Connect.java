@@ -12,7 +12,7 @@ import es.parser.Symbol;
 public class Connect implements Command {
   @Override
   public String getSummary() {
-    return "void   connect(String host, String database, String username[, String password])";
+    return "void    connect(String host, String database, String username[, String password])";
   }
   
   @Override

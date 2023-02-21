@@ -15,7 +15,7 @@ public class Data implements Command {
   
   @Override
   public String getSummary() {
-    return "void   data(Series series);";
+    return "void    data(Series series);";
   }
   
   @Override

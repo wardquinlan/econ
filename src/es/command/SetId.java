@@ -13,7 +13,7 @@ import es.parser.Symbol;
 public class SetId implements Command {
   @Override
   public String getSummary() {
-    return "void   setId(Series series, int id);";
+    return "void    setId(Series series, int id);";
   }
   
   @Override

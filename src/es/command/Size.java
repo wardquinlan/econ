@@ -12,7 +12,7 @@ import es.parser.Symbol;
 public class Size implements Command {
   @Override
   public String getSummary() {
-    return "int    size(Object object);";
+    return "int     size(Object object);";
   }
   
   @Override

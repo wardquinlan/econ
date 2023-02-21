@@ -12,7 +12,7 @@ import es.parser.Symbol;
 public class Normalize implements Command {
   @Override
   public String getSummary() {
-    return "Series normalize(Series seriesCollapsed, Series series);";
+    return "Series  normalize(Series seriesCollapsed, Series series);";
   }
   
   @Override

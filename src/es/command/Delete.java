@@ -14,7 +14,7 @@ import es.parser.Symbol;
 public class Delete implements Command {
   @Override
   public String getSummary() {
-    return "void   delete(Series series, String date);";
+    return "void    delete(Series series, String date);";
   }
   
   @Override

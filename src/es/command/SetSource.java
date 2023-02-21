@@ -12,7 +12,7 @@ import es.parser.Symbol;
 public class SetSource implements Command {
   @Override
   public String getSummary() {
-    return "void   setSource(String series, String source);";
+    return "void    setSource(String series, String source);";
   }
   
   @Override

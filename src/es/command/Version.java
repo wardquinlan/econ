@@ -12,7 +12,7 @@ import es.parser.Symbol;
 public class Version implements Command {
   @Override
   public String getSummary() {
-    return "String version();";
+    return "String  version();";
   }
   
   @Override

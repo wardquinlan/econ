@@ -21,7 +21,7 @@ import es.parser.Symbol;
 public class QTP implements Command {
   @Override
   public String getSummary() {
-    return "Series qtp(String templateFilePath, String scope, String sourceId);";
+    return "Series  qtp(String templateFilePath, String scope, String sourceId);";
   }
   
   @Override

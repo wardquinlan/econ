@@ -11,7 +11,7 @@ import es.parser.Symbol;
 public class ExitIf implements Command {
   @Override
   public String getSummary() {
-    return "void   exitIf(boolean condition, String message[, int code]);";
+    return "void    exitIf(boolean condition, String message[, int code]);";
   }
   
   @Override

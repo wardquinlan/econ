@@ -24,7 +24,7 @@ import es.parser.Symbol;
 public class Plot implements Command {
   @Override
   public String getSummary() {
-    return "void   plot(Object object);";
+    return "void    plot(Object object);";
   }
   
   @Override

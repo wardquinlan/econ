@@ -13,7 +13,7 @@ import es.parser.Symbol;
 public class Log implements Command {
   @Override
   public String getSummary() {
-    return "float  log(Object object);";
+    return "float   log(Object object);";
   }
   
   @Override
