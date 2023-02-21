@@ -91,11 +91,11 @@ public class Merge implements Command {
         mergeData.getTimeSeriesInsert().size() == 0 &&
         mergeData.getTimeSeriesUpdate().size() == 0 &&
         mergeData.getTimeSeriesDelete().size() == 0) {
-      log.info("nothing to merge");
+      log.info("nothing to merge: " + timeSeriesCat.getId());
       return null;
     }
     TimeSeriesDAO.getInstance().merge(mergeData);
-    log.info("series merged");
+    log.info("series merged: " + timeSeriesCat.getId());
     return null;
   }
 }
