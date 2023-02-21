@@ -56,7 +56,16 @@
     <chmod file="${output}/es.sh" perm="755"/>
     <chmod file="${output}/createdb.sh" perm="755"/>
     <chmod file="${output}/ddl.sh" perm="755"/>
-  	<tar basedir="${output}" destfile="${output}/es.tar.gz" excludes=".es" compression="gzip"/>
+  	<tar destfile="${output}/es.tar.gz" excludes=".es" compression="gzip">
+  		<tarfileset dir="${output}" filemode="755">
+  			<include name="*.sh"/>
+  		</tarfileset>
+      <tarfileset dir="${output}">
+      	<include name="**"/>
+        <exclude name="*.sh"/>
+      	<exclude name=".es"/>
+      </tarfileset>
+  	</tar>
   </target>
 
   <target name="rebuild" depends="clean,jar">
