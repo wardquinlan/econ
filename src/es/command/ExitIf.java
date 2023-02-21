@@ -34,7 +34,7 @@ public class ExitIf implements Command {
     }
     Boolean condition = (Boolean) params.get(0);
     if (!(params.get(1) instanceof String)) {
-      throw new Exception(params.get(0) + " is not a String");
+      throw new Exception(params.get(1) + " is not a String");
     }
     String message = (String) params.get(1);
     int code = 0;
@@ -44,7 +44,7 @@ public class ExitIf implements Command {
       }
       code = (Integer) params.get(2);
     }
-    if (!condition) {
+    if (condition) {
       System.out.println(message);
       System.exit(code);
     }
