@@ -15,7 +15,7 @@ import es.parser.Symbol;
 public class Merge implements Command {
   @Override
   public String getSummary() {
-    return "void    merge(Series series[, String option[, String option[, String option[, String option]]]]);";
+    return "void    merge(Series series, String option[, String option[, String option[, String option]]]);";
   }
   
   @Override
@@ -59,6 +59,9 @@ public class Merge implements Command {
       } else {
         throw new Exception("unrecognized merge option: " + params.get(i));
       }
+    }
+    if (!mergeInserts && !mergeUpdates && !mergeDeletes && !mergeMetaData) {
+      throw new Exception("at least one merge option is required");
     }
     TimeSeries timeSeriesCat = (TimeSeries) params.get(0);
     if (timeSeriesCat.getId() == null) {
