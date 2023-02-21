@@ -15,14 +15,14 @@ import es.parser.Symbol;
 public class Merge implements Command {
   @Override
   public String getSummary() {
-    return "void    merge(Series series[, String option[, String option[, String option]]]);";
+    return "void    merge(Series series[, String option[, String option[, String option[, String option]]]]);";
   }
   
   @Override
   public List<String> getDetails() {
     List<String> list = new ArrayList<>();
     list.add("Merges 'series' in the catalog into the datastore");
-    list.add("4 options are supported as follows:");
+    list.add("Up to 4 options are supported as follows:");
     list.add("  --with-inserts - if set, merges inserts to data");
     list.add("  --with-updates - if set, merges updates to data");
     list.add("  --with-deletes - if set, merges deletions to data (requires administrative mode)");
