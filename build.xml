@@ -10,6 +10,10 @@
   <property name="lib" value="lib"/>
   <property name="output" value="output"/>
   <property name="classes" value="classes"/>
+	<tstamp>
+	     <format property="tstamp" pattern="yyyy-MM-dd_HH:mm:ss"/>
+	</tstamp>
+	<property name="version" value="ES Version 1.00.${tstamp}"/>
 
   <path id="buildpath">
     <pathelement location="${lib}/log4j-1.2.14.jar"/>
@@ -18,7 +22,6 @@
   </path>
 
   <target name="init">
-    <tstamp/>
   </target>
 
   <target name="clean" depends="init">
@@ -49,6 +52,7 @@
   	<copy todir="${output}/includes" file="${resources}/settings.es"/>
   	<copy todir="${output}/includes" file="${resources}/constants.es"/>
   	<copy todir="${output}/includes" file="${resources}/defaults.es"/>
+  	<echo file="${output}/includes/version.es">const VERSION='${version}';${line.separator}</echo>
     <chmod file="${output}/es.sh" perm="755"/>
     <chmod file="${output}/createdb.sh" perm="755"/>
     <chmod file="${output}/ddl.sh" perm="755"/>
