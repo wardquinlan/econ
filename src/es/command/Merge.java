@@ -87,6 +87,13 @@ public class Merge implements Command {
       throw new Exception("series title is null");
     }
     MergeData mergeData = Utils.prepareMerge(timeSeriesCat, timeSeriesDS, mergeInserts, mergeUpdates, mergeDeletes, mergeMetaData);
+    if (!mergeMetaData &&
+        mergeData.getTimeSeriesInsert().size() == 0 &&
+        mergeData.getTimeSeriesUpdate().size() == 0 &&
+        mergeData.getTimeSeriesDelete().size() == 0) {
+      log.info("nothing to merge");
+      return null;
+    }
     TimeSeriesDAO.getInstance().merge(mergeData);
     log.info("series merged");
     return null;
