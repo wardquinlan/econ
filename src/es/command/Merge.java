@@ -15,17 +15,18 @@ import es.parser.Symbol;
 public class Merge implements Command {
   @Override
   public String getSummary() {
-    return "void    merge(Series series, String option[, String option[, String option[, String option]]]);";
+    return "void    merge(Series series, String options...);";
   }
   
   @Override
   public List<String> getDetails() {
     List<String> list = new ArrayList<>();
     list.add("Merges 'series' in the catalog into the datastore");
-    list.add("Up to 4 options are supported as follows:");
-    list.add("  --with-inserts - if set, merges inserts to data");
-    list.add("  --with-updates - if set, merges updates to data");
-    list.add("  --with-deletes - if set, merges deletions to data (requires administrative mode)");
+    list.add("The following options are supported as follows:");
+    list.add("  --dry-run       - if set, computes the merge but does not actually apply it");
+    list.add("  --with-inserts  - if set, merges inserts");
+    list.add("  --with-updates  - if set, merges updates (requires administrative mode)");
+    list.add("  --with-deletes  - if set, merges deletions (requires administrative mode)");
     list.add("  --with-metadata - if set, merges updates to metadate (requires administrative mode)");
     return list;
   }
@@ -37,10 +38,11 @@ public class Merge implements Command {
   
   @Override
   public Object run(Map<String, Symbol> symbolTable, File file, List<Object> params) throws Exception {
-    Utils.validate(params, 1, 5);
+    Utils.validate(params, 1, 6);
     if (!(params.get(0) instanceof TimeSeries)) {
       throw new Exception(params.get(0) + " is not a Series");
     }
+    boolean dryRun = false;
     boolean mergeInserts = false;
     boolean mergeUpdates = false;
     boolean mergeDeletes = false;
@@ -51,17 +53,20 @@ public class Merge implements Command {
       } else if (params.get(i).equals("--with-updates")) {
         mergeUpdates = true;
       } else if (params.get(i).equals("--with-deletes")) {
-        Utils.validateIsAdmin();
         mergeDeletes = true;
       } else if (params.get(i).equals("--with-metadata")) {
-        Utils.validateIsAdmin();
         mergeMetaData = true;
+      } else if (params.get(i).equals("--dry-run")) {
+        dryRun = true;
       } else {
         throw new Exception("unrecognized merge option: " + params.get(i));
       }
     }
     if (!mergeInserts && !mergeUpdates && !mergeDeletes && !mergeMetaData) {
       throw new Exception("at least one merge option is required");
+    }
+    if (!dryRun && (mergeUpdates || mergeDeletes || mergeMetaData)) {
+      Utils.validateIsAdmin();
     }
     TimeSeries timeSeriesCat = (TimeSeries) params.get(0);
     if (timeSeriesCat.getId() == null) {
@@ -92,6 +97,10 @@ public class Merge implements Command {
         mergeData.getTimeSeriesUpdate().size() == 0 &&
         mergeData.getTimeSeriesDelete().size() == 0) {
       log.info("nothing to merge: " + timeSeriesCat.getId());
+      return null;
+    }
+    if (dryRun) {
+      log.info("suppressing physical merge with --dry-run option");
       return null;
     }
     TimeSeriesDAO.getInstance().merge(mergeData);

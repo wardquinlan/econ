@@ -198,7 +198,6 @@ public class Utils {
     mergeData.getTimeSeriesUpdate().setId(timeSeriesCat.getId());
     mergeData.getTimeSeriesDelete().setId(timeSeriesCat.getId());
     if (mergeMetaData) {
-      Utils.validateIsAdmin();
       TimeSeries timeSeriesMerge = new TimeSeries(TimeSeries.NULL);
       timeSeriesMerge.setId(timeSeriesCat.getId());
       timeSeriesMerge.setName(timeSeriesCat.getName());
