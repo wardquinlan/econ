@@ -12,7 +12,7 @@ import es.parser.Symbol;
 public class Drop implements Command {
   @Override
   public String getSummary() {
-    return "void   drop(int id)";
+    return "void    drop(int id)";
   }
   
   @Override
@@ -35,6 +35,10 @@ public class Drop implements Command {
       throw new Exception(params.get(0) + " is not an int");
     }
     int id = (int) params.get(0);
+    if (Utils.load(id) == null) {
+      log.warn("series does not exist: " + id);
+      return null;
+    }
     TimeSeriesDAO.getInstance().drop(id);
     log.info("series dropped");
     return null;
