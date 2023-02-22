@@ -3,10 +3,14 @@ package es.core;
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Properties;
 
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
@@ -32,7 +36,21 @@ public class Main {
       log.error("ES_HOME not set");
       System.exit(1);
     }
-    
+
+    try {
+      InputStream input = new FileInputStream(System.getenv("ES_HOME") + File.separator + "es.d" + File.separator + "es.properties");
+      Properties props = new Properties();
+      props.load(input);
+      if (props.get("es.version") == null) {
+        log.error("cannot load version");
+        System.exit(1);
+      }
+      Settings.getInstance().setVersion((String) props.get("es.version"));
+    } catch (IOException e) {
+      log.error("cannot load version", e);
+      System.exit(1);
+    }
+
     Options options = new Options();
     Option opt = new Option("s", "suppress-autoload", false, "suppress auto-loading of .es");
     options.addOption(opt);

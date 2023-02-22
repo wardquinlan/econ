@@ -6,7 +6,7 @@ public class Settings {
   private boolean testFunctions = false;
   private boolean suppressAutoload = false;
   private boolean admin = false;
-  private String version = "ES Version 1.00";
+  private String version;
   
   private static Settings instance = new Settings();
   
@@ -35,6 +35,10 @@ public class Settings {
     return admin;
   }
   
+  public void setVersion(String version) {
+    this.version = version;
+  }
+
   public String getVersion() {
     return version;
   }
