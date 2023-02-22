@@ -1,15 +1,15 @@
 print("loading quote data at " + timestamp() + "...");
 
-SP500 = qdb(DB  + "/" + "SPX:US.txt");
-T10Y3M = qtp(TP, "*", "T10Y3M");
-TBOND1 = qtp(TP, "*", "TBOND1");
-TBOND2 = qtp(TP, "*", "TBOND2");
-WILL5000 = qtp(TP, "*", "WILL5000");
-GDP = qtp(TP, "*", "GDP");
-NFCI = qtp(TP, "*", "NFCI");
-QSALES = qtp(TPS, "^GSPC.TXT", "QSALES");
-USD = qtp(TP, "*", "USD");
-RRP = qtp(TP, "*", "RRP");
+SP500 = qdb(DATABASE  + "/" + "SPX:US.txt");
+T10Y3M = qtp(TEMPLATE + "/ng.txt", "*", "T10Y3M");
+TBOND1 = qtp(TEMPLATE + "/ng.txt", "*", "TBOND1");
+TBOND2 = qtp(TEMPLATE + "/ng.txt", "*", "TBOND2");
+WILL5000 = qtp(TEMPLATE + "/ng.txt", "*", "WILL5000");
+GDP = qtp(TEMPLATE + "/ng.txt", "*", "GDP");
+NFCI = qtp(TEMPLATE + "/ng.txt", "*", "NFCI");
+QSALES = qtp(TEMPLATE + "/ng-static.txt", "^GSPC.TXT", "QSALES");
+USD = qtp(TEMPLATE + "/ng.txt", "*", "USD");
+RRP = qtp(TEMPLATE + "/ng.txt", "*", "RRP");
 
 AVG = average(SP500, 200);
 setName(AVG, "AVG");
@@ -35,7 +35,7 @@ FC = (100 + TBOND2)^2 / (100 + TBOND1) - 100;
 setTitle(FC, "1-year Forecasted Rate");
 setNotes(FC, "1-year Forecasted Rate defined as: (1 + 2-Year Rate)^2 / (1  + 1-Year Rate) - 1");
 
-VIX = qtp(TP, "*", "VIX");
+VIX = qtp(TEMPLATE + "/ng.txt", "*", "VIX");
 setTitle(VIX, "CBOE Volatility Index");
 VOL = VIX > 36;
 

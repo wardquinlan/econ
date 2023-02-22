@@ -58,6 +58,8 @@ public class Main {
     options.addOption(opt);
     opt = new Option("a", "admin", false, "run in administrative mode");
     options.addOption(opt);
+    opt = new Option("p", "suppress-prompt", false, "suppresses prompt in interactive mode");
+    options.addOption(opt);
     CommandLine cmd = null;
     try {
       CommandLineParser parser = new DefaultParser();
@@ -115,10 +117,12 @@ public class Main {
         BufferedReader rdr = new BufferedReader(new InputStreamReader(System.in));
         while (true) {
           try {
-            if (Settings.getInstance().isAdmin()) {
-              System.out.print("ES # ");
-            } else {
-              System.out.print("ES $ ");
+            if (!Settings.getInstance().isPromptSuppressed()) {
+              if (Settings.getInstance().isAdmin()) {
+                System.out.print("ES # ");
+              } else {
+                System.out.print("ES $ ");
+              }
             }
             String line = rdr.readLine();
             if (line == null) {

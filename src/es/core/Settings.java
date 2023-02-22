@@ -7,6 +7,7 @@ public class Settings {
   private boolean suppressAutoload = false;
   private boolean admin = false;
   private String version;
+  private boolean promptSuppressed = false;
   
   private static Settings instance = new Settings();
   
@@ -21,6 +22,7 @@ public class Settings {
     testFunctions = cmd.hasOption("test");
     suppressAutoload = cmd.hasOption("suppress-autoload");
     admin = cmd.hasOption("admin");
+    promptSuppressed = cmd.hasOption("suppress-prompt");
   }
 
   public boolean testFunctions() {
@@ -35,6 +37,10 @@ public class Settings {
     return admin;
   }
   
+  public boolean isPromptSuppressed() {
+    return promptSuppressed;
+  }
+
   public void setVersion(String version) {
     this.version = version;
   }
