@@ -10,10 +10,10 @@
   <property name="lib" value="lib"/>
   <property name="output" value="output"/>
   <property name="classes" value="classes"/>
-	<tstamp>
-	     <format property="tstamp" pattern="yyyy-MM-dd_HH:mm:ss"/>
-	</tstamp>
-	<property name="version" value="ES Version 1.00.${tstamp}"/>
+  <tstamp>
+       <format property="tstamp" pattern="yyyy-MM-dd HH:mm:ss"/>
+  </tstamp>
+  <property name="version" value="Build ${tstamp}"/>
 
   <path id="buildpath">
     <pathelement location="${lib}/log4j-1.2.14.jar"/>
@@ -37,7 +37,7 @@
   <target name="jar" depends="compile">
     <mkdir dir="${output}"/>
     <mkdir dir="${output}/${appname}.d"/>
-  	<mkdir dir="${output}/includes"/>
+    <mkdir dir="${output}/includes"/>
     <jar jarfile="${output}/${appname}.d/${appname}.jar" basedir="${classes}"/>
     <copy todir="${output}" file="${resources}/es.sh"/>
     <copy todir="${output}" file="${resources}/createdb.sh"/>
@@ -48,24 +48,24 @@
     <copy todir="${output}/${appname}.d">
       <fileset dir="${resources}" includes="*.properties"/>
     </copy>
-  	<copy tofile="${output}/.es" file="${output}/../.es"/>
-  	<copy todir="${output}/includes" file="${resources}/settings.es"/>
-  	<copy todir="${output}/includes" file="${resources}/constants.es"/>
-  	<copy todir="${output}/includes" file="${resources}/defaults.es"/>
-  	<echo file="${output}/includes/version.es">const VERSION='${version}';${line.separator}</echo>
+    <copy tofile="${output}/.es" file="${output}/../.es"/>
+    <copy todir="${output}/includes" file="${resources}/settings.es"/>
+    <copy todir="${output}/includes" file="${resources}/constants.es"/>
+    <copy todir="${output}/includes" file="${resources}/defaults.es"/>
+    <echo file="${output}/es.d/es.properties">es.version=${version}${line.separator}</echo>
     <chmod file="${output}/es.sh" perm="755"/>
     <chmod file="${output}/createdb.sh" perm="755"/>
     <chmod file="${output}/ddl.sh" perm="755"/>
-  	<tar destfile="${output}/es.tar.gz" excludes=".es" compression="gzip">
-  		<tarfileset dir="${output}" filemode="755">
-  			<include name="*.sh"/>
-  		</tarfileset>
-      <tarfileset dir="${output}">
-      	<include name="**"/>
-        <exclude name="*.sh"/>
-      	<exclude name=".es"/>
+    <tar destfile="${output}/es.tar.gz" excludes=".es" compression="gzip">
+      <tarfileset dir="${output}" filemode="755">
+        <include name="*.sh"/>
       </tarfileset>
-  	</tar>
+      <tarfileset dir="${output}">
+        <include name="**"/>
+        <exclude name="*.sh"/>
+        <exclude name=".es"/>
+      </tarfileset>
+    </tar>
   </target>
 
   <target name="rebuild" depends="clean,jar">
