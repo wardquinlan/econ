@@ -11,9 +11,9 @@
   <property name="output" value="output"/>
   <property name="classes" value="classes"/>
   <tstamp>
-       <format property="tstamp" pattern="yyyy-MM-dd_HH:mm:ss"/>
+       <format property="tstamp" pattern="yyyyMMdd_HHmmss"/>
   </tstamp>
-  <property name="version" value="Build_${tstamp}"/>
+  <property name="version" value="B_${tstamp}"/>
 
   <path id="buildpath">
     <pathelement location="${lib}/log4j-1.2.14.jar"/>
@@ -56,7 +56,7 @@
     <chmod file="${output}/es.sh" perm="755"/>
     <chmod file="${output}/createdb.sh" perm="755"/>
     <chmod file="${output}/ddl.sh" perm="755"/>
-    <tar destfile="${output}/es.${version}.tar.gz" excludes=".es" compression="gzip">
+    <tar destfile="${output}/ES_${version}.tar.gz" excludes=".es" compression="gzip">
       <tarfileset dir="${output}" filemode="755">
         <include name="*.sh"/>
       </tarfileset>
