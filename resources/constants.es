@@ -152,4 +152,5 @@ const BOOLEAN = 2;
 const DATE = 3;
 
 const NULL = 0;
+const E = 2.718280;
 
