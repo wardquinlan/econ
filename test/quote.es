@@ -39,7 +39,6 @@ VIX = qtp(TEMPLATE + "/ng.txt", "*", "VIX");
 setTitle(VIX, "CBOE Volatility Index");
 VOL = VIX > 36;
 
-const E = 2.718280;
 const K = 0.5;
 const NR = 3.25;
 
