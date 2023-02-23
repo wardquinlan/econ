@@ -142,11 +142,14 @@ const SlateGray=0x708090;
 const DarkSlateGray=0x2F4F4F;
 const Black=0x000000;
 
-const FREQUENCY_NONE = 0;
-const FREQUENCY_DAYS = 1;
-const FREQUENCY_MONTHS = 2;
-const FREQUENCY_YEARS = 3;
+const NONE = 0;
+const DAYS = 1;
+const MONTHS = 2;
+const YEARS = 3;
 
 const FLOAT = 1;
 const BOOLEAN = 2;
 const DATE = 3;
+
+const NULL = 0;
+
