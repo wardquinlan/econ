@@ -22,6 +22,8 @@ import es.command.FRED;
 import es.command.Fonts;
 import es.command.Get;
 import es.command.GetNotes;
+import es.command.GetSource;
+import es.command.GetSourceId;
 import es.command.GetTitle;
 import es.command.Help;
 import es.command.Insert;
@@ -97,6 +99,8 @@ public class FunctionCaller {
     commandMap.put("isAdmin", new IsAdmin());
     commandMap.put("getTitle", new GetTitle());
     commandMap.put("getNotes", new GetNotes());
+    commandMap.put("getSource", new GetSource());
+    commandMap.put("getSourceId", new GetSourceId());
     if (Settings.getInstance().testFunctions()) {
       commandMap.put("collapse", new Collapse());
       commandMap.put("normalize", new Normalize());
