@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import es.core.TimeSeries;
+import es.core.TimeSeriesDAO;
 import es.core.Utils;
 import es.parser.Symbol;
 
@@ -18,7 +19,11 @@ public class Meta implements Command {
   @Override
   public List<String> getDetails() {
     List<String> list = new ArrayList<>();
-    list.add("Shows series metadata associated with 'series'");
+    list.add("Shows series metadata associated with 'object', where 'object' is one of:");
+    list.add("  - a series");
+    list.add("  - an id");
+    list.add("");
+    list.add("If 'object' is an id, series metadata is displayed directly from the datastore");
     return list;
   }
   
@@ -30,11 +35,15 @@ public class Meta implements Command {
   @Override
   public Object run(Map<String, Symbol> symbolTable, File file, List<Object> params) throws Exception {
     Utils.validate(params, 1, 1);
-    if (!(params.get(0) instanceof TimeSeries)) {
-      throw new Exception(params.get(0) + " is not a Series");
+    TimeSeries timeSeries;
+    if (params.get(0) instanceof TimeSeries) {
+      timeSeries = (TimeSeries) params.get(0);
+    } else if (params.get(0) instanceof Integer) {
+      timeSeries = TimeSeriesDAO.getInstance().loadSeriesById((Integer) params.get(0));
+    } else {
+      throw new Exception(params.get(0) + " is neither a Series nor an int");
     }
-    
-    TimeSeries timeSeries = (TimeSeries) params.get(0);
+
     System.out.println("Id       : " + (timeSeries.getId() == null ? "" : timeSeries.getId()));
     System.out.println("Name     : " + Utils.stringWithNULL(timeSeries.getName()));
     System.out.println("Title    : " + Utils.stringWithNULL(timeSeries.getTitle()));
