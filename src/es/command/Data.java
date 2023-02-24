@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import es.core.TimeSeries;
+import es.core.TimeSeriesDAO;
 import es.core.TimeSeriesData;
 import es.core.Utils;
 import es.parser.Symbol;
@@ -15,13 +16,17 @@ public class Data implements Command {
   
   @Override
   public String getSummary() {
-    return "void    data(Series series);";
+    return "void    data(Object object);";
   }
   
   @Override
   public List<String> getDetails() {
     List<String> list = new ArrayList<>();
-    list.add("Displays series data of 'series'");
+    list.add("Displays series data of 'object', where 'object' is one of:");
+    list.add("  - a series");
+    list.add("  - an id");
+    list.add("");
+    list.add("If 'object' is an id, series data is displayed directly from the datastore");
     return list;
   }
   
@@ -33,10 +38,15 @@ public class Data implements Command {
   @Override
   public Object run(Map<String, Symbol> symbolTable, File file, List<Object> params) throws Exception {
     Utils.validate(params, 1, 1);
-    if (!(params.get(0) instanceof TimeSeries)) {
-      throw new Exception(params.get(0) + " is not a Series");
+    TimeSeries timeSeries;
+    if (params.get(0) instanceof TimeSeries) {
+      timeSeries = (TimeSeries) params.get(0);
+    } else if (params.get(0) instanceof Integer) {
+      timeSeries = TimeSeriesDAO.getInstance().loadSeriesById((Integer) params.get(0));
+    } else {
+      throw new Exception(params.get(0) + " is neither a Series nor an int");
     }
-    TimeSeries timeSeries = (TimeSeries) params.get(0);
+    
     System.out.printf(Utils.generateFormatString(TIME_SERIES_DATA_COL_WIDTHS) + "\n", "Index", "Id", "Date", "Value");
     System.out.printf(Utils.generateUnderlineString(TIME_SERIES_DATA_COL_WIDTHS) + "\n");
     for (Integer idx = 0; idx < timeSeries.getTimeSeriesDataList().size(); idx++) {
