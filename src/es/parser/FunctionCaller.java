@@ -21,6 +21,7 @@ import es.command.ExitIf;
 import es.command.FRED;
 import es.command.Fonts;
 import es.command.Get;
+import es.command.GetTitle;
 import es.command.Help;
 import es.command.Insert;
 import es.command.IsAdmin;
@@ -93,6 +94,7 @@ public class FunctionCaller {
     commandMap.put("isConnected", new IsConnected());
     commandMap.put("exitIf", new ExitIf());
     commandMap.put("isAdmin", new IsAdmin());
+    commandMap.put("getTitle", new GetTitle());
     if (Settings.getInstance().testFunctions()) {
       commandMap.put("collapse", new Collapse());
       commandMap.put("normalize", new Normalize());
