@@ -136,6 +136,11 @@ public class Tokenizer {
               if (rdr.peek() == -1) {
                 throw new Exception("unterminated string: " + sb);
               }
+              if (rdr.peek() == 'n') {
+                rdr.read();
+                sb.append("\n");
+                continue;
+              }
             }
             sb.append((char) rdr.read());
           }
