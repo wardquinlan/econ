@@ -24,7 +24,7 @@ import es.parser.Symbol;
 public class Plot implements Command {
   @Override
   public String getSummary() {
-    return "void    plot(Object object);";
+    return "void    plot(Object object[, int dxincr[, int frequency]]);";
   }
   
   @Override
@@ -33,6 +33,12 @@ public class Plot implements Command {
     list.add("Plots a series or a context, where 'object' is:");
     list.add("  - a Series");
     list.add("  - a context file name");
+    list.add("");
+    list.add("Note that dxincr must be > 0 and that frequency must be 0 <= frequency <= 3, namely:");
+    list.add("  - NONE (0)");
+    list.add("  - DAYS (1)");
+    list.add("  - MONTHS (2)");
+    list.add("  - YEARS (3)");
     return list;
   }
   
@@ -43,9 +49,10 @@ public class Plot implements Command {
   
   @Override
   public Object run(Map<String, Symbol> symbolTable, File file, List<Object> params) throws Exception {
-    Utils.validate(params, 1, 1);
+    Utils.validate(params, 1, 3);
     Context ctx;
     if (params.get(0) instanceof String) {
+      Utils.validate(params, 1, 1);
       String filename = (String) params.get(0);
       XMLParser xmlParser;
       if (Paths.get(filename).isAbsolute()) {
@@ -61,16 +68,37 @@ public class Plot implements Command {
       series.setType(Series.LINE); // TODO: in theory could support bar series - can look at series data type
       series.setTimeSeries(timeSeries);
       Chart chart = new Chart(symbolTable);
-      chart.setSpan(100);
       chart.setLabel(Utils.stringWithNULL(timeSeries.getName()));
       chart.getSeries().add(series);
       Panel panel = new Panel(symbolTable);
       panel.setLabel(Utils.stringWithNULL(timeSeries.getName()));
       panel.getCharts().add(chart);
+      if (params.size() >= 2) {
+        if (params.get(1) instanceof Integer) {
+          int dxIncr = (Integer) params.get(1);
+          if (dxIncr <= 0) {
+            throw new Exception("invalid dxincr: " + dxIncr);
+          }
+          panel.setDxIncr(dxIncr);
+        } else {
+          throw new Exception("argument must be an int: " + params.get(1));
+        }
+      }
+      if (params.size() == 3) {
+        if (params.get(2) instanceof Integer) {
+          int frequency = (Integer) params.get(2);
+          if (frequency != Panel.FREQUENCY_NONE && frequency != Panel.FREQUENCY_DAYS && frequency != Panel.FREQUENCY_MONTHS && frequency != Panel.FREQUENCY_YEARS) {
+            throw new Exception("invalid frequency: " + frequency);
+          }
+          panel.setFrequency(frequency);
+        } else {
+          throw new Exception("argument must be an int: " + params.get(2));
+        }
+      }
       ctx = new Context(symbolTable);
       ctx.getPanels().add(panel);
     } else {
-      throw new Exception("invalid argument: " + params.get(0));
+      throw new Exception("argument must be a String or a Series: " + params.get(0));
     }
     
     JFrame frame = new Frame(ctx);
