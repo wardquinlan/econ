@@ -10,16 +10,16 @@ import es.core.TimeSeriesData;
 import es.core.Utils;
 import es.parser.Symbol;
 
-public class Average implements Command {
+public class Sum implements Command {
   @Override
   public String getSummary() {
-    return "Series  average(Series series, int n);";
+    return "Series  sum(Series series, int n);";
   }
   
   @Override
   public List<String> getDetails() {
     List<String> list = new ArrayList<>();
-    list.add("Calculates the 'n'-period moving average of 'series'");
+    list.add("Calculates the 'n'-period moving summation of 'series'");
     list.add("");
     list.add("Note that 0 < n <= size(series)");
     return list;
@@ -27,7 +27,7 @@ public class Average implements Command {
   
   @Override
   public String getReturns() {
-    return "'n'-period moving average of 'series'";
+    return "'n'-period moving summation of 'series'";
   }
   
   @Override
@@ -56,7 +56,7 @@ public class Average implements Command {
       }
       TimeSeriesData timeSeriesData = new TimeSeriesData();
       timeSeriesData.setDate(timeSeries.get(i + n - 1).getDate());
-      timeSeriesData.setValue(sum / n);
+      timeSeriesData.setValue(sum);
       timeSeriesAvg.add(timeSeriesData);
     }
     return timeSeriesAvg;

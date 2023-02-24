@@ -47,6 +47,7 @@ import es.command.SetSourceId;
 import es.command.SetTitle;
 import es.command.Size;
 import es.command.Status;
+import es.command.Sum;
 import es.command.Timestamp;
 import es.command.Today;
 import es.command.Update;
@@ -101,6 +102,7 @@ public class FunctionCaller {
     commandMap.put("getNotes", new GetNotes());
     commandMap.put("getSource", new GetSource());
     commandMap.put("getSourceId", new GetSourceId());
+    commandMap.put("sum", new Sum());
     if (Settings.getInstance().testFunctions()) {
       commandMap.put("collapse", new Collapse());
       commandMap.put("normalize", new Normalize());
