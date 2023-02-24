@@ -50,6 +50,15 @@ public class Plot implements Command {
   @Override
   public Object run(Map<String, Symbol> symbolTable, File file, List<Object> params) throws Exception {
     Utils.validate(params, 1, 3);
+    Symbol symbol = symbolTable.get("settings.loaded");
+    if (symbol == null || !((Boolean) symbol.getValue())) {
+      throw new Exception("settings not loaded");
+    }
+    symbol = symbolTable.get("defaults.loaded");
+    if (symbol == null || !((Boolean) symbol.getValue())) {
+      throw new Exception("defaults not loaded");
+    }
+    
     Context ctx;
     if (params.get(0) instanceof String) {
       Utils.validate(params, 1, 1);

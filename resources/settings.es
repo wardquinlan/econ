@@ -11,7 +11,7 @@ settings.tooltips.maxline = 90;
 sources.fred.baseurl = "https://api.stlouisfed.org/fred";
 
 # used to mark that settings have completed loading
-settings.loaded = 1;
+settings.loaded = true;
 
 print("Running '" + version() + "'");
 print();

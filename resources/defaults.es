@@ -12,3 +12,5 @@ defaults.chart.rectcolor = LightGray;
 defaults.chart.ngridlines = 40;
 
 defaults.series.linecolor = Black;
+
+defaults.loaded = true;
