@@ -60,10 +60,17 @@ public class Main {
     options.addOption(opt);
     opt = new Option("p", "suppress-prompt", false, "suppresses prompt in interactive mode");
     options.addOption(opt);
+    opt = new Option("h", "help", false, "display this screen");
+    options.addOption(opt);
     CommandLine cmd = null;
     try {
       CommandLineParser parser = new DefaultParser();
       cmd = parser.parse(options, args);
+      if (cmd.hasOption("help")) {
+        HelpFormatter formatter = new HelpFormatter();
+        formatter.printHelp("es", options);
+        System.exit(0);
+      }
       Settings.getInstance().setOptions(cmd);
     } catch(ParseException e) {
       HelpFormatter formatter = new HelpFormatter();
