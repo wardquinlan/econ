@@ -9,22 +9,22 @@ import es.core.TimeSeries;
 import es.core.Utils;
 import es.parser.Symbol;
 
-public class GetTitle implements Command {
+public class GetNotes implements Command {
   @Override
   public String getSummary() {
-    return "String  getTitle(Series series);";
+    return "String  getNotes(Series series);";
   }
   
   @Override
   public List<String> getDetails() {
     List<String> list = new ArrayList<>();
-    list.add("Gets series title");
+    list.add("Gets series notes");
     return list;
   }
   
   @Override
   public String getReturns() {
-    return "Series title";
+    return "Series notes";
   }
   
   @Override
@@ -36,6 +36,6 @@ public class GetTitle implements Command {
     }
     
     TimeSeries timeSeries = (TimeSeries) params.get(0);
-    return timeSeries.getTitle();
+    return timeSeries.getNotes();
   }
 }

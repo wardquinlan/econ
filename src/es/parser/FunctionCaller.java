@@ -21,6 +21,7 @@ import es.command.ExitIf;
 import es.command.FRED;
 import es.command.Fonts;
 import es.command.Get;
+import es.command.GetNotes;
 import es.command.GetTitle;
 import es.command.Help;
 import es.command.Insert;
@@ -95,6 +96,7 @@ public class FunctionCaller {
     commandMap.put("exitIf", new ExitIf());
     commandMap.put("isAdmin", new IsAdmin());
     commandMap.put("getTitle", new GetTitle());
+    commandMap.put("getNotes", new GetNotes());
     if (Settings.getInstance().testFunctions()) {
       commandMap.put("collapse", new Collapse());
       commandMap.put("normalize", new Normalize());
