@@ -337,7 +337,8 @@ public class Utils {
     }
     sb.append("<p><strong>" + "Size:</strong> " + timeSeries.size() + "</p>");
     if (timeSeries.getTimeSeriesDataList().size() > 0) {
-      sb.append("<p><strong>" + "Last:</strong> " + timeSeries.getTimeSeriesDataList().get(timeSeries.getTimeSeriesDataList().size() - 1).getValue() + "</p>");
+      sb.append("<p><strong>" + "Last:</strong> " + timeSeries.getTimeSeriesDataList().get(timeSeries.getTimeSeriesDataList().size() - 1).getValue() +
+        " (" + Utils.DATE_FORMAT.format(timeSeries.get(timeSeries.size() - 1).getDate()) + ")" + "</p>");
     }
     String change = Utils.change(timeSeries);
     if (change != null) {
