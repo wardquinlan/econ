@@ -41,6 +41,9 @@ public class SetSource implements Command {
     
     TimeSeries timeSeries = (TimeSeries) params.get(0);
     String source = (String) params.get(1);
+    if (source.contains("\n")) {
+      throw new Exception("invalid character(s)");
+    }
     timeSeries.setSource(source);
     return null;
   }

@@ -41,6 +41,9 @@ public class SetTitle implements Command {
     
     TimeSeries timeSeries = (TimeSeries) params.get(0);
     String title = (String) params.get(1);
+    if (title.contains("\n")) {
+      throw new Exception("invalid character(s)");
+    }
     timeSeries.setTitle(title);
     return null;
   }

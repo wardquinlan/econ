@@ -44,6 +44,9 @@ public class SetName implements Command {
       Utils.validateIsAdmin();
     }
     String name = (String) params.get(1);
+    if (name.contains("\n")) {
+      throw new Exception("invalid character(s)");
+    }
     timeSeries.setName(name);
     return null;
   }

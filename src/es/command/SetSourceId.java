@@ -41,6 +41,9 @@ public class SetSourceId implements Command {
     
     TimeSeries timeSeries = (TimeSeries) params.get(0);
     String sourceId = (String) params.get(1);
+    if (sourceId.contains("\n")) {
+      throw new Exception("invalid character(s)");
+    }
     timeSeries.setSourceId(sourceId);
     return null;
   }
