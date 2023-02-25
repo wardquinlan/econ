@@ -10,7 +10,7 @@ import es.core.Utils;
 import es.parser.Symbol;
 
 public class Cat implements Command {
-  private static final int TIME_SERIES_COL_WIDTHS[] = {20, 5, 20, 30, 8, 12, 30};
+  private static final int TIME_SERIES_COL_WIDTHS[] = {20, 5, 20, 30, 8, 12, 20};
   
   @Override
   public String getSummary() {

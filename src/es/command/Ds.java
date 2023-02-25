@@ -11,7 +11,7 @@ import es.core.Utils;
 import es.parser.Symbol;
 
 public class Ds implements Command {
-  private static final int TIME_SERIES_COL_WIDTHS[] = {5, 20, 30, 12, 30, 8};
+  private static final int TIME_SERIES_COL_WIDTHS[] = {5, 20, 30, 12, 20, 8};
   
   @Override
   public String getSummary() {
