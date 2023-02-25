@@ -352,6 +352,18 @@ public class Utils {
   }
 
   private static String splitHTML(String text, int maxline) {
+    String array[] = text.split("\n");
+    StringBuffer splitHTML = new StringBuffer();
+    for (int i = 0; i < array.length; i++) {
+      splitHTML.append(splitHTML2(array[i], maxline));
+      if (i != array.length - 1) {
+        splitHTML.append("<br/>");
+      }
+    }
+    return splitHTML.toString();
+  }
+  
+  private static String splitHTML2(String text, int maxline) {
     String array[] = text.split(" ");
     int idx = 0;
     StringBuffer splitHTML = new StringBuffer();
