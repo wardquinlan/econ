@@ -43,6 +43,9 @@ public class Data implements Command {
       timeSeries = (TimeSeries) params.get(0);
     } else if (params.get(0) instanceof Integer) {
       timeSeries = TimeSeriesDAO.getInstance().loadSeriesById((Integer) params.get(0));
+      if (timeSeries == null) {
+        throw new Exception(params.get(0) + " not found");
+      }
     } else {
       throw new Exception(params.get(0) + " is neither a Series nor an int");
     }
