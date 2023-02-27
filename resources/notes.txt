@@ -26,3 +26,7 @@ if we overflow gridline array, we get an array out of bounds.  Should probably f
 
 ** load() also deletes all the metadata in the parser!!!!!!!!!!!
 ** test merge updates / deletes
+
+change();
+pchange();
+
