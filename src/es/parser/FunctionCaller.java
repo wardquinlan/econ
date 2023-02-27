@@ -8,6 +8,7 @@ import java.util.TreeMap;
 import es.command.Assert;
 import es.command.Average;
 import es.command.Cat;
+import es.command.Change;
 import es.command.Collapse;
 import es.command.Command;
 import es.command.Connect;
@@ -103,6 +104,7 @@ public class FunctionCaller {
     commandMap.put("getSource", new GetSource());
     commandMap.put("getSourceId", new GetSourceId());
     commandMap.put("sum", new Sum());
+    commandMap.put("change", new Change());
     if (Settings.getInstance().testFunctions()) {
       commandMap.put("collapse", new Collapse());
       commandMap.put("normalize", new Normalize());
