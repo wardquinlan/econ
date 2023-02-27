@@ -10,24 +10,24 @@ import es.core.TimeSeriesData;
 import es.core.Utils;
 import es.parser.Symbol;
 
-public class Change implements Command {
+public class PChange implements Command {
   @Override
   public String getSummary() {
-    return "Series  change(Series series[, int n]);";
+    return "Series  pchange(Series series[, int n]);";
   }
   
   @Override
   public List<String> getDetails() {
     List<String> list = new ArrayList<>();
-    list.add("Calculates the 'n'-period change of 'series' (n defaults to 1)");
+    list.add("Calculates the 'n'-period percentage change of 'series' (n defaults to 1)");
     list.add("");
-    list.add("Note that 0 < n < size(series)");
+    list.add("Note that 0 < n < size(series).  Also note that all series values must be > 0.");
     return list;
   }
   
   @Override
   public String getReturns() {
-    return "'n'-period change of 'series'";
+    return "'n'-period percentage change of 'series'";
   }
   
   @Override
@@ -56,7 +56,13 @@ public class Change implements Command {
     
     TimeSeries timeSeriesChange = new TimeSeries(TimeSeries.FLOAT);
     for (int i = n; i < timeSeries.size(); i++) {
-      float change = (float) timeSeries.get(i).getValue() - (float) timeSeries.get(i - n).getValue();
+      float val1 = (float) timeSeries.get(i - n).getValue();
+      float val2 = (float) timeSeries.get(i).getValue();
+      if (val1 <= 0 || val2 <= 0) {
+        throw new Exception("series values must be >= 0");
+      }
+      float change = (val2 - val1) / val1;
+      change *= 100f;
       TimeSeriesData timeSeriesData = new TimeSeriesData();
       timeSeriesData.setDate(timeSeries.get(i).getDate());
       timeSeriesData.setValue(change);

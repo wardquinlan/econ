@@ -35,6 +35,7 @@ import es.command.Merge;
 import es.command.Meta;
 import es.command.Normalize;
 import es.command.Offset;
+import es.command.PChange;
 import es.command.Plot;
 import es.command.Print;
 import es.command.QDB;
@@ -105,6 +106,7 @@ public class FunctionCaller {
     commandMap.put("getSourceId", new GetSourceId());
     commandMap.put("sum", new Sum());
     commandMap.put("change", new Change());
+    commandMap.put("pchange", new PChange());
     if (Settings.getInstance().testFunctions()) {
       commandMap.put("collapse", new Collapse());
       commandMap.put("normalize", new Normalize());
