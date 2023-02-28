@@ -35,11 +35,11 @@ public class Max implements Command {
     Utils.validate(params, 2, 2);
     Object val1 = params.get(0);
     if (!(val1 instanceof TimeSeries) && !(val1 instanceof Float) && !(val1 instanceof Integer)) {
-      throw new Exception(val1 + " is not a Series, an int, nor a float");
+      throw new Exception(val1 + " is not a Series, an int, or a float");
     }
     Object val2 = params.get(1);
     if (!(val2 instanceof TimeSeries) && !(val2 instanceof Float) && !(val2 instanceof Integer)) {
-      throw new Exception(val2 + " is not a Series, an int, nor a float");
+      throw new Exception(val2 + " is not a Series, an int, or a float");
     }
     Executor executor = new Executor(new es.parser.Max());
     return executor.exec(val1, val2);
