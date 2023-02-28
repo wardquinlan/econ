@@ -108,6 +108,7 @@ public class FunctionCaller {
     commandMap.put("change", new Change());
     commandMap.put("pchange", new PChange());
     commandMap.put("max", new es.command.Max());
+    commandMap.put("min", new es.command.Min());
     if (Settings.getInstance().testFunctions()) {
       commandMap.put("collapse", new Collapse());
       commandMap.put("normalize", new Normalize());

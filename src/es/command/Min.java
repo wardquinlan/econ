@@ -10,16 +10,16 @@ import es.core.Utils;
 import es.parser.Executor;
 import es.parser.Symbol;
 
-public class Max implements Command {
+public class Min implements Command {
   @Override
   public String getSummary() {
-    return "Object  max(Object object1, Object object2);";
+    return "Object  min(Object object1, Object object2);";
   }
   
   @Override
   public List<String> getDetails() {
     List<String> list = new ArrayList<>();
-    list.add("Computes and returns the maximum between 'object1' and 'object2', where:");
+    list.add("Computes and returns the minimum between 'object1' and 'object2', where:");
     list.add("  - 'object1' is a Series, an int, or a float");
     list.add("  - 'object2' is a Series, an int, or a float");
     return list;
@@ -27,7 +27,7 @@ public class Max implements Command {
   
   @Override
   public String getReturns() {
-    return "Maximum Series, int, or float, depending on the context";
+    return "Minimum Series, int, or float, depending on the context";
   }
   
   @Override
@@ -41,7 +41,7 @@ public class Max implements Command {
     if (!(val2 instanceof TimeSeries) && !(val2 instanceof Float) && !(val2 instanceof Integer)) {
       throw new Exception(val2 + " is not a Series, an int, nor a float");
     }
-    Executor executor = new Executor(new es.parser.Max());
+    Executor executor = new Executor(new es.parser.Min());
     return executor.exec(val1, val2);
   }
 }
