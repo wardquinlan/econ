@@ -1,3 +1,1 @@
-print("hello world");
-ds();
-
+plot("/home/ward/es/es.xml");
