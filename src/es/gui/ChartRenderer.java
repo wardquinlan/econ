@@ -232,15 +232,17 @@ public class ChartRenderer {
       g.setColor(panel.getFontColor());
       g.drawString(df.format(gridLine), x2 + CHART_HPADDING, y2);
     }
-    // draw the 0-line.  Note: don't try and draw a label for the 0-line
-    if (gridLines[0] < 0 && gridLines[gridLines.length - 1] > 0) {
-      int x1 = CHART_HPADDING + 1;
-      int y1 = Utils.transform(scaler, 0f, yBase + chartHeight - CHART_SEPARATOR - 1, yBase, pair.getMinValue(), pair.getMaxValue());
-      int x2 = x1 + chartWidth - 1;
-      int y2 = y1;
-      g.setColor(chart.getLineColor());
-      g.setStroke(strokeMain);
-      g.drawLine(x1, y1, x2, y2);
+    // draw the unlabelled gridlines.  Note: don't try and draw a label (obviously)
+    for (float uGridline: chart.getGridlines()) {
+      if (gridLines[0] < uGridline && gridLines[gridLines.length - 1] > uGridline) {
+        int x1 = CHART_HPADDING + 1;
+        int y1 = Utils.transform(scaler, uGridline, yBase + chartHeight - CHART_SEPARATOR - 1, yBase, pair.getMinValue(), pair.getMaxValue());
+        int x2 = x1 + chartWidth - 1;
+        int y2 = y1;
+        g.setColor(chart.getLineColor());
+        g.setStroke(strokeMain);
+        g.drawLine(x1, y1, x2, y2);
+      }
     }
   }
   

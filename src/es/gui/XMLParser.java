@@ -266,10 +266,12 @@ public class XMLParser {
     String[] gridlines = value.split(",");
     for (String gridline: gridlines) {
       String s = gridline.trim();
-      try {
-        chart.getGridlines().add(Float.parseFloat(s));
-      } catch(NumberFormatException e) {
-        throw generateAttributeException(attribute);
+      if (!s.equals("")) {
+        try {
+          chart.getGridlines().add(Float.parseFloat(s));
+        } catch(NumberFormatException e) {
+          throw generateAttributeException(attribute);
+        }
       }
     }
   }
