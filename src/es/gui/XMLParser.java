@@ -163,6 +163,7 @@ public class XMLParser {
   
   private Chart parseChart(Node node) throws Exception {
     Chart chart = new Chart(symbolTable);
+    boolean gridlinesFound = false;
     NamedNodeMap map = node.getAttributes();
     for (int i = 0; i < map.getLength(); i++) {
       Node attribute = map.item(i);
@@ -176,6 +177,9 @@ public class XMLParser {
         chart.setRectColor(parseColorAttribute(attribute));
       } else if (attribute.getNodeName().equals("ngridlines")) {
         chart.setNGridLines(parseIntAttribute(attribute));
+      } else if (attribute.getNodeName().equals("gridlines")) {
+        parseGridlineAttribute(chart, attribute);
+        gridlinesFound = true;
       } else if (attribute.getNodeName().equals("span")) {
         int span = parseIntAttribute(attribute);
         if (span < 1 || span > 100) {
@@ -191,6 +195,10 @@ public class XMLParser {
 
     if (chart.getLabel() == null) {
       throw new Exception("missing chart label attribute");
+    }
+    
+    if (!gridlinesFound) {
+      chart.getGridlines().add(0f);
     }
     
     NodeList nodeList = node.getChildNodes();
@@ -250,6 +258,19 @@ public class XMLParser {
       return Integer.parseInt(attribute.getNodeValue());
     } catch(NumberFormatException e) {
       throw generateAttributeException(attribute);
+    }
+  }
+  
+  private void parseGridlineAttribute(Chart chart, Node attribute) throws Exception {
+    String value = attribute.getNodeValue();
+    String[] gridlines = value.split(",");
+    for (String gridline: gridlines) {
+      String s = gridline.trim();
+      try {
+        chart.getGridlines().add(Float.parseFloat(s));
+      } catch(NumberFormatException e) {
+        throw generateAttributeException(attribute);
+      }
     }
   }
   
