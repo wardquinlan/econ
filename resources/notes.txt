@@ -30,3 +30,10 @@ if we overflow gridline array, we get an array out of bounds.  Should probably f
 change();
 pchange();
 
+------------------------------------------------
+
+Notes: June 2023
+----------------
+
+- drop() should require administrative access
+- mergeAll() should merge all FRED series.  Note that internally it can simply invoke the merge() command which will do all the validation
