@@ -67,6 +67,8 @@ public class Tokenizer {
             tk = new Token(Token.INC);
           } else if (sb.toString().equals("const")) {
             tk = new Token(Token.CONST);
+          } else if (sb.toString().equals("function")) {
+            tk = new Token(Token.UFUNC);
           } else if (functionCaller.isFunction(sb.toString())) {
             tk = new Token(Token.FUNC);
             tk.setFile(file); // set the file so that the XML parser is able to calculate the relative path
@@ -173,6 +175,12 @@ public class Tokenizer {
           list.add(tk);
         } else if (val == ')') {
           Token tk = new Token(Token.RPAREN);
+          list.add(tk);
+        } else if (val == '{') {
+          Token tk = new Token(Token.LBRACE);
+          list.add(tk);
+        } else if (val == '}') {
+          Token tk = new Token(Token.RBRACE);
           list.add(tk);
         } else if (val == '=') {
           Token tk = new Token(Token.ASSIGN);
