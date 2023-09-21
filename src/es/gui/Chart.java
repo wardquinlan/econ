@@ -2,11 +2,10 @@ package es.gui;
 
 import java.awt.Color;
 import java.util.ArrayList;
-import java.util.Map;
 
 import es.core.LinearScaler;
 import es.core.Scaler;
-import es.parser.Symbol;
+import es.parser.SymbolTable;
 
 public class Chart extends GUIObject {
   private Color backgroundColor;
@@ -19,7 +18,7 @@ public class Chart extends GUIObject {
   private ArrayList<Float> gridlines = new ArrayList<>();
   private ArrayList<Series> series = new ArrayList<>();
   
-  public Chart(Map<String, Symbol> symbolTable) {
+  public Chart(SymbolTable symbolTable) {
     super(symbolTable);
     backgroundColor = new Color((int) symbolTable.get("defaults.chart.backgroundcolor").getValue());
     lineColor = new Color((int) symbolTable.get("defaults.chart.linecolor").getValue());

@@ -37,3 +37,9 @@ Notes: June 2023
 
 - drop() should require administrative access
 - mergeAll() should merge all FRED series.  Note that internally it can simply invoke the merge() command which will do all the validation
+
+September 2023
+--------------
+
+Cat() command.  Do we also loop through the parent symbol table?
+

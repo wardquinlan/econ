@@ -3,11 +3,11 @@ package es.command;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import es.core.TimeSeries;
 import es.core.Utils;
 import es.parser.Symbol;
+import es.parser.SymbolTable;
 
 public class Cat implements Command {
   private static final int TIME_SERIES_COL_WIDTHS[] = {20, 5, 20, 30, 8, 12, 20};
@@ -30,7 +30,7 @@ public class Cat implements Command {
   }
   
   @Override
-  public Object run(Map<String, Symbol> symbolTable, File file, List<Object> params) throws Exception {
+  public Object run(SymbolTable symbolTable, File file, List<Object> params) throws Exception {
     Utils.validate(params, 0, 0);
     System.out.printf(Utils.generateFormatString(TIME_SERIES_COL_WIDTHS) + "\n", "Symbol", "Id", "Name", "Title", "Type", "Source", "Source Id");
     System.out.printf(Utils.generateUnderlineString(TIME_SERIES_COL_WIDTHS) + "\n");

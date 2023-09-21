@@ -2,9 +2,8 @@ package es.gui;
 
 import java.awt.Color;
 import java.util.ArrayList;
-import java.util.Map;
 
-import es.parser.Symbol;
+import es.parser.SymbolTable;
 
 public class Panel extends GUIObject {
   public static final int FREQUENCY_NONE = 0;
@@ -22,7 +21,7 @@ public class Panel extends GUIObject {
   private String label;
   private ArrayList<Chart> charts = new ArrayList<>();
 
-  public Panel(Map<String, Symbol> symbolTable) {
+  public Panel(SymbolTable symbolTable) {
     super(symbolTable);
     backgroundColor = new Color((int) symbolTable.get("defaults.panel.backgroundcolor").getValue());
     fontColor = new Color((int) symbolTable.get("defaults.panel.fontcolor").getValue());

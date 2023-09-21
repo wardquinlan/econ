@@ -1,10 +1,9 @@
 package es.gui;
 
 import java.awt.Color;
-import java.util.Map;
 
 import es.core.TimeSeries;
-import es.parser.Symbol;
+import es.parser.SymbolTable;
 
 public class Series extends GUIObject {
   public static final int LINE = 1;
@@ -14,7 +13,7 @@ public class Series extends GUIObject {
   private int type = LINE;
   private Color color;
 
-  public Series(Map<String, Symbol> symbolTable) {
+  public Series(SymbolTable symbolTable) {
     super(symbolTable);
     color = new Color((int) symbolTable.get("defaults.series.linecolor").getValue());
   }

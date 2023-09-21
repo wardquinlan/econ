@@ -3,7 +3,6 @@ package es.gui;
 import java.awt.Color;
 import java.io.File;
 import java.nio.file.Paths;
-import java.util.Map;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -20,15 +19,16 @@ import es.core.Scaler;
 import es.core.TimeSeries;
 import es.core.Utils;
 import es.parser.Symbol;
+import es.parser.SymbolTable;
 
 public class XMLParser {
   public static final int MAX_LEVEL = 8;
   private File file;
   private int level;
   private String basename;
-  private Map<String, Symbol> symbolTable;
+  private SymbolTable symbolTable;
   
-  public XMLParser(File file, int level, Map<String, Symbol> symbolTable) throws Exception {
+  public XMLParser(File file, int level, SymbolTable symbolTable) throws Exception {
     if (level > MAX_LEVEL) {
       throw new Exception("exceeds maximum include level");
     }

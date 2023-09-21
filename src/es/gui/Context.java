@@ -1,15 +1,13 @@
 package es.gui;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
-import es.parser.Symbol;
+import es.parser.SymbolTable;
 
 public class Context extends GUIObject {
   private ArrayList<Panel> panels = new ArrayList<>();
 
-  public Context(Map<String, Symbol> symbolTable) {
+  public Context(SymbolTable symbolTable) {
     super(symbolTable);
   }
   

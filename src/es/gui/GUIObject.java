@@ -1,13 +1,11 @@
 package es.gui;
 
-import java.util.Map;
-
-import es.parser.Symbol;
+import es.parser.SymbolTable;
 
 public abstract class GUIObject {
-  protected Map<String, Symbol> symbolTable;
+  protected SymbolTable symbolTable;
   
-  public GUIObject(Map<String, Symbol> symbolTable) {
+  public GUIObject(SymbolTable symbolTable) {
     this.symbolTable = symbolTable;
   }
 }

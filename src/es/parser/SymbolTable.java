@@ -2,6 +2,7 @@ package es.parser;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 public class SymbolTable {
   private SymbolTable parent = null;
@@ -13,5 +14,9 @@ public class SymbolTable {
   
   public void put(String symbolName, Symbol symbol) {
     map.put(symbolName, symbol);
+  }
+  
+  public Set<String> keySet() {
+    return map.keySet();
   }
 }
