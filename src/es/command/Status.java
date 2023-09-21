@@ -3,12 +3,11 @@ package es.command;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import es.core.Settings;
 import es.core.TimeSeriesDAO;
 import es.core.Utils;
-import es.parser.Symbol;
+import es.parser.SymbolTable;
 
 public class Status implements Command {
   @Override
@@ -29,7 +28,7 @@ public class Status implements Command {
   }
   
   @Override
-  public Object run(Map<String, Symbol> symbolTable, File file, List<Object> params) throws Exception {
+  public Object run(SymbolTable symbolTable, File file, List<Object> params) throws Exception {
     Utils.validate(params, 0, 0);
     System.out.println("version   : " + Settings.getInstance().getVersion());
     System.out.println("datastore : " + (TimeSeriesDAO.getInstance().getDatastore() == null ? "not connected" : TimeSeriesDAO.getInstance().getDatastore()));

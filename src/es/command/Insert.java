@@ -5,12 +5,11 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 import es.core.TimeSeries;
 import es.core.TimeSeriesData;
 import es.core.Utils;
-import es.parser.Symbol;
+import es.parser.SymbolTable;
 
 public class Insert implements Command {
   @Override
@@ -35,7 +34,7 @@ public class Insert implements Command {
   }
   
   @Override
-  public Object run(Map<String, Symbol> symbolTable, File file, List<Object> params) throws Exception {
+  public Object run(SymbolTable symbolTable, File file, List<Object> params) throws Exception {
     if (params.size() < 2) {
       throw new Exception("missing argument(s)");
     }

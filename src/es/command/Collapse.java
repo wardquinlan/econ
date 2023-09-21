@@ -3,11 +3,10 @@ package es.command;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import es.core.TimeSeries;
 import es.core.Utils;
-import es.parser.Symbol;
+import es.parser.SymbolTable;
 
 public class Collapse implements Command {
   @Override
@@ -28,7 +27,7 @@ public class Collapse implements Command {
   }
   
   @Override
-  public Object run(Map<String, Symbol> symbolTable, File file, List<Object> params) throws Exception {
+  public Object run(SymbolTable symbolTable, File file, List<Object> params) throws Exception {
     List<TimeSeries> timeSeriesList = new ArrayList<>();
     for (Object object: params) {
       if (!(object instanceof TimeSeries)) {

@@ -123,7 +123,7 @@ public class FunctionCaller {
     return funcName.equals("help") || commandMap.keySet().contains(funcName);
   }
   
-  public Object invokeFunction(String funcName, Map<String, Symbol> symbolTable, File file, List<Object> params) throws Exception {
+  public Object invokeFunction(String funcName, SymbolTable symbolTable, File file, List<Object> params) throws Exception {
     if (funcName.equals("help")) {
       if (params.size() == 1 && params.get(0) instanceof String) {
         Command command = commandMap.get(params.get(0));

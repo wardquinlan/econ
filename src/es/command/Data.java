@@ -3,13 +3,12 @@ package es.command;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import es.core.TimeSeries;
 import es.core.TimeSeriesDAO;
 import es.core.TimeSeriesData;
 import es.core.Utils;
-import es.parser.Symbol;
+import es.parser.SymbolTable;
 
 public class Data implements Command {
   private static final int TIME_SERIES_DATA_COL_WIDTHS[] = {8, 5, 10, 10};
@@ -36,7 +35,7 @@ public class Data implements Command {
   }
   
   @Override
-  public Object run(Map<String, Symbol> symbolTable, File file, List<Object> params) throws Exception {
+  public Object run(SymbolTable symbolTable, File file, List<Object> params) throws Exception {
     Utils.validate(params, 1, 1);
     TimeSeries timeSeries;
     if (params.get(0) instanceof TimeSeries) {

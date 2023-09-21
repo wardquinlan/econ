@@ -5,10 +5,9 @@ import java.awt.GraphicsEnvironment;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import es.core.Utils;
-import es.parser.Symbol;
+import es.parser.SymbolTable;
 
 public class Fonts implements Command {
   @Override
@@ -29,7 +28,7 @@ public class Fonts implements Command {
   }
   
   @Override
-  public Object run(Map<String, Symbol> symbolTable, File file, List<Object> params) throws Exception {
+  public Object run(SymbolTable symbolTable, File file, List<Object> params) throws Exception {
     Utils.validate(params, 0, 0);
     Font fonts[] = GraphicsEnvironment.getLocalGraphicsEnvironment().getAllFonts();
     for (Font font: fonts) {

@@ -16,7 +16,7 @@ import java.util.StringTokenizer;
 import es.core.TimeSeries;
 import es.core.TimeSeriesData;
 import es.core.Utils;
-import es.parser.Symbol;
+import es.parser.SymbolTable;
 
 public class QTP implements Command {
   @Override
@@ -40,7 +40,7 @@ public class QTP implements Command {
   }
   
   @Override
-  public Object run(Map<String, Symbol> symbolTable, File file, List<Object> params) throws Exception {
+  public Object run(SymbolTable symbolTable, File file, List<Object> params) throws Exception {
     Utils.validate(params, 3, 3);
     if (!(params.get(0) instanceof String)) {
       throw new Exception(params.get(0) + " is not a String");

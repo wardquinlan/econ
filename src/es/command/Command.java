@@ -2,12 +2,11 @@ package es.command;
 
 import java.io.File;
 import java.util.List;
-import java.util.Map;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import es.parser.Symbol;
+import es.parser.SymbolTable;
 
 /*
   TEMPLATE:
@@ -30,7 +29,7 @@ import es.parser.Symbol;
   }
   
   @Override
-  public Object run(Map<String, Symbol> symbolTable, File file, List<Object> params) throws Exception {
+  public Object run(SymbolTable symbolTable, File file, List<Object> params) throws Exception {
   }
   
 */
@@ -41,5 +40,5 @@ public interface Command {
   public abstract String getSummary();
   public abstract List<String> getDetails();
   public abstract String getReturns();
-  public abstract Object run(Map<String, Symbol> symbolTable, File file, List<Object> params) throws Exception;
+  public abstract Object run(SymbolTable symbolTable, File file, List<Object> params) throws Exception;
 }

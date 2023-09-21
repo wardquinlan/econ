@@ -3,10 +3,9 @@ package es.command;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import es.core.Utils;
-import es.parser.Symbol;
+import es.parser.SymbolTable;
 
 public class ExitIf implements Command {
   @Override
@@ -27,7 +26,7 @@ public class ExitIf implements Command {
   }
   
   @Override
-  public Object run(Map<String, Symbol> symbolTable, File file, List<Object> params) throws Exception {
+  public Object run(SymbolTable symbolTable, File file, List<Object> params) throws Exception {
     Utils.validate(params, 2, 3);
     if (!(params.get(0) instanceof Boolean)) {
       throw new Exception(params.get(0) + " is not a boolean");

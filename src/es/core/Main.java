@@ -8,8 +8,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Properties;
 
 import org.apache.commons.cli.CommandLine;
@@ -23,7 +21,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import es.parser.Parser;
-import es.parser.Symbol;
+import es.parser.SymbolTable;
 import es.parser.Token;
 import es.parser.TokenIterator;
 import es.parser.Tokenizer;
@@ -97,7 +95,7 @@ public class Main {
         }
       });
       
-      Map<String, Symbol> symbolTable = new HashMap<String, Symbol>();
+      SymbolTable symbolTable = new SymbolTable();
       File file = new File(System.getenv("ES_HOME") + File.separator + ".es");
       if (file.exists() && !Settings.getInstance().suppressAutoload()) {
         log.info("found autoload file '.es'; loading...");

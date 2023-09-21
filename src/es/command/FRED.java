@@ -8,7 +8,6 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 import javax.net.ssl.HttpsURLConnection;
 import javax.xml.parsers.DocumentBuilder;
@@ -23,7 +22,7 @@ import org.w3c.dom.NodeList;
 import es.core.TimeSeries;
 import es.core.TimeSeriesData;
 import es.core.Utils;
-import es.parser.Symbol;
+import es.parser.SymbolTable;
 
 public class FRED implements Command {
   private String BASEURL;
@@ -56,7 +55,7 @@ public class FRED implements Command {
   }
   
   @Override
-  public Object run(Map<String, Symbol> symbolTable, File file, List<Object> params) throws Exception {
+  public Object run(SymbolTable symbolTable, File file, List<Object> params) throws Exception {
     if (symbolTable.get("sources.fred.baseurl") == null) {
       throw new Exception("sources.fred.baseurl not defined");
     }

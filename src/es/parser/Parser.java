@@ -35,13 +35,13 @@ public class Parser {
   private static final UnaryOperator uMinus = new UMinus();
   private static final UnaryOperator uNot = new UNot();
   private FunctionCaller functionCaller = new FunctionCaller();
-  private Map<String, Symbol> symbolTable;
+  private SymbolTable symbolTable;
 
-  public Parser(Map<String, Symbol> symbolTable) {
+  public Parser(SymbolTable symbolTable) {
     this.symbolTable = symbolTable;
   }
   
-  public Map<String, Symbol> parse(Token tk, TokenIterator itr) throws Exception {
+  public SymbolTable parse(Token tk, TokenIterator itr) throws Exception {
     while (true) {
       parseStatement(tk, itr);
       if (!itr.hasNext()) {
