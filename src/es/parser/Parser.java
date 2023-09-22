@@ -56,7 +56,13 @@ public class Parser {
     return symbolTable;
   }
   
+  @SuppressWarnings("unchecked")
   private void parseFunction(Token tk, TokenIterator itr) throws Exception {
+    Function function = new Function();
+    if (symbolTable.getParent() != null) {
+      log.error("can only define a function in the global scope");
+      throw new Exception("syntax error");
+    }
     if (!itr.hasNext()) {
       log.error("missing function name");
       throw new Exception("syntax error");
@@ -66,6 +72,7 @@ public class Parser {
       log.error("invalid function name");
       throw new Exception("syntax error");
     }
+    String functionName = (String) tk.getValue();
     if (!itr.hasNext()) {
       log.error("missing left param");
       throw new Exception("syntax error");
@@ -85,6 +92,7 @@ public class Parser {
         log.error("missing right paren");
         throw new Exception("syntax error");
       }
+      function.getParams().add((String) tk.getValue());
       tk = itr.next();
       if (tk.getType() == Token.RPAREN) {
         break;
@@ -115,6 +123,10 @@ public class Parser {
     if (tk.getType() != Token.BLOCK) {
       log.error("invalid function body");
       throw new Exception("syntax error");
+    }
+    List<Token> list = (List<Token>) tk.getValue();
+    for (Token tk2: list) {
+      function.getTokenList().add(tk2);
     }
   }
   

@@ -1,6 +1,11 @@
-function assignTest(a, b)
-{
-  a = 5;
+print("before function body");
+
+a = 5;
+
+function assignTest(a, b) {
+  print("Function Body");
 }
 
-print("done");
+print(a);
+
+print("after function body");

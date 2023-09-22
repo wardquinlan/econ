@@ -19,4 +19,8 @@ public class SymbolTable {
   public Set<String> keySet() {
     return map.keySet();
   }
+
+  public SymbolTable getParent() {
+    return parent;
+  }
 }
