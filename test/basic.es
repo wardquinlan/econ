@@ -1,11 +1,5 @@
-print("before function body");
-
-a = 5;
-
 function assignTest(a, b) {
+  function inner() {
+  }
   print("Function Body");
 }
-
-print(a);
-
-print("after function body");
