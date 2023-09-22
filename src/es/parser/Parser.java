@@ -132,6 +132,12 @@ public class Parser {
     for (Token tk2: list) {
       function.getTokenList().add(tk2);
     }
+    if (symbolTable.get(functionName) != null) {
+      log.error("symbol already defined for function " + functionName);
+      throw new Exception("symbol already defined");
+    }
+    Symbol symbol = new Symbol(list, true);
+    symbolTable.put(functionName, symbol);
   }
   
   private void parseStatement(Token tk, TokenIterator itr) throws Exception {
