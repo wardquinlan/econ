@@ -63,10 +63,12 @@ public class Parser {
   @SuppressWarnings("unchecked")
   private void parseFunction(Token tk, TokenIterator itr) throws Exception {
     Function function = new Function();
+    /* do this later
     if (!isGlobalScope()) {
       log.error("can only define a function in the global scope");
       throw new Exception("syntax error");
     }
+    */
     if (!itr.hasNext()) {
       log.error("missing function name");
       throw new Exception("syntax error");
