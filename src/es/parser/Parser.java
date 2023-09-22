@@ -56,10 +56,14 @@ public class Parser {
     return symbolTable;
   }
   
+  public boolean isGlobalScope() {
+    return symbolTable.getParent() == null;
+  }
+  
   @SuppressWarnings("unchecked")
   private void parseFunction(Token tk, TokenIterator itr) throws Exception {
     Function function = new Function();
-    if (symbolTable.getParent() != null) {
+    if (!isGlobalScope()) {
       log.error("can only define a function in the global scope");
       throw new Exception("syntax error");
     }
