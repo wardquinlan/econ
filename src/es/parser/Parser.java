@@ -43,13 +43,75 @@ public class Parser {
   
   public SymbolTable parse(Token tk, TokenIterator itr) throws Exception {
     while (true) {
-      parseStatement(tk, itr);
+      if (tk.getType() == Token.UFUNC) {
+        parseFunction(tk, itr);
+      } else {
+        parseStatement(tk, itr);
+      }
       if (!itr.hasNext()) {
         break;
       }
       tk = itr.next();
     }
     return symbolTable;
+  }
+  
+  private void parseFunction(Token tk, TokenIterator itr) throws Exception {
+    if (!itr.hasNext()) {
+      log.error("missing function name");
+      throw new Exception("syntax error");
+    }
+    tk = itr.next();
+    if (tk.getType() != Token.SYMBOL) {
+      log.error("invalid function name");
+      throw new Exception("syntax error");
+    }
+    if (!itr.hasNext()) {
+      log.error("missing left param");
+      throw new Exception("syntax error");
+    }
+    tk = itr.next();
+    if (tk.getType() != Token.LPAREN) {
+      log.error("missing left paren");
+      throw new Exception("syntax error");
+    }
+    if (!itr.hasNext()) {
+      log.error("missing right paren");
+      throw new Exception("syntax error");
+    }
+    tk = itr.next();
+    while (tk.getType() == Token.SYMBOL) {
+      if (!itr.hasNext()) {
+        log.error("missing right paren");
+        throw new Exception("syntax error");
+      }
+      tk = itr.next();
+      if (tk.getType() == Token.RPAREN) {
+        break;
+      }
+      if (tk.getType() != Token.COMMA) {
+        log.error("unexpected token: " + tk);
+        throw new Exception("syntax error");
+      }
+      if (!itr.hasNext()) {
+        log.error("missing right paren");
+        throw new Exception("syntax error");
+      }
+      tk = itr.next();
+    }
+    if (tk.getType() != Token.RPAREN) {
+      log.error("missing right paren");
+      throw new Exception("syntax error");
+    }
+    if (!itr.hasNext()) {
+      log.error("missing function body");
+      throw new Exception("syntax error");
+    }
+    tk = itr.next();
+    if (tk.getType() != Token.BLOCK) {
+      log.error("invalid function body");
+      throw new Exception("syntax error");
+    }
   }
   
   private void parseStatement(Token tk, TokenIterator itr) throws Exception {
