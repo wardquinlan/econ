@@ -98,6 +98,10 @@ public class Parser {
         throw new Exception("syntax error");
       }
       tk = itr.next();
+      if (tk.getType() != Token.SYMBOL) {
+        log.error("unexpected token: " + tk);
+        throw new Exception("syntax error");
+      }
     }
     if (tk.getType() != Token.RPAREN) {
       log.error("missing right paren");
