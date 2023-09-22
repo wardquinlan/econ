@@ -36,6 +36,7 @@ public class Token {
   public static final int BOOLEAN  = 28; // Boolean
   public static final int NOT      = 29; // !
   public static final int UFUNC    = 30; // user-defined function
+  public static final int BLOCK    = 31; // BLOCK
   
   public static Map<Integer, String> map = new HashMap<Integer, String>();
   static {
@@ -69,6 +70,7 @@ public class Token {
     map.put(OR,      "OR");
     map.put(BOOLEAN, "BOOLEAN");
     map.put(UFUNC,   "UFUNC");
+    map.put(BLOCK,   "BLOCK");
   }
   
   private int type;

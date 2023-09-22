@@ -263,4 +263,38 @@ public class Tokenizer {
     }
     return new TokenIterator(listNew);
   }
+  
+  private TokenIterator processBlocks(Token tk, TokenIterator itr) throws Exception {
+    List<Token> list = new ArrayList<Token>();
+    while (true) {
+      if (!itr.hasNext()) {
+        break;
+      }
+      
+      if (tk.getType() == Token.LBRACE) {
+        tk = processBlock(tk, itr);
+      }
+      list.add(tk);
+      tk = itr.next();
+    }
+  return new TokenIterator(list);
+  }
+  
+  // NOTE: this function can be used recursively in the future to support IF, WHILE, etc.
+  @SuppressWarnings("unchecked")
+  Token processBlock(Token tk, TokenIterator itr) throws Exception {
+    Token tkBlock = new Token(Token.BLOCK);
+    tkBlock.setValue(new ArrayList<Token>());
+    while (true) {
+      if (!itr.hasNext()) {
+        throw new Exception("unterminated block");
+      }
+      tk = itr.next();
+      if (tk.getType() == Token.RBRACE) {
+        break;
+      }
+      ((List<Token>) tkBlock.getValue()).add(tk);
+    }
+    return tkBlock;
+  }
 }
