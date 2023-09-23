@@ -397,6 +397,11 @@ public class Parser {
         throw new Exception("uninitialized symbol: " + tk.getValue());
       }
       if (symbol.getValue() instanceof Function) {
+        // TODO: have to distinguish between a Function as an RVALUE and actually calling the function.
+        tk = itr.next();
+        if (tk.getType() != Token.LPAREN) {
+          
+        }
         Function function = (Function) symbol.getValue();
         if (function.getTokenList().size() > 0) {
           SymbolTable childSymbolTable = new SymbolTable(symbolTable);
