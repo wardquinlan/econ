@@ -294,6 +294,9 @@ public class Tokenizer {
         throw new Exception("unterminated block");
       }
       tk = itr.next();
+      if (tk.getType() == Token.LBRACE) {
+        tk = processBlock(tk, itr);
+      }
       if (tk.getType() == Token.RBRACE) {
         break;
       }

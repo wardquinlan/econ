@@ -1,5 +1,7 @@
 function assignTest(a, b) {
   function inner() {
+    1;
   }
-  print("Function Body");
+  2;
 }
+3;
