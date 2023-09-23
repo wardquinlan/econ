@@ -11,8 +11,8 @@ public class Token {
   public static final int STRING   = 3;  // "hello"
   public static final int LPAREN   = 4;  // (
   public static final int RPAREN   = 5;  // )
-  public static final int LBRACE   = 6;  // { NOTE: defined, but not currently supported
-  public static final int RBRACE   = 7;  // } NOTE: defined, but not currently supported
+  public static final int LBRACE   = 6;  // {
+  public static final int RBRACE   = 7;  // }
   public static final int ASSIGN   = 8;  // =
   public static final int EQ       = 9;  // ==
   public static final int NE       = 10;  // !=
