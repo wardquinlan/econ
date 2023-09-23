@@ -41,7 +41,7 @@ public class Parser {
     this.symbolTable = symbolTable;
   }
   
-  public SymbolTable parse(Token tk, TokenIterator itr) throws Exception {
+  public Object parse(Token tk, TokenIterator itr) throws Exception {
     while (true) {
       if (tk.getType() == Token.UFUNC) {
         parseFunction(tk, itr);
@@ -53,7 +53,7 @@ public class Parser {
       }
       tk = itr.next();
     }
-    return symbolTable;
+    return null;
   }
   
   public boolean isGlobalScope() {
@@ -395,6 +395,17 @@ public class Parser {
       Symbol symbol = symbolTable.get(symbolName);
       if (symbol == null) {
         throw new Exception("uninitialized symbol: " + tk.getValue());
+      }
+      if (symbol.getValue() instanceof Function) {
+        Function function = (Function) symbol.getValue();
+        if (function.getTokenList().size() > 0) {
+          SymbolTable childSymbolTable = new SymbolTable(symbolTable);
+          Parser parser = new Parser(childSymbolTable);
+          TokenIterator itr2 = new TokenIterator(function.getTokenList());
+          Token tk2 = itr2.next();
+          return parser.parse(tk2, itr2);
+        }
+        return null;
       }
       return symbol.getValue();
     }

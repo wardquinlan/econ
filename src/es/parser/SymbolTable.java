@@ -5,8 +5,16 @@ import java.util.Map;
 import java.util.Set;
 
 public class SymbolTable {
-  private SymbolTable parent = null;
+  private SymbolTable parent;
   private Map<String, Symbol> map = new HashMap<String, Symbol>();
+  
+  public SymbolTable() {
+    this.parent = null;
+  }
+  
+  public SymbolTable(SymbolTable parent) {
+    this.parent = parent;
+  }
   
   public Symbol get(String symbolName) {
     return map.get(symbolName);

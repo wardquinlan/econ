@@ -1,7 +1,5 @@
-function assignTest(a, b) {
-  function inner() {
-    1;
-  }
-  2;
+function outer() {
+  print('hello');
 }
-3;
+
+outer();
