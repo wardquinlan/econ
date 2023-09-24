@@ -405,11 +405,13 @@ public class Parser {
           throw new Exception("syntax error");
         }
         tk = itr.next();
+        List<Object> paramList = new ArrayList<Object>();
         while (true) {
           if (tk.getType() == Token.RPAREN) {
             break;
           }
           Object param = expression(tk, itr);
+          paramList.add(param);
           if (!itr.hasNext()) {
             log.error("missing right paren");
             throw new Exception("syntax error");
@@ -431,8 +433,15 @@ public class Parser {
           }
         }
         Function function = (Function) symbol.getValue();
+        if (paramList.size() != function.getParams().size()) {
+          log.error("size mismatch when calling function");
+          throw new Exception("wrong number of params in function call");
+        }
         if (function.getTokenList().size() > 0) {
           SymbolTable childSymbolTable = new SymbolTable(symbolTable);
+          for (int i = 0; i < paramList.size(); i++) {
+            childSymbolTable.put(function.getParams().get(i), new Symbol(paramList.get(i)));
+          }
           Parser parser = new Parser(childSymbolTable);
           TokenIterator itr2 = new TokenIterator(function.getTokenList());
           Token tk2 = itr2.next();
