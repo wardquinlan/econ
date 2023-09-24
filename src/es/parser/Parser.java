@@ -405,9 +405,30 @@ public class Parser {
           throw new Exception("syntax error");
         }
         tk = itr.next();
-        if (tk.getType() != Token.RPAREN) {
-          log.error("missing right paren");
-          throw new Exception("syntax error");
+        while (true) {
+          if (tk.getType() == Token.RPAREN) {
+            break;
+          }
+          Object param = expression(tk, itr);
+          if (!itr.hasNext()) {
+            log.error("missing right paren");
+            throw new Exception("syntax error");
+          }
+          tk = itr.next();
+          if (tk.getType() == Token.COMMA) {
+            if (!itr.hasNext()) {
+              log.error("missing next param");
+              throw new Exception("syntax error");
+            }
+            tk = itr.next();
+            if (tk.getType() == Token.RPAREN) {
+              log.error("missing next param");
+              throw new Exception("syntax error");
+            }
+          } else if (tk.getType() != Token.RPAREN) {
+            log.error("missing right paren");
+            throw new Exception("syntax error");
+          }
         }
         Function function = (Function) symbol.getValue();
         if (function.getTokenList().size() > 0) {
