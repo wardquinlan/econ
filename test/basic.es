@@ -1,5 +1,8 @@
-function outer() {
-  print('hello');
+name = 'global name';
+
+function outer(name) {
+  print(name);
 }
 
-outer();
+outer('hello');
+print('name');
