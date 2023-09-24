@@ -17,10 +17,15 @@ public class SymbolTable {
   }
   
   public Symbol get(String symbolName) {
-    return map.get(symbolName);
+    Symbol symbol = map.get(symbolName);
+    if (symbol == null && parent != null) {
+      symbol = parent.get(symbolName);
+    }
+    return symbol;
   }
   
   public void put(String symbolName, Symbol symbol) {
+    // NOTE: could also put into the parent
     map.put(symbolName, symbol);
   }
   
