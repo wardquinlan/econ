@@ -138,7 +138,7 @@ public class Parser {
       log.error("symbol already defined for function " + functionName);
       throw new Exception("symbol already defined");
     }
-    Symbol symbol = new Symbol(list, true);
+    Symbol symbol = new Symbol(function, true);
     symbolTable.put(functionName, symbol);
   }
   
@@ -391,16 +391,23 @@ public class Parser {
           symbolTable.put(symbolName, new Symbol(val));
         }
       }
-       
       Symbol symbol = symbolTable.get(symbolName);
       if (symbol == null) {
         throw new Exception("uninitialized symbol: " + tk.getValue());
       }
-      if (symbol.getValue() instanceof Function) {
-        // TODO: have to distinguish between a Function as an RVALUE and actually calling the function.
+      if (itr.hasNext() && itr.peek().getType() == Token.LPAREN) {
+        if (!(symbol.getValue() instanceof Function)) {
+          throw new Exception("not a function: " + symbolName);
+        }
+        itr.next();
+        if (!itr.hasNext()) {
+          log.error("missing right paren");
+          throw new Exception("syntax error");
+        }
         tk = itr.next();
-        if (tk.getType() != Token.LPAREN) {
-          
+        if (tk.getType() != Token.RPAREN) {
+          log.error("missing right paren");
+          throw new Exception("syntax error");
         }
         Function function = (Function) symbol.getValue();
         if (function.getTokenList().size() > 0) {
