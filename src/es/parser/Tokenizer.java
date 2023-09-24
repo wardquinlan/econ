@@ -69,6 +69,8 @@ public class Tokenizer {
             tk = new Token(Token.CONST);
           } else if (sb.toString().equals("function")) {
             tk = new Token(Token.UFUNC);
+          } else if (sb.toString().equals("return")) {
+            tk = new Token(Token.RETURN);
           } else if (functionCaller.isFunction(sb.toString())) {
             tk = new Token(Token.FUNC);
             tk.setFile(file); // set the file so that the XML parser is able to calculate the relative path
