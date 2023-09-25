@@ -40,11 +40,10 @@ public class SetId implements Command {
     }
     
     TimeSeries timeSeries = (TimeSeries) params.get(0);
-    if (timeSeries.getId() != null) {
+    Integer id = (Integer) params.get(1);
+    if (timeSeries.getId() != null && !timeSeries.getId().equals(id)) {
       log.warn("resetting an id which has already been set: " + timeSeries.getId());
     }
-    
-    Integer id = (Integer) params.get(1);
     timeSeries.setId(id);
     for (TimeSeriesData timeSeriesData: timeSeries.getTimeSeriesDataList()) {
       timeSeriesData.setId(id);
