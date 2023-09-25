@@ -110,8 +110,8 @@ public class Plot implements Command {
     } else {
       throw new Exception("argument must be a String or a Series: " + params.get(0));
     }
-    
-    JFrame frame = new Frame(ctx);
+    new Frame(ctx);
+/*    
     frame.addWindowListener(new WindowAdapter() {
       @Override
       public void windowClosing(WindowEvent e) {
@@ -125,7 +125,7 @@ public class Plot implements Command {
     synchronized (Lock.instance()) {
       Lock.instance().wait();
     }
-    
+*/    
     return null;
   }
 }
