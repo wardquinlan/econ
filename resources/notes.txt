@@ -43,3 +43,5 @@ September 2023
 
 Cat() command.  Do we also loop through the parent symbol table?
 
+Log() command.  INFO, WARN, ERROR.  Also change existing log() to ln()
+
