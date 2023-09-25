@@ -1,6 +1,7 @@
 package es.parser;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
@@ -30,7 +31,18 @@ public class SymbolTable {
   }
   
   public Set<String> keySet() {
-    return map.keySet();
+    Set<String> set = new HashSet<String>();
+    set.addAll(map.keySet());
+    if (parent == null) {
+      return set;
+    }
+    // current scope hides parent scope
+    for (String key: parent.keySet()) {
+      if (!set.contains(key)) {
+        set.add(key);
+      }
+    }
+    return set;
   }
 
   public SymbolTable getParent() {
