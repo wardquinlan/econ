@@ -25,7 +25,9 @@ public class Ds implements Command {
   @Override
   public List<String> getDetails() {
     List<String> list = new ArrayList<>();
-    list.add("Lists series in the datastore");
+    list.add("With no parameters, lists series in the datastore in a human-readable format.  If the optional parameter 'fn' is supplied,");
+    list.add("will iterate through all series in the datastore, calling the supplied function which must take a Series as its only parameter.");
+    list.add("Moreover, the supplied function can not return any value.");
     return list;
   }
   
@@ -74,7 +76,7 @@ public class Ds implements Command {
         Token tk2 = itr2.next();
         Object ret = parser.parse(tk2, itr2);
         if (ret != null) {
-          throw new Exception("cannot return null from this function: " + params.get(0));
+          throw new Exception("cannot return null from function call");
         }
       }
     }
