@@ -23,7 +23,7 @@ public class Update implements Command {
     list.add("");
     list.add("  - 'series' is the series in question");
     list.add("  - 'date' is the date, in the format yyyy-mm-dd");
-    list.add("  - 'value' is the value (must be a boolean, an int or a float");
+    list.add("  - 'value' is the value (must be a boolean, an int or a float)");
     return list;
   }
   
