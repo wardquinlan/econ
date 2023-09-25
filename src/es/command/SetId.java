@@ -41,7 +41,7 @@ public class SetId implements Command {
     
     TimeSeries timeSeries = (TimeSeries) params.get(0);
     if (timeSeries.getId() != null) {
-      throw new Exception("cannot reset an id which has already been set");
+      log.warn("resetting an id which has already been set: " + timeSeries.getId());
     }
     
     Integer id = (Integer) params.get(1);

@@ -40,7 +40,7 @@ public class SetName implements Command {
     
     TimeSeries timeSeries = (TimeSeries) params.get(0);
     if (timeSeries.getName() != null) {
-      Utils.validateIsAdmin();
+      log.warn("resetting a name which has already been set: " + timeSeries.getName());
     }
     String name = (String) params.get(1);
     if (name.contains("\n")) {
