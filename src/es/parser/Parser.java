@@ -45,6 +45,9 @@ public class Parser {
     while (true) {
       if (tk.getType() == Token.UFUNC) {
         parseFunction(tk, itr);
+      } else if (tk.getType() == Token.RETURN) {
+        tk = itr.next();
+        return parseStatement(tk, itr);
       } else {
         parseStatement(tk, itr);
       }
@@ -142,8 +145,9 @@ public class Parser {
     symbolTable.put(functionName, symbol);
   }
   
-  private void parseStatement(Token tk, TokenIterator itr) throws Exception {
+  private Object parseStatement(Token tk, TokenIterator itr) throws Exception {
     Statement statement = new Statement();
+    Object ret = null;
     while (true) {
       if (tk.getType() == Token.SEMI) {
         break;
@@ -156,22 +160,23 @@ public class Parser {
       tk = itr.next();
     }
     if (statement.getTokens().size() == 0) {
-      return;
+      return ret;
     }
     TokenIterator itr2 = new TokenIterator(statement.getTokens());
     Token tk2 = itr2.next();
     if (tk2.getType() == Token.CONST) {
-      parseDeclaration(tk2, itr2);
+      ret = parseDeclaration(tk2, itr2);
     } else {
-      expression(tk2, itr2);
+      ret = expression(tk2, itr2);
     }
     if (itr2.hasNext()) {
       log.error("unexpected symbol at end of line");
       throw new Exception("syntax error");
     }
+    return ret;
   }
   
-  private void parseDeclaration(Token tk, TokenIterator itr) throws Exception {
+  private Object parseDeclaration(Token tk, TokenIterator itr) throws Exception {
     if (!itr.hasNext()) {
       log.error("invalid const declaration");
       throw new Exception("syntax error");
@@ -201,6 +206,7 @@ public class Parser {
       throw new Exception("symbol already defined: " + symbolName);
     }
     symbolTable.put(symbolName, new Symbol(val, true));
+    return val;
   }
   
   private Object expression(Token tk, TokenIterator itr) throws Exception {
