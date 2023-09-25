@@ -22,6 +22,8 @@ import es.command.ExitIf;
 import es.command.FRED;
 import es.command.Fonts;
 import es.command.Get;
+import es.command.GetId;
+import es.command.GetName;
 import es.command.GetNotes;
 import es.command.GetSource;
 import es.command.GetSourceId;
@@ -100,6 +102,8 @@ public class FunctionCaller {
     commandMap.put("isConnected", new IsConnected());
     commandMap.put("exitIf", new ExitIf());
     commandMap.put("isAdmin", new IsAdmin());
+    commandMap.put("getId", new GetId());
+    commandMap.put("getName", new GetName());
     commandMap.put("getTitle", new GetTitle());
     commandMap.put("getNotes", new GetNotes());
     commandMap.put("getSource", new GetSource());
