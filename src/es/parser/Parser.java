@@ -65,7 +65,8 @@ public class Parser {
     return symbolTable.getParent() == null;
   }
 
-  private void parseIf(Token tk, TokenIterator itr) throws Exception {
+  @SuppressWarnings("unchecked")
+  private Object parseIf(Token tk, TokenIterator itr) throws Exception {
     if (!itr.hasNext()) {
       throw new Exception("syntax error: missing expression");
     }
@@ -86,14 +87,17 @@ public class Parser {
       throw new Exception("syntax error: missing right paren");
     }
     tk = itr.next();
-    if (!itr.hasNext()) {
+    if (tk.getType() != Token.BLOCK) {
       throw new Exception("syntax error: missing if body");
     }
     if ((Boolean) expr) {
-      parseStatement(tk, itr);
-    } else {
-      skipStatement(tk, itr);
+      SymbolTable childSymbolTable = new SymbolTable(symbolTable);
+      Parser parser = new Parser(childSymbolTable);
+      TokenIterator itr2 = new TokenIterator((List<Token>) tk.getValue());
+      Token tk2 = itr2.next();
+      return parser.parse(tk2, itr2);
     }
+    return null;
   }
   
   @SuppressWarnings("unchecked")

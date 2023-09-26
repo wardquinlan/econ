@@ -1,1 +1,3 @@
-if (3 < 4) print('true');
+if (3 < 4) {
+  print('true');
+}
