@@ -11,19 +11,13 @@ import es.parser.SymbolTable;
 public class Size implements Command {
   @Override
   public String getSummary() {
-    return "int     size(Object object);";
+    return "int     size(Series series);";
   }
   
   @Override
   public List<String> getDetails() {
     List<String> list = new ArrayList<>();
-    list.add("Returns series size associated with 'object', where 'object' is:");
-    list.add("  - an id");
-    list.add("  - a name");
-    list.add("  - a Series");
-    list.add("");
-    list.add("Note that if 'object' is a series, size() returns series size from the catalog; otherwise, size() returns");
-    list.add("series size from the datastore");
+    list.add("Returns the size of 'series'");
     return list;
   }
   
