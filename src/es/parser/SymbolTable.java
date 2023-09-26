@@ -5,6 +5,8 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+import es.core.Utils;
+
 public class SymbolTable {
   private SymbolTable parent;
   private Map<String, Symbol> map = new HashMap<String, Symbol>();
@@ -19,15 +21,22 @@ public class SymbolTable {
   
   public Symbol get(String symbolName) {
     Symbol symbol = map.get(symbolName);
-    if (symbol == null && parent != null) {
-      symbol = parent.get(symbolName);
+    if (parent != null) {
+      if (symbol == null) {
+        symbol = parent.get(symbolName);
+      } else {
+        Utils.ASSERT(parent.get(symbolName) == null, "parent symbol is not null: " + symbolName);
+      }
     }
     return symbol;
   }
   
   public void put(String symbolName, Symbol symbol) {
-    // NOTE: could also put into the parent
-    map.put(symbolName, symbol);
+    if (parent != null && parent.get(symbolName) != null) {
+      parent.put(symbolName, symbol);
+    } else {
+      map.put(symbolName, symbol);
+    }
   }
   
   public Set<String> keySet() {
@@ -36,11 +45,9 @@ public class SymbolTable {
     if (parent == null) {
       return set;
     }
-    // current scope hides parent scope
     for (String key: parent.keySet()) {
-      if (!set.contains(key)) {
-        set.add(key);
-      }
+      Utils.ASSERT(!set.contains(key), "parent key is not null: " + key);
+      set.add(key);
     }
     return set;
   }

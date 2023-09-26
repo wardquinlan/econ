@@ -1,9 +1,8 @@
-function f(flag) {
-  if (flag) {
-    print('returning true');
-  }
-  print('returning false');
-  return false;
+name = '';
+
+function count(series) {
+  name = name + getName(series);
 }
 
-print(f(false));
+ds(count);
+print(name);
