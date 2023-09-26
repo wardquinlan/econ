@@ -49,7 +49,7 @@ import es.command.SetNotes;
 import es.command.SetSource;
 import es.command.SetSourceId;
 import es.command.SetTitle;
-import es.command.Size;
+import es.command.GetSize;
 import es.command.Status;
 import es.command.Sum;
 import es.command.Timestamp;
@@ -75,7 +75,7 @@ public class FunctionCaller {
     commandMap.put("cat", new Cat());
     commandMap.put("create", new Create());
     commandMap.put("insert", new Insert());
-    commandMap.put("size", new Size());
+    commandMap.put("size", new GetSize());
     commandMap.put("connect", new Connect());
     commandMap.put("save", new Save());
     commandMap.put("setId", new SetId());

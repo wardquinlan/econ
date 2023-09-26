@@ -8,7 +8,7 @@ import es.core.TimeSeries;
 import es.core.Utils;
 import es.parser.SymbolTable;
 
-public class Size implements Command {
+public class GetSize implements Command {
   @Override
   public String getSummary() {
     return "int     size(Series series);";
