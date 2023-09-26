@@ -75,7 +75,7 @@ public class FunctionCaller {
     commandMap.put("cat", new Cat());
     commandMap.put("create", new Create());
     commandMap.put("insert", new Insert());
-    commandMap.put("size", new GetSize());
+    commandMap.put("getSize", new GetSize());
     commandMap.put("connect", new Connect());
     commandMap.put("save", new Save());
     commandMap.put("setId", new SetId());
