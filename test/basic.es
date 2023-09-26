@@ -1,8 +1,11 @@
-name = '';
+total = 0;
 
 function count(series) {
-  name = name + getName(series);
+  if (getSource(series) == 'FRED') {
+    print('count for ' + getName(series) + ' = ' + getSize(series));
+    total = total + getSize(series);
+  }
 }
 
-ds(count);
-print(name);
+cat(count);
+print('total count for FRED series = ' + total);
