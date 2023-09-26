@@ -9,6 +9,7 @@ import es.core.TimeSeriesDAO;
 import es.core.Utils;
 import es.parser.Function;
 import es.parser.Parser;
+import es.parser.ReturnResult;
 import es.parser.Symbol;
 import es.parser.SymbolTable;
 import es.parser.Token;
@@ -74,9 +75,9 @@ public class Ds implements Command {
         Parser parser = new Parser(childSymbolTable);
         TokenIterator itr2 = new TokenIterator(function.getTokenList());
         Token tk2 = itr2.next();
-        Object ret = parser.parse(tk2, itr2);
-        if (ret != null) {
-          throw new Exception("cannot return null from function call");
+        ReturnResult returnResult = parser.parse(tk2, itr2);
+        if (returnResult != null && returnResult.getValue() != null) {
+          throw new Exception("cannot return null from function call: " + returnResult.getValue());
         }
       }
     }
