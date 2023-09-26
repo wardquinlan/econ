@@ -41,15 +41,15 @@ public class Parser {
     this.symbolTable = symbolTable;
   }
   
-  public Object parse(Token tk, TokenIterator itr) throws Exception {
+  public ReturnResult parse(Token tk, TokenIterator itr) throws Exception {
     while (true) {
       if (tk.getType() == Token.UFUNC) {
         parseFunction(tk, itr);
       } else if (tk.getType() == Token.IF) {
-        Object result = parseIf(tk, itr);
-        if (result instanceof ReturnResult) {
+        ReturnResult returnResult = parseIf(tk, itr);
+        if (returnResult != null) {
           // need to terminate if the if statement returned
-          return ((ReturnResult) result).getValue();
+          return returnResult;
         }
         // otherwise, keep going
       } else if (tk.getType() == Token.RETURN) {
@@ -71,7 +71,7 @@ public class Parser {
   }
 
   @SuppressWarnings("unchecked")
-  private Object parseIf(Token tk, TokenIterator itr) throws Exception {
+  private ReturnResult parseIf(Token tk, TokenIterator itr) throws Exception {
     if (!itr.hasNext()) {
       throw new Exception("syntax error: missing expression");
     }
@@ -516,7 +516,10 @@ public class Parser {
           Parser parser = new Parser(childSymbolTable);
           TokenIterator itr2 = new TokenIterator(function.getTokenList());
           Token tk2 = itr2.next();
-          return parser.parse(tk2, itr2);
+          ReturnResult returnResult = parser.parse(tk2, itr2);
+          if (returnResult != null) {
+            return returnResult.getValue();
+          }
         }
         return null;
       }
