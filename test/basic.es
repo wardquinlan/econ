@@ -1,13 +1,8 @@
-function f() {
-  if (true) {
-    print('f1');
+function iterator(series) {
+  if (getSource(series) == 'FRED') {
+    print('FRED series found: ' + getName(series));
   }
-  if (true) {
-    print('f2');
-  }
+  return 'x';
 }
 
-print('m1');
-print(f());
-print('m2');
-
+ds(iterator);
