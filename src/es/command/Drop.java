@@ -17,7 +17,7 @@ public class Drop implements Command {
   @Override
   public List<String> getDetails() {
     List<String> list = new ArrayList<>();
-    list.add("Drops the series identified by 'id' from the datastore");
+    list.add("Drops the series identified by 'id' from the datastore (requires administrative mode)");
     return list;
   }
   
