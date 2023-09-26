@@ -1,11 +1,13 @@
-function test(flag) {
-  if (!flag) {
-    print('validation failed');
-    return false;
+function f() {
+  if (true) {
+    print('f1');
   }
-  print('validation passed');
-  return true;
+  if (true) {
+    print('f2');
+  }
 }
 
-result = test(false);
-print('result=' + result);
+print('m1');
+print(f());
+print('m2');
+
