@@ -72,6 +72,7 @@ public class Parser {
 
   @SuppressWarnings("unchecked")
   private ReturnResult parseIf(Token tk, TokenIterator itr) throws Exception {
+    ReturnResult returnResult = null;
     if (!itr.hasNext()) {
       throw new Exception("syntax error: missing expression");
     }
@@ -103,10 +104,10 @@ public class Parser {
       Parser parser = new Parser(childSymbolTable);
       TokenIterator itr2 = new TokenIterator((List<Token>) tk.getValue());
       Token tk2 = itr2.next();
-      return parser.parse(tk2, itr2);
+      returnResult = parser.parse(tk2, itr2);
     }
     if (!itr.hasNext()) {
-      return null;
+      return returnResult;
     }
     if (itr.peek().getType() == Token.ELSE) {
       itr.next();
@@ -122,10 +123,10 @@ public class Parser {
         Parser parser = new Parser(childSymbolTable);
         TokenIterator itr2 = new TokenIterator((List<Token>) tk.getValue());
         Token tk2 = itr2.next();
-        return parser.parse(tk2, itr2);
+        returnResult = parser.parse(tk2, itr2);
       }
     }
-    return null;
+    return returnResult;
   }
   
   @SuppressWarnings("unchecked")

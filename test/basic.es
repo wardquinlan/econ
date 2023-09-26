@@ -1,8 +1,9 @@
-function iterator(series) {
-  if (getSource(series) == 'FRED') {
-    print('FRED series found: ' + getName(series));
+function f(flag) {
+  if (flag) {
+    print('returning true');
   }
-  return 'x';
+  print('returning false');
+  return false;
 }
 
-ds(iterator);
+print(f(false));
