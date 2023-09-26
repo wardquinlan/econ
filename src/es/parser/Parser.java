@@ -45,6 +45,8 @@ public class Parser {
     while (true) {
       if (tk.getType() == Token.UFUNC) {
         parseFunction(tk, itr);
+      } else if (tk.getType() == Token.IF) {
+        parseIf(tk, itr);
       } else if (tk.getType() == Token.RETURN) {
         tk = itr.next();
         return parseStatement(tk, itr);
@@ -61,6 +63,37 @@ public class Parser {
   
   public boolean isGlobalScope() {
     return symbolTable.getParent() == null;
+  }
+
+  private void parseIf(Token tk, TokenIterator itr) throws Exception {
+    if (!itr.hasNext()) {
+      throw new Exception("syntax error: missing expression");
+    }
+    tk = itr.next();
+    if (tk.getType() != Token.LPAREN) {
+      throw new Exception("syntax error: missing expression");
+    }
+    tk = itr.next();
+    Object expr = expression(tk, itr);
+    if (!(expr instanceof Boolean)) {
+      throw new Exception("syntax error: invalid expression");
+    }
+    if (!itr.hasNext()) {
+      throw new Exception("syntax error: missing right paren");
+    }
+    tk = itr.next();
+    if (tk.getType() != Token.RPAREN) {
+      throw new Exception("syntax error: missing right paren");
+    }
+    tk = itr.next();
+    if (!itr.hasNext()) {
+      throw new Exception("syntax error: missing if body");
+    }
+    if ((Boolean) expr) {
+      parseStatement(tk, itr);
+    } else {
+      skipStatement(tk, itr);
+    }
   }
   
   @SuppressWarnings("unchecked")
@@ -143,6 +176,19 @@ public class Parser {
     }
     Symbol symbol = new Symbol(function, true);
     symbolTable.put(functionName, symbol);
+  }
+  
+  private void skipStatement(Token tk, TokenIterator itr) throws Exception {
+    while (true) {
+      if (tk.getType() == Token.SEMI) {
+        break;
+      }
+      if (!itr.hasNext()) {
+        log.error("missing semi colon");
+        throw new Exception("syntax error");
+      }
+      tk = itr.next();
+    }
   }
   
   private Object parseStatement(Token tk, TokenIterator itr) throws Exception {

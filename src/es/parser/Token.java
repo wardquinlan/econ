@@ -38,6 +38,8 @@ public class Token {
   public static final int UFUNC    = 30; // user-defined function
   public static final int BLOCK    = 31; // BLOCK
   public static final int RETURN   = 32; // return
+  public static final int IF       = 33; // if
+  public static final int ELSE     = 34; // else
   
   public static Map<Integer, String> map = new HashMap<Integer, String>();
   static {
@@ -73,6 +75,8 @@ public class Token {
     map.put(UFUNC,   "UFUNC");
     map.put(BLOCK,   "BLOCK");
     map.put(RETURN,  "RETURN");
+    map.put(IF,      "IF");
+    map.put(ELSE,    "ELSE");
   }
   
   private int type;

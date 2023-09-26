@@ -69,6 +69,8 @@ public class Tokenizer {
             tk = new Token(Token.CONST);
           } else if (sb.toString().equals("function")) {
             tk = new Token(Token.UFUNC);
+          } else if (sb.toString().equals("if")) {
+            tk = new Token(Token.IF);
           } else if (sb.toString().equals("return")) {
             tk = new Token(Token.RETURN);
           } else if (functionCaller.isFunction(sb.toString())) {
