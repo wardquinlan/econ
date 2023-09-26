@@ -40,6 +40,7 @@ public class Token {
   public static final int RETURN   = 32; // return
   public static final int IF       = 33; // if
   public static final int ELSE     = 34; // else
+  public static final int THROW    = 35; // throw
   
   public static Map<Integer, String> map = new HashMap<Integer, String>();
   static {

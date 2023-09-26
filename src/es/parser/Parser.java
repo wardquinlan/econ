@@ -52,6 +52,23 @@ public class Parser {
           return returnResult;
         }
         // otherwise, keep going
+      } else if (tk.getType() == Token.THROW) {
+        if (!itr.hasNext()) {
+          throw new Exception("missing string in throw clause");
+        }
+        tk = itr.next();
+        if (tk.getType() != Token.STRING) {
+          throw new Exception("throw clause must throw a string: " + tk.getValue());
+        }
+        String message = (String) tk.getValue();
+        if (!itr.hasNext()) {
+          throw new Exception("untermianted throw clause: " + message);
+        }
+        tk = itr.next();
+        if (tk.getType() != Token.SEMI) {
+          throw new Exception("untermianted throw clause: " + message);
+        }
+        throw new Exception(message);
       } else if (tk.getType() == Token.RETURN) {
         tk = itr.next();
         return new ReturnResult(parseStatement(tk, itr));

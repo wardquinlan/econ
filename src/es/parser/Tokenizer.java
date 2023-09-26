@@ -73,6 +73,8 @@ public class Tokenizer {
             tk = new Token(Token.IF);
           } else if (sb.toString().equals("else")) {
             tk = new Token(Token.ELSE);
+          } else if (sb.toString().equals("throw")) {
+            tk = new Token(Token.THROW);
           } else if (sb.toString().equals("return")) {
             tk = new Token(Token.RETURN);
           } else if (functionCaller.isFunction(sb.toString())) {
