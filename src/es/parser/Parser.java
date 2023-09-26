@@ -86,16 +86,39 @@ public class Parser {
     if (tk.getType() != Token.RPAREN) {
       throw new Exception("syntax error: missing right paren");
     }
+    if (!itr.hasNext()) {
+      throw new Exception("syntax error: missing if body");
+    }
     tk = itr.next();
     if (tk.getType() != Token.BLOCK) {
       throw new Exception("syntax error: missing if body");
     }
-    if ((Boolean) expr) {
+    if ((Boolean) expr && ((List<Token>) tk.getValue()).size() > 0) {
       SymbolTable childSymbolTable = new SymbolTable(symbolTable);
       Parser parser = new Parser(childSymbolTable);
       TokenIterator itr2 = new TokenIterator((List<Token>) tk.getValue());
       Token tk2 = itr2.next();
       return parser.parse(tk2, itr2);
+    }
+    if (!itr.hasNext()) {
+      return null;
+    }
+    if (itr.peek().getType() == Token.ELSE) {
+      itr.next();
+      if (!itr.hasNext()) {
+        throw new Exception("syntax error: missing else body");
+      }
+      tk = itr.next();
+      if (tk.getType() != Token.BLOCK) {
+        throw new Exception("syntax error: missing else body");
+      }
+      if (! (Boolean) expr  && ((List<Token>) tk.getValue()).size() > 0) {
+        SymbolTable childSymbolTable = new SymbolTable(symbolTable);
+        Parser parser = new Parser(childSymbolTable);
+        TokenIterator itr2 = new TokenIterator((List<Token>) tk.getValue());
+        Token tk2 = itr2.next();
+        return parser.parse(tk2, itr2);
+      }
     }
     return null;
   }
@@ -180,19 +203,6 @@ public class Parser {
     }
     Symbol symbol = new Symbol(function, true);
     symbolTable.put(functionName, symbol);
-  }
-  
-  private void skipStatement(Token tk, TokenIterator itr) throws Exception {
-    while (true) {
-      if (tk.getType() == Token.SEMI) {
-        break;
-      }
-      if (!itr.hasNext()) {
-        log.error("missing semi colon");
-        throw new Exception("syntax error");
-      }
-      tk = itr.next();
-    }
   }
   
   private Object parseStatement(Token tk, TokenIterator itr) throws Exception {
