@@ -32,6 +32,7 @@ import es.command.Help;
 import es.command.Insert;
 import es.command.IsAdmin;
 import es.command.IsConnected;
+import es.command.Ln;
 import es.command.Load;
 import es.command.Merge;
 import es.command.Meta;
@@ -87,7 +88,8 @@ public class FunctionCaller {
     commandMap.put("qdb", new QDB());
     commandMap.put("qtp", new QTP());
     commandMap.put("timestamp", new Timestamp());
-    commandMap.put("ln", new es.command.Ln());
+    commandMap.put("ln", new Ln());
+    commandMap.put("log", new es.command.Log());
     commandMap.put("date", new es.command.Date());
     commandMap.put("average", new Average());
     commandMap.put("merge", new Merge());

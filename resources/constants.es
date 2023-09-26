@@ -154,3 +154,7 @@ const DATE = 3;
 const NULL = 0;
 const E = 2.718280;
 
+const INFO = 0;
+const WARN = 1;
+const ERROR = 2;
+
