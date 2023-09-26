@@ -46,10 +46,15 @@ public class Parser {
       if (tk.getType() == Token.UFUNC) {
         parseFunction(tk, itr);
       } else if (tk.getType() == Token.IF) {
-        parseIf(tk, itr);
+        Object result = parseIf(tk, itr);
+        if (result instanceof ReturnResult) {
+          // need to terminate if the if statement returned
+          return ((ReturnResult) result).getValue();
+        }
+        // otherwise, keep going
       } else if (tk.getType() == Token.RETURN) {
         tk = itr.next();
-        return parseStatement(tk, itr);
+        return new ReturnResult(parseStatement(tk, itr));
       } else {
         parseStatement(tk, itr);
       }
