@@ -9,10 +9,10 @@ import es.core.TimeSeriesData;
 import es.core.Utils;
 import es.parser.SymbolTable;
 
-public class Log implements Command {
+public class Ln implements Command {
   @Override
   public String getSummary() {
-    return "float   log(Object object);";
+    return "float   ln(Object object);";
   }
   
   @Override

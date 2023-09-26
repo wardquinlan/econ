@@ -87,7 +87,7 @@ public class FunctionCaller {
     commandMap.put("qdb", new QDB());
     commandMap.put("qtp", new QTP());
     commandMap.put("timestamp", new Timestamp());
-    commandMap.put("log", new es.command.Log());
+    commandMap.put("ln", new es.command.Ln());
     commandMap.put("date", new es.command.Date());
     commandMap.put("average", new Average());
     commandMap.put("merge", new Merge());
