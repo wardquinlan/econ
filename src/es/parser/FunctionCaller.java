@@ -85,8 +85,6 @@ public class FunctionCaller {
     commandMap.put("setName", new SetName());
     commandMap.put("today", new Today());
     commandMap.put("fred", new FRED());
-    commandMap.put("qdb", new QDB());
-    commandMap.put("qtp", new QTP());
     commandMap.put("timestamp", new Timestamp());
     commandMap.put("ln", new Ln());
     commandMap.put("log", new es.command.Log());
@@ -122,6 +120,8 @@ public class FunctionCaller {
       commandMap.put("offset", new Offset());
       commandMap.put("get", new Get());
       commandMap.put("fonts", new Fonts());
+      commandMap.put("qdb", new QDB());
+      commandMap.put("qtp", new QTP());
     }
   }
   
