@@ -11,7 +11,7 @@ import es.parser.SymbolTable;
 public class Get implements Command {
   @Override
   public String getSummary() {
-    return "float   get(Series series, int index);";
+    return "Object   get(Series series, int index);";
   }
   
   @Override

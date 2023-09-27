@@ -45,3 +45,13 @@ Cat() command.  Do we also loop through the parent symbol table?
 
 Log() command.  INFO, WARN, ERROR.  Also change existing log() to ln()
 
+
+NOTE
+
+In order to support if() statements without {} blocks, I think I need another parser pass.  This pass would go through and insert the {} blocks around the if / else blocks as needed.
+This could be a completely different parser, or it could be the same parser with some sort of flag.
+
+The reason we need to do this is because we need to call the parser to get the whole list of tokens to insert into the block ... but we can't directly call the parser as is because
+that would evaluate the block.  Which we don't want to do.
+
+We need a parser pass which generates the list of tokens, but without actually doing the evaluation.
