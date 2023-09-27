@@ -57,18 +57,11 @@ public class Parser {
           throw new Exception("missing string in throw clause");
         }
         tk = itr.next();
-        if (tk.getType() != Token.STRING) {
-          throw new Exception("throw clause must throw a string: " + tk.getValue());
+        Object message = parseStatement(tk, itr);
+        if (!(message instanceof String)) {
+          throw new Exception("throw clause must throw a string: " + message);
         }
-        String message = (String) tk.getValue();
-        if (!itr.hasNext()) {
-          throw new Exception("untermianted throw clause: " + message);
-        }
-        tk = itr.next();
-        if (tk.getType() != Token.SEMI) {
-          throw new Exception("untermianted throw clause: " + message);
-        }
-        throw new Exception(message);
+        throw new Exception((String) message);
       } else if (tk.getType() == Token.RETURN) {
         tk = itr.next();
         return new ReturnResult(parseStatement(tk, itr));
