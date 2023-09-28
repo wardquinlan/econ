@@ -36,6 +36,74 @@ define('FUNCTIONS_', 1);
 
 -----
 
+We can also define a type() function:
+
+String type(Object object);
+
+Which returns:
+
+- String
+- int
+- float
+- boolean
+- Series (... or possibly: FloatSeries, DateSeries, BooleanSeries)
+
+...or possibly:
+
+String type(Object object); # returns just 'Series'
+
+String seriesType(Series series); # returns float, date, boolean
+
+-----
+
+If we do the above 2, we can probably implement functions with variable # of parameters:
+
+function cf(boolean condtion, String message) {
+  if (!defined('condition')) {
+    throw 'condition not defined';
+  }
+  if (defined('message')) {
+    if (!cond) {
+      throw '*** CONFIRMATION FAILED: ' + message;
+    }
+  }
+
+  if (!cond) {
+    throw '*** CONFIRMATION FAILED';
+  }
+}
+
+cf(false);
+cf(false, 'test message');
+
+...OH:
+
+This won't work because defined() is operating at the GLOBAL SCOPE.  So we probably need:
+
+defined(); # operates at any scope
+gdefined(); # operates only at global scope
+define(); # operates at any scope
+gdefine(); # operates only at global scope
+
+Alternatively, we can just pass "extra" parameters with strings, like this:
+
+void cf(boolean cond, String message) {
+  if (!cond) {
+    if (message == 'undefined') {
+      throw '*** CONFIRMATION FAILED';
+    }
+
+    throw '*** CONFIRMATION FAILED: ' + message;
+  }
+}
+
+cf(false, 'test'); # *** CONFIRMATION FAILED: test
+cf(false); # *** CONFIRMATION FAILED
+cf(false, 'test', 5); # WARN: extra parameter(s) passed during function call will be ignored
+
+
+-----
+
 We might also want to add a new column to TIME_SERIES:
 
 LAST_MERGED TIMESTAMP;
