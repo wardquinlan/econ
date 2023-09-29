@@ -136,6 +136,19 @@ re-introduce assert(), but don't exit().
 Operators EQ() and NE() can probably return false / true if the parameters are not supported.  This does not apply to the
 inequalities however.
 
+if a global varaible exists, say S, and S is listed as a parameter name in a function ... the global variable is modified.
+This is a problem:
+
+ES $ S = 6;
+ES $ ;                
+ES $ function wq(S) {;}
+ES $ print(S);
+6
+ES $ wq(4);
+ES $ print(S);
+4
+ES $ 
+
 -----
 
 We might also want to add a new column to TIME_SERIES:
