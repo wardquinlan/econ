@@ -515,13 +515,12 @@ public class Parser {
           }
         }
         Function function = (Function) symbol.getValue();
-        if (paramList.size() != function.getParams().size()) {
-          log.error("size mismatch when calling function");
-          throw new Exception("wrong number of params in function call");
-        }
         if (function.getTokenList().size() > 0) {
+          if (paramList.size() > function.getParams().size()) {
+            log.warn("ignoring extra params during function call " + symbolName + "()");
+          }
           SymbolTable childSymbolTable = new SymbolTable(symbolTable);
-          for (int i = 0; i < paramList.size(); i++) {
+          for (int i = 0; i < paramList.size() && i < function.getParams().size(); i++) {
             childSymbolTable.localPut(function.getParams().get(i), new Symbol(paramList.get(i)));
           }
           Parser parser = new Parser(childSymbolTable);
