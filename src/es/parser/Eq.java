@@ -19,7 +19,8 @@ public class Eq implements BinaryOperator {
     } else if (val1 instanceof Boolean && val2 instanceof Boolean) {
       return val1.equals(val2);
     } else {
-      throw new Exception("syntax error");
+      // throw new Exception("syntax error");
+      return false;
     }
   }
   
