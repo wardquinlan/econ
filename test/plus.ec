@@ -11,42 +11,42 @@ assert(1 + 2 - 5 - 7 == -9);
 include 'T1.ec';
 
 T = T1 + 1;
-assert(size(T) == size(T1));
+assert(getSize(T) == getSize(T1));
 assert(get(T, 0) == get(T1, 0) + 1);
 assert(get(T, 1) == get(T1, 1) + 1);
 assert(get(T, 2) == get(T1, 2) + 1);
 assert(get(T, 3) == get(T1, 3) + 1);
 
 T = 1 + T1;
-assert(size(T) == size(T1));
+assert(getSize(T) == getSize(T1));
 assert(get(T, 0) == get(T1, 0) + 1);
 assert(get(T, 1) == get(T1, 1) + 1);
 assert(get(T, 2) == get(T1, 2) + 1);
 assert(get(T, 3) == get(T1, 3) + 1);
 
 T = T1 + 1.0;
-assert(size(T) == size(T1));
+assert(getSize(T) == getSize(T1));
 assert(get(T, 0) == get(T1, 0) + 1);
 assert(get(T, 1) == get(T1, 1) + 1);
 assert(get(T, 2) == get(T1, 2) + 1);
 assert(get(T, 3) == get(T1, 3) + 1);
 
 T = 1.0 + T1;
-assert(size(T) == size(T1));
+assert(getSize(T) == getSize(T1));
 assert(get(T, 0) == get(T1, 0) + 1);
 assert(get(T, 1) == get(T1, 1) + 1);
 assert(get(T, 2) == get(T1, 2) + 1);
 assert(get(T, 3) == get(T1, 3) + 1);
 
 T = +T1;
-assert(size(T) == size(T1));
+assert(getSize(T) == getSize(T1));
 assert(get(T, 0) == get(T1, 0));
 assert(get(T, 1) == get(T1, 1));
 assert(get(T, 2) == get(T1, 2));
 assert(get(T, 3) == get(T1, 3));
 
 T = ++T1;
-assert(size(T) == size(T1));
+assert(getSize(T) == getSize(T1));
 assert(get(T, 0) == get(T1, 0));
 assert(get(T, 1) == get(T1, 1));
 assert(get(T, 2) == get(T1, 2));
@@ -55,7 +55,7 @@ assert(get(T, 3) == get(T1, 3));
 include 'T2.ec';
 
 T = T1 + T2;
-assert(size(T) == 6);
+assert(getSize(T) == 6);
 assert(offset(T) == 0);
 assert(get(T, 0) == 5);
 assert(get(T, 1) == 6);

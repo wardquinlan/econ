@@ -11,12 +11,12 @@ insert(A, "2022-12-07", 8);
 insert(A, "2022-12-08", 4);
 insert(A, "2022-12-09", 3);
 insert(A, "2022-12-10", 9);
-assert(size(A) == 10, "size(A) != 10");
+assert(getSize(A) == 10, "getSize(A) != 10");
 
 B = average(A, 4);
-assert(size(B) == 7, "size(B) != 7");
+assert(getSize(B) == 7, "getSize(B) != 7");
 B1 = sum(A, 4);
-assert(size(B) == size(B1));
+assert(getSize(B) == getSize(B1));
 
 assert(get(B, 0) == 4.5,  "index 0");
 assert(get(B, 1) == 5.75, "index 1");

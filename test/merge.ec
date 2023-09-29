@@ -16,7 +16,7 @@ merge(T1);
 
 T2 = load(99);
 
-assert(size(T1) == size(T2), "T1 != T2");
+assert(getSize(T1) == getSize(T2), "T1 != T2");
 assert(get(T1, 0) == get(T2, 0));
 assert(get(T1, 3) == get(T2, 3));
 assert(get(T1, 6) == get(T2, 6));
@@ -31,7 +31,7 @@ delete(T1, "2022-12-05");
 delete(T1, "2022-12-10");
 merge(T1, "--with-deletes");
 T2 = load(99);
-assert(size(T1) == size(T2), "T1 != T2");
+assert(getSize(T1) == getSize(T2), "T1 != T2");
 data(T1);
 data(T2);
 
