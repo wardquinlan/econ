@@ -27,6 +27,14 @@ public class SymbolTable {
     return symbol;
   }
   
+  public void globalPut(String symbolName, Symbol symbol) {
+    SymbolTable symbolTable = this;
+    while (symbolTable.getParent() != null) {
+      symbolTable = symbolTable.getParent();
+    }
+    symbolTable.put(symbolName, symbol);
+  }
+  
   public void localPut(String symbolName, Symbol symbol) {
     map.put(symbolName, symbol);
   }

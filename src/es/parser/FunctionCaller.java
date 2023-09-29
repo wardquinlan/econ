@@ -14,6 +14,7 @@ import es.command.Command;
 import es.command.Connect;
 import es.command.Create;
 import es.command.Data;
+import es.command.Defined;
 import es.command.Delete;
 import es.command.Drop;
 import es.command.Ds;
@@ -21,6 +22,7 @@ import es.command.Exit;
 import es.command.ExitIf;
 import es.command.FRED;
 import es.command.Fonts;
+import es.command.GPut;
 import es.command.Get;
 import es.command.GetId;
 import es.command.GetName;
@@ -115,6 +117,8 @@ public class FunctionCaller {
     commandMap.put("min", new es.command.Min());
     commandMap.put("get", new Get());
     commandMap.put("assert", new Assert());
+    commandMap.put("defined", new Defined());
+    commandMap.put("gPut", new GPut());
     if (Settings.getInstance().testFunctions()) {
       commandMap.put("collapse", new Collapse());
       commandMap.put("normalize", new Normalize());
