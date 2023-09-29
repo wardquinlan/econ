@@ -87,8 +87,8 @@ gdefine(); # operates only at global scope
 
 MORE SUCCINCTLY:
 
-boolean defined(String symbolName);
-void gPut(String symbolName, Object value);
+boolean defined(String symbolName); # any scope
+void gPut(String symbolName, Object value); # global scope
 
 [[[
 Alternatively, we can just pass "extra" parameters with strings, like this:
@@ -127,6 +127,12 @@ if (!defined('CONSTANTS_ES_')) {
 
   ... all the constants
 }
+
+And finally
+-----------
+
+Operators EQ() and NE() can probably return false / true if the parameters are not supported.  This does not apply to the
+inequalities however.
 
 -----
 
