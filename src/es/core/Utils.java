@@ -59,8 +59,11 @@ public class Utils {
   
   public static void ASSERT(boolean condition, String message) {
     if (!condition) {
-      log.fatal("***ASSERTION FAILED: " + message);
-      System.exit(1);
+      if (message != null) {
+        log.fatal("*** ASSERTION FAILED ***: " + message);
+      } else {
+        log.fatal("*** ASSERTION FAILED ***");
+      }
     }
   }
   

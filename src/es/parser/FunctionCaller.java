@@ -114,10 +114,10 @@ public class FunctionCaller {
     commandMap.put("max", new es.command.Max());
     commandMap.put("min", new es.command.Min());
     commandMap.put("get", new Get());
+    commandMap.put("assert", new Assert());
     if (Settings.getInstance().testFunctions()) {
       commandMap.put("collapse", new Collapse());
       commandMap.put("normalize", new Normalize());
-      commandMap.put("assert", new Assert());
       commandMap.put("getOffset", new GetOffset());
       commandMap.put("fonts", new Fonts());
       commandMap.put("qdb", new QDB());
