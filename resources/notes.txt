@@ -131,6 +131,8 @@ if (!defined('CONSTANTS_ES_')) {
 And finally
 -----------
 
+re-introduce assert(), but don't exit().
+
 Operators EQ() and NE() can probably return false / true if the parameters are not supported.  This does not apply to the
 inequalities however.
 
