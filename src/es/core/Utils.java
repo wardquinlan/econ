@@ -60,9 +60,9 @@ public class Utils {
   public static void ASSERT(boolean condition, String message) {
     if (!condition) {
       if (message != null) {
-        log.fatal("*** ASSERTION FAILED ***: " + message);
+        log.error("*** ASSERTION FAILED ***: " + message);
       } else {
-        log.fatal("*** ASSERTION FAILED ***");
+        log.error("*** ASSERTION FAILED ***");
       }
     }
   }
