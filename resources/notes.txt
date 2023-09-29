@@ -85,6 +85,12 @@ gdefined(); # operates only at global scope
 define(); # operates at any scope
 gdefine(); # operates only at global scope
 
+MORE SUCCINCTLY:
+
+boolean defined(String symbolName);
+void gPut(String symbolName, Object value);
+
+[[[
 Alternatively, we can just pass "extra" parameters with strings, like this:
 
 void cf(boolean cond, String message) {
@@ -101,6 +107,26 @@ cf(false, 'test'); # *** CONFIRMATION FAILED: test
 cf(false); # *** CONFIRMATION FAILED
 cf(false, 'test', 5); # WARN: extra parameter(s) passed during function call will be ignored
 
+...this might have trouble though if the optional parameter message is an int and not a string.
+]]]
+
+This is probably best:
+
+void cf(boolean cond, String message) {
+  if (!cond) {
+    if (defined('message')) {
+      throw '*** CONFIRMATION FAILED: ' + message + ' ***';
+    }
+    throw '*** CONFIRMATION FAILED ***';
+  }
+}
+
+# constants.es
+if (!defined('CONSTANTS_ES_')) {
+  gPut('CONSTANTS_ES_', true);
+
+  ... all the constants
+}
 
 -----
 
