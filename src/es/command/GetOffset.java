@@ -8,10 +8,10 @@ import es.core.TimeSeries;
 import es.core.Utils;
 import es.parser.SymbolTable;
 
-public class Offset implements Command {
+public class GetOffset implements Command {
   @Override
   public String getSummary() {
-    return "int     offset(Series series);";
+    return "int     getOffset(Series series);";
   }
   
   @Override

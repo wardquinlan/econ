@@ -5,4 +5,4 @@ insert(T1, '2022-12-06', 6);
 insert(T1, '2022-12-09', 9);
 
 assert(getSize(T1) == 4);
-assert(offset(T1) == 0);
+assert(getOffset(T1) == 0);

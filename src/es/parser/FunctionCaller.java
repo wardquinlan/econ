@@ -37,7 +37,7 @@ import es.command.Load;
 import es.command.Merge;
 import es.command.Meta;
 import es.command.Normalize;
-import es.command.Offset;
+import es.command.GetOffset;
 import es.command.PChange;
 import es.command.Plot;
 import es.command.Print;
@@ -118,7 +118,7 @@ public class FunctionCaller {
       commandMap.put("collapse", new Collapse());
       commandMap.put("normalize", new Normalize());
       commandMap.put("assert", new Assert());
-      commandMap.put("offset", new Offset());
+      commandMap.put("getOffset", new GetOffset());
       commandMap.put("fonts", new Fonts());
       commandMap.put("qdb", new QDB());
       commandMap.put("qtp", new QTP());

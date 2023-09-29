@@ -56,7 +56,7 @@ include 'T2.ec';
 
 T = T1 + T2;
 assert(getSize(T) == 6);
-assert(offset(T) == 0);
+assert(getOffset(T) == 0);
 assert(get(T, 0) == 5);
 assert(get(T, 1) == 6);
 assert(get(T, 2) == 9);
