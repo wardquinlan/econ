@@ -86,7 +86,7 @@ public class Cat implements Command {
       for (String name: list) {
         TimeSeries timeSeries = (TimeSeries) symbolTable.get(name).getValue();
         SymbolTable childSymbolTable = new SymbolTable(symbolTable);
-        childSymbolTable.put(function.getParams().get(0), new Symbol(timeSeries));
+        childSymbolTable.localPut(function.getParams().get(0), new Symbol(timeSeries));
         Parser parser = new Parser(childSymbolTable);
         TokenIterator itr2 = new TokenIterator(function.getTokenList());
         Token tk2 = itr2.next();

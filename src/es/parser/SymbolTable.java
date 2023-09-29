@@ -21,14 +21,14 @@ public class SymbolTable {
   
   public Symbol get(String symbolName) {
     Symbol symbol = map.get(symbolName);
-    if (parent != null) {
-      if (symbol == null) {
-        symbol = parent.get(symbolName);
-      } else {
-        Utils.ASSERT(parent.get(symbolName) == null, "parent symbol is not null: " + symbolName);
-      }
+    if (symbol == null && parent != null) {
+      return parent.get(symbolName);
     }
     return symbol;
+  }
+  
+  public void localPut(String symbolName, Symbol symbol) {
+    map.put(symbolName, symbol);
   }
   
   public void put(String symbolName, Symbol symbol) {

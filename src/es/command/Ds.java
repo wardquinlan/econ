@@ -71,7 +71,7 @@ public class Ds implements Command {
       List<TimeSeries> list = TimeSeriesDAO.getInstance().listSeries();
       for (TimeSeries timeSeries: list) {
         SymbolTable childSymbolTable = new SymbolTable(symbolTable);
-        childSymbolTable.put(function.getParams().get(0), new Symbol(timeSeries));
+        childSymbolTable.localPut(function.getParams().get(0), new Symbol(timeSeries));
         Parser parser = new Parser(childSymbolTable);
         TokenIterator itr2 = new TokenIterator(function.getTokenList());
         Token tk2 = itr2.next();
