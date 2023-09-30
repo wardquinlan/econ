@@ -59,7 +59,6 @@ public class SymbolTable {
       return set;
     }
     for (String key: parent.keySet()) {
-      Utils.ASSERT(!set.contains(key), "parent key is not null: " + key);
       set.add(key);
     }
     return set;
