@@ -17,25 +17,6 @@ We need a parser pass which generates the list of tokens, but WITHOUT ACTUALLY D
 
 -----
 
-We can define 2 new functions:
-
-void define(String name, Object value);
-boolean defined(String name);
-
-These functions define / determine if something is defined ... at the GLOBAL scope.  It has to be at the GLOBAL scope.  If it is at the LOCAL scope, then
-it will fall out of scope, and defined() will always return false.
-
-Then, we can do this at the beginning of include files:
-
-if (!defined(FUNCTIONS_)) {
-define('FUNCTIONS_', 1);
-
-# ... body of 'FUNCTIONS'
-  
-}
-
------
-
 We can also define a type() function:
 
 String type(Object object);
@@ -56,104 +37,15 @@ String seriesType(Series series); # returns float, date, boolean
 
 -----
 
-If we do the above 2, we can probably implement functions with variable # of parameters:
-
-function cf(boolean condtion, String message) {
-  if (!defined('condition')) {
-    throw 'condition not defined';
-  }
-  if (defined('message')) {
-    if (!cond) {
-      throw '*** CONFIRMATION FAILED: ' + message;
-    }
-  }
-
-  if (!cond) {
-    throw '*** CONFIRMATION FAILED';
-  }
-}
-
-cf(false);
-cf(false, 'test message');
-
-...OH:
-
-This won't work because defined() is operating at the GLOBAL SCOPE.  So we probably need:
-
-defined(); # operates at any scope
-gdefined(); # operates only at global scope
-define(); # operates at any scope
-gdefine(); # operates only at global scope
-
-MORE SUCCINCTLY:
-
-boolean defined(String symbolName); # any scope
-void gPut(String symbolName, Object value); # global scope
-
-[[[
-Alternatively, we can just pass "extra" parameters with strings, like this:
-
-void cf(boolean cond, String message) {
-  if (!cond) {
-    if (message == 'undefined') {
-      throw '*** CONFIRMATION FAILED';
-    }
-
-    throw '*** CONFIRMATION FAILED: ' + message;
-  }
-}
-
-cf(false, 'test'); # *** CONFIRMATION FAILED: test
-cf(false); # *** CONFIRMATION FAILED
-cf(false, 'test', 5); # WARN: extra parameter(s) passed during function call will be ignored
-
-...this might have trouble though if the optional parameter message is an int and not a string.
-]]]
-
-This is probably best:
-
-void cf(boolean cond, String message) {
-  if (!cond) {
-    if (defined('message')) {
-      throw '*** CONFIRMATION FAILED: ' + message + ' ***';
-    }
-    throw '*** CONFIRMATION FAILED ***';
-  }
-}
-
-# constants.es
-if (!defined('CONSTANTS_ES_')) {
-  gPut('CONSTANTS_ES_', true);
-
-  ... all the constants
-}
-
-And finally
------------
-
-re-introduce assert(), but don't exit().
-
-Operators EQ() and NE() can probably return false / true if the parameters are not supported.  This does not apply to the
-inequalities however.
-
-if a global varaible exists, say S, and S is listed as a parameter name in a function ... the global variable is modified.
-This is a problem:
-
-ES $ S = 6;
-ES $ ;                
-ES $ function wq(S) {;}
-ES $ print(S);
-6
-ES $ wq(4);
-ES $ print(S);
-4
-ES $ 
-
------
-
 We might also want to add a new column to TIME_SERIES:
 
 LAST_MERGED TIMESTAMP;
 
 We just update each series with the last merge time.  It can be NULL for backwards compatibility purposes.
+
+
+-----
+
+gPut() should check the variable doesn't already exist before writing it.
+
 
