@@ -92,7 +92,7 @@ public class Cat implements Command {
         Token tk2 = itr2.next();
         ReturnResult returnResult = parser.parse(tk2, itr2);
         if (returnResult != null && returnResult.getValue() != null) {
-          throw new Exception("cannot return null from function call: " + returnResult.getValue());
+          throw new Exception("cannot return anything during iterations: " + returnResult.getValue());
         }
       }
     }

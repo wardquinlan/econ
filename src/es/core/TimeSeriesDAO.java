@@ -48,7 +48,7 @@ public class TimeSeriesDAO {
     PreparedStatement ps = conn.prepareStatement("select id, name, title, source, source_id, notes from time_series order by id");
     ResultSet resultSet = ps.executeQuery();
     while (resultSet.next()) {
-      TimeSeries series = new TimeSeries(TimeSeries.NULL);
+      TimeSeries series = new TimeSeries(TimeSeries.FLOAT);
       series.setId(resultSet.getInt(1));
       series.setName(resultSet.getString(2));
       series.setTitle(resultSet.getString(3));
