@@ -40,9 +40,14 @@ public class SymbolTable {
   }
   
   public void put(String symbolName, Symbol symbol) {
-    if (parent != null && parent.get(symbolName) != null) {
+    if (map.get(symbolName) != null) {
+      // if already in local symbol table
+      map.put(symbolName, symbol);
+    } else if (parent != null && parent.get(symbolName) != null) {
+      // if already in parent symbol table
       parent.put(symbolName, symbol);
     } else {
+      // if in neither
       map.put(symbolName, symbol);
     }
   }
