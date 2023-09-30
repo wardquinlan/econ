@@ -52,3 +52,7 @@ We might need an isNull() command to see if, for examples, a series' notes is nu
 
 load() should probably throw an exception if it fails.  That would solve a lot of problems.
 
+we probably want a new function:
+
+boolean exists(int id);
+
