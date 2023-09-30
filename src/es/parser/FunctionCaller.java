@@ -120,7 +120,9 @@ public class FunctionCaller {
     commandMap.put("defined", new Defined());
     // I can't think of a way to use this to conditionally include files.  If we create an 'if' block, then all the constants (or whatever) are in the
     // scope of the if block.  So this doesn't work.
-    // commandMap.put("gPut", new GPut());
+    
+    // this might be relevant for other reasons, though: it is a way to modify a global scope from within a local scope
+    commandMap.put("gPut", new GPut());
     if (Settings.getInstance().testFunctions()) {
       commandMap.put("collapse", new Collapse());
       commandMap.put("normalize", new Normalize());
