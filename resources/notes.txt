@@ -46,13 +46,5 @@ We just update each series with the last merge time.  It can be NULL for backwar
 
 -----
 
-gPut() should check the variable doesn't already exist before writing it.
-
 We might need an isNull() command to see if, for examples, a series' notes is null.
-
-load() should probably throw an exception if it fails.  That would solve a lot of problems.
-
-we probably want a new function:
-
-boolean exists(int id);
 
