@@ -27,10 +27,14 @@ public class SymbolTable {
     return symbol;
   }
   
-  public void globalPut(String symbolName, Symbol symbol) {
+  public void globalPut(String symbolName, Symbol symbol) throws Exception {
     SymbolTable symbolTable = this;
     while (symbolTable.getParent() != null) {
       symbolTable = symbolTable.getParent();
+    }
+    Symbol tmp = symbolTable.get(symbolName);
+    if (tmp != null && tmp.isConstant()) {
+      throw new Exception("symbol is already defined as a const: " + symbolName);
     }
     symbolTable.put(symbolName, symbol);
   }
