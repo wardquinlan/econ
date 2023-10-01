@@ -18,6 +18,7 @@ import es.command.Defined;
 import es.command.Delete;
 import es.command.Drop;
 import es.command.Ds;
+import es.command.Exists;
 import es.command.Exit;
 import es.command.ExitIf;
 import es.command.FRED;
@@ -118,6 +119,7 @@ public class FunctionCaller {
     commandMap.put("get", new Get());
     commandMap.put("assert", new Assert());
     commandMap.put("defined", new Defined());
+    commandMap.put("exists", new Exists());
     // I can't think of a way to use this to conditionally include files.  If we create an 'if' block, then all the constants (or whatever) are in the
     // scope of the if block.  So this doesn't work.
     
