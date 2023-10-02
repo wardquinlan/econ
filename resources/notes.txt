@@ -52,3 +52,5 @@ We might need an isNull() command to see if, for examples, a series' notes is nu
 
 New option -c / --command to run a given string command (likely in quotes)
 
+Can probably move functions.es => utils.es and put it actually into Econ project itself.
+
