@@ -48,3 +48,7 @@ We just update each series with the last merge time.  It can be NULL for backwar
 
 We might need an isNull() command to see if, for examples, a series' notes is null.
 
+-----
+
+New option -c / --command to run a given string command (likely in quotes)
+
