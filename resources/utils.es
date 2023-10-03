@@ -18,7 +18,7 @@ function resetName(name, nameNew) {
   if (!isAdmin()) {
     throw 'you must be running in administrative mode to reset name\'s';
   }
-  if (name == UNDEFINED or nameNew == UNDEFINED)) {
+  if (name == UNDEFINED or nameNew == UNDEFINED) {
     throw 'usage: resetName(name, nameNew)';
   }
   if (exists(nameNew)) {
