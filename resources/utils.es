@@ -37,6 +37,12 @@ function backup(id) {
   if (!defined('id')) {
     throw 'usage: backup(id)';
   }
+  if (getType(id) != 'int') {
+    throw 'id must be an int';
+  }
+  if (id >= 10000) {
+    throw 'id must be < 10000';
+  }
   S = load(id);
   if (exists(getId(S) + 10000)) {
     throw 'backup for series already exists: ' + id + '; drop the backup first and try again';
