@@ -17,23 +17,7 @@ We need a parser pass which generates the list of tokens, but WITHOUT ACTUALLY D
 
 -----
 
-We can also define a type() function:
-
-String type(Object object);
-
-Which returns:
-
-- String
-- int
-- float
-- boolean
-- Series (... or possibly: FloatSeries, DateSeries, BooleanSeries)
-
-...or possibly:
-
-String type(Object object); # returns just 'Series'
-
-String seriesType(Series series); # returns float, date, boolean
+String getSeriesType(Series series); # returns float, date, boolean
 
 -----
 
@@ -47,10 +31,4 @@ We just update each series with the last merge time.  It can be NULL for backwar
 -----
 
 We might need an isNull() command to see if, for examples, a series' notes is null.
-
------
-
-New option -c / --command to run a given string command (likely in quotes)
-
-Can probably move functions.es => utils.es and put it actually into Econ project itself.
 

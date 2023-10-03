@@ -60,6 +60,8 @@ public class Main {
     options.addOption(opt);
     opt = new Option("h", "help", false, "display this screen");
     options.addOption(opt);
+    opt = new Option("c", "command", true, "run specified command(s) then exit");
+    options.addOption(opt);
     CommandLine cmd = null;
     try {
       CommandLineParser parser = new DefaultParser();
@@ -110,8 +112,20 @@ public class Main {
         log.warn("skipping the loading of .es...");
       }
       
+      if (cmd.hasOption("command") && args.length == 1) {
+        throw new Exception("cannot specify both --command option and an input file");
+      }
       if (args.length == 1) {
         Tokenizer tokenizer = new Tokenizer(new File(args[0]), 0);
+        TokenIterator itr = tokenizer.tokenize();
+        if (itr.hasNext()) {
+          Parser parser = new Parser(symbolTable);
+          Token tk = itr.next();
+          parser.parse(tk, itr);
+        }
+      } else if (cmd.hasOption("command")) {
+        String value = cmd.getOptionValue("command");
+        Tokenizer tokenizer = new Tokenizer(new ByteArrayInputStream(value.getBytes(StandardCharsets.UTF_8)));
         TokenIterator itr = tokenizer.tokenize();
         if (itr.hasNext()) {
           Parser parser = new Parser(symbolTable);
