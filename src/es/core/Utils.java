@@ -45,6 +45,8 @@ public class Utils {
     1000f, 2000f, 3000f, 4000f, 5000f, 6000f, 7000f, 8000f, 9000f
   };
   
+  public static final String UNDEFINED = "[[[UNDEFINED]]]";
+  
   public static float findDYGridLines(int nGridLines, MinMaxPair pair) throws Exception {
     int idx = 0;
     while (pair.getMinValue() + nGridLines * rgnum[idx] < pair.getMaxValue() && idx < rgnum.length) {

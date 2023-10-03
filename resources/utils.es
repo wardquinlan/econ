@@ -2,7 +2,7 @@ function resetId(id, idNew) {
   if (!isAdmin()) {
     throw 'you must be running in administrative mode to reset id\'s';
   }
-  if (!defined('id') or !defined('idNew')) {
+  if (id == UNDEFINED or idNew == UNDEFINED) {
     throw 'usage: resetId(id, idNew)';
   }
   if (exists(idNew)) {
@@ -18,7 +18,7 @@ function resetName(name, nameNew) {
   if (!isAdmin()) {
     throw 'you must be running in administrative mode to reset name\'s';
   }
-  if (!defined('name') or !defined('nameNew')) {
+  if (name == UNDEFINED or nameNew == UNDEFINED)) {
     throw 'usage: resetName(name, nameNew)';
   }
   if (exists(nameNew)) {
@@ -34,7 +34,7 @@ function backup(id) {
   if (!isAdmin()) {
     throw 'you must be running in administrative mode to do backups';
   }
-  if (!defined('id')) {
+  if (id == UNDEFINED) {
     throw 'usage: backup(id)';
   }
   if (getType(id) != 'int') {

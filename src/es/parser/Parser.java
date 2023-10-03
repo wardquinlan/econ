@@ -523,6 +523,9 @@ public class Parser {
           for (int i = 0; i < paramList.size() && i < function.getParams().size(); i++) {
             childSymbolTable.localPut(function.getParams().get(i), new Symbol(paramList.get(i)));
           }
+          for (int i = paramList.size(); i < function.getParams().size(); i++) {
+            childSymbolTable.localPut(function.getParams().get(i), new Symbol(Utils.UNDEFINED, true));
+          }
           Parser parser = new Parser(childSymbolTable);
           TokenIterator itr2 = new TokenIterator(function.getTokenList());
           Token tk2 = itr2.next();
