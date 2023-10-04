@@ -516,15 +516,12 @@ public class Parser {
         }
         Function function = (Function) symbol.getValue();
         if (function.getTokenList().size() > 0) {
-          if (paramList.size() > function.getParams().size()) {
-            log.warn("ignoring extra params during function call " + symbolName + "()");
+          if (function.getParams().size() != paramList.size()) {
+            throw new Exception("param list size mismatch during function call: " + symbolName + "()");
           }
           SymbolTable childSymbolTable = new SymbolTable(symbolTable);
-          for (int i = 0; i < paramList.size() && i < function.getParams().size(); i++) {
+          for (int i = 0; i < paramList.size(); i++) {
             childSymbolTable.localPut(function.getParams().get(i), new Symbol(paramList.get(i)));
-          }
-          for (int i = paramList.size(); i < function.getParams().size(); i++) {
-            childSymbolTable.localPut(function.getParams().get(i), new Symbol(Utils.UNDEFINED, true));
           }
           Parser parser = new Parser(childSymbolTable);
           TokenIterator itr2 = new TokenIterator(function.getTokenList());

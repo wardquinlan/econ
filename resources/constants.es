@@ -151,7 +151,6 @@ const FLOAT = 1;
 const BOOLEAN = 2;
 const DATE = 3;
 
-const UNDEFINED = '[[[UNDEFINED]]]'; 
 const NULL = 0;
 const E = 2.718280;
 

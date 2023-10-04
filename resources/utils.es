@@ -2,9 +2,6 @@ function resetId(id, idNew) {
   if (!isAdmin()) {
     throw 'you must be running in administrative mode to reset id\'s';
   }
-  if (id == UNDEFINED or idNew == UNDEFINED) {
-    throw 'usage: resetId(id, idNew)';
-  }
   if (exists(idNew)) {
     throw 'series already exists: ' + idNew;
   } 
@@ -17,9 +14,6 @@ function resetId(id, idNew) {
 function resetName(name, nameNew) {
   if (!isAdmin()) {
     throw 'you must be running in administrative mode to reset name\'s';
-  }
-  if (name == UNDEFINED or nameNew == UNDEFINED) {
-    throw 'usage: resetName(name, nameNew)';
   }
   if (exists(nameNew)) {
     throw 'series already exists: ' + nameNew;
@@ -34,9 +28,6 @@ function backup(id) {
   if (!isAdmin()) {
     throw 'you must be running in administrative mode to do backups';
   }
-  if (id == UNDEFINED) {
-    throw 'usage: backup(id)';
-  }
   if (getType(id) != 'int') {
     throw 'id must be an int';
   }
@@ -47,7 +38,7 @@ function backup(id) {
   if (exists(getId(S) + 10000)) {
     throw 'backup for series already exists: ' + id + '; drop the backup first and try again';
   }
-  print('backuping up series ' + id + '...');
+  print('backing up series ' + id + '...');
   setName(S, getName(S) + '.bak');
   setId(S, getId(S) + 10000);
   print('backup series name = ' + getName(S));
@@ -56,14 +47,7 @@ function backup(id) {
 }
 
 function last(series) {
-  if (getType(series) == 'String') {
-    if (series == UNDEFINED) {
-      throw 'usage: last(series)';
-    }
-    # try and load the series
-    series = load(series);
-  }
-  if (getType(series) == 'int') {
+  if (getType(series) == 'String' or getType(series) == 'int') {
     # try and load the series
     series = load(series);
   }
