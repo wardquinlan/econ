@@ -2,6 +2,9 @@ function resetId(id, idNew) {
   if (!isAdmin()) {
     throw 'you must be running in administrative mode to reset id\'s';
   }
+  if (getType(id) != 'int' or getType(idNew) != 'int') {
+    throw 'usage: resetId(int id, int idNew);';
+  }
   if (exists(idNew)) {
     throw 'series already exists: ' + idNew;
   } 
@@ -14,6 +17,9 @@ function resetId(id, idNew) {
 function resetName(name, nameNew) {
   if (!isAdmin()) {
     throw 'you must be running in administrative mode to reset name\'s';
+  }
+  if (getType(name) != 'String' or getType(nameNew) != 'String') {
+    throw 'usage: resetName(String name, String nameNew);';
   }
   if (exists(nameNew)) {
     throw 'series already exists: ' + nameNew;
@@ -29,7 +35,7 @@ function backup(id) {
     throw 'you must be running in administrative mode to do backups';
   }
   if (getType(id) != 'int') {
-    throw 'id must be an int';
+    throw 'usage: backup(int id);';
   }
   if (id >= 10000) {
     throw 'id must be < 10000';
