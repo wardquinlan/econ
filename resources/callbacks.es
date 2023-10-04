@@ -28,14 +28,3 @@ function metrics(series) {
   }
 }
 
-function last(series) {
-  if (getSize(series) == 0) {
-    throw getName(series) + ': no data';
-  }
-  D = date(series);
-  C = change(series);
-  assert(getSize(series) == getSize(D), 'original series and date series are not consistent');
-  assert(getSize(series) == getSize(C) + 1, 'original series and change series are not consistent');
-  print(get(D, getSize(D) - 1) + ': ' + get(series, getSize(series) - 1) + ' (change = ' + get(C, getSize(C) - 1) + ')');
-}
-

@@ -93,7 +93,7 @@ public class Parser {
     tk = itr.next();
     Object expr = expression(tk, itr);
     if (!(expr instanceof Boolean)) {
-      throw new Exception("syntax error: invalid expression");
+      throw new Exception("syntax error: expression evaluated to non-Boolean result inside if statement");
     }
     if (!itr.hasNext()) {
       throw new Exception("syntax error: missing right paren");
