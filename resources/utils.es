@@ -75,3 +75,7 @@ function last(series) {
   return get(series, getSize(series) - 1);
 }
 
+function updateAll() {
+  ds(updateSeries);
+}
+
