@@ -32,3 +32,46 @@ We just update each series with the last merge time.  It can be NULL for backwar
 
 We might need an isNull() command to see if, for examples, a series' notes is null.
 
+-----
+
+We might need an actual class to represent NULL.  We only need one instance of it.
+
+public class NULL {
+  ...
+}
+
+In order to implement a "FULL PARSER" there will be a few passes:
+
+1)  Tokenization
+2)  Parsing
+3)  Evaluation
+
+The Parsing pass will parse tokens into Statements.  Some statements, such as IF statements, will have additional sub-statements.  It might look something like this:
+
+Statement
+Statement
+Statement
+IF-Statement
+  IF-Body
+    Statement
+  ELSE-Body
+    Statement
+    Statement
+    Statement
+Statement
+
+Functions definitions are really just Symbols that go into the Symbol Table, like they do today.
+
+The Evaluation pass, then, works primarily on Statements, not on Tokens.  
+
+A regular Statement is really just an Expression tree, something like this:
+
+Statement
+  PLUS
+    3
+    TIMES
+    2
+    5
+
+Note that my Parser today is a combination of a Parser and an Evaluator.
+
