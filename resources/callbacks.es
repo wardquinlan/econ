@@ -43,18 +43,3 @@ function metrics(series) {
   }
 }
 
-function last(series) {
-  if (getType(series) == 'String' or getType(series) == 'int') {
-    # try and load the series
-    series = load(series);
-  }
-  if (getSize(series) == 0) {
-    # try and load the series
-    series = load(getId(series));
-    if (getSize(series) == 0) {
-      throw getName(series) + ': no data';
-    }
-  }
-  return get(series, getSize(series) - 1);
-}
-

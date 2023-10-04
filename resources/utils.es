@@ -63,3 +63,15 @@ function usage() {
   print('Number of records stored in datastore: ' + METRICS.numberOfRecords);
 }
 
+# this looks a bit like a callback, but it really isn't because it returns something
+function last(series) {
+  if (getType(series) == 'String' or getType(series) == 'int') {
+    # try and load the series
+    series = load(series);
+  }
+  if (getSize(series) == 0) {
+    throw getName(series) + ': no data';
+  }
+  return get(series, getSize(series) - 1);
+}
+
