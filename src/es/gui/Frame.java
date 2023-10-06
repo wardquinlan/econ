@@ -23,6 +23,7 @@ public class Frame extends JFrame {
     getContentPane().add(tabbedPane);
     ToolTipManager.sharedInstance().setInitialDelay((int) ctx.get("settings.tooltips.initialdelay"));
     ToolTipManager.sharedInstance().setDismissDelay((int) ctx.get("settings.tooltips.dismissdelay"));
+    setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
     setVisible(true);
     tabbedPane.getComponentAt(0).requestFocus();
   }
