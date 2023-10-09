@@ -32,7 +32,6 @@ import es.evaluator.UMinus;
 import es.evaluator.UNot;
 import es.evaluator.UPlus;
 import es.evaluator.UnaryOperator;
-import es.tokenizer.Token;
 
 public class OldParser {
   private static final Log log = LogFactory.getFactory().getInstance(OldParser.class);

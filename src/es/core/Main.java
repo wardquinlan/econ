@@ -22,7 +22,7 @@ import org.apache.commons.logging.LogFactory;
 
 import es.parser.OldParser;
 import es.parser.SymbolTable;
-import es.tokenizer.Token;
+import es.parser.Token;
 import es.tokenizer.Tokenizer;
 
 public class Main {
