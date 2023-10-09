@@ -5,9 +5,8 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 
 /**
- * @deprecated use ESIterator in the future
+ * Deprecated => use ESIterator in the future
  */
-@Deprecated
 public class LookAheadReader {
   private InputStreamReader inputStreamReader;
   private Integer next;
