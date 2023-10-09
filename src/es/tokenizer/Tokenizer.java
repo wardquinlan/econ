@@ -13,7 +13,6 @@ import org.apache.commons.logging.LogFactory;
 
 import es.core.ESIterator;
 import es.parser.FunctionCaller;
-import es.parser.LookAheadReader;
 
 public class Tokenizer {
   private static Log log = LogFactory.getFactory().getInstance(Tokenizer.class);

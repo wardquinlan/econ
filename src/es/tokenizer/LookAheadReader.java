@@ -1,4 +1,4 @@
-package es.parser;
+package es.tokenizer;
 
 import java.io.IOException;
 import java.io.InputStream;
