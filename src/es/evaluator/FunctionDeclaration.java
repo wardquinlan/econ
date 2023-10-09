@@ -1,4 +1,4 @@
-package es.parser;
+package es.evaluator;
 
 public class FunctionDeclaration extends Statement {
 }
