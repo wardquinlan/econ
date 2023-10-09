@@ -11,6 +11,7 @@ import org.apache.commons.logging.LogFactory;
 
 import es.core.TimeSeries;
 import es.core.TimeSeriesData;
+import es.core.TokenIterator;
 import es.core.Utils;
 import es.evaluator.And;
 import es.evaluator.Div;

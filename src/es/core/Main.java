@@ -22,7 +22,6 @@ import org.apache.commons.logging.LogFactory;
 
 import es.parser.OldParser;
 import es.parser.SymbolTable;
-import es.parser.TokenIterator;
 import es.tokenizer.Token;
 import es.tokenizer.Tokenizer;
 

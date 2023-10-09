@@ -1,4 +1,4 @@
-package es.parser;
+package es.core;
 
 import java.util.Iterator;
 import java.util.List;
