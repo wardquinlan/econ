@@ -6,14 +6,12 @@ import java.util.List;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import es.tokenizer.Token;
-
-public class TokenIterator implements Iterator<Token> {
-  private static Log log = LogFactory.getFactory().getInstance(TokenIterator.class);
-  private List<Token> list;
+public class ESIterator<T> implements Iterator<T> {
+  private static Log log = LogFactory.getFactory().getInstance(ESIterator.class);
+  private List<T> list;
   private int idx;
   
-  public TokenIterator(List<Token> list) {
+  public ESIterator(List<T> list) {
     this.list = list;
     idx = -1;
   }
@@ -22,16 +20,16 @@ public class TokenIterator implements Iterator<Token> {
     return (idx != (list.size() - 1));
   }
   
-  public Token peek() {
+  public T peek() {
     return list.get(idx + 1);
   }
   
-  public Token next() {
+  public T next() {
     return list.get(++idx);
   }
   
   public void remove() {
-    log.fatal("remove is not supported");
-    System.exit(0);
+    Utils.ASSERT(false, "remove is not supported");
+    System.exit(1);
   }
 }

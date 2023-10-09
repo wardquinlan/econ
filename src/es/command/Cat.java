@@ -4,8 +4,8 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+import es.core.ESIterator;
 import es.core.TimeSeries;
-import es.core.TokenIterator;
 import es.core.Utils;
 import es.parser.Function;
 import es.parser.OldParser;
@@ -88,7 +88,7 @@ public class Cat implements Command {
         SymbolTable childSymbolTable = new SymbolTable(symbolTable);
         childSymbolTable.localPut(function.getParams().get(0), new Symbol(timeSeries));
         OldParser parser = new OldParser(childSymbolTable);
-        TokenIterator itr2 = new TokenIterator(function.getTokenList());
+        ESIterator<Token> itr2 = new ESIterator<Token>(function.getTokenList());
         Token tk2 = itr2.next();
         ReturnResult returnResult = parser.parse(tk2, itr2);
         if (returnResult != null && returnResult.getValue() != null) {

@@ -9,9 +9,9 @@ import java.util.Map;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import es.core.ESIterator;
 import es.core.TimeSeries;
 import es.core.TimeSeriesData;
-import es.core.TokenIterator;
 import es.core.Utils;
 import es.evaluator.And;
 import es.evaluator.Div;
@@ -62,7 +62,7 @@ public class OldParser {
     this.symbolTable = symbolTable;
   }
   
-  public ReturnResult parse(Token tk, TokenIterator itr) throws Exception {
+  public ReturnResult parse(Token tk, ESIterator<Token> itr) throws Exception {
     while (true) {
       if (tk.getType() == Token.UFUNC) {
         parseFunction(tk, itr);
@@ -102,7 +102,7 @@ public class OldParser {
   }
 
   @SuppressWarnings("unchecked")
-  private ReturnResult parseIf(Token tk, TokenIterator itr) throws Exception {
+  private ReturnResult parseIf(Token tk, ESIterator<Token> itr) throws Exception {
     ReturnResult returnResult = null;
     if (!itr.hasNext()) {
       throw new Exception("syntax error: missing expression");
@@ -133,7 +133,7 @@ public class OldParser {
     if ((Boolean) expr && ((List<Token>) tk.getValue()).size() > 0) {
       SymbolTable childSymbolTable = new SymbolTable(symbolTable);
       OldParser parser = new OldParser(childSymbolTable);
-      TokenIterator itr2 = new TokenIterator((List<Token>) tk.getValue());
+      ESIterator<Token> itr2 = new ESIterator<Token>((List<Token>) tk.getValue());
       Token tk2 = itr2.next();
       returnResult = parser.parse(tk2, itr2);
     }
@@ -152,7 +152,7 @@ public class OldParser {
       if (! (Boolean) expr  && ((List<Token>) tk.getValue()).size() > 0) {
         SymbolTable childSymbolTable = new SymbolTable(symbolTable);
         OldParser parser = new OldParser(childSymbolTable);
-        TokenIterator itr2 = new TokenIterator((List<Token>) tk.getValue());
+        ESIterator<Token> itr2 = new ESIterator<Token>((List<Token>) tk.getValue());
         Token tk2 = itr2.next();
         returnResult = parser.parse(tk2, itr2);
       }
@@ -161,7 +161,7 @@ public class OldParser {
   }
   
   @SuppressWarnings("unchecked")
-  private void parseFunction(Token tk, TokenIterator itr) throws Exception {
+  private void parseFunction(Token tk, ESIterator<Token> itr) throws Exception {
     Function function = new Function();
     /* do this later
     if (!isGlobalScope()) {
@@ -242,7 +242,7 @@ public class OldParser {
     symbolTable.put(functionName, symbol);
   }
   
-  private Object parseStatement(Token tk, TokenIterator itr) throws Exception {
+  private Object parseStatement(Token tk, ESIterator<Token> itr) throws Exception {
     List<Token> tokens = new ArrayList<Token>();
     Object ret = null;
     while (true) {
@@ -259,7 +259,7 @@ public class OldParser {
     if (tokens.size() == 0) {
       return ret;
     }
-    TokenIterator itr2 = new TokenIterator(tokens);
+    ESIterator<Token> itr2 = new ESIterator<Token>(tokens);
     Token tk2 = itr2.next();
     if (tk2.getType() == Token.CONST) {
       ret = parseDeclaration(tk2, itr2);
@@ -273,7 +273,7 @@ public class OldParser {
     return ret;
   }
   
-  private Object parseDeclaration(Token tk, TokenIterator itr) throws Exception {
+  private Object parseDeclaration(Token tk, ESIterator<Token> itr) throws Exception {
     if (!itr.hasNext()) {
       log.error("invalid const declaration");
       throw new Exception("syntax error");
@@ -306,7 +306,7 @@ public class OldParser {
     return val;
   }
   
-  private Object expression(Token tk, TokenIterator itr) throws Exception {
+  private Object expression(Token tk, ESIterator<Token> itr) throws Exception {
     Object val1 = expressionL2(tk, itr);
     while (true) {
       if (!itr.hasNext()) {
@@ -329,7 +329,7 @@ public class OldParser {
     return val1;
   }
   
-  private Object expressionL2(Token tk, TokenIterator itr) throws Exception {
+  private Object expressionL2(Token tk, ESIterator<Token> itr) throws Exception {
     Object val1 = simpleExpression(tk, itr);
     if (!itr.hasNext()) {
       return val1;
@@ -360,7 +360,7 @@ public class OldParser {
     return val1;
   }
   
-  private Object simpleExpression(Token tk, TokenIterator itr) throws Exception {
+  private Object simpleExpression(Token tk, ESIterator<Token> itr) throws Exception {
     Object val1 = term(tk, itr);
     while (true) {
       if (!itr.hasNext()) {
@@ -383,7 +383,7 @@ public class OldParser {
     return val1;
   }
   
-  private Object term(Token tk, TokenIterator itr) throws Exception {
+  private Object term(Token tk, ESIterator<Token> itr) throws Exception {
     Object val1 = exp(tk, itr);
     while (true) {
       if (!itr.hasNext()) {
@@ -406,7 +406,7 @@ public class OldParser {
     return val1;
   }
 
-  private Object exp(Token tk, TokenIterator itr) throws Exception {
+  private Object exp(Token tk, ESIterator<Token> itr) throws Exception {
     Object val1 = primary(tk, itr);
     while (true) {
       if (!itr.hasNext()) {
@@ -429,7 +429,7 @@ public class OldParser {
     return val1;
   }
   
-  private Object primary(Token tk, TokenIterator itr) throws Exception {
+  private Object primary(Token tk, ESIterator<Token> itr) throws Exception {
     if (tk.getType() == Token.INTEGER || tk.getType() == Token.REAL || tk.getType() == Token.STRING || tk.getType() == Token.BOOLEAN) {
       return tk.getValue();
     }
@@ -545,7 +545,7 @@ public class OldParser {
             childSymbolTable.localPut(function.getParams().get(i), new Symbol(paramList.get(i)));
           }
           OldParser parser = new OldParser(childSymbolTable);
-          TokenIterator itr2 = new TokenIterator(function.getTokenList());
+          ESIterator<Token> itr2 = new ESIterator<Token>(function.getTokenList());
           Token tk2 = itr2.next();
           ReturnResult returnResult = parser.parse(tk2, itr2);
           if (returnResult != null) {

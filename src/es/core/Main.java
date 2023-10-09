@@ -101,7 +101,7 @@ public class Main {
       if (file.exists() && !Settings.getInstance().suppressAutoload()) {
         log.info("found autoload file '.es'; loading...");
         Tokenizer tokenizer = new Tokenizer(file, 0);
-        TokenIterator itr = tokenizer.tokenize();
+        ESIterator<Token> itr = tokenizer.tokenize();
         if (itr.hasNext()) {
           OldParser parser = new OldParser(symbolTable);
           Token tk = itr.next();
@@ -116,7 +116,7 @@ public class Main {
       }
       if (args.length == 1) {
         Tokenizer tokenizer = new Tokenizer(new File(args[0]), 0);
-        TokenIterator itr = tokenizer.tokenize();
+        ESIterator<Token> itr = tokenizer.tokenize();
         if (itr.hasNext()) {
           OldParser parser = new OldParser(symbolTable);
           Token tk = itr.next();
@@ -125,7 +125,7 @@ public class Main {
       } else if (cmd.hasOption("command")) {
         String value = cmd.getOptionValue("command");
         Tokenizer tokenizer = new Tokenizer(new ByteArrayInputStream(value.getBytes(StandardCharsets.UTF_8)));
-        TokenIterator itr = tokenizer.tokenize();
+        ESIterator<Token> itr = tokenizer.tokenize();
         if (itr.hasNext()) {
           OldParser parser = new OldParser(symbolTable);
           Token tk = itr.next();
@@ -147,7 +147,7 @@ public class Main {
               break;
             }
             Tokenizer tokenizer = new Tokenizer(new ByteArrayInputStream(line.getBytes(StandardCharsets.UTF_8)));
-            TokenIterator itr = tokenizer.tokenize();
+            ESIterator<Token> itr = tokenizer.tokenize();
             if (itr.hasNext()) {
               OldParser parser = new OldParser(symbolTable);
               Token tk = itr.next();

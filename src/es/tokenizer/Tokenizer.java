@@ -11,7 +11,7 @@ import java.util.List;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import es.core.TokenIterator;
+import es.core.ESIterator;
 import es.parser.FunctionCaller;
 import es.parser.LookAheadReader;
 
@@ -42,7 +42,7 @@ public class Tokenizer {
     rdr = new LookAheadReader(new FileInputStream(file));
   }
   
-  public TokenIterator tokenize() throws Exception {
+  public ESIterator<Token> tokenize() throws Exception {
     List<Token> list = new ArrayList<Token>();
     try {
       while (true) {
@@ -237,7 +237,7 @@ public class Tokenizer {
     return postTokenize(list);
   }
   
-  private TokenIterator postTokenize(List<Token> list) throws Exception {
+  private ESIterator<Token> postTokenize(List<Token> list) throws Exception {
     List<Token> listNew = new ArrayList<Token>();
     for (int i = 0; i < list.size(); i++) {
       Token tk = list.get(i);
@@ -265,7 +265,7 @@ public class Tokenizer {
         } else {
           tokenizer = new Tokenizer(new File(basename + File.separator + filename), level + 1);
         }
-        TokenIterator itr = tokenizer.tokenize();
+        ESIterator<Token> itr = tokenizer.tokenize();
         while (itr.hasNext()) {
           listNew.add(itr.next());
         }
@@ -273,7 +273,7 @@ public class Tokenizer {
         listNew.add(tk);
       }
     }
-    TokenIterator itr = new TokenIterator(listNew);
+    ESIterator<Token> itr = new ESIterator<Token>(listNew);
     if (itr.hasNext()) {
       Token tk = itr.next();
       itr = processBlocks(tk, itr);
@@ -281,7 +281,7 @@ public class Tokenizer {
     return itr;
   }
   
-  private TokenIterator processBlocks(Token tk, TokenIterator itr) throws Exception {
+  private ESIterator<Token> processBlocks(Token tk, ESIterator<Token> itr) throws Exception {
     List<Token> list = new ArrayList<Token>();
     while (true) {
       if (tk.getType() == Token.LBRACE) {
@@ -293,12 +293,12 @@ public class Tokenizer {
       }
       tk = itr.next();
     }
-    return new TokenIterator(list);
+    return new ESIterator<Token>(list);
   }
   
   // NOTE: this function can be used recursively in the future to support IF, WHILE, etc.
   @SuppressWarnings("unchecked")
-  Token processBlock(Token tk, TokenIterator itr) throws Exception {
+  Token processBlock(Token tk, ESIterator<Token> itr) throws Exception {
     Token tkBlock = new Token(Token.BLOCK);
     tkBlock.setValue(new ArrayList<Token>());
     while (true) {
