@@ -1,12 +1,12 @@
-package evaluator;
+package es.evaluator;
 
 import es.core.TimeSeries;
 
-public class UNot implements UnaryOperator {
+public class UPlus implements UnaryOperator {
   @Override
   public Object exec(Object val1) throws Exception {
-    if (val1 instanceof Boolean) {
-      return !((Boolean) val1);
+    if (val1 instanceof Integer || val1 instanceof Float) {
+      return val1;
     } else {
       throw new Exception("syntax error");
     }
@@ -14,6 +14,6 @@ public class UNot implements UnaryOperator {
   
   @Override
   public int getAssociatedSeriesType() {
-    return TimeSeries.BOOLEAN;
+    return TimeSeries.FLOAT;
   }
 }

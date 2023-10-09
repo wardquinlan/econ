@@ -1,4 +1,4 @@
-package evaluator;
+package es.evaluator;
 
 import es.core.TimeSeries;
 

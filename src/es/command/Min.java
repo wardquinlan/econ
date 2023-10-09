@@ -6,8 +6,8 @@ import java.util.List;
 
 import es.core.TimeSeries;
 import es.core.Utils;
+import es.evaluator.Executor;
 import es.parser.SymbolTable;
-import evaluator.Executor;
 
 public class Min implements Command {
   @Override
@@ -40,7 +40,7 @@ public class Min implements Command {
     if (!(val2 instanceof TimeSeries) && !(val2 instanceof Float) && !(val2 instanceof Integer)) {
       throw new Exception(val2 + " is not a Series, an int, or a float");
     }
-    Executor executor = new Executor(new evaluator.Min());
+    Executor executor = new Executor(new es.evaluator.Min());
     return executor.exec(val1, val2);
   }
 }
