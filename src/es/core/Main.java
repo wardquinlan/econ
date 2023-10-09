@@ -22,9 +22,9 @@ import org.apache.commons.logging.LogFactory;
 
 import es.parser.OldParser;
 import es.parser.SymbolTable;
-import es.parser.Token;
 import es.parser.TokenIterator;
-import es.parser.Tokenizer;
+import es.tokenizer.Token;
+import es.tokenizer.Tokenizer;
 
 public class Main {
   private static final Log log = LogFactory.getFactory().getInstance(Main.class);

@@ -12,8 +12,8 @@ import es.parser.OldParser;
 import es.parser.ReturnResult;
 import es.parser.Symbol;
 import es.parser.SymbolTable;
-import es.parser.Token;
 import es.parser.TokenIterator;
+import es.tokenizer.Token;
 
 public class Ds implements Command {
   private static final int TIME_SERIES_COL_WIDTHS[] = {5, 20, 30, 12, 20, 8};

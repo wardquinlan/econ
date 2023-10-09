@@ -3,6 +3,8 @@ package es.parser;
 import java.util.ArrayList;
 import java.util.List;
 
+import es.tokenizer.Token;
+
 public class Statement {
   private List<Token> list = new ArrayList<Token>();
   

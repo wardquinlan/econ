@@ -1,4 +1,4 @@
-package es.parser;
+package es.tokenizer;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -10,6 +10,10 @@ import java.util.List;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+
+import es.parser.FunctionCaller;
+import es.parser.LookAheadReader;
+import es.parser.TokenIterator;
 
 public class Tokenizer {
   private static Log log = LogFactory.getFactory().getInstance(Tokenizer.class);

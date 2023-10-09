@@ -6,6 +6,8 @@ import java.util.List;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import es.tokenizer.Token;
+
 public class TokenIterator implements Iterator<Token> {
   private static Log log = LogFactory.getFactory().getInstance(TokenIterator.class);
   private List<Token> list;
