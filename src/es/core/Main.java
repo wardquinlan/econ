@@ -119,12 +119,16 @@ public class Main {
         Tokenizer tokenizer = new Tokenizer(new File(args[0]), 0);
         ESIterator<Token> itr = tokenizer.tokenize();
         if (itr.hasNext()) {
-          OldParser parser = new OldParser(symbolTable);
-          Token tk = itr.next();
-          parser.parse(tk, itr);
-          Parser p = new Parser();
-          //ESIterator itr2 = p.parse(tk, itr);
-          //System.out.println(itr2);
+          if (Settings.getInstance().testFunctions()) {
+            Parser p = new Parser();
+            Token tk = itr.next();
+            ESIterator itr2 = p.parse(tk, itr);
+            System.out.println(itr2);
+          } else {
+            OldParser parser = new OldParser(symbolTable);
+            Token tk = itr.next();
+            parser.parse(tk, itr);
+          }
         }
       } else if (cmd.hasOption("command")) {
         String value = cmd.getOptionValue("command");
