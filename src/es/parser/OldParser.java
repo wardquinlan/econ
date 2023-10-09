@@ -242,23 +242,23 @@ public class OldParser {
   }
   
   private Object parseStatement(Token tk, TokenIterator itr) throws Exception {
-    Statement statement = new Statement();
+    List<Token> tokens = new ArrayList<Token>();
     Object ret = null;
     while (true) {
       if (tk.getType() == Token.SEMI) {
         break;
       }
-      statement.getTokens().add(tk);
+      tokens.add(tk);
       if (!itr.hasNext()) {
         log.error("missing semi colon");
         throw new Exception("syntax error");
       }
       tk = itr.next();
     }
-    if (statement.getTokens().size() == 0) {
+    if (tokens.size() == 0) {
       return ret;
     }
-    TokenIterator itr2 = new TokenIterator(statement.getTokens());
+    TokenIterator itr2 = new TokenIterator(tokens);
     Token tk2 = itr2.next();
     if (tk2.getType() == Token.CONST) {
       ret = parseDeclaration(tk2, itr2);
