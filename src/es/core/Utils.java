@@ -15,6 +15,7 @@ import org.apache.commons.logging.LogFactory;
 import es.gui.Chart;
 import es.gui.MinMaxPair;
 import es.gui.Panel;
+import es.gui.Scaler;
 import es.gui.Series;
 
 public class Utils {

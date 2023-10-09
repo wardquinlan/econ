@@ -15,7 +15,6 @@ import javax.swing.JComponent;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import es.core.Scaler;
 import es.core.TimeSeries;
 import es.core.Utils;
 

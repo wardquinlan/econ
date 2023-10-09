@@ -3,8 +3,6 @@ package es.gui;
 import java.awt.Color;
 import java.util.ArrayList;
 
-import es.core.LinearScaler;
-import es.core.Scaler;
 import es.parser.SymbolTable;
 
 public class Chart extends GUIObject {

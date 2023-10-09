@@ -13,9 +13,6 @@ import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
-import es.core.LinearScaler;
-import es.core.LogScaler;
-import es.core.Scaler;
 import es.core.TimeSeries;
 import es.core.Utils;
 import es.parser.Symbol;

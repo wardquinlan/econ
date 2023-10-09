@@ -1,4 +1,4 @@
-package es.core;
+package es.gui;
 
 public class LinearScaler implements Scaler {
   @Override
