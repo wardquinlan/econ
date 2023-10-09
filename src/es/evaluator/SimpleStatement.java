@@ -1,5 +1,13 @@
 package es.evaluator;
 
 public class SimpleStatement extends Statement {
-  private ESNode node;
+  private Object node;
+
+  public Object getNode() {
+    return node;
+  }
+
+  public void setNode(Object node) {
+    this.node = node;
+  }
 }

@@ -21,6 +21,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import es.parser.OldParser;
+import es.parser.Parser;
 import es.parser.SymbolTable;
 import es.parser.Token;
 import es.tokenizer.Tokenizer;
@@ -121,6 +122,9 @@ public class Main {
           OldParser parser = new OldParser(symbolTable);
           Token tk = itr.next();
           parser.parse(tk, itr);
+          Parser p = new Parser();
+          //ESIterator itr2 = p.parse(tk, itr);
+          //System.out.println(itr2);
         }
       } else if (cmd.hasOption("command")) {
         String value = cmd.getOptionValue("command");
