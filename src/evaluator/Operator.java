@@ -1,4 +1,4 @@
-package es.parser;
+package evaluator;
 
 public interface Operator {
   public abstract int getAssociatedSeriesType();

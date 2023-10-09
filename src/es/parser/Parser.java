@@ -12,6 +12,25 @@ import org.apache.commons.logging.LogFactory;
 import es.core.TimeSeries;
 import es.core.TimeSeriesData;
 import es.core.Utils;
+import evaluator.And;
+import evaluator.Div;
+import evaluator.Eq;
+import evaluator.Executor;
+import evaluator.Exp;
+import evaluator.Gt;
+import evaluator.Gte;
+import evaluator.Lt;
+import evaluator.Lte;
+import evaluator.Minus;
+import evaluator.Mult;
+import evaluator.Ne;
+import evaluator.Operator;
+import evaluator.Or;
+import evaluator.Plus;
+import evaluator.UMinus;
+import evaluator.UNot;
+import evaluator.UPlus;
+import evaluator.UnaryOperator;
 
 public class Parser {
   private static final Log log = LogFactory.getFactory().getInstance(Parser.class);

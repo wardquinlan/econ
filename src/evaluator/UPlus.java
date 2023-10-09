@@ -1,19 +1,17 @@
-package es.parser;
+package evaluator;
 
 import es.core.TimeSeries;
 
-public class UMinus implements UnaryOperator {
+public class UPlus implements UnaryOperator {
   @Override
   public Object exec(Object val1) throws Exception {
-    if (val1 instanceof Integer) {
-      return -((Integer) val1);
-    } else if (val1 instanceof Float) {
-      return -((Float) val1);
+    if (val1 instanceof Integer || val1 instanceof Float) {
+      return val1;
     } else {
       throw new Exception("syntax error");
     }
   }
-
+  
   @Override
   public int getAssociatedSeriesType() {
     return TimeSeries.FLOAT;
