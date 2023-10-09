@@ -32,8 +32,8 @@ import es.evaluator.UNot;
 import es.evaluator.UPlus;
 import es.evaluator.UnaryOperator;
 
-public class Parser {
-  private static final Log log = LogFactory.getFactory().getInstance(Parser.class);
+public class OldParser {
+  private static final Log log = LogFactory.getFactory().getInstance(OldParser.class);
   private static final Map<Integer, Operator> operatorMap = new HashMap<>();
   static {
     operatorMap.put(Token.PLUS, new Plus());
@@ -56,7 +56,7 @@ public class Parser {
   private FunctionCaller functionCaller = new FunctionCaller();
   private SymbolTable symbolTable;
 
-  public Parser(SymbolTable symbolTable) {
+  public OldParser(SymbolTable symbolTable) {
     this.symbolTable = symbolTable;
   }
   
@@ -130,7 +130,7 @@ public class Parser {
     }
     if ((Boolean) expr && ((List<Token>) tk.getValue()).size() > 0) {
       SymbolTable childSymbolTable = new SymbolTable(symbolTable);
-      Parser parser = new Parser(childSymbolTable);
+      OldParser parser = new OldParser(childSymbolTable);
       TokenIterator itr2 = new TokenIterator((List<Token>) tk.getValue());
       Token tk2 = itr2.next();
       returnResult = parser.parse(tk2, itr2);
@@ -149,7 +149,7 @@ public class Parser {
       }
       if (! (Boolean) expr  && ((List<Token>) tk.getValue()).size() > 0) {
         SymbolTable childSymbolTable = new SymbolTable(symbolTable);
-        Parser parser = new Parser(childSymbolTable);
+        OldParser parser = new OldParser(childSymbolTable);
         TokenIterator itr2 = new TokenIterator((List<Token>) tk.getValue());
         Token tk2 = itr2.next();
         returnResult = parser.parse(tk2, itr2);
@@ -542,7 +542,7 @@ public class Parser {
           for (int i = 0; i < paramList.size(); i++) {
             childSymbolTable.localPut(function.getParams().get(i), new Symbol(paramList.get(i)));
           }
-          Parser parser = new Parser(childSymbolTable);
+          OldParser parser = new OldParser(childSymbolTable);
           TokenIterator itr2 = new TokenIterator(function.getTokenList());
           Token tk2 = itr2.next();
           ReturnResult returnResult = parser.parse(tk2, itr2);

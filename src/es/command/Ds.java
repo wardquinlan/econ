@@ -8,7 +8,7 @@ import es.core.TimeSeries;
 import es.core.TimeSeriesDAO;
 import es.core.Utils;
 import es.parser.Function;
-import es.parser.Parser;
+import es.parser.OldParser;
 import es.parser.ReturnResult;
 import es.parser.Symbol;
 import es.parser.SymbolTable;
@@ -72,7 +72,7 @@ public class Ds implements Command {
       for (TimeSeries timeSeries: list) {
         SymbolTable childSymbolTable = new SymbolTable(symbolTable);
         childSymbolTable.localPut(function.getParams().get(0), new Symbol(timeSeries));
-        Parser parser = new Parser(childSymbolTable);
+        OldParser parser = new OldParser(childSymbolTable);
         TokenIterator itr2 = new TokenIterator(function.getTokenList());
         Token tk2 = itr2.next();
         ReturnResult returnResult = parser.parse(tk2, itr2);

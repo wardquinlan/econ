@@ -20,7 +20,7 @@ import org.apache.commons.cli.ParseException;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import es.parser.Parser;
+import es.parser.OldParser;
 import es.parser.SymbolTable;
 import es.parser.Token;
 import es.parser.TokenIterator;
@@ -104,7 +104,7 @@ public class Main {
         Tokenizer tokenizer = new Tokenizer(file, 0);
         TokenIterator itr = tokenizer.tokenize();
         if (itr.hasNext()) {
-          Parser parser = new Parser(symbolTable);
+          OldParser parser = new OldParser(symbolTable);
           Token tk = itr.next();
           parser.parse(tk, itr);
         }
@@ -119,7 +119,7 @@ public class Main {
         Tokenizer tokenizer = new Tokenizer(new File(args[0]), 0);
         TokenIterator itr = tokenizer.tokenize();
         if (itr.hasNext()) {
-          Parser parser = new Parser(symbolTable);
+          OldParser parser = new OldParser(symbolTable);
           Token tk = itr.next();
           parser.parse(tk, itr);
         }
@@ -128,7 +128,7 @@ public class Main {
         Tokenizer tokenizer = new Tokenizer(new ByteArrayInputStream(value.getBytes(StandardCharsets.UTF_8)));
         TokenIterator itr = tokenizer.tokenize();
         if (itr.hasNext()) {
-          Parser parser = new Parser(symbolTable);
+          OldParser parser = new OldParser(symbolTable);
           Token tk = itr.next();
           parser.parse(tk, itr);
         }
@@ -150,7 +150,7 @@ public class Main {
             Tokenizer tokenizer = new Tokenizer(new ByteArrayInputStream(line.getBytes(StandardCharsets.UTF_8)));
             TokenIterator itr = tokenizer.tokenize();
             if (itr.hasNext()) {
-              Parser parser = new Parser(symbolTable);
+              OldParser parser = new OldParser(symbolTable);
               Token tk = itr.next();
               parser.parse(tk, itr);
             }
