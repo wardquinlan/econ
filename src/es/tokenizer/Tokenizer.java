@@ -15,6 +15,7 @@ import es.core.ESIterator;
 import es.parser.FunctionCaller;
 import es.parser.LookAheadReader;
 
+@SuppressWarnings("deprecation")
 public class Tokenizer {
   private static Log log = LogFactory.getFactory().getInstance(Tokenizer.class);
   private File file;
