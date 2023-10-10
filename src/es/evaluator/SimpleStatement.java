@@ -18,6 +18,8 @@ public class SimpleStatement implements Statement {
       ESNode node = (ESNode) expr;
       Object result = node.evaluate();
       System.out.println("Result: " + result);
+    } else if (expr instanceof FunctionCall) {
+      System.out.println("Result: " + expr);
     }
   }
   

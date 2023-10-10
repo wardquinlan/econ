@@ -11,6 +11,7 @@ import org.apache.commons.logging.LogFactory;
 import es.core.ESIterator;
 import es.evaluator.ESNode;
 import es.evaluator.Executor;
+import es.evaluator.FunctionCall;
 import es.evaluator.SimpleStatement;
 import es.evaluator.Statement;
 
@@ -141,6 +142,42 @@ public class Parser {
       ESNode node = new ESNode(ESNode.UNOT);
       node.setRhs(val2);
       return node;
+    }
+    // TODO: can probably remove FUNC altogether
+    if (tk.getType() == Token.SYMBOL || tk.getType() == Token.FUNC) {
+      String symbolName = (String) tk.getValue();
+      if (itr.hasNext() && itr.peek().getType() == Token.LPAREN) {
+        itr.next();
+        if (!itr.hasNext()) {
+          log.error("missing right paren");
+          throw new Exception("syntax error");
+        }
+        tk = itr.next();
+        FunctionCall functionCall = new FunctionCall(symbolName);
+        while (true) {
+          if (tk.getType() == Token.RPAREN) {
+            break;
+          }
+          Object param = expression(tk, itr);
+          functionCall.getParams().add(param);
+          if (!itr.hasNext()) {
+            throw new Exception("syntax error: missing right paren");
+          }
+          tk = itr.next();
+          if (tk.getType() == Token.COMMA) {
+            if (!itr.hasNext()) {
+              throw new Exception("syntax error: missing next param");
+            }
+            tk = itr.next();
+            if (tk.getType() == Token.RPAREN) {
+              throw new Exception("syntax error: missing next param");
+            }
+          } else if (tk.getType() != Token.RPAREN) {
+            throw new Exception("syntax error: missing right param");
+          }
+        }
+        return functionCall;
+      }
     }
     
     throw new Exception("unsupported primary expression: " + tk);
