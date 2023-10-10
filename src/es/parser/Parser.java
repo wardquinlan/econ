@@ -8,7 +8,6 @@ import org.apache.commons.logging.LogFactory;
 
 import es.core.ESIterator;
 import es.evaluator.ESNode;
-import es.evaluator.Executor;
 import es.evaluator.SimpleStatement;
 import es.evaluator.Statement;
 
@@ -19,7 +18,13 @@ public class Parser {
     List<Statement> list = new ArrayList<Statement>();
     while (true) {
       list.add(parseStatement(tk, itr));
+      if (!itr.hasNext()) {
+        break;
+      }
+      tk = itr.next();
     }
+    ESIterator<Statement> statementItr = new ESIterator<Statement>(list);
+    return statementItr;
   }
   
   private Statement parseStatement(Token tk, ESIterator<Token> itr) throws Exception {
@@ -46,7 +51,7 @@ public class Parser {
       throw new Exception("syntax error");
     }
     SimpleStatement statement = new SimpleStatement();
-    statement.setNode(expr);
+    statement.setExpr(expr);
     return statement;
   }
 
