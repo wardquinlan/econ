@@ -1,7 +1,9 @@
 package es.parser;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -13,6 +15,11 @@ import es.evaluator.Statement;
 
 public class Parser {
   private static final Log log = LogFactory.getFactory().getInstance(Parser.class);
+  private static final Map<Integer, Integer> tokenNodeMap = new HashMap<Integer, Integer>();
+  static {
+    tokenNodeMap.put(Token.AND, ESNode.AND);
+    tokenNodeMap.put(Token.OR, ESNode.OR);
+  }
 
   public ESIterator<Statement> parse(Token tk, ESIterator<Token> itr) throws Exception {
     List<Statement> list = new ArrayList<Statement>();
@@ -62,14 +69,14 @@ public class Parser {
         return val1;
       }
       if (itr.peek().getType() == Token.AND || itr.peek().getType() == Token.OR) {
-        itr.next();
+        Token tkOp = itr.next();
         if (!itr.hasNext()) {
           log.error("missing RHS");
           throw new Exception("syntax error");
         }
         tk = itr.next();
         Object val2 = primary(tk, itr);
-        ESNode node = new ESNode();
+        ESNode node = new ESNode(tokenNodeMap.get(tkOp.getType()));
         node.setLhs(val1);
         node.setRhs(val2);
         val1 = node;
