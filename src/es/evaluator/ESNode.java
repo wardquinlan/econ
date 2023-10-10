@@ -3,6 +3,9 @@ package es.evaluator;
 import java.util.HashMap;
 import java.util.Map;
 
+import es.core.Utils;
+import es.parser.Token;
+
 public class ESNode {
   public static final int PLUS     = 18; // +
   public static final int MINUS    = 19; // - 
@@ -15,6 +18,14 @@ public class ESNode {
     map.put(MINUS,   "MINUS");
     map.put(AND,     "AND");
     map.put(OR,      "OR");
+  }
+  
+  private static final Map<Integer, Operator> operatorMap = new HashMap<>();
+  static {
+    operatorMap.put(PLUS, new Plus());
+    operatorMap.put(MINUS, new Minus());
+    operatorMap.put(AND, new And());
+    operatorMap.put(OR, new Or());
   }
   
   private Object lhs;
@@ -43,6 +54,20 @@ public class ESNode {
   
   public int getType() {
     return type;
+  }
+  
+  public Object evaluate() throws Exception {
+    Operator operator = operatorMap.get(type);
+    Utils.ASSERT(operator != null, "operator not found");
+    Utils.ASSERT(rhs != null, "rhs is null");
+    Executor executor = new Executor(operator);
+    if (lhs == null) {
+      Utils.ASSERT(operator instanceof UnaryOperator, "operator is not unary");
+      return executor.exec(rhs);
+    }  else {
+      Utils.ASSERT(operator instanceof BinaryOperator, "operator is not binary");
+      return executor.exec(lhs, rhs);
+    }
   }
   
   @Override

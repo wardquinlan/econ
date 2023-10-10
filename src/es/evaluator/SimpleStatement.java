@@ -12,8 +12,13 @@ public class SimpleStatement implements Statement {
   }
   
   @Override
-  public void evaluate() {
+  public void evaluate() throws Exception {
     System.out.println(toString());
+    if (expr instanceof ESNode) {
+      ESNode node = (ESNode) expr;
+      Object result = node.evaluate();
+      System.out.println("Result: " + result);
+    }
   }
   
   @Override
