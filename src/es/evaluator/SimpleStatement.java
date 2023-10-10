@@ -10,4 +10,9 @@ public class SimpleStatement extends Statement {
   public void setExpr(Object expr) {
     this.expr = expr;
   }
+  
+  @Override
+  public String toString() {
+    return "{SimpleStatement: " + expr + "}";
+  }
 }
