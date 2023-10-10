@@ -1,6 +1,8 @@
 package es.evaluator;
 
 public class ESNode {
+  public static final int PLUS     = 18; // +
+  public static final int MINUS    = 19; // - 
   public static final int AND      = 26; // and
   public static final int OR       = 27; // or
   
