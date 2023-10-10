@@ -1,6 +1,5 @@
 /bin/
-/output/
-/output.stable/
+/output*/
 /classes/
 /.settings/
 .project
