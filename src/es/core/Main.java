@@ -20,6 +20,7 @@ import org.apache.commons.cli.ParseException;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import es.evaluator.Evaluator;
 import es.evaluator.Statement;
 import es.parser.OldParser;
 import es.parser.Parser;
@@ -124,10 +125,8 @@ public class Main {
             Parser p = new Parser();
             Token tk = itr.next();
             ESIterator<Statement> itr2 = p.parse(tk, itr);
-            while (itr2.hasNext()) {
-              Statement statement = itr2.next();
-              System.out.println(statement);
-            }
+            Evaluator e = new Evaluator();
+            e.evaluate(itr2);
           } else {
             OldParser parser = new OldParser(symbolTable);
             Token tk = itr.next();

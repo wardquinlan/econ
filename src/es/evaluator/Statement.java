@@ -1,4 +1,5 @@
 package es.evaluator;
 
-public abstract class Statement {
+public interface Statement {
+  public void evaluate();
 }

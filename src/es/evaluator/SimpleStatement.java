@@ -1,6 +1,6 @@
 package es.evaluator;
 
-public class SimpleStatement extends Statement {
+public class SimpleStatement implements Statement {
   private Object expr;
 
   public Object getExpr() {
@@ -9,6 +9,11 @@ public class SimpleStatement extends Statement {
 
   public void setExpr(Object expr) {
     this.expr = expr;
+  }
+  
+  @Override
+  public void evaluate() {
+    System.out.println(toString());
   }
   
   @Override
