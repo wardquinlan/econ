@@ -63,10 +63,13 @@ public class ESNode {
     Executor executor = new Executor(operator);
     if (lhs == null) {
       Utils.ASSERT(operator instanceof UnaryOperator, "operator is not unary");
-      return executor.exec(rhs);
+      Object val2 = (rhs instanceof ESNode ? ((ESNode) rhs).evaluate() : rhs);
+      return executor.exec(val2);
     }  else {
       Utils.ASSERT(operator instanceof BinaryOperator, "operator is not binary");
-      return executor.exec(lhs, rhs);
+      Object val1 = (lhs instanceof ESNode ? ((ESNode) lhs).evaluate() : lhs);
+      Object val2 = (rhs instanceof ESNode ? ((ESNode) rhs).evaluate() : rhs);
+      return executor.exec(val1, val2);
     }
   }
   
