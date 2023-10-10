@@ -125,7 +125,7 @@ public class Main {
             Parser p = new Parser();
             Token tk = itr.next();
             ESIterator<Statement> itr2 = p.parse(tk, itr);
-            Evaluator e = new Evaluator();
+            Evaluator e = new Evaluator(symbolTable);
             e.evaluate(itr2);
           } else {
             OldParser parser = new OldParser(symbolTable);

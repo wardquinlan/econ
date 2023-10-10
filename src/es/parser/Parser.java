@@ -1,5 +1,6 @@
 package es.parser;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -146,6 +147,7 @@ public class Parser {
     // TODO: can probably remove FUNC altogether
     if (tk.getType() == Token.SYMBOL || tk.getType() == Token.FUNC) {
       String symbolName = (String) tk.getValue();
+      File file = (File) tk.getFile();
       if (itr.hasNext() && itr.peek().getType() == Token.LPAREN) {
         itr.next();
         if (!itr.hasNext()) {
@@ -154,6 +156,7 @@ public class Parser {
         }
         tk = itr.next();
         FunctionCall functionCall = new FunctionCall(symbolName);
+        functionCall.setFile(file);
         while (true) {
           if (tk.getType() == Token.RPAREN) {
             break;

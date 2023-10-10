@@ -1,8 +1,10 @@
 package es.evaluator;
 
+import es.parser.SymbolTable;
+
 public class FunctionDeclaration implements Statement {
   @Override
-  public void evaluate() {
+  public void evaluate(SymbolTable symbolTable) {
   }
   
   @Override
