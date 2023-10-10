@@ -10,6 +10,7 @@ import org.apache.commons.logging.LogFactory;
 
 import es.core.ESIterator;
 import es.evaluator.ESNode;
+import es.evaluator.Executor;
 import es.evaluator.SimpleStatement;
 import es.evaluator.Statement;
 
@@ -111,6 +112,37 @@ public class Parser {
     if (tk.getType() == Token.INTEGER || tk.getType() == Token.REAL || tk.getType() == Token.STRING || tk.getType() == Token.BOOLEAN) {
       return tk.getValue();
     }
+    if (tk.getType() == Token.PLUS) {
+      if (!itr.hasNext()) {
+        throw new Exception("syntax error: missing RHS");
+      }
+      tk = itr.next();
+      Object val2 = primary(tk, itr);
+      ESNode node = new ESNode(ESNode.UPLUS);
+      node.setRhs(val2);
+      return node;
+    }
+    if (tk.getType() == Token.MINUS) {
+      if (!itr.hasNext()) {
+        throw new Exception("syntax error: missing RHS");
+      }
+      tk = itr.next();
+      Object val2 = primary(tk, itr);
+      ESNode node = new ESNode(ESNode.UMINUS);
+      node.setRhs(val2);
+      return node;
+    }
+    if (tk.getType() == Token.NOT) {
+      if (!itr.hasNext()) {
+        throw new Exception("syntax error: missing RHS");
+      }
+      tk = itr.next();
+      Object val2 = primary(tk, itr);
+      ESNode node = new ESNode(ESNode.UNOT);
+      node.setRhs(val2);
+      return node;
+    }
+    
     throw new Exception("unsupported primary expression: " + tk);
   }
 }

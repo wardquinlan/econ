@@ -4,13 +4,15 @@ import java.util.HashMap;
 import java.util.Map;
 
 import es.core.Utils;
-import es.parser.Token;
 
 public class ESNode {
-  public static final int PLUS     = 18; // +
-  public static final int MINUS    = 19; // - 
-  public static final int AND      = 26; // and
-  public static final int OR       = 27; // or
+  public static final int PLUS     = 0; // +
+  public static final int MINUS    = 1; // - 
+  public static final int AND      = 2; // and
+  public static final int OR       = 3; // or
+  public static final int UPLUS    = 5; // +
+  public static final int UMINUS   = 6; // -
+  public static final int UNOT     = 7; // !
 
   public static Map<Integer, String> map = new HashMap<Integer, String>();
   static {
@@ -18,6 +20,9 @@ public class ESNode {
     map.put(MINUS,   "MINUS");
     map.put(AND,     "AND");
     map.put(OR,      "OR");
+    map.put(UPLUS,   "UPLUS");
+    map.put(UMINUS,  "UMINUS");
+    map.put(UNOT,    "UNOT");
   }
   
   private static final Map<Integer, Operator> operatorMap = new HashMap<>();
@@ -26,6 +31,9 @@ public class ESNode {
     operatorMap.put(MINUS, new Minus());
     operatorMap.put(AND, new And());
     operatorMap.put(OR, new Or());
+    operatorMap.put(UPLUS, new UPlus());
+    operatorMap.put(UMINUS, new UMinus());
+    operatorMap.put(UNOT, new UNot());
   }
   
   private Object lhs;
