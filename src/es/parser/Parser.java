@@ -182,6 +182,8 @@ public class Parser {
           }
         }
         return functionCall;
+      } else {
+        return new Symbol(name);
       }
     }
     

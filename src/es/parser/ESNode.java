@@ -93,8 +93,8 @@ public class ESNode implements Evaluable {
     Utils.ASSERT(lhs instanceof Symbol, "lhs is not a Symbol");
     Symbol symbol = (Symbol) lhs;
     Object val = (rhs instanceof Evaluable ? ((Evaluable) rhs).evaluate(symbolTable) : rhs);
-    symbol.setValue(val);
-    symbolTable.put(symbol.getName(), symbol);
+    Symbol symbolNew = new Symbol(symbol.getName(), val);
+    symbolTable.put(symbolNew.getName(), symbolNew);
     return val;
   }
   
