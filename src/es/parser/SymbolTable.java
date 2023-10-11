@@ -5,8 +5,6 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-import es.evaluator.Symbol;
-
 public class SymbolTable {
   private SymbolTable parent;
   private Map<String, Symbol> map = new HashMap<String, Symbol>();

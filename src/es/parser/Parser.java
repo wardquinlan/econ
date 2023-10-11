@@ -9,11 +9,6 @@ import java.util.Map;
 import es.core.ESIterator;
 import es.core.TimeSeries;
 import es.core.TimeSeriesData;
-import es.evaluator.ESNode;
-import es.evaluator.FunctionCall;
-import es.evaluator.SimpleStatement;
-import es.evaluator.Statement;
-import es.evaluator.Symbol;
 
 public class Parser {
   private static final Map<Integer, Integer> tokenNodeMap = new HashMap<Integer, Integer>();

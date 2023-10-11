@@ -19,7 +19,7 @@ import es.gui.Lock;
 import es.gui.Panel;
 import es.gui.Series;
 import es.gui.XMLParser;
-import es.evaluator.Symbol;
+import es.parser.Symbol;
 import es.parser.SymbolTable;
 
 public class Plot implements Command {

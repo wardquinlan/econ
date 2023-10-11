@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import es.core.Utils;
-import es.evaluator.Symbol;
+import es.parser.Symbol;
 import es.parser.SymbolTable;
 
 public class GPut implements Command {

@@ -20,13 +20,13 @@ import org.apache.commons.cli.ParseException;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import es.evaluator.Evaluator;
-import es.evaluator.Statement;
+import es.parser.Evaluator;
 import es.parser.OldParser;
 import es.parser.Parser;
+import es.parser.Statement;
 import es.parser.SymbolTable;
 import es.parser.Token;
-import es.tokenizer.Tokenizer;
+import es.parser.Tokenizer;
 
 public class Main {
   private static final Log log = LogFactory.getFactory().getInstance(Main.class);

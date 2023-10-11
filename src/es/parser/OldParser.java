@@ -13,25 +13,6 @@ import es.core.ESIterator;
 import es.core.TimeSeries;
 import es.core.TimeSeriesData;
 import es.core.Utils;
-import es.evaluator.And;
-import es.evaluator.Div;
-import es.evaluator.Eq;
-import es.evaluator.Executor;
-import es.evaluator.Exp;
-import es.evaluator.Gt;
-import es.evaluator.Gte;
-import es.evaluator.Lt;
-import es.evaluator.Lte;
-import es.evaluator.Minus;
-import es.evaluator.Mult;
-import es.evaluator.Ne;
-import es.evaluator.Operator;
-import es.evaluator.Or;
-import es.evaluator.Plus;
-import es.evaluator.UMinus;
-import es.evaluator.UNot;
-import es.evaluator.UPlus;
-import es.evaluator.UnaryOperator;
 
 public class OldParser {
   /*
