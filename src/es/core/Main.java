@@ -106,9 +106,11 @@ public class Main {
         Tokenizer tokenizer = new Tokenizer(file, 0);
         ESIterator<Token> itr = tokenizer.tokenize();
         if (itr.hasNext()) {
-          //OldParser parser = new OldParser(symbolTable);
-          //Token tk = itr.next();
-          //parser.parse(tk, itr);
+          Parser p = new Parser();
+          Token tk = itr.next();
+          ESIterator<Statement> itr2 = p.parse(tk, itr);
+          Evaluator e = new Evaluator(symbolTable);
+          e.evaluate(itr2);
         }
       } else {
         log.warn("skipping the loading of .es...");
@@ -132,9 +134,11 @@ public class Main {
         Tokenizer tokenizer = new Tokenizer(new ByteArrayInputStream(value.getBytes(StandardCharsets.UTF_8)));
         ESIterator<Token> itr = tokenizer.tokenize();
         if (itr.hasNext()) {
-          //OldParser parser = new OldParser(symbolTable);
-          //Token tk = itr.next();
-          //parser.parse(tk, itr);
+          Parser p = new Parser();
+          Token tk = itr.next();
+          ESIterator<Statement> itr2 = p.parse(tk, itr);
+          Evaluator e = new Evaluator(symbolTable);
+          e.evaluate(itr2);
         }
       } else {
         BufferedReader rdr = new BufferedReader(new InputStreamReader(System.in));
@@ -154,9 +158,11 @@ public class Main {
             Tokenizer tokenizer = new Tokenizer(new ByteArrayInputStream(line.getBytes(StandardCharsets.UTF_8)));
             ESIterator<Token> itr = tokenizer.tokenize();
             if (itr.hasNext()) {
-              //OldParser parser = new OldParser(symbolTable);
-              //Token tk = itr.next();
-              //parser.parse(tk, itr);
+              Parser p = new Parser();
+              Token tk = itr.next();
+              ESIterator<Statement> itr2 = p.parse(tk, itr);
+              Evaluator e = new Evaluator(symbolTable);
+              e.evaluate(itr2);
             }
           } catch(Exception e) {
             log.error(e);
