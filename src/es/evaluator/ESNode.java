@@ -14,6 +14,7 @@ public class ESNode implements Evaluable {
   public static final int UPLUS    = 5; // +
   public static final int UMINUS   = 6; // -
   public static final int UNOT     = 7; // !
+  public static final int ASSIGN   = 8; // =
 
   public static Map<Integer, String> map = new HashMap<Integer, String>();
   static {
@@ -24,6 +25,7 @@ public class ESNode implements Evaluable {
     map.put(UPLUS,   "UPLUS");
     map.put(UMINUS,  "UMINUS");
     map.put(UNOT,    "UNOT");
+    map.put(ASSIGN,  "ASSIGN");
   }
   
   private static final Map<Integer, Operator> operatorMap = new HashMap<>();
