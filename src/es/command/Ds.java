@@ -68,6 +68,7 @@ public class Ds implements Command {
       throw new Exception("wrong number of params in function call (must be 1)");
     }
     if (function.getTokenList().size() > 0) {
+      /*
       List<TimeSeries> list = TimeSeriesDAO.getInstance().listSeries();
       for (TimeSeries timeSeries: list) {
         SymbolTable childSymbolTable = new SymbolTable(symbolTable);
@@ -80,6 +81,7 @@ public class Ds implements Command {
           throw new Exception("cannot return anything during iterations: " + returnResult.getValue());
         }
       }
+      */
     }
     return null;
   }

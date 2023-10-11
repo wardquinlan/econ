@@ -34,6 +34,7 @@ import es.evaluator.UPlus;
 import es.evaluator.UnaryOperator;
 
 public class OldParser {
+  /*
   private static final Log log = LogFactory.getFactory().getInstance(OldParser.class);
   private static final Map<Integer, Operator> operatorMap = new HashMap<>();
   static {
@@ -162,12 +163,6 @@ public class OldParser {
   @SuppressWarnings("unchecked")
   private void parseFunction(Token tk, ESIterator<Token> itr) throws Exception {
     Function function = new Function();
-    /* do this later
-    if (!isGlobalScope()) {
-      log.error("can only define a function in the global scope");
-      throw new Exception("syntax error");
-    }
-    */
     if (!itr.hasNext()) {
       log.error("missing function name");
       throw new Exception("syntax error");
@@ -569,7 +564,6 @@ public class OldParser {
       }
       return val;
     }
-    /*
     if (tk.getType() == Token.FUNC) {
       String funcName = (String) tk.getValue();
       if (!itr.hasNext()) {
@@ -614,7 +608,7 @@ public class OldParser {
       Utils.ASSERT(file != null, "file is null");
       return functionCaller.invokeFunction(funcName, symbolTable, file, params);
     }
-    */
     throw new Exception("unsupported primary expression: " + tk);
   }
+  */
 }

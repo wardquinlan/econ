@@ -84,6 +84,7 @@ public class Cat implements Command {
         }
       }
       for (String name: list) {
+        /*
         TimeSeries timeSeries = (TimeSeries) symbolTable.get(name).getValue();
         SymbolTable childSymbolTable = new SymbolTable(symbolTable);
         childSymbolTable.localPut(function.getParams().get(0), new Symbol(timeSeries));
@@ -94,6 +95,7 @@ public class Cat implements Command {
         if (returnResult != null && returnResult.getValue() != null) {
           throw new Exception("cannot return anything during iterations: " + returnResult.getValue());
         }
+        */
       }
     }
     return null;
