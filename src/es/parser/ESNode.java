@@ -68,6 +68,9 @@ public class ESNode implements Evaluable {
   
   @Override
   public Object evaluate(SymbolTable symbolTable) throws Exception {
+    if (type == ASSIGN) {
+      return evaluateAssignment(symbolTable);
+    }
     Operator operator = operatorMap.get(type);
     Utils.ASSERT(operator != null, "operator not found");
     Utils.ASSERT(rhs != null, "rhs is null");
@@ -82,6 +85,17 @@ public class ESNode implements Evaluable {
       Object val2 = (rhs instanceof Evaluable ? ((Evaluable) rhs).evaluate(symbolTable) : rhs);
       return executor.exec(val1, val2);
     }
+  }
+  
+  private Object evaluateAssignment(SymbolTable symbolTable) throws Exception {
+    Utils.ASSERT(lhs != null, "lhs is null");
+    Utils.ASSERT(rhs != null, "rhs is null");
+    Utils.ASSERT(lhs instanceof Symbol, "lhs is not a Symbol");
+    Symbol symbol = (Symbol) lhs;
+    Object val = (rhs instanceof Evaluable ? ((Evaluable) rhs).evaluate(symbolTable) : rhs);
+    symbol.setValue(val);
+    symbolTable.put(symbol.getName(), symbol);
+    return val;
   }
   
   @Override
