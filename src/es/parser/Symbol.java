@@ -1,5 +1,7 @@
 package es.parser;
 
+// Note that the concept of a symbol's "value" only has meaning during the evaluation phase.  However, a symbol 
+// can still be created by the parser to indicate that a symbol was found.
 public class Symbol implements Evaluable {
   private String name;
   private Object value;
