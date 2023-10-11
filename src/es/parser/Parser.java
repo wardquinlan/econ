@@ -7,10 +7,13 @@ import java.util.List;
 import java.util.Map;
 
 import es.core.ESIterator;
+import es.core.TimeSeries;
+import es.core.TimeSeriesData;
 import es.evaluator.ESNode;
 import es.evaluator.FunctionCall;
 import es.evaluator.SimpleStatement;
 import es.evaluator.Statement;
+import es.evaluator.Symbol;
 
 public class Parser {
   private static final Map<Integer, Integer> tokenNodeMap = new HashMap<Integer, Integer>();
@@ -140,15 +143,27 @@ public class Parser {
       return node;
     }
     if (tk.getType() == Token.SYMBOL) {
-      String symbolName = (String) tk.getValue();
-      File file = (File) tk.getFile();
-      if (itr.hasNext() && itr.peek().getType() == Token.LPAREN) {
+      String name = (String) tk.getValue();
+      if (itr.hasNext() && itr.peek().getType() == Token.ASSIGN) {
+        itr.next();
+        if (!itr.hasNext()) {
+          throw new Exception("syntax error: missing RHS on ASSIGN");
+        }
+        tk = itr.next();
+        Object val = expression(tk, itr);
+        Symbol symbol = new Symbol(name);
+        ESNode node = new ESNode(ESNode.ASSIGN);
+        node.setLhs(symbol);
+        node.setRhs(val);
+        return node;
+      } else if (itr.hasNext() && itr.peek().getType() == Token.LPAREN) {
+        File file = (File) tk.getFile();
         itr.next();
         if (!itr.hasNext()) {
           throw new Exception("syntax error: missing right paren");
         }
         tk = itr.next();
-        FunctionCall functionCall = new FunctionCall(symbolName);
+        FunctionCall functionCall = new FunctionCall(name);
         functionCall.setFile(file);
         while (true) {
           if (tk.getType() == Token.RPAREN) {
