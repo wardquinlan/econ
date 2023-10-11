@@ -4,7 +4,11 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FunctionCall {
+import es.core.Utils;
+import es.parser.FunctionCaller;
+import es.parser.SymbolTable;
+
+public class FunctionCall implements Evaluable {
   private String name;
   private List<Object> params = new ArrayList<>();
   private File file;
@@ -33,6 +37,14 @@ public class FunctionCall {
     this.file = file;
   }
 
+  @Override
+  public Object evaluate(SymbolTable symbolTable) throws Exception {
+    Utils.ASSERT(file != null, "file is null");
+    FunctionCaller functionCaller = new FunctionCaller();
+    Object result = functionCaller.invokeFunction(name, symbolTable, file, params);
+    return result;
+  }
+  
   @Override
   public String toString() {
     return "{FunctionCall: " + name + "}";

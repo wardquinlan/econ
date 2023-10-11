@@ -4,8 +4,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 import es.core.Utils;
+import es.parser.SymbolTable;
 
-public class ESNode {
+public class ESNode implements Evaluable {
   public static final int PLUS     = 0; // +
   public static final int MINUS    = 1; // - 
   public static final int AND      = 2; // and
@@ -64,19 +65,20 @@ public class ESNode {
     return type;
   }
   
-  public Object evaluate() throws Exception {
+  @Override
+  public Object evaluate(SymbolTable symbolTable) throws Exception {
     Operator operator = operatorMap.get(type);
     Utils.ASSERT(operator != null, "operator not found");
     Utils.ASSERT(rhs != null, "rhs is null");
     Executor executor = new Executor(operator);
     if (lhs == null) {
       Utils.ASSERT(operator instanceof UnaryOperator, "operator is not unary");
-      Object val2 = (rhs instanceof ESNode ? ((ESNode) rhs).evaluate() : rhs);
+      Object val2 = (rhs instanceof ESNode ? ((ESNode) rhs).evaluate(symbolTable) : rhs);
       return executor.exec(val2);
     }  else {
       Utils.ASSERT(operator instanceof BinaryOperator, "operator is not binary");
-      Object val1 = (lhs instanceof ESNode ? ((ESNode) lhs).evaluate() : lhs);
-      Object val2 = (rhs instanceof ESNode ? ((ESNode) rhs).evaluate() : rhs);
+      Object val1 = (lhs instanceof ESNode ? ((ESNode) lhs).evaluate(symbolTable) : lhs);
+      Object val2 = (rhs instanceof ESNode ? ((ESNode) rhs).evaluate(symbolTable) : rhs);
       return executor.exec(val1, val2);
     }
   }
