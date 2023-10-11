@@ -29,7 +29,6 @@ public class Token {
   public static final int DIV      = 21; // /
   public static final int EXP      = 22; // ^
   public static final int INC      = 23; // include
-  public static final int FUNC     = 24; // function()
   public static final int CONST    = 25; // const
   public static final int AND      = 26; // and
   public static final int OR       = 27; // or
@@ -68,7 +67,6 @@ public class Token {
     map.put(DIV,     "DIV");
     map.put(EXP,     "EXP");
     map.put(INC,     "INC");
-    map.put(FUNC,    "FUNC");
     map.put(CONST,   "CONST");
     map.put(AND,     "AND");
     map.put(OR,      "OR");

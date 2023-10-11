@@ -144,8 +144,7 @@ public class Parser {
       node.setRhs(val2);
       return node;
     }
-    // TODO: can probably remove FUNC altogether
-    if (tk.getType() == Token.SYMBOL || tk.getType() == Token.FUNC) {
+    if (tk.getType() == Token.SYMBOL) {
       String symbolName = (String) tk.getValue();
       File file = (File) tk.getFile();
       if (itr.hasNext() && itr.peek().getType() == Token.LPAREN) {

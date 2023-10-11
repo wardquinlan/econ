@@ -81,9 +81,6 @@ public class Tokenizer {
             tk = new Token(Token.THROW);
           } else if (sb.toString().equals("return")) {
             tk = new Token(Token.RETURN);
-          } else if (functionCaller.isFunction(sb.toString())) {
-            tk = new Token(Token.FUNC);
-            tk.setFile(file); // set the file so that the XML parser is able to calculate the relative path
           } else if (sb.toString().equals("and")) {
             tk = new Token(Token.AND);
           } else if (sb.toString().equals("or")) {
@@ -96,6 +93,7 @@ public class Tokenizer {
             tk.setValue(true);
           } else {
             tk = new Token(Token.SYMBOL);
+            tk.setFile(file); // set the file so that the XML parser is able to calculate the relative path
           }
           if (tk.getType() != Token.BOOLEAN) { 
             tk.setValue(sb.toString());

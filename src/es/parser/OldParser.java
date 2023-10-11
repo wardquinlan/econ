@@ -569,6 +569,7 @@ public class OldParser {
       }
       return val;
     }
+    /*
     if (tk.getType() == Token.FUNC) {
       String funcName = (String) tk.getValue();
       if (!itr.hasNext()) {
@@ -613,6 +614,7 @@ public class OldParser {
       Utils.ASSERT(file != null, "file is null");
       return functionCaller.invokeFunction(funcName, symbolTable, file, params);
     }
+    */
     throw new Exception("unsupported primary expression: " + tk);
   }
 }
