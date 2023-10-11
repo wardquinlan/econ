@@ -15,11 +15,9 @@ public class SimpleStatement implements Statement {
   
   @Override
   public void evaluate(SymbolTable symbolTable) throws Exception {
-    System.out.println(toString());
     if (expr instanceof Evaluable) {
       Evaluable evaluable = (Evaluable) expr;
-      Object result = evaluable.evaluate(symbolTable);
-      System.out.println("Result: " + result);
+      evaluable.evaluate(symbolTable);
     }
   }
   

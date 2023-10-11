@@ -41,10 +41,10 @@ public class FunctionCall implements Evaluable {
   public Object evaluate(SymbolTable symbolTable) throws Exception {
     Utils.ASSERT(file != null, "file is null");
     List<Object> params2 = new ArrayList<>();
-    FunctionCaller functionCaller = new FunctionCaller();
     for (Object param: params) {
       params2.add((param instanceof Evaluable ? ((Evaluable) param).evaluate(symbolTable) : param));
     }
+    FunctionCaller functionCaller = new FunctionCaller();
     Object result = functionCaller.invokeFunction(name, symbolTable, file, params2);
     return result;
   }

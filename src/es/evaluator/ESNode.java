@@ -73,12 +73,12 @@ public class ESNode implements Evaluable {
     Executor executor = new Executor(operator);
     if (lhs == null) {
       Utils.ASSERT(operator instanceof UnaryOperator, "operator is not unary");
-      Object val2 = (rhs instanceof ESNode ? ((ESNode) rhs).evaluate(symbolTable) : rhs);
+      Object val2 = (rhs instanceof Evaluable ? ((Evaluable) rhs).evaluate(symbolTable) : rhs);
       return executor.exec(val2);
     }  else {
       Utils.ASSERT(operator instanceof BinaryOperator, "operator is not binary");
-      Object val1 = (lhs instanceof ESNode ? ((ESNode) lhs).evaluate(symbolTable) : lhs);
-      Object val2 = (rhs instanceof ESNode ? ((ESNode) rhs).evaluate(symbolTable) : rhs);
+      Object val1 = (lhs instanceof Evaluable ? ((Evaluable) lhs).evaluate(symbolTable) : lhs);
+      Object val2 = (rhs instanceof Evaluable ? ((Evaluable) rhs).evaluate(symbolTable) : rhs);
       return executor.exec(val1, val2);
     }
   }
