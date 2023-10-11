@@ -12,7 +12,6 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import es.core.ESIterator;
-import es.parser.FunctionCaller;
 import es.parser.Token;
 
 public class Tokenizer {
@@ -21,7 +20,6 @@ public class Tokenizer {
   private int level;
   private String basename;
   private LookAheadReader rdr;
-  private FunctionCaller functionCaller = new FunctionCaller();
   private static final int MAX_LEVEL = 8;
   
   public Tokenizer(InputStream inputStream) throws Exception {
