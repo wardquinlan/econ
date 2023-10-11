@@ -6,18 +6,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-
 import es.core.ESIterator;
 import es.evaluator.ESNode;
-import es.evaluator.Executor;
 import es.evaluator.FunctionCall;
 import es.evaluator.SimpleStatement;
 import es.evaluator.Statement;
 
 public class Parser {
-  private static final Log log = LogFactory.getFactory().getInstance(Parser.class);
   private static final Map<Integer, Integer> tokenNodeMap = new HashMap<Integer, Integer>();
   static {
     tokenNodeMap.put(Token.AND, ESNode.AND);
@@ -150,8 +145,7 @@ public class Parser {
       if (itr.hasNext() && itr.peek().getType() == Token.LPAREN) {
         itr.next();
         if (!itr.hasNext()) {
-          log.error("missing right paren");
-          throw new Exception("syntax error");
+          throw new Exception("syntax error: missing right paren");
         }
         tk = itr.next();
         FunctionCall functionCall = new FunctionCall(symbolName);
