@@ -146,9 +146,8 @@ public class Parser {
         }
         tk = itr.next();
         Object val = expression(tk, itr);
-        Symbol symbol = new Symbol(name);
         ESNode node = new ESNode(ESNode.ASSIGN);
-        node.setLhs(symbol);
+        node.setLhs(new Symbol(name));
         node.setRhs(val);
         return node;
       } else if (itr.hasNext() && itr.peek().getType() == Token.LPAREN) {
