@@ -121,17 +121,11 @@ public class Main {
         Tokenizer tokenizer = new Tokenizer(new File(args[0]), 0);
         ESIterator<Token> itr = tokenizer.tokenize();
         if (itr.hasNext()) {
-          if (Settings.getInstance().testFunctions()) {
-            Parser p = new Parser();
-            Token tk = itr.next();
-            ESIterator<Statement> itr2 = p.parse(tk, itr);
-            Evaluator e = new Evaluator(symbolTable);
-            e.evaluate(itr2);
-          } else {
-            OldParser parser = new OldParser(symbolTable);
-            Token tk = itr.next();
-            parser.parse(tk, itr);
-          }
+          Parser p = new Parser();
+          Token tk = itr.next();
+          ESIterator<Statement> itr2 = p.parse(tk, itr);
+          Evaluator e = new Evaluator(symbolTable);
+          e.evaluate(itr2);
         }
       } else if (cmd.hasOption("command")) {
         String value = cmd.getOptionValue("command");
