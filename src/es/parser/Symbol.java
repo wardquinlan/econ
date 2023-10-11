@@ -37,7 +37,11 @@ public class Symbol implements Evaluable {
   
   @Override
   public Object evaluate(SymbolTable symbolTable) throws Exception {
-    return symbolTable.get(name).getValue();
+    Symbol symbol = symbolTable.get(name);
+    if (symbol == null) {
+      throw new Exception("symbol not found: " + name);
+    }
+    return symbol.getValue();
   }
   
   @Override
