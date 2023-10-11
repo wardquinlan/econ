@@ -44,9 +44,14 @@ public class Parser {
     if (tokens.size() == 0) {
       return new SimpleStatement();
     }
+    Object expr;
     ESIterator<Token> itr2 = new ESIterator<Token>(tokens);
     Token tk2 = itr2.next();
-    Object expr = expression(tk2, itr2);
+    if (tk2.getType() == Token.CONST) {
+      expr = parseConst(tk2, itr2);
+    } else {
+      expr = expression(tk2, itr2);
+    }
     if (itr2.hasNext()) {
       throw new Exception("syntax error: unexpected symbol at end of line");
     }
@@ -55,6 +60,33 @@ public class Parser {
     return statement;
   }
 
+  private Object parseConst(Token tk, ESIterator<Token> itr) throws Exception {
+    if (!itr.hasNext()) {
+      throw new Exception("syntax error: invalid const declaration");
+    }
+    tk = itr.next();
+    if (tk.getType() != Token.SYMBOL) {
+      throw new Exception("syntax error: invalid const declaration");
+    }
+    String name = (String) tk.getValue();
+    if (!itr.hasNext()) {
+      throw new Exception("syntax error: invalid const declaration");
+    }
+    tk = itr.next();
+    if (tk.getType() != Token.ASSIGN) {
+      throw new Exception("syntax error: invalid const declaration");
+    }
+    if (!itr.hasNext()) {
+      throw new Exception("syntax error: invalid const declaration");
+    }
+    tk = itr.next();
+    Object val = expression(tk, itr);
+    ESNode node = new ESNode(ESNode.ASSIGN);
+    node.setLhs(new Symbol(name, null, true));
+    node.setRhs(val);
+    return node;
+  }
+  
   private Object expression(Token tk, ESIterator<Token> itr) throws Exception {
     Object val1 = simpleExpression(tk, itr);
     while (true) {
