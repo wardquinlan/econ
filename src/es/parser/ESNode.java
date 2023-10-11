@@ -3,6 +3,8 @@ package es.parser;
 import java.util.HashMap;
 import java.util.Map;
 
+import es.core.TimeSeries;
+import es.core.TimeSeriesData;
 import es.core.Utils;
 
 public class ESNode implements Evaluable {
@@ -93,6 +95,28 @@ public class ESNode implements Evaluable {
     Utils.ASSERT(lhs instanceof Symbol, "lhs is not a Symbol");
     Symbol symbol = (Symbol) lhs;
     Object val = (rhs instanceof Evaluable ? ((Evaluable) rhs).evaluate(symbolTable) : rhs);
+    if (val instanceof TimeSeries) {
+      // need to make a copy of TimeSeries
+      TimeSeries timeSeries1 = (TimeSeries) val;
+      TimeSeries timeSeries = new TimeSeries(timeSeries1.getType());
+      for (TimeSeriesData timeSeriesData1: timeSeries1.getTimeSeriesDataList()) {
+        TimeSeriesData timeSeriesData = new TimeSeriesData();
+        timeSeriesData.setId(timeSeriesData1.getId());
+        timeSeriesData.setDate(timeSeriesData1.getDate());
+        timeSeriesData.setValue(timeSeriesData1.getValue());
+        timeSeries.add(timeSeriesData);
+      }
+      if (timeSeries1.isBase()) {
+        // copy Id / Name metadata for 'base' series
+        timeSeries.setId(timeSeries1.getId());
+        timeSeries.setName(timeSeries1.getName());
+      }
+      timeSeries.setSource(timeSeries1.getSource());
+      timeSeries.setSourceId(timeSeries1.getSourceId());
+      timeSeries.setNotes(timeSeries1.getNotes());
+      timeSeries.setTitle(timeSeries1.getTitle());
+      val = timeSeries;
+    }    
     Symbol symbolNew = new Symbol(symbol.getName(), val);
     symbolTable.put(symbolNew.getName(), symbolNew);
     return val;
