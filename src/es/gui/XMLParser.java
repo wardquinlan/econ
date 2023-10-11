@@ -15,7 +15,7 @@ import org.w3c.dom.NodeList;
 
 import es.core.TimeSeries;
 import es.core.Utils;
-import es.parser.Symbol;
+import es.evaluator.Symbol;
 import es.parser.SymbolTable;
 
 public class XMLParser {

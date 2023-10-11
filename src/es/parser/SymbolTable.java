@@ -5,7 +5,7 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-import es.core.Utils;
+import es.evaluator.Symbol;
 
 public class SymbolTable {
   private SymbolTable parent;

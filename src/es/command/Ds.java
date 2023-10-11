@@ -11,7 +11,7 @@ import es.core.Utils;
 import es.parser.Function;
 import es.parser.OldParser;
 import es.parser.ReturnResult;
-import es.parser.Symbol;
+import es.evaluator.Symbol;
 import es.parser.SymbolTable;
 import es.parser.Token;
 

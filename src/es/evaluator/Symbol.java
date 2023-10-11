@@ -8,10 +8,16 @@ public class Symbol implements Evaluable {
   private boolean constant = false;
   
   public Symbol(String name) {
-    this.name = name;
+    this(name, null);
   }
   
-  public Symbol(String name, boolean constant) {
+  public Symbol(String name, Object value) {
+    this(name, value, false);
+  }
+  
+  public Symbol(String name, Object value, boolean constant) {
+    this.name = name;
+    this.value = value;
     this.constant = constant;
   }
   

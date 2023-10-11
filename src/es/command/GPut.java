@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import es.core.Utils;
-import es.parser.Symbol;
+import es.evaluator.Symbol;
 import es.parser.SymbolTable;
 
 public class GPut implements Command {
@@ -35,7 +35,7 @@ public class GPut implements Command {
     String symbolName = (String) params.get(0);
     validateSymbolName(symbolName);
     Object value = params.get(1);
-    symbolTable.globalPut(symbolName, new Symbol(value));
+    symbolTable.globalPut(symbolName, new Symbol(symbolName, value));
     return null;
   }
   
