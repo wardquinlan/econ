@@ -109,8 +109,11 @@ public class Main {
           Parser p = new Parser();
           Token tk = itr.next();
           ESIterator<Statement> itr2 = p.parse(tk, itr);
-          Evaluator e = new Evaluator(symbolTable);
-          e.evaluate(itr2);
+          if (itr2.hasNext()) {
+            Evaluator e = new Evaluator(symbolTable);
+            Statement statement = itr2.next();
+            e.evaluate(statement, itr2);
+          }
         }
       } else {
         log.warn("skipping the loading of .es...");
@@ -126,8 +129,11 @@ public class Main {
           Parser p = new Parser();
           Token tk = itr.next();
           ESIterator<Statement> itr2 = p.parse(tk, itr);
-          Evaluator e = new Evaluator(symbolTable);
-          e.evaluate(itr2);
+          if (itr2.hasNext()) {
+            Evaluator e = new Evaluator(symbolTable);
+            Statement statement = itr2.next();
+            e.evaluate(statement, itr2);
+          }
         }
       } else if (cmd.hasOption("command")) {
         String value = cmd.getOptionValue("command");
@@ -137,8 +143,11 @@ public class Main {
           Parser p = new Parser();
           Token tk = itr.next();
           ESIterator<Statement> itr2 = p.parse(tk, itr);
-          Evaluator e = new Evaluator(symbolTable);
-          e.evaluate(itr2);
+          if (itr2.hasNext()) {
+            Evaluator e = new Evaluator(symbolTable);
+            Statement statement = itr2.next();
+            e.evaluate(statement, itr2);
+          }
         }
       } else {
         BufferedReader rdr = new BufferedReader(new InputStreamReader(System.in));
@@ -161,8 +170,11 @@ public class Main {
               Parser p = new Parser();
               Token tk = itr.next();
               ESIterator<Statement> itr2 = p.parse(tk, itr);
-              Evaluator e = new Evaluator(symbolTable);
-              e.evaluate(itr2);
+              if (itr2.hasNext()) {
+                Evaluator e = new Evaluator(symbolTable);
+                Statement statement = itr2.next();
+                e.evaluate(statement, itr2);
+              }
             }
           } catch(Exception e) {
             log.error(e);

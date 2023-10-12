@@ -180,9 +180,12 @@ public class FunctionCaller {
     for (int i = 0; i < params.size(); i++) {
       childSymbolTable.localPut(functionDeclaration.getParams().get(i), new Symbol(functionDeclaration.getParams().get(i), params.get(i)));
     }
-    Evaluator e = new Evaluator(childSymbolTable);
     ESIterator<Statement> itr = new ESIterator<>(functionDeclaration.getStatements());
-    e.evaluate(itr);
+    if (itr.hasNext()) {
+      Evaluator e = new Evaluator(childSymbolTable);
+      Statement statement = itr.next();
+      e.evaluate(statement, itr);
+    }
     return null;
   }
 }
