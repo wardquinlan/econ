@@ -1,7 +1,4 @@
-connect('localhost', 'es', 'es');
-S = load(500);
-print(S);
-T = S;
-print(T);
-T = S + 1000;
-print(T);
+ A = 5;
+print("A = " + A);
+A = 6;
+#A = 7;

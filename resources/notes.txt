@@ -75,3 +75,7 @@ Statement
 
 Note that my Parser today is a combination of a Parser and an Evaluator.
 
+-----
+
+I think I will need to do something about comparing TimeSeries.  It breaks the semantics of compares right now.
+ 

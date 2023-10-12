@@ -35,7 +35,6 @@ public class Token {
   public static final int BOOLEAN  = 28; // Boolean
   public static final int NOT      = 29; // !
   public static final int UFUNC    = 30; // user-defined function
-  public static final int BLOCK    = 31; // BLOCK
   public static final int RETURN   = 32; // return
   public static final int IF       = 33; // if
   public static final int ELSE     = 34; // else
@@ -72,7 +71,6 @@ public class Token {
     map.put(OR,      "OR");
     map.put(BOOLEAN, "BOOLEAN");
     map.put(UFUNC,   "UFUNC");
-    map.put(BLOCK,   "BLOCK");
     map.put(RETURN,  "RETURN");
     map.put(IF,      "IF");
     map.put(ELSE,    "ELSE");

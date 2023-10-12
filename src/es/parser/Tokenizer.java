@@ -268,47 +268,6 @@ public class Tokenizer {
         listNew.add(tk);
       }
     }
-    ESIterator<Token> itr = new ESIterator<Token>(listNew);
-    if (itr.hasNext()) {
-      Token tk = itr.next();
-      itr = processBlocks(tk, itr);
-    }
-    return itr;
-  }
-  
-  private ESIterator<Token> processBlocks(Token tk, ESIterator<Token> itr) throws Exception {
-    List<Token> list = new ArrayList<Token>();
-    while (true) {
-      if (tk.getType() == Token.LBRACE) {
-        tk = processBlock(tk, itr);
-      }
-      list.add(tk);
-      if (!itr.hasNext()) {
-        break;
-      }
-      tk = itr.next();
-    }
-    return new ESIterator<Token>(list);
-  }
-  
-  // NOTE: this function can be used recursively in the future to support IF, WHILE, etc.
-  @SuppressWarnings("unchecked")
-  Token processBlock(Token tk, ESIterator<Token> itr) throws Exception {
-    Token tkBlock = new Token(Token.BLOCK);
-    tkBlock.setValue(new ArrayList<Token>());
-    while (true) {
-      if (!itr.hasNext()) {
-        throw new Exception("unterminated block");
-      }
-      tk = itr.next();
-      if (tk.getType() == Token.LBRACE) {
-        tk = processBlock(tk, itr);
-      }
-      if (tk.getType() == Token.RBRACE) {
-        break;
-      }
-      ((List<Token>) tkBlock.getValue()).add(tk);
-    }
-    return tkBlock;
+    return new ESIterator<Token>(listNew);
   }
 }

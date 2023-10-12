@@ -7,8 +7,6 @@ import java.util.List;
 import java.util.Map;
 
 import es.core.ESIterator;
-import es.core.TimeSeries;
-import es.core.TimeSeriesData;
 
 public class Parser {
   private static final Map<Integer, Integer> tokenNodeMap = new HashMap<Integer, Integer>();
@@ -22,7 +20,11 @@ public class Parser {
   public ESIterator<Statement> parse(Token tk, ESIterator<Token> itr) throws Exception {
     List<Statement> list = new ArrayList<Statement>();
     while (true) {
-      list.add(parseStatement(tk, itr));
+      if (tk.getType() == Token.UFUNC) {
+        list.add(parseFunction(tk, itr));
+      } else {
+        list.add(parseStatement(tk, itr));
+      }
       if (!itr.hasNext()) {
         break;
       }
@@ -30,6 +32,60 @@ public class Parser {
     }
     ESIterator<Statement> statementItr = new ESIterator<Statement>(list);
     return statementItr;
+  }
+  
+  private Statement parseFunction(Token tk, ESIterator<Token> itr) throws Exception {
+    Function function = new Function();
+    if (!itr.hasNext()) {
+      throw new Exception("syntax error: missing function name");
+    }
+    tk = itr.next();
+    if (tk.getType() != Token.SYMBOL) {
+      throw new Exception("syntax error: invalid function name");
+    }
+    String name = (String) tk.getValue();
+    if (!itr.hasNext()) {
+      throw new Exception("syntax error: missing left param");
+    }
+    tk = itr.next();
+    if (tk.getType() != Token.LPAREN) {
+      throw new Exception("syntax error: missing left paren");
+    }
+    if (!itr.hasNext()) {
+      throw new Exception("syntax error: missing right paren");
+    }
+    tk = itr.next();
+    while (tk.getType() == Token.SYMBOL) {
+      if (!itr.hasNext()) {
+        throw new Exception("syntax error: missing right paren");
+      }
+      function.getParams().add((String) tk.getValue());
+      tk = itr.next();
+      if (tk.getType() == Token.RPAREN) {
+        break;
+      }
+      if (tk.getType() != Token.COMMA) {
+        throw new Exception("syntax error: unexpected token: " + tk);
+      }
+      if (!itr.hasNext()) {
+        throw new Exception("syntax error: missing right paren");
+      }
+      tk = itr.next();
+      if (tk.getType() != Token.SYMBOL) {
+        throw new Exception("syntax error: unexpected token: " + tk);
+      }
+    }
+    if (tk.getType() != Token.RPAREN) {
+      throw new Exception("syntax error: missing right paren");
+    }
+    if (!itr.hasNext()) {
+      throw new Exception("syntax error: missing function body");
+    }
+    tk = itr.next();
+    if (tk.getType() != Token.LBRACE) {
+      throw new Exception("syntax error: invalid function body");
+    }
+    return null;
   }
   
   private Statement parseStatement(Token tk, ESIterator<Token> itr) throws Exception {
