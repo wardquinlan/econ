@@ -4,16 +4,12 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-import es.core.ESIterator;
 import es.core.TimeSeries;
 import es.core.TimeSeriesDAO;
 import es.core.Utils;
-import es.parser.Function;
-import es.parser.OldParser;
-import es.parser.ReturnResult;
-import es.parser.Symbol;
+import es.parser.FunctionCaller;
+import es.parser.FunctionDeclaration;
 import es.parser.SymbolTable;
-import es.parser.Token;
 
 public class Ds implements Command {
   private static final int TIME_SERIES_COL_WIDTHS[] = {5, 20, 30, 12, 20, 8};
@@ -60,28 +56,16 @@ public class Ds implements Command {
   }
   
   private Object runAsIterator(SymbolTable symbolTable, File file, List<Object> params) throws Exception {
-    if (!(params.get(0) instanceof Function)) {
+    if (!(params.get(0) instanceof FunctionDeclaration)) {
       throw new Exception(params.get(0) + " is not a function");
     }
-    Function function = (Function) params.get(0);
-    if (function.getParams().size() != 1) {
-      throw new Exception("wrong number of params in function call (must be 1)");
-    }
-    if (function.getTokenList().size() > 0) {
-      /*
-      List<TimeSeries> list = TimeSeriesDAO.getInstance().listSeries();
-      for (TimeSeries timeSeries: list) {
-        SymbolTable childSymbolTable = new SymbolTable(symbolTable);
-        childSymbolTable.localPut(function.getParams().get(0), new Symbol(timeSeries));
-        OldParser parser = new OldParser(childSymbolTable);
-        ESIterator<Token> itr2 = new ESIterator<Token>(function.getTokenList());
-        Token tk2 = itr2.next();
-        ReturnResult returnResult = parser.parse(tk2, itr2);
-        if (returnResult != null && returnResult.getValue() != null) {
-          throw new Exception("cannot return anything during iterations: " + returnResult.getValue());
-        }
-      }
-      */
+    FunctionDeclaration functionDeclaration = (FunctionDeclaration) params.get(0);
+    List<TimeSeries> list = TimeSeriesDAO.getInstance().listSeries();
+    FunctionCaller functionCaller = new FunctionCaller();
+    for (TimeSeries timeSeries: list) {
+      List<Object> list2 = new ArrayList<>();
+      list2.add(timeSeries);
+      functionCaller.invokeFunction(functionDeclaration.getName(), symbolTable, file, list2);
     }
     return null;
   }
