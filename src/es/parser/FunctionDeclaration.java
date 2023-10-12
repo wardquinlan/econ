@@ -14,7 +14,6 @@ public class FunctionDeclaration implements Statement {
   
   @Override
   public void evaluate(SymbolTable symbolTable) throws Exception {
-    System.out.println("evaluating function");
     Symbol symbolT = symbolTable.get(name);
     if (symbolT != null) {
       throw new Exception("cannot overwrite symbol with a function: " + name);

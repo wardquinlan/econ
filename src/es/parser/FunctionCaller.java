@@ -173,8 +173,16 @@ public class FunctionCaller {
       throw new Exception("symbol not found or symbol is not a function: " + funcName);
     }
     FunctionDeclaration functionDeclaration = (FunctionDeclaration) symbolTable.get(funcName).getValue();
-    Evaluator e = new Evaluator(symbolTable);
-    e.evaluate(new ESIterator<Statement>(functionDeclaration.getStatements()));
+    if (functionDeclaration.getParams().size() != params.size()) {
+      throw new Exception("param list size mismatch during function call: " + funcName);
+    }
+    SymbolTable childSymbolTable = new SymbolTable(symbolTable);
+    for (int i = 0; i < params.size(); i++) {
+      childSymbolTable.localPut(functionDeclaration.getParams().get(i), new Symbol(functionDeclaration.getParams().get(i), params.get(i)));
+    }
+    Evaluator e = new Evaluator(childSymbolTable);
+    ESIterator<Statement> itr = new ESIterator<>(functionDeclaration.getStatements());
+    e.evaluate(itr);
     return null;
   }
 }
