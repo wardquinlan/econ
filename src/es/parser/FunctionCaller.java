@@ -61,6 +61,7 @@ import es.command.Timestamp;
 import es.command.Today;
 import es.command.Update;
 import es.command.Version;
+import es.core.ESIterator;
 import es.core.Settings;
 
 public class FunctionCaller {
@@ -164,6 +165,16 @@ public class FunctionCaller {
       }
       return null;
     }
-    return commandMap.get(funcName).run(symbolTable, file, params);
+    if (commandMap.get(funcName) != null) {
+      // call built-in function
+      return commandMap.get(funcName).run(symbolTable, file, params);
+    }
+    if (symbolTable.get(funcName) == null || !(symbolTable.get(funcName).getValue() instanceof FunctionDeclaration)) {
+      throw new Exception("symbol not found or symbol is not a function: " + funcName);
+    }
+    FunctionDeclaration functionDeclaration = (FunctionDeclaration) symbolTable.get(funcName).getValue();
+    Evaluator e = new Evaluator(symbolTable);
+    e.evaluate(new ESIterator<Statement>(functionDeclaration.getStatements()));
+    return null;
   }
 }
