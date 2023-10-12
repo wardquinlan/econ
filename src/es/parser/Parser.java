@@ -98,6 +98,10 @@ public class Parser {
         break;
       }
       parseStatement(functionDeclaration.getStatements(), tk, itr);
+      if (!itr.hasNext()) {
+        throw new Exception("syntax error: missing right brace");
+      }
+      tk = itr.next();
     }
     return functionDeclaration;
   }
