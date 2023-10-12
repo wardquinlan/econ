@@ -20,11 +20,7 @@ public class Parser {
   public ESIterator<Statement> parse(Token tk, ESIterator<Token> itr) throws Exception {
     List<Statement> list = new ArrayList<Statement>();
     while (true) {
-      if (tk.getType() == Token.UFUNC) {
-        list.add(parseFunction(tk, itr));
-      } else {
-        list.add(parseStatement(tk, itr));
-      }
+      parseStatement(list, tk, itr);
       if (!itr.hasNext()) {
         break;
       }
@@ -34,8 +30,15 @@ public class Parser {
     return statementItr;
   }
   
+  private void parseStatement(List<Statement> list, Token tk, ESIterator<Token> itr) throws Exception {
+    if (tk.getType() == Token.UFUNC) {
+      list.add(parseFunction(tk, itr));
+    } else {
+      list.add(parseSimpleStatement(tk, itr));
+    }
+  }
+  
   private Statement parseFunction(Token tk, ESIterator<Token> itr) throws Exception {
-    Function function = new Function();
     if (!itr.hasNext()) {
       throw new Exception("syntax error: missing function name");
     }
@@ -44,6 +47,7 @@ public class Parser {
       throw new Exception("syntax error: invalid function name");
     }
     String name = (String) tk.getValue();
+    FunctionDeclaration functionDeclaration = new FunctionDeclaration(name);
     if (!itr.hasNext()) {
       throw new Exception("syntax error: missing left param");
     }
@@ -59,7 +63,7 @@ public class Parser {
       if (!itr.hasNext()) {
         throw new Exception("syntax error: missing right paren");
       }
-      function.getParams().add((String) tk.getValue());
+      functionDeclaration.getParams().add((String) tk.getValue());
       tk = itr.next();
       if (tk.getType() == Token.RPAREN) {
         break;
@@ -85,10 +89,20 @@ public class Parser {
     if (tk.getType() != Token.LBRACE) {
       throw new Exception("syntax error: invalid function body");
     }
-    return null;
+    if (!itr.hasNext()) {
+      throw new Exception("syntax error: missing right brace");
+    }
+    tk = itr.next();
+    while (true) {
+      if (tk.getType() == Token.RBRACE) {
+        break;
+      }
+      parseStatement(functionDeclaration.getStatements(), tk, itr);
+    }
+    return functionDeclaration;
   }
   
-  private Statement parseStatement(Token tk, ESIterator<Token> itr) throws Exception {
+  private Statement parseSimpleStatement(Token tk, ESIterator<Token> itr) throws Exception {
     List<Token> tokens = new ArrayList<Token>();
     while (tk.getType() != Token.SEMI) {
       tokens.add(tk);
