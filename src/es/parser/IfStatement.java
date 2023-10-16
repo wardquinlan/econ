@@ -30,6 +30,10 @@ public class IfStatement extends Statement {
       for (Statement statement: ifBody) {
         statement.evaluate(symbolTable);
       }
+    } else {
+      for (Statement statement: elseBody) {
+        statement.evaluate(symbolTable);
+      }
     }
     return null;
   }

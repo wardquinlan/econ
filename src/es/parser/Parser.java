@@ -98,6 +98,15 @@ public class Parser {
     tk = itr.next();
     IfStatement statement = new IfStatement(predicate);
     parseBlock(statement.getIfBody(), tk, itr);
+    
+    if (itr.hasNext() && itr.peek().getType() == Token.ELSE) {
+      itr.next();
+      if (!itr.hasNext()) {
+        throw new Exception("syntax error: invalid else body");
+      }
+      tk = itr.next();
+      parseBlock(statement.getElseBody(), tk, itr);
+    }
     return statement;
   }
   
