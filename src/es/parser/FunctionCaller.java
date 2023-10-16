@@ -184,7 +184,7 @@ public class FunctionCaller {
     if (itr.hasNext()) {
       Evaluator e = new Evaluator(childSymbolTable);
       Statement statement = itr.next();
-      e.evaluate(statement, itr);
+      return e.evaluate(statement, itr);
     }
     return null;
   }

@@ -31,6 +31,26 @@ import es.parser.Tokenizer;
 public class Main {
   private static final Log log = LogFactory.getFactory().getInstance(Main.class);
   
+  private static void evaluateAndExit(Tokenizer tokenizer, SymbolTable symbolTable) throws Exception {
+    ESIterator<Token> itr = tokenizer.tokenize();
+    if (itr.hasNext()) {
+      Parser p = new Parser();
+      Token tk = itr.next();
+      ESIterator<Statement> itr2 = p.parse(tk, itr);
+      if (itr2.hasNext()) {
+        Evaluator e = new Evaluator(symbolTable);
+        Statement statement = itr2.next();
+        Object result = e.evaluate(statement, itr2);
+        if (result instanceof Integer) {
+          log.info("exiting with status code " + (Integer) result);
+          System.exit((Integer) result);
+        }
+      }
+    }
+    log.warn("evaluator returned non-integral result, exiting with 0 status code");
+    System.exit(0);
+  }
+
   public static void main(String[] args) {
     if (System.getenv("ES_HOME") == null) {
       log.error("ES_HOME not set");
@@ -104,17 +124,7 @@ public class Main {
       if (file.exists() && !Settings.getInstance().suppressAutoload()) {
         log.info("found autoload file '.es'; loading...");
         Tokenizer tokenizer = new Tokenizer(file, 0);
-        ESIterator<Token> itr = tokenizer.tokenize();
-        if (itr.hasNext()) {
-          Parser p = new Parser();
-          Token tk = itr.next();
-          ESIterator<Statement> itr2 = p.parse(tk, itr);
-          if (itr2.hasNext()) {
-            Evaluator e = new Evaluator(symbolTable);
-            Statement statement = itr2.next();
-            e.evaluate(statement, itr2);
-          }
-        }
+        evaluateAndExit(tokenizer, symbolTable);
       } else {
         log.warn("skipping the loading of .es...");
       }
@@ -124,31 +134,11 @@ public class Main {
       }
       if (args.length == 1) {
         Tokenizer tokenizer = new Tokenizer(new File(args[0]), 0);
-        ESIterator<Token> itr = tokenizer.tokenize();
-        if (itr.hasNext()) {
-          Parser p = new Parser();
-          Token tk = itr.next();
-          ESIterator<Statement> itr2 = p.parse(tk, itr);
-          if (itr2.hasNext()) {
-            Evaluator e = new Evaluator(symbolTable);
-            Statement statement = itr2.next();
-            e.evaluate(statement, itr2);
-          }
-        }
+        evaluateAndExit(tokenizer, symbolTable);
       } else if (cmd.hasOption("command")) {
         String value = cmd.getOptionValue("command");
         Tokenizer tokenizer = new Tokenizer(new ByteArrayInputStream(value.getBytes(StandardCharsets.UTF_8)));
-        ESIterator<Token> itr = tokenizer.tokenize();
-        if (itr.hasNext()) {
-          Parser p = new Parser();
-          Token tk = itr.next();
-          ESIterator<Statement> itr2 = p.parse(tk, itr);
-          if (itr2.hasNext()) {
-            Evaluator e = new Evaluator(symbolTable);
-            Statement statement = itr2.next();
-            e.evaluate(statement, itr2);
-          }
-        }
+        evaluateAndExit(tokenizer, symbolTable);
       } else {
         BufferedReader rdr = new BufferedReader(new InputStreamReader(System.in));
         while (true) {
@@ -165,17 +155,7 @@ public class Main {
               break;
             }
             Tokenizer tokenizer = new Tokenizer(new ByteArrayInputStream(line.getBytes(StandardCharsets.UTF_8)));
-            ESIterator<Token> itr = tokenizer.tokenize();
-            if (itr.hasNext()) {
-              Parser p = new Parser();
-              Token tk = itr.next();
-              ESIterator<Statement> itr2 = p.parse(tk, itr);
-              if (itr2.hasNext()) {
-                Evaluator e = new Evaluator(symbolTable);
-                Statement statement = itr2.next();
-                e.evaluate(statement, itr2);
-              }
-            }
+            evaluateAndExit(tokenizer, symbolTable);
           } catch(Exception e) {
             log.error(e);
           }
@@ -184,13 +164,7 @@ public class Main {
       System.exit(0);
     } catch(Exception e) {
       log.error(e);
-      try {
-        if (TimeSeriesDAO.getInstance() != null) {
-          TimeSeriesDAO.getInstance().close();
-        }
-      } catch(Exception e2) {
-        log.warn("unable to close DAO", e2);
-      }
+      log.info("exiting with status code 1...");
       System.exit(1);
     }
   }

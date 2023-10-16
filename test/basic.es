@@ -1,13 +1,8 @@
-connect('localhost', 'es', 'es');
-function f(series) {
-  print(series);
+function f() {
+  print('hello world');
+  return 3;
+  print('goodbye world');
 }
 
-S = load(500);
-ds(f);
-print('--------------------------------');
-cat(f);
-print(S);
+print(f());
 
-S = load(500);
-f(S);

@@ -9,13 +9,17 @@ public class Evaluator {
     this.symbolTable = symbolTable;
   }
   
-  public void evaluate(Statement statement, ESIterator<Statement> itr) throws Exception {
+  public Object evaluate(Statement statement, ESIterator<Statement> itr) throws Exception {
     while (true) {
-      statement.evaluate(symbolTable);
+      Object object = statement.evaluate(symbolTable);
+      if (statement instanceof ReturnStatement) {
+        return object;
+      }
       if (!itr.hasNext()) {
         break;
       }
       statement = itr.next();
     }
+    return null;
   }
 }
