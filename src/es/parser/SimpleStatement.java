@@ -5,7 +5,10 @@ import es.core.Utils;
 public class SimpleStatement extends Statement {
   private Object expr;
 
-  public void setExpr(Object expr) {
+  public SimpleStatement() {
+  }
+  
+  public SimpleStatement(Object expr) {
     this.expr = expr;
   }
   

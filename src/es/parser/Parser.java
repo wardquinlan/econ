@@ -135,9 +135,7 @@ public class Parser {
     if (itr2.hasNext()) {
       throw new Exception("syntax error: unexpected symbol at end of line");
     }
-    ReturnStatement statement = new ReturnStatement();
-    statement.setExpr(expr);
-    return statement;
+    return new ReturnStatement(expr);
   }
   
   private Statement parseSimpleStatement(Token tk, ESIterator<Token> itr) throws Exception {
@@ -163,9 +161,7 @@ public class Parser {
     if (itr2.hasNext()) {
       throw new Exception("syntax error: unexpected symbol at end of line");
     }
-    SimpleStatement statement = new SimpleStatement();
-    statement.setExpr(expr);
-    return statement;
+    return new SimpleStatement(expr);
   }
 
   private Object parseConst(Token tk, ESIterator<Token> itr) throws Exception {

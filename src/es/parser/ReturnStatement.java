@@ -3,7 +3,10 @@ package es.parser;
 public class ReturnStatement extends Statement {
   private Object expr;
 
-  public void setExpr(Object expr) {
+  public ReturnStatement() {
+  }
+  
+  public ReturnStatement(Object expr) {
     this.expr = expr;
   }
   
