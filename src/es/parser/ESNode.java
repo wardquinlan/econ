@@ -103,6 +103,14 @@ public class ESNode implements Evaluable {
     }  else {
       Utils.ASSERT(operator instanceof BinaryOperator, "operator is not binary");
       Object val1 = (lhs instanceof Evaluable ? ((Evaluable) lhs).evaluate(symbolTable) : lhs);
+      if (operator instanceof And && val1 instanceof Boolean && (!(Boolean) val1)) {
+        // don't evaluate rhs
+        return false;
+      }
+      if (operator instanceof Or && val1 instanceof Boolean && ((Boolean) val1)) {
+        // don't evaluate rhs
+        return true;
+      }
       Object val2 = (rhs instanceof Evaluable ? ((Evaluable) rhs).evaluate(symbolTable) : rhs);
       return executor.exec(val1, val2);
     }
