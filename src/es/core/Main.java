@@ -21,7 +21,6 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import es.parser.Evaluator;
-import es.parser.OldParser;
 import es.parser.Parser;
 import es.parser.Statement;
 import es.parser.SymbolTable;
@@ -31,7 +30,7 @@ import es.parser.Tokenizer;
 public class Main {
   private static final Log log = LogFactory.getFactory().getInstance(Main.class);
   
-  private static void evaluateAndExit(Tokenizer tokenizer, SymbolTable symbolTable) throws Exception {
+  private static void evaluateWithExit(Tokenizer tokenizer, SymbolTable symbolTable) throws Exception {
     ESIterator<Token> itr = tokenizer.tokenize();
     if (itr.hasNext()) {
       Parser p = new Parser();
@@ -41,14 +40,16 @@ public class Main {
         Evaluator e = new Evaluator(symbolTable);
         Statement statement = itr2.next();
         Object result = e.evaluate(statement, itr2);
-        if (result instanceof Integer) {
-          log.info("exiting with status code " + (Integer) result);
-          System.exit((Integer) result);
+        if (result != null) {
+          if (result instanceof Integer) {
+            log.info("exiting with status code " + (Integer) result);
+            System.exit((Integer) result);
+          }
+          log.info("evaluator returned non-integral result (" + result + "), exiting with 0 status code");
+          System.exit(0);
         }
-        log.warn("evaluator returned non-integral result (" + result + "), exiting with 0 status code");
       }
     }
-    System.exit(0);
   }
 
   public static void main(String[] args) {
@@ -124,7 +125,7 @@ public class Main {
       if (file.exists() && !Settings.getInstance().suppressAutoload()) {
         log.info("found autoload file '.es'; loading...");
         Tokenizer tokenizer = new Tokenizer(file, 0);
-        evaluateAndExit(tokenizer, symbolTable);
+        evaluateWithExit(tokenizer, symbolTable);
       } else {
         log.warn("skipping the loading of .es...");
       }
@@ -134,11 +135,11 @@ public class Main {
       }
       if (args.length == 1) {
         Tokenizer tokenizer = new Tokenizer(new File(args[0]), 0);
-        evaluateAndExit(tokenizer, symbolTable);
+        evaluateWithExit(tokenizer, symbolTable);
       } else if (cmd.hasOption("command")) {
         String value = cmd.getOptionValue("command");
         Tokenizer tokenizer = new Tokenizer(new ByteArrayInputStream(value.getBytes(StandardCharsets.UTF_8)));
-        evaluateAndExit(tokenizer, symbolTable);
+        evaluateWithExit(tokenizer, symbolTable);
       } else {
         BufferedReader rdr = new BufferedReader(new InputStreamReader(System.in));
         while (true) {
@@ -155,7 +156,7 @@ public class Main {
               break;
             }
             Tokenizer tokenizer = new Tokenizer(new ByteArrayInputStream(line.getBytes(StandardCharsets.UTF_8)));
-            evaluateAndExit(tokenizer, symbolTable);
+            evaluateWithExit(tokenizer, symbolTable);
           } catch(Exception e) {
             log.error(e);
           }
