@@ -37,6 +37,8 @@ public class Parser {
       list.add(parseFunction(tk, itr));
     } else if (tk.getType() == Token.RETURN) {
       list.add(parseReturn(tk, itr));
+    } else if (tk.getType() == Token.THROW) {
+      list.add(parseThrow(tk, itr));
     } else {
       list.add(parseSimpleStatement(tk, itr));
     }
@@ -136,6 +138,31 @@ public class Parser {
       throw new Exception("syntax error: unexpected symbol at end of line");
     }
     return new ReturnStatement(expr);
+  }
+
+  private Statement parseThrow(Token tk, ESIterator<Token> itr) throws Exception {
+    if (!itr.hasNext()) {
+      throw new Exception("syntax error: missing semi colon");
+    }
+    tk = itr.next();
+    List<Token> tokens = new ArrayList<Token>();
+    while (tk.getType() != Token.SEMI) {
+      tokens.add(tk);
+      if (!itr.hasNext()) {
+        throw new Exception("syntax error: missing semi colon");
+      }
+      tk = itr.next();
+    }
+    if (tokens.size() == 0) {
+      throw new Exception("syntax error: missing throw expression");
+    }
+    ESIterator<Token> itr2 = new ESIterator<Token>(tokens);
+    Token tk2 = itr2.next();
+    Object expr = expression(tk2, itr2);
+    if (itr2.hasNext()) {
+      throw new Exception("syntax error: unexpected symbol at end of line");
+    }
+    return new ThrowStatement(expr);
   }
   
   private Statement parseSimpleStatement(Token tk, ESIterator<Token> itr) throws Exception {

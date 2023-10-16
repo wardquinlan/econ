@@ -1,8 +1,5 @@
-function f() {
-  print('hello world');
-  return 3;
-  print('goodbye world');
+function f(a, b) {
+  throw a + b;
 }
 
-print(f());
-
+return f(1, 2);
