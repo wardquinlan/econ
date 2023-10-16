@@ -3,7 +3,7 @@ package es.parser;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FunctionDeclaration implements Statement {
+public class FunctionDeclaration extends Statement {
   private String name;
   private List<String> params = new ArrayList<>();
   private List<Statement> statements = new ArrayList<>();
@@ -13,13 +13,14 @@ public class FunctionDeclaration implements Statement {
   }
   
   @Override
-  public void evaluate(SymbolTable symbolTable) throws Exception {
+  public Object evaluate(SymbolTable symbolTable) throws Exception {
     Symbol symbolT = symbolTable.get(name);
     if (symbolT != null) {
       throw new Exception("cannot overwrite symbol with a function: " + name);
     }
     Symbol symbolNew = new Symbol(name, this, true);
     symbolTable.put(name, symbolNew);
+    return null;
   }
   
   public String getName() {

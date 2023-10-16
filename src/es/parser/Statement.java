@@ -1,5 +1,6 @@
 package es.parser;
 
-public interface Statement {
-  public void evaluate(SymbolTable symbolTable) throws Exception;
+public abstract class Statement implements Evaluable{
+  @Override
+  public abstract Object evaluate(SymbolTable symbolTable) throws Exception;
 }

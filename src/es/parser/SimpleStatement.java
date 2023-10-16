@@ -1,22 +1,22 @@
 package es.parser;
 
-public class SimpleStatement implements Statement {
-  private Object expr;
+import es.core.Utils;
 
-  public Object getExpr() {
-    return expr;
-  }
+public class SimpleStatement extends Statement {
+  private Object expr;
 
   public void setExpr(Object expr) {
     this.expr = expr;
   }
   
   @Override
-  public void evaluate(SymbolTable symbolTable) throws Exception {
+  public Object evaluate(SymbolTable symbolTable) throws Exception {
     if (expr instanceof Evaluable) {
       Evaluable evaluable = (Evaluable) expr;
-      evaluable.evaluate(symbolTable);
+      return evaluable.evaluate(symbolTable);
     }
+    Utils.ASSERT(expr != null, "expr cannot be null");
+    return expr;
   }
   
   @Override
