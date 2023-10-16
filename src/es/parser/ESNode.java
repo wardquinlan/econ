@@ -16,6 +16,12 @@ public class ESNode implements Evaluable {
   public static final int UMINUS   = 6; // -
   public static final int UNOT     = 7; // !
   public static final int ASSIGN   = 8; // =
+  public static final int LT       = 9; // <
+  public static final int GT       = 10; // >
+  public static final int LTE      = 11; // <=
+  public static final int GTE      = 12; // >=
+  public static final int EQ       = 13; // ==
+  public static final int NE       = 14; // !=
 
   public static Map<Integer, String> map = new HashMap<Integer, String>();
   static {
@@ -27,6 +33,12 @@ public class ESNode implements Evaluable {
     map.put(UMINUS,  "UMINUS");
     map.put(UNOT,    "UNOT");
     map.put(ASSIGN,  "ASSIGN");
+    map.put(LT,      "LT");
+    map.put(GT,      "GT");
+    map.put(LTE,     "LTE");
+    map.put(GTE,     "GTE");
+    map.put(EQ,      "EQ");
+    map.put(NE,      "NE");
   }
   
   private static final Map<Integer, Operator> operatorMap = new HashMap<>();
@@ -38,6 +50,13 @@ public class ESNode implements Evaluable {
     operatorMap.put(UPLUS, new UPlus());
     operatorMap.put(UMINUS, new UMinus());
     operatorMap.put(UNOT, new UNot());
+    operatorMap.put(LT, new Lt());
+    operatorMap.put(GT, new Gt());
+    operatorMap.put(LTE, new Lte());
+    operatorMap.put(GTE, new Gte());
+    operatorMap.put(EQ, new Eq());
+    operatorMap.put(NE, new Ne());
+    
   }
   
   private Object lhs;

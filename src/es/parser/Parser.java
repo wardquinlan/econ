@@ -15,6 +15,12 @@ public class Parser {
     tokenNodeMap.put(Token.OR, ESNode.OR);
     tokenNodeMap.put(Token.PLUS, ESNode.PLUS);
     tokenNodeMap.put(Token.MINUS, ESNode.MINUS);
+    tokenNodeMap.put(Token.LT, ESNode.LT);
+    tokenNodeMap.put(Token.GT, ESNode.GT);
+    tokenNodeMap.put(Token.LTE, ESNode.LTE);
+    tokenNodeMap.put(Token.GTE, ESNode.GTE);
+    tokenNodeMap.put(Token.EQ, ESNode.EQ);
+    tokenNodeMap.put(Token.NE, ESNode.NE);
   }
   // just for checks of existing functions, does not actually invoke the function from here...
   private FunctionCaller functionCaller = new FunctionCaller();
@@ -219,7 +225,7 @@ public class Parser {
   }
   
   private Object expression(Token tk, ESIterator<Token> itr) throws Exception {
-    Object val1 = simpleExpression(tk, itr);
+    Object val1 = expressionL2(tk, itr);
     while (true) {
       if (!itr.hasNext()) {
         return val1;
@@ -230,7 +236,7 @@ public class Parser {
           throw new Exception("syntax error: missing RHS");
         }
         tk = itr.next();
-        Object val2 = simpleExpression(tk, itr);
+        Object val2 = expressionL2(tk, itr);
         ESNode node = new ESNode(tokenNodeMap.get(tkOp.getType()));
         node.setLhs(val1);
         node.setRhs(val2);
@@ -238,6 +244,38 @@ public class Parser {
       } else {
         break;
       }
+    }
+    return val1;
+  }
+  
+  private Object expressionL2(Token tk, ESIterator<Token> itr) throws Exception {
+    Object val1 = simpleExpression(tk, itr);
+    if (!itr.hasNext()) {
+      return val1;
+    }
+    
+    // NOTE: could implement LT, LTE, GT, GTE for Strings, too (using String.compareTo())
+    // NOTE: all of these are the same level of precedence.  This differs from Java -
+    //       see https://introcs.cs.princeton.edu/java/11precedence/
+    //
+    //       We could probably put LT, LTE, GT and GTE into a 'expressionL3()' which I think would fix this.
+    // NOTE: My implementation of AND and OR is also slightly different from Java; see above web site.
+    if (itr.peek().getType() == Token.EQ  || 
+        itr.peek().getType() == Token.NE  ||
+        itr.peek().getType() == Token.LT  ||
+        itr.peek().getType() == Token.LTE ||
+        itr.peek().getType() == Token.GT  ||
+        itr.peek().getType() == Token.GTE) {
+      Token tkOp = itr.next();
+      if (!itr.hasNext()) {
+        throw new Exception("syntax error: missing RHS");
+      }
+      tk = itr.next();
+      Object val2 = simpleExpression(tk, itr);
+      ESNode node = new ESNode(tokenNodeMap.get(tkOp.getType()));
+      node.setLhs(val1);
+      node.setRhs(val2);
+      val1 = node;
     }
     return val1;
   }
