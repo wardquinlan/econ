@@ -24,6 +24,7 @@ public class ESNode implements Evaluable {
   public static final int NE       = 14; // !=
   public static final int MULT     = 15; // *
   public static final int DIV      = 16; // /
+  public static final int EXP      = 17; // ^
 
   public static Map<Integer, String> map = new HashMap<Integer, String>();
   static {
@@ -43,6 +44,7 @@ public class ESNode implements Evaluable {
     map.put(NE,      "NE");
     map.put(MULT,    "MULT");
     map.put(DIV,     "DIV");
+    map.put(EXP,     "EXP");
   }
   
   private static final Map<Integer, Operator> operatorMap = new HashMap<>();
@@ -62,6 +64,7 @@ public class ESNode implements Evaluable {
     operatorMap.put(NE, new Ne());
     operatorMap.put(MULT, new Mult());
     operatorMap.put(DIV, new Div());
+    operatorMap.put(EXP, new Exp());
   }
   
   private Object lhs;

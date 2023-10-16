@@ -23,6 +23,7 @@ public class Parser {
     tokenNodeMap.put(Token.NE, ESNode.NE);
     tokenNodeMap.put(Token.MULT, ESNode.MULT);
     tokenNodeMap.put(Token.DIV, ESNode.DIV);
+    tokenNodeMap.put(Token.EXP, ESNode.EXP);
   }
   // just for checks of existing functions, does not actually invoke the function from here...
   private FunctionCaller functionCaller = new FunctionCaller();
@@ -307,12 +308,36 @@ public class Parser {
   }
   
   private Object term(Token tk, ESIterator<Token> itr) throws Exception {
-    Object val1 = primary(tk, itr);
+    Object val1 = exp(tk, itr);
     while (true) {
       if (!itr.hasNext()) {
         break;
       }
       if (itr.peek().getType() == Token.MULT || itr.peek().getType() == Token.DIV) {
+        Token tkOp = itr.next();
+        if (!itr.hasNext()) {
+          throw new Exception("syntax error: missing RHS");
+        }
+        tk = itr.next();
+        Object val2 = exp(tk, itr);
+        ESNode node = new ESNode(tokenNodeMap.get(tkOp.getType()));
+        node.setLhs(val1);
+        node.setRhs(val2);
+        val1 = node;
+      } else {
+        break;
+      }
+    }
+    return val1;
+  }
+
+  private Object exp(Token tk, ESIterator<Token> itr) throws Exception {
+    Object val1 = primary(tk, itr);
+    while (true) {
+      if (!itr.hasNext()) {
+        break;
+      }
+      if (itr.peek().getType() == Token.EXP) {
         Token tkOp = itr.next();
         if (!itr.hasNext()) {
           throw new Exception("syntax error: missing RHS");
