@@ -13,7 +13,24 @@ public class IfStatement extends Statement {
   }
   
   @Override
-  public Object evaluate(SymbolTable symbolTable) {
+  public Object evaluate(SymbolTable symbolTable) throws Exception {
+    Boolean result;
+    if (predicate instanceof Boolean) {
+      result = (Boolean) predicate;
+    } else if (predicate instanceof Evaluable) {
+      Object tmp = ((Evaluable) predicate).evaluate(symbolTable);
+      if (!(tmp instanceof Boolean)) {
+        throw new Exception("predicate does not evaluate to a boolean expression");
+      }
+      result = (Boolean) tmp;
+    } else {
+      throw new Exception("predicate does not evaluate to a boolean expression");
+    }
+    if (result) {
+      for (Statement statement: ifBody) {
+        statement.evaluate(symbolTable);
+      }
+    }
     return null;
   }
   
