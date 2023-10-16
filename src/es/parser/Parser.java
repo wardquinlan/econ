@@ -48,9 +48,55 @@ public class Parser {
       list.add(parseReturn(tk, itr));
     } else if (tk.getType() == Token.THROW) {
       list.add(parseThrow(tk, itr));
+    } else if (tk.getType() == Token.IF) {
+      list.add(parseIf(tk, itr));
     } else {
       list.add(parseSimpleStatement(tk, itr));
     }
+  }
+  
+  private void parseBlock(List<Statement> list, Token tk, ESIterator<Token> itr) throws Exception {
+    if (tk.getType() == Token.LBRACE) {
+      while (true) {
+        if (!itr.hasNext()) {
+          throw new Exception("syntax error: invalid block");
+        }
+        tk = itr.next();
+        if (tk.getType() == Token.RBRACE) {
+          break;
+        }
+        parseStatement(list, tk, itr);
+      }
+    }
+  }
+  
+  private Statement parseIf(Token tk, ESIterator<Token> itr) throws Exception {
+    if (!itr.hasNext()) {
+      throw new Exception("syntax error: missing predicate");
+    }
+    tk = itr.next();
+    if (tk.getType() != Token.LPAREN) {
+      throw new Exception("syntax error: invalid predicate");
+    }
+    if (!itr.hasNext()) {
+      throw new Exception("syntax error: invalid predicate");
+    }
+    tk = itr.next();
+    Object predicate = expression(tk, itr);
+    if (!itr.hasNext()) {
+      throw new Exception("syntax error: invalid predicate");
+    }
+    tk = itr.next();
+    if (tk.getType() != Token.RPAREN) {
+      throw new Exception("syntax error: invalid predicate");
+    }
+    if (!itr.hasNext()) {
+      throw new Exception("syntax error: invalid if body");
+    }
+    tk = itr.next();
+    IfStatement statement = new IfStatement(predicate);
+    parseBlock(statement.getIfBody(), tk, itr);
+    return statement;
   }
   
   private Statement parseFunction(Token tk, ESIterator<Token> itr) throws Exception {
