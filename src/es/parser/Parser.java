@@ -67,6 +67,8 @@ public class Parser {
         }
         parseStatement(list, tk, itr);
       }
+    } else {
+      parseStatement(list, tk, itr);
     }
   }
   
