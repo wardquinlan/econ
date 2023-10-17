@@ -10,8 +10,8 @@ We just update each series with the last merge time.  It can be NULL for backwar
 
 I think I will need to do something about comparing TimeSeries.  It breaks the semantics of compares right now.
  
-- support undefined
-- optional arguments
 - while statement - and BREAK
 - consider AND / OR lhs support in the Binary Operator somehow.  Maybe.
-- allow the writing of const's if they are the same value
+X allow the writing of const's if they are the same value
+  => too many use cases esp. considering TimeSeries objects
+- rewrite assert() and exitif() as es functions (?)
