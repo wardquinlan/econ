@@ -1,25 +1,6 @@
-June 2023
----------
-
 If we overflow gridline array, we get an array out of bounds.  Should probably fix this.
 
-
-September 2023
---------------
-
-In order to support if() statements without {} blocks, I think I need ANOTHER PARSER PASS.  This pass would go through and insert the {} blocks around the if / else blocks as needed.
-This could be a completely different parser, or it could be the same parser with some sort of flag.
-
-The reason we need to do this is because we need to call the parser to get the whole list of tokens to insert into the block ... but we can't directly call the parser as is because
-that would evaluate the block.  Which we don't want to do.
-
-We need a parser pass which generates the list of tokens, but WITHOUT ACTUALLY DOING THE EVALUATION.
-
------
-
 String getSeriesType(Series series); # returns float, date, boolean
-
------
 
 We might also want to add a new column to TIME_SERIES:
 
@@ -27,55 +8,10 @@ LAST_MERGED TIMESTAMP;
 
 We just update each series with the last merge time.  It can be NULL for backwards compatibility purposes.
 
-
------
-
-We might need an isNull() command to see if, for examples, a series' notes is null.
-
------
-
-We might need an actual class to represent NULL.  We only need one instance of it.
-
-public class NULL {
-  ...
-}
-
-In order to implement a "FULL PARSER" there will be a few passes:
-
-1)  Tokenization
-2)  Parsing
-3)  Evaluation
-
-The Parsing pass will parse tokens into Statements.  Some statements, such as IF statements, will have additional sub-statements.  It might look something like this:
-
-Statement
-Statement
-Statement
-IF-Statement
-  IF-Body
-    Statement
-  ELSE-Body
-    Statement
-    Statement
-    Statement
-Statement
-
-Functions definitions are really just Symbols that go into the Symbol Table, like they do today.
-
-The Evaluation pass, then, works primarily on Statements, not on Tokens.  
-
-A regular Statement is really just an Expression tree, something like this:
-
-Statement
-  PLUS
-    3
-    TIMES
-    2
-    5
-
-Note that my Parser today is a combination of a Parser and an Evaluator.
-
------
-
 I think I will need to do something about comparing TimeSeries.  It breaks the semantics of compares right now.
  
+- support undefined
+- optional arguments
+- while statement - and BREAK
+- consider AND / OR lhs support in the Binary Operator somehow.  Maybe.
+- allow the writing of const's if they are the same value

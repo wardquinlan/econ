@@ -158,3 +158,4 @@ const INFO = 0;
 const WARN = 1;
 const ERROR = 2;
 
+const UNDEFINED = 'undefined';

@@ -1,5 +1,13 @@
-function f(a, b) {
-  throw a + b;
+function f(s) {
+  if (getType(s) == 'int') {
+    if (!exists(s)) {
+      throw 'series does not exist: ' + s;
+    }
+    s = load(s);
+  }
+  if (getType(s) == 'Series' and getId(s) < 10000) {
+    print(getName(s));
+  }
 }
 
-return f(1, 2);
+f(500);
