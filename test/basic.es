@@ -1,4 +1,8 @@
 function f(s) {
+  if (getType(s) == 'String' and s == 'undefined') {
+    print('defaulting s to DFF...');
+    s = load('DFF');
+  }
   if (getType(s) == 'int') {
     if (!exists(s)) {
       throw 'series does not exist: ' + s;
@@ -10,4 +14,5 @@ function f(s) {
   }
 }
 
+f();
 f(500);
