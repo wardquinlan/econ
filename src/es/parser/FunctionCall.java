@@ -19,18 +19,10 @@ public class FunctionCall implements Evaluable {
     return name;
   }
 
-  public void setName(String name) {
-    this.name = name;
-  }
-
   public List<Object> getParams() {
     return params;
   }
   
-  public File getFile() {
-    return file;
-  }
-
   public void setFile(File file) {
     this.file = file;
   }
