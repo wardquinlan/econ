@@ -69,7 +69,7 @@ public class Tokenizer {
           } else if (sb.toString().equals("const")) {
             tk = new Token(Token.CONST);
           } else if (sb.toString().equals("function")) {
-            tk = new Token(Token.UFUNC);
+            tk = new Token(Token.FUNCDECL);
           } else if (sb.toString().equals("if")) {
             tk = new Token(Token.IF);
           } else if (sb.toString().equals("else")) {
