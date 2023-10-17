@@ -12,8 +12,8 @@ public class Evaluator {
   public Object evaluate(Statement statement, ESIterator<Statement> itr) throws Exception {
     while (true) {
       Object object = statement.evaluate(symbolTable);
-      if (statement instanceof ReturnStatement) {
-        return object;
+      if (object instanceof Return) {
+        return ((Return) object).getValue();
       }
       if (!itr.hasNext()) {
         break;

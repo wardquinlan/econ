@@ -14,9 +14,9 @@ public class ReturnStatement extends Statement {
   public Object evaluate(SymbolTable symbolTable) throws Exception {
     if (expr instanceof Evaluable) {
       Evaluable evaluable = (Evaluable) expr;
-      return evaluable.evaluate(symbolTable);
+      return new Return(evaluable.evaluate(symbolTable));
     }
-    return expr;
+    return new Return(expr);
   }
   
   @Override

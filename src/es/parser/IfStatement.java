@@ -28,11 +28,17 @@ public class IfStatement extends Statement {
     }
     if (result) {
       for (Statement statement: ifBody) {
-        statement.evaluate(symbolTable);
+        Object result2 = statement.evaluate(symbolTable);
+        if (result2 instanceof Return) {
+          return result2;
+        }
       }
     } else {
       for (Statement statement: elseBody) {
-        statement.evaluate(symbolTable);
+        Object result2 = statement.evaluate(symbolTable);
+        if (result2 instanceof Return) {
+          return result2;
+        }
       }
     }
     return null;
