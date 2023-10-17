@@ -3,11 +3,7 @@ package es.core;
 import java.util.Iterator;
 import java.util.List;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-
 public class ESIterator<T> implements Iterator<T> {
-  private static Log log = LogFactory.getFactory().getInstance(ESIterator.class);
   private List<T> list;
   private int idx;
   
