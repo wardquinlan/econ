@@ -20,7 +20,6 @@ import es.command.Drop;
 import es.command.Ds;
 import es.command.Exists;
 import es.command.Exit;
-import es.command.ExitIf;
 import es.command.FRED;
 import es.command.Fonts;
 import es.command.GPut;
@@ -106,7 +105,6 @@ public class FunctionCaller {
     commandMap.put("version", new Version());
     commandMap.put("data", new Data());
     commandMap.put("isConnected", new IsConnected());
-    commandMap.put("exitIf", new ExitIf());
     commandMap.put("isAdmin", new IsAdmin());
     commandMap.put("getId", new GetId());
     commandMap.put("getName", new GetName());
