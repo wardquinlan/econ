@@ -1,18 +1,12 @@
-function f(s) {
-  if (getType(s) == 'String' and s == 'undefined') {
-    print('defaulting s to DFF...');
-    s = load('DFF');
-  }
-  if (getType(s) == 'int') {
-    if (!exists(s)) {
-      throw 'series does not exist: ' + s;
-    }
-    s = load(s);
-  }
-  if (getType(s) == 'Series' and getId(s) < 10000) {
-    print(getName(s));
+function f() {
+  if (false) {
+  } else {
+    print('error');
+    return;
   }
 }
 
-f();
-f(500);
+a = f();
+print(a);
+return a;
+
