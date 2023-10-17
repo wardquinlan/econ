@@ -1,7 +1,5 @@
 package es.parser;
 
-import es.core.Utils;
-
 public class SimpleStatement extends Statement {
   private Object expr;
 
@@ -18,7 +16,6 @@ public class SimpleStatement extends Statement {
       Evaluable evaluable = (Evaluable) expr;
       return evaluable.evaluate(symbolTable);
     }
-    Utils.ASSERT(expr != null, "expr cannot be null");
     return expr;
   }
   
