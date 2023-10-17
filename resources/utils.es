@@ -21,6 +21,9 @@ function resetName(name, nameNew) {
   if (getType(name) != 'String' or getType(nameNew) != 'String') {
     throw 'usage: resetName(String name, String nameNew);';
   }
+  if (name == UNDEFINED or nameNew == UNDEFINED) {
+    throw 'usage: resetName(String name, String nameNew);';
+  }
   if (exists(nameNew)) {
     throw 'series already exists: ' + nameNew;
   } 
