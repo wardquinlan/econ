@@ -12,7 +12,7 @@ import es.parser.FunctionDeclaration;
 import es.parser.SymbolTable;
 
 public class Ds implements Command {
-  private static final int TIME_SERIES_COL_WIDTHS[] = {5, 20, 30, 12, 20, 8};
+  private static final int TIME_SERIES_COL_WIDTHS[] = {5, 20, 30, 12, 20, 10, 10, 8};
   
   @Override
   public String getSummary() {
@@ -39,7 +39,7 @@ public class Ds implements Command {
     if (params.size() > 0) {
       return runAsIterator(symbolTable, file, params);
     }
-    System.out.printf(Utils.generateFormatString(TIME_SERIES_COL_WIDTHS) + "\n", "Id", "Name", "Title", "Source", "Source Id", "Size");
+    System.out.printf(Utils.generateFormatString(TIME_SERIES_COL_WIDTHS) + "\n", "Id", "Name", "Title", "Source", "Source Id", "Units", "Frequency", "Size");
     System.out.printf(Utils.generateUnderlineString(TIME_SERIES_COL_WIDTHS) + "\n");
     List<TimeSeries> list = TimeSeriesDAO.getInstance().listSeries();
     for (TimeSeries timeSeries: list) {
@@ -50,6 +50,8 @@ public class Ds implements Command {
         Utils.generateTruncatedData(TIME_SERIES_COL_WIDTHS, 2, timeSeries.getTitle()), 
         Utils.generateTruncatedData(TIME_SERIES_COL_WIDTHS, 3, Utils.stringWithNULL(timeSeries.getSource())), 
         Utils.generateTruncatedData(TIME_SERIES_COL_WIDTHS, 4, Utils.stringWithNULL(timeSeries.getSourceId())),
+        Utils.generateTruncatedData(TIME_SERIES_COL_WIDTHS, 5, Utils.stringWithNULL(timeSeries.getUnitsShort())),
+        Utils.generateTruncatedData(TIME_SERIES_COL_WIDTHS, 6, Utils.stringWithNULL(timeSeries.getFrequencyShort())),
         size.toString());
     }
     return null;
