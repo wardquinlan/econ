@@ -167,11 +167,27 @@ public class FRED implements Command {
         if (title == null || title.getNodeType() != Node.ATTRIBUTE_NODE) {
           throw new Exception("title attribute not found");
         }
+        Node frequency = map.getNamedItem("frequency");
+        Node units = map.getNamedItem("units");
+        Node frequencyShort = map.getNamedItem("frequency_short");
+        Node unitsShort = map.getNamedItem("units_short");
         Node notes = map.getNamedItem("notes");
         // default the name to the node value (but user can change later if needed)
         timeSeries.setName(id.getNodeValue());
         timeSeries.setSourceId(id.getNodeValue());
         timeSeries.setTitle(title.getNodeValue());
+        if (frequency != null) {
+          timeSeries.setFrequency(frequency.getNodeValue());
+        }
+        if (units != null) {
+          timeSeries.setUnits(units.getNodeValue());
+        }
+        if (frequencyShort != null) {
+          timeSeries.setFrequencyShort(frequencyShort.getNodeValue());
+        }
+        if (unitsShort != null) {
+          timeSeries.setUnitsShort(unitsShort.getNodeValue());
+        }
         if (notes != null) {
           timeSeries.setNotes(notes.getNodeValue());
         }

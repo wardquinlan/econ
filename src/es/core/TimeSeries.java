@@ -18,6 +18,10 @@ public class TimeSeries {
   private String source;
   private String sourceId;
   private String notes;
+  private String frequency;
+  private String units;
+  private String frequencyShort;
+  private String unitsShort;
   private ArrayList<TimeSeriesData> timeSeriesDataList = new ArrayList<>();
   
   public TimeSeries(int type) {
@@ -104,6 +108,38 @@ public class TimeSeries {
     this.sourceId = sourceId;
   }
   
+  public String getFrequency() {
+    return frequency;
+  }
+
+  public void setFrequency(String frequency) {
+    this.frequency = frequency;
+  }
+
+  public String getUnits() {
+    return units;
+  }
+
+  public void setUnits(String units) {
+    this.units = units;
+  }
+
+  public String getFrequencyShort() {
+    return frequencyShort;
+  }
+
+  public void setFrequencyShort(String frequencyShort) {
+    this.frequencyShort = frequencyShort;
+  }
+
+  public String getUnitsShort() {
+    return unitsShort;
+  }
+
+  public void setUnitsShort(String unitsShort) {
+    this.unitsShort = unitsShort;
+  }
+
   public String getNotes() {
     return notes;
   }
