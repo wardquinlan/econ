@@ -176,17 +176,17 @@ public class FRED implements Command {
         timeSeries.setName(id.getNodeValue());
         timeSeries.setSourceId(id.getNodeValue());
         timeSeries.setTitle(title.getNodeValue());
-        if (frequency != null) {
-          timeSeries.setFrequency(frequency.getNodeValue());
-        }
         if (units != null) {
           timeSeries.setUnits(units.getNodeValue());
         }
-        if (frequencyShort != null) {
-          timeSeries.setFrequencyShort(frequencyShort.getNodeValue());
-        }
         if (unitsShort != null) {
           timeSeries.setUnitsShort(unitsShort.getNodeValue());
+        }
+        if (frequency != null) {
+          timeSeries.setFrequency(frequency.getNodeValue());
+        }
+        if (frequencyShort != null) {
+          timeSeries.setFrequencyShort(frequencyShort.getNodeValue());
         }
         if (notes != null) {
           timeSeries.setNotes(notes.getNodeValue());

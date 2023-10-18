@@ -339,6 +339,12 @@ public class Utils {
     if (timeSeries.getSourceId() != null) {
       sb.append("<p><strong>" + "Source Id:</strong> " + timeSeries.getSourceId() + "</p>");
     }
+    if (timeSeries.getUnits() != null) {
+      sb.append("<p><strong>" + "Units:</strong> " + timeSeries.getUnits() + "</p>");
+    }
+    if (timeSeries.getFrequency() != null) {
+      sb.append("<p><strong>" + "Frequency:</strong> " + timeSeries.getFrequency() + "</p>");
+    }
     sb.append("<p><strong>" + "Size:</strong> " + timeSeries.size() + "</p>");
     if (timeSeries.getTimeSeriesDataList().size() > 0) {
       sb.append("<p><strong>" + "Last:</strong> " + timeSeries.getTimeSeriesDataList().get(timeSeries.getTimeSeriesDataList().size() - 1).getValue() +

@@ -18,10 +18,10 @@ public class TimeSeries {
   private String source;
   private String sourceId;
   private String notes;
-  private String frequency;
   private String units;
-  private String frequencyShort;
   private String unitsShort;
+  private String frequency;
+  private String frequencyShort;
   private ArrayList<TimeSeriesData> timeSeriesDataList = new ArrayList<>();
   
   public TimeSeries(int type) {

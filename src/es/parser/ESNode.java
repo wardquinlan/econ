@@ -148,6 +148,10 @@ public class ESNode implements Evaluable {
       }
       timeSeries.setSource(timeSeries1.getSource());
       timeSeries.setSourceId(timeSeries1.getSourceId());
+      timeSeries.setUnits(timeSeries1.getUnits());
+      timeSeries.setUnitsShort(timeSeries1.getUnitsShort());
+      timeSeries.setFrequency(timeSeries1.getFrequency());
+      timeSeries.setFrequencyShort(timeSeries1.getFrequencyShort());
       timeSeries.setNotes(timeSeries1.getNotes());
       timeSeries.setTitle(timeSeries1.getTitle());
       val = timeSeries;
