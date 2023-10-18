@@ -45,7 +45,7 @@ public class TimeSeriesDAO {
       throw new Exception("not connected to datatore");
     }
     List<TimeSeries> list = new ArrayList<>();
-    PreparedStatement ps = conn.prepareStatement("select id, name, title, source, source_id, notes from time_series order by id");
+    PreparedStatement ps = conn.prepareStatement("select id, name, title, source, source_id, units, units_short, frequency, frequency_short, notes from time_series order by id");
     ResultSet resultSet = ps.executeQuery();
     while (resultSet.next()) {
       TimeSeries series = new TimeSeries(TimeSeries.FLOAT);
@@ -54,7 +54,11 @@ public class TimeSeriesDAO {
       series.setTitle(resultSet.getString(3));
       series.setSource(resultSet.getString(4));
       series.setSourceId(resultSet.getString(5));
-      series.setNotes(resultSet.getString(6));
+      series.setUnits(resultSet.getString(6));
+      series.setUnitsShort(resultSet.getString(7));
+      series.setFrequency(resultSet.getString(8));
+      series.setFrequencyShort(resultSet.getString(9));
+      series.setNotes(resultSet.getString(10));
       list.add(series);
     }
     return list;
@@ -121,13 +125,17 @@ public class TimeSeriesDAO {
       }
       
       if (mergeData.getTimeSeriesMerge() != null) {
-        PreparedStatement ps = conn.prepareStatement("update time_series set name = ?, title = ?, source = ?, source_id = ?, notes = ? where id = ?");
+        PreparedStatement ps = conn.prepareStatement("update time_series set name = ?, title = ?, source = ?, source_id = ?, units = ?, units_short = ?, frequency = ?, frequency_short = ?, notes = ? where id = ?");
         ps.setString(1, mergeData.getTimeSeriesMerge().getName());
         ps.setString(2, mergeData.getTimeSeriesMerge().getTitle());
         ps.setString(3, mergeData.getTimeSeriesMerge().getSource());
         ps.setString(4, mergeData.getTimeSeriesMerge().getSourceId());
-        ps.setString(5, mergeData.getTimeSeriesMerge().getNotes());
-        ps.setInt(6, mergeData.getTimeSeriesMerge().getId());
+        ps.setString(5, mergeData.getTimeSeriesMerge().getUnits());
+        ps.setString(6, mergeData.getTimeSeriesMerge().getUnitsShort());
+        ps.setString(7, mergeData.getTimeSeriesMerge().getFrequency());
+        ps.setString(8, mergeData.getTimeSeriesMerge().getFrequencyShort());
+        ps.setString(9, mergeData.getTimeSeriesMerge().getNotes());
+        ps.setInt(10, mergeData.getTimeSeriesMerge().getId());
         ps.executeUpdate();
       }
       
@@ -145,13 +153,17 @@ public class TimeSeriesDAO {
     }
     try {
       conn.setAutoCommit(false);
-      PreparedStatement ps = conn.prepareStatement("insert into time_series(id, name, title, source, source_id, notes) values (?, ?, ?, ?, ?, ?)");
+      PreparedStatement ps = conn.prepareStatement("insert into time_series(id, name, title, source, source_id, units, units_short, frequency, frequency_short, notes) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
       ps.setInt(1, timeSeries.getId());
       ps.setString(2, timeSeries.getName());
       ps.setString(3, timeSeries.getTitle());
       ps.setString(4, timeSeries.getSource());
       ps.setString(5, timeSeries.getSourceId());
-      ps.setString(6, timeSeries.getNotes());
+      ps.setString(6, timeSeries.getUnits());
+      ps.setString(7, timeSeries.getUnitsShort());
+      ps.setString(8, timeSeries.getFrequency());
+      ps.setString(9, timeSeries.getFrequencyShort());
+      ps.setString(10, timeSeries.getNotes());
       ps.executeUpdate();
       
       for (TimeSeriesData timeSeriesData: timeSeries.getTimeSeriesDataList()) {
@@ -172,7 +184,7 @@ public class TimeSeriesDAO {
     if (conn == null) {
       throw new Exception("not connected to datatore");
     }
-    PreparedStatement ps = conn.prepareStatement("select id, name, title, source, source_id, notes from time_series where id = ?");
+    PreparedStatement ps = conn.prepareStatement("select id, name, title, source, source_id, units, units_short, frequency, frequency_short, notes from time_series where id = ?");
     ps.setInt(1, id);
     ResultSet resultSet = ps.executeQuery();
     if (!resultSet.next()) {
@@ -185,7 +197,11 @@ public class TimeSeriesDAO {
     series.setTitle(resultSet.getString(3));
     series.setSource(resultSet.getString(4));
     series.setSourceId(resultSet.getString(5));
-    series.setNotes(resultSet.getString(6));
+    series.setUnits(resultSet.getString(6));
+    series.setUnitsShort(resultSet.getString(7));
+    series.setFrequency(resultSet.getString(8));
+    series.setFrequencyShort(resultSet.getString(9));
+    series.setNotes(resultSet.getString(10));
     Utils.ASSERT(!resultSet.next(), "resultSet not empty");
     
     ps = conn.prepareStatement("select id, datestamp, value from time_series_data where id = ? order by datestamp");
@@ -206,7 +222,7 @@ public class TimeSeriesDAO {
     if (conn == null) {
       throw new Exception("not connected to datatore");
     }
-    PreparedStatement ps = conn.prepareStatement("select id, name, title, source, source_id, notes from time_series where name = ?");
+    PreparedStatement ps = conn.prepareStatement("select id, name, title, source, source_id, units, units_short, frequency, frequency_short, notes from time_series where name = ?");
     ps.setString(1, name);
     ResultSet resultSet = ps.executeQuery();
     if (!resultSet.next()) {
@@ -219,7 +235,11 @@ public class TimeSeriesDAO {
     series.setTitle(resultSet.getString(3));
     series.setSource(resultSet.getString(4));
     series.setSourceId(resultSet.getString(5));
-    series.setNotes(resultSet.getString(6));
+    series.setUnits(resultSet.getString(6));
+    series.setUnitsShort(resultSet.getString(7));
+    series.setFrequency(resultSet.getString(8));
+    series.setFrequencyShort(resultSet.getString(9));
+    series.setNotes(resultSet.getString(10));
     Utils.ASSERT(!resultSet.next(), "resultSet not empty");
     
     ps = conn.prepareStatement("select id, datestamp, value from time_series_data where id = ? order by datestamp");
