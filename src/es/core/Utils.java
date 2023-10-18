@@ -208,6 +208,10 @@ public class Utils {
       timeSeriesMerge.setTitle(timeSeriesCat.getTitle());
       timeSeriesMerge.setSource(timeSeriesCat.getSource());
       timeSeriesMerge.setSourceId(timeSeriesCat.getSourceId());
+      timeSeriesMerge.setUnits(timeSeriesCat.getUnits());
+      timeSeriesMerge.setUnitsShort(timeSeriesCat.getUnitsShort());
+      timeSeriesMerge.setFrequency(timeSeriesCat.getFrequency());
+      timeSeriesMerge.setFrequencyShort(timeSeriesCat.getFrequencyShort());
       timeSeriesMerge.setNotes(timeSeriesCat.getNotes());
       mergeData.setTimeSeriesMerge(timeSeriesMerge);
       log.info("updating metadata");
