@@ -36,11 +36,16 @@ public class SymbolTable {
     }
     symbolTable.put(symbolName, symbol);
   }
+
+  public void put(String symbolName, Symbol symbol) {
+    map.put(symbolName, symbol);
+  }
   
   public void localPut(String symbolName, Symbol symbol) {
     map.put(symbolName, symbol);
   }
-  
+
+/*
   public void put(String symbolName, Symbol symbol) {
     if (map.get(symbolName) != null) {
       // if already in local symbol table
@@ -53,6 +58,7 @@ public class SymbolTable {
       map.put(symbolName, symbol);
     }
   }
+*/
   
   public Set<String> keySet() {
     Set<String> set = new HashSet<String>();

@@ -14,11 +14,7 @@ public class FunctionDeclaration extends Statement {
   
   @Override
   public Object evaluate(SymbolTable symbolTable) throws Exception {
-    Symbol symbolT = symbolTable.get(name);
-    if (symbolT != null) {
-      throw new Exception("cannot overwrite symbol with a function: " + name);
-    }
-    Symbol symbolNew = new Symbol(name, this, true);
+    Symbol symbolNew = new Symbol(name, this);
     symbolTable.put(name, symbolNew);
     return null;
   }
