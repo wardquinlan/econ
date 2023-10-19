@@ -25,6 +25,14 @@ public class SymbolTable {
     return symbol;
   }
   
+  public Symbol globalGet(String symbolName) {
+    SymbolTable symbolTable = this;
+    while (symbolTable.getParent() != null) {
+      symbolTable = symbolTable.getParent();
+    }
+    return symbolTable.get(symbolName);
+  }
+  
   public void globalPut(String symbolName, Symbol symbol) throws Exception {
     SymbolTable symbolTable = this;
     while (symbolTable.getParent() != null) {

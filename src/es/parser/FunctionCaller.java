@@ -22,6 +22,7 @@ import es.command.Exists;
 import es.command.Exit;
 import es.command.FRED;
 import es.command.Fonts;
+import es.command.GGet;
 import es.command.GPut;
 import es.command.Get;
 import es.command.GetFrequency;
@@ -140,6 +141,7 @@ public class FunctionCaller {
     commandMap.put("setUnitsShort", new SetUnitsShort());
     commandMap.put("setFrequencyShort", new SetFrequencyShort());
     commandMap.put("stdev", new StdDev());
+    commandMap.put("gGet", new GGet());
     // I can't think of a way to use this to conditionally include files.  If we create an 'if' block, then all the constants (or whatever) are in the
     // scope of the if block.  So this doesn't work.
     

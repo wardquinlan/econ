@@ -14,6 +14,7 @@ function f(C) {
     assert(N == 5);
     N = 6;
     assert(N == 6);
+    assert(gGet('N') == 8);
   }
 
   g();
