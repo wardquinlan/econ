@@ -11,5 +11,6 @@ include 'gt.ec';
 include 'ne.ec';
 include 'cond.ec';
 include 'average.ec';
+include 'stdev.ec';
 
 print("*** TESTS COMPLETED SUCCESSFULLY ***");

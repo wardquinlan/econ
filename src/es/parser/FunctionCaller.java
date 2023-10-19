@@ -63,6 +63,7 @@ import es.command.SetUnits;
 import es.command.SetUnitsShort;
 import es.command.GetSize;
 import es.command.Status;
+import es.command.StdDev;
 import es.command.Sum;
 import es.command.Timestamp;
 import es.command.Today;
@@ -138,6 +139,7 @@ public class FunctionCaller {
     commandMap.put("setFrequency", new SetFrequency());
     commandMap.put("setUnitsShort", new SetUnitsShort());
     commandMap.put("setFrequencyShort", new SetFrequencyShort());
+    commandMap.put("stdev", new StdDev());
     // I can't think of a way to use this to conditionally include files.  If we create an 'if' block, then all the constants (or whatever) are in the
     // scope of the if block.  So this doesn't work.
     
