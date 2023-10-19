@@ -37,8 +37,8 @@ function metrics(series) {
     if (getSize(series) == 0) {
       series = load(getId(series));
     }
-    METRICS.numberOfSeries = METRICS.numberOfSeries + 1;
-    METRICS.numberOfRecords = METRICS.numberOfRecords + getSize(series);
+    gPut('METRICS.numberOfSeries', METRICS.numberOfSeries + 1);
+    gPut('METRICS.numberOfRecords', METRICS.numberOfRecords + getSize(series));
     print(getName(series) + ': ' + getSize(series));
   }
 }
