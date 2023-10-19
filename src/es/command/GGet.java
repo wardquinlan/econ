@@ -17,13 +17,13 @@ public class GGet implements Command {
   @Override
   public List<String> getDetails() {
     List<String> list = new ArrayList<>();
-    list.add("Gets symbol with name 'symbolName' from the global scope");
+    list.add("Gets object with name 'symbolName' from the global scope");
     return list;
   }
   
   @Override
   public String getReturns() {
-    return null;
+    return "Object with name 'symbolName' from the global scope, or null if it does not exist";
   }
   
   @Override
