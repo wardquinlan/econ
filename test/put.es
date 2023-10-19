@@ -1,6 +1,8 @@
 print('RUNNING PUT TESTS');
 
-function f() {
+function f(C) {
+  print('f() called');
+  assert(C == 10);
   assert(defined('N'));
   assert(N == 8);
   N = 5;
@@ -8,6 +10,7 @@ function f() {
   assert(N == 5);
 
   function g() {
+    print('g() called');
     assert(N == 5);
     N = 6;
     assert(N == 6);
@@ -18,6 +21,7 @@ function f() {
 }
 
 function h() {
+  print('h() called');
   gPut('N', 9);
   assert(N == 9);
 }
@@ -25,6 +29,9 @@ function h() {
 assert(!defined('N'));
 N = 8;
 assert(defined('N'));
+assert(N == 8);
+
+f(10);
 assert(N == 8);
 
 h();
