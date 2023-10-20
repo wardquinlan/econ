@@ -2,7 +2,7 @@ print("RUNNING MERGE TESTS");
 print("THESE TESTS REQUIRE ADMIN MODE");
 
 drop(99);
-include "T1.ec";
+include "T1.es";
 setId(T1, 99);
 setTitle(T1, "My Title");
 

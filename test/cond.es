@@ -17,7 +17,7 @@ assert(false or (false == !true));
 assert(3 < 2 or 4 > 5 or !!true);
 assert(!(3 < 2 and !(4 < 3)));
 
-include 'T3.ec';
+include 'T3.es';
 
 T = !T3;
 assert(get(T3, 0) == !get(T, 0));

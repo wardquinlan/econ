@@ -1,6 +1,6 @@
 print('RUNNING COLLAPSE TESTS');
 
-include 'T1.ec';
+include 'T1.es';
 
 C = collapse(T1);
 assert(getSize(C) == 4);
@@ -13,7 +13,7 @@ assert(get(N1, 1) == 4);
 assert(get(N1, 2) == 6);
 assert(get(N1, 3) == 9);
 
-include 'T2.ec';
+include 'T2.es';
 
 C = collapse(T1, T2);
 assert(getSize(C) == 8);

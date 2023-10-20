@@ -7,7 +7,7 @@ assert(1.0 - 1.0 == 0);
 assert(1 - 1 - 1 == -1);
 assert(1 + 2 - 5 - 7 == -9);
 
-include 'T1.ec';
+include 'T1.es';
 
 T = -T1;
 assert(getSize(T) == getSize(T1));

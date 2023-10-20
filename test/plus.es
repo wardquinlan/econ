@@ -8,7 +8,7 @@ assert("1" + 0 == "10");
 assert(1 + 1 + 1 == 3);
 assert(1 + 2 - 5 - 7 == -9);
 
-include 'T1.ec';
+include 'T1.es';
 
 T = T1 + 1;
 assert(getSize(T) == getSize(T1));
@@ -52,7 +52,7 @@ assert(get(T, 1) == get(T1, 1));
 assert(get(T, 2) == get(T1, 2));
 assert(get(T, 3) == get(T1, 3));
 
-include 'T2.ec';
+include 'T2.es';
 
 T = T1 + T2;
 assert(getSize(T) == 6);

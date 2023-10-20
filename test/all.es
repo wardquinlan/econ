@@ -1,3 +1,5 @@
+print('*** RUNNING ALL TESTS ***');
+
 include 'plus.es';
 include 'minus.es';
 include 'mult.es';
@@ -14,5 +16,10 @@ include 'average.es';
 include 'stdev.es';
 include 'put.es';
 include 'null.es';
+include 'collapse.es';
+include 'T1.es';
+include 'T2.es';
+include 'T3.es';
+include 'T4.es';
 
 print("*** TESTS COMPLETED SUCCESSFULLY ***");
