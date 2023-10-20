@@ -37,6 +37,6 @@ public class DlgConfirm implements Command {
       }
       prompt = (String) params.get(0);
     }
-    return JOptionPane.showConfirmDialog(null, prompt, "Confirm", JOptionPane.YES_NO_OPTION);
+    return (JOptionPane.showConfirmDialog(null, prompt, "Confirm", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION);
   }
 }
