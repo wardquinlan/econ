@@ -11,7 +11,7 @@ import es.parser.SymbolTable;
 public class Drop implements Command {
   @Override
   public String getSummary() {
-    return "void    drop(int id)";
+    return "void    drop(int id);";
   }
   
   @Override
