@@ -102,14 +102,11 @@ public class ESNode implements Evaluable {
     }
     Operator operator = operatorMap.get(type);
     Utils.ASSERT(operator != null, "operator not found");
-    Utils.ASSERT(rhs != null, "rhs is null");
     Executor executor = new Executor(operator);
-    if (lhs == null) {
-      Utils.ASSERT(operator instanceof UnaryOperator, "operator is not unary");
+    if (operator instanceof UnaryOperator) {
       Object val2 = (rhs instanceof Evaluable ? ((Evaluable) rhs).evaluate(symbolTable) : rhs);
       return executor.exec(val2);
     }  else {
-      Utils.ASSERT(operator instanceof BinaryOperator, "operator is not binary");
       Object val1 = (lhs instanceof Evaluable ? ((Evaluable) lhs).evaluate(symbolTable) : lhs);
       if (operator instanceof And && val1 instanceof Boolean && (!(Boolean) val1)) {
         // don't evaluate rhs
@@ -126,7 +123,6 @@ public class ESNode implements Evaluable {
   
   private Object evaluateAssignment(SymbolTable symbolTable) throws Exception {
     Utils.ASSERT(lhs != null, "lhs is null");
-    Utils.ASSERT(rhs != null, "rhs is null");
     Utils.ASSERT(lhs instanceof Symbol, "lhs is not a Symbol");
     Symbol symbol = (Symbol) lhs;
     Object val = (rhs instanceof Evaluable ? ((Evaluable) rhs).evaluate(symbolTable) : rhs);

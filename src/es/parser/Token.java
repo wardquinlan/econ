@@ -39,6 +39,7 @@ public class Token {
   public static final int IF       = 33; // if
   public static final int ELSE     = 34; // else
   public static final int THROW    = 35; // throw
+  public static final int NULL     = 36; // null
   
   public static Map<Integer, String> map = new HashMap<Integer, String>();
   static {
@@ -74,6 +75,7 @@ public class Token {
     map.put(RETURN,  "RETURN");
     map.put(IF,      "IF");
     map.put(ELSE,    "ELSE");
+    map.put(NULL,    "NULL");
   }
   
   private int type;

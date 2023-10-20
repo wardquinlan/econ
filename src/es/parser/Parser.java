@@ -413,7 +413,7 @@ public class Parser {
   }
   
   private Object primary(Token tk, ESIterator<Token> itr) throws Exception {
-    if (tk.getType() == Token.INTEGER || tk.getType() == Token.REAL || tk.getType() == Token.STRING || tk.getType() == Token.BOOLEAN) {
+    if (tk.getType() == Token.INTEGER || tk.getType() == Token.REAL || tk.getType() == Token.STRING || tk.getType() == Token.BOOLEAN || tk.getType() == Token.NULL) {
       return tk.getValue();
     }
     if (tk.getType() == Token.PLUS) {

@@ -68,6 +68,8 @@ public class Tokenizer {
             tk = new Token(Token.INC);
           } else if (sb.toString().equals("const")) {
             tk = new Token(Token.CONST);
+          } else if (sb.toString().equals("null")) {
+            tk = new Token(Token.NULL);
           } else if (sb.toString().equals("function")) {
             tk = new Token(Token.FUNCDECL);
           } else if (sb.toString().equals("if")) {
@@ -92,7 +94,7 @@ public class Tokenizer {
             tk = new Token(Token.SYMBOL);
             tk.setFile(file); // set the file so that the XML parser is able to calculate the relative path
           }
-          if (tk.getType() != Token.BOOLEAN) { 
+          if (tk.getType() != Token.BOOLEAN  && tk.getType() != Token.NULL) { 
             tk.setValue(sb.toString());
           }
           list.add(tk);

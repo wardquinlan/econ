@@ -18,6 +18,8 @@ public class Ne implements BinaryOperator {
       return ((String) val1).compareTo((String) val2) != 0;
     } else if (val1 instanceof Boolean && val2 instanceof Boolean) {
       return !val1.equals(val2);
+    } else if (val1 == null && val2 == null) {
+      return false;
     } else {
       // throw new Exception("syntax error");
       return true;
