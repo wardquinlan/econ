@@ -52,6 +52,7 @@ import es.command.Normalize;
 import es.command.GetOffset;
 import es.command.PChange;
 import es.command.ParseFloat;
+import es.command.ParseInt;
 import es.command.Plot;
 import es.command.Print;
 import es.command.QDB;
@@ -151,6 +152,7 @@ public class FunctionCaller {
     commandMap.put("dlgInput", new DlgInput());
     commandMap.put("dlgMessage", new DlgMessage());
     commandMap.put("parseFloat", new ParseFloat());
+    commandMap.put("parseInt", new ParseInt());
     commandMap.put("dlgConfirm", new DlgConfirm());
     // I can't think of a way to use this to conditionally include files.  If we create an 'if' block, then all the constants (or whatever) are in the
     // scope of the if block.  So this doesn't work.
