@@ -12,7 +12,7 @@ import es.parser.SymbolTable;
 public class DlgInput implements Command {
   @Override
   public String getSummary() {
-    return "String  dlgInput(String prompt);";
+    return "String  dlgInput([String prompt]);";
   }
   
   @Override
@@ -29,10 +29,14 @@ public class DlgInput implements Command {
   
   @Override
   public Object run(SymbolTable symbolTable, File file, List<Object> params) throws Exception {
-    Utils.validate(params, 1, 1);
-    if (!(params.get(0) instanceof String)) {
-      throw new Exception("invalid message");
+    Utils.validate(params, 0, 1);
+    String prompt = "Enter input:";
+    if (params.size() > 0) {
+      if (!(params.get(0) instanceof String)) {
+        throw new Exception("invalid message");
+      }
+      prompt = (String) params.get(0);
     }
-    return JOptionPane.showInputDialog(params.get(0));
+    return JOptionPane.showInputDialog(prompt);
   }
 }
