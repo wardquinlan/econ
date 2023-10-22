@@ -33,6 +33,10 @@ public class ParseInt implements Command {
     if (!(params.get(0) instanceof String)) {
       throw new Exception("invalid value");
     }
-    return Integer.parseInt((String) params.get(0));
+    try {
+      return Integer.parseInt((String) params.get(0));
+    } catch (NumberFormatException e) {
+      return null;
+    }
   }
 }

@@ -33,6 +33,10 @@ public class ParseFloat implements Command {
     if (!(params.get(0) instanceof String)) {
       throw new Exception("invalid value");
     }
-    return Float.parseFloat((String) params.get(0));
+    try {
+      return Float.parseFloat((String) params.get(0));
+    } catch(NumberFormatException e) {
+      return null;
+    }
   }
 }
