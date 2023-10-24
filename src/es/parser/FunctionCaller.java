@@ -43,7 +43,6 @@ import es.command.Help;
 import es.command.Insert;
 import es.command.IsAdmin;
 import es.command.IsConnected;
-import es.command.IsNull;
 import es.command.Ln;
 import es.command.Load;
 import es.command.Merge;
@@ -148,7 +147,6 @@ public class FunctionCaller {
     commandMap.put("setFrequencyShort", new SetFrequencyShort());
     commandMap.put("stdev", new StdDev());
     commandMap.put("gGet", new GGet());
-    commandMap.put("isNull", new IsNull());
     commandMap.put("dlgInput", new DlgInput());
     commandMap.put("dlgMessage", new DlgMessage());
     commandMap.put("parseFloat", new ParseFloat());
