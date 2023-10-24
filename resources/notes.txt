@@ -21,3 +21,5 @@ Think about reintroducing ReturnResult. Or simply, only return int's from top le
 defaults.es should probably include a scaler: defaults.chart.scaler=Linear / Log
 
 plot() can probably have extra params removed, but accept say up to 4 charts.  default colours will have to change to default.chart.colour1, ..., colour4
+
+setNotes(), setTitle(), etc ... cannot set null's.
