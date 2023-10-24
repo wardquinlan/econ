@@ -26,3 +26,5 @@ setNotes(), setTitle(), etc ... cannot set null's.
 
 Remove isNull()
 
+printf()
+
