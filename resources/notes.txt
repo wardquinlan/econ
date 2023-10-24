@@ -11,8 +11,20 @@ We just update each series with the last merge time.  It can be NULL for backwar
 I think I will need to do something about comparing TimeSeries.  It breaks the semantics of compares right now.
  
 - while statement - and BREAK and CONTINUE
-- consider AND / OR lhs support in the Binary Operator somehow.  Maybe.
 X allow the writing of const's if they are the same value
   => too many use cases esp. considering TimeSeries objects
 X rewrite assert() and exitif() as es functions (?)
   => risky b.c. of use in test scripts.  I removed exitif().
+
+Think about reintroducing ReturnResult. Or simply, only return int's from top level.  Not sure which is best.
+
+defaults.es should probably include a scaler: defaults.chart.scaler=Linear / Log
+
+plot() can probably have extra params removed, but accept say up to 4 charts.  default colours will have to change to default.chart.colour1, ..., colour4
+
+setNotes(), setTitle(), etc ... cannot set null's.
+
+Remove isNull()
+
+printf()
+
