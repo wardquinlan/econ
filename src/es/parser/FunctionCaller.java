@@ -212,7 +212,7 @@ public class FunctionCaller {
       throw new Exception("calling function with too many parameters: " + funcName);
     }
     while (params.size() < functionDeclaration.getParams().size()) {
-      params.add("undefined");
+      params.add(null);
     }
     Utils.ASSERT(functionDeclaration.getParams().size() == params.size(), "function parmeters size mismatch");
     SymbolTable childSymbolTable = new SymbolTable(symbolTable);

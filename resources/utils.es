@@ -2,8 +2,8 @@
 # load() functions
 #################################################################################
 function loadSeries(series) {
-  if (series == null or series == 'undefined') {
-    throw 'cannot load empty series: ' + series;
+  if (series == null) {
+    throw 'cannot load series: ' + series;
   }
   if (getType(series) != 'Series') {
     series = load(series);
@@ -66,9 +66,6 @@ function resetName(name, nameNew) {
     throw 'you must be running in administrative mode to reset name\'s';
   }
   if (getType(name) != 'String' or getType(nameNew) != 'String') {
-    throw 'usage: resetName(String name, String nameNew);';
-  }
-  if (name == 'undefined' or nameNew == 'undefined') {
     throw 'usage: resetName(String name, String nameNew);';
   }
   if (exists(nameNew)) {
