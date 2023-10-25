@@ -45,8 +45,7 @@ public class Main {
             log.info("exiting with status code " + (Integer) result);
             System.exit((Integer) result);
           }
-          log.info("evaluator returned non-integral result (" + result + "), exiting with 0 status code");
-          System.exit(0);
+          log.info("evaluator returned non-integral result (" + result + "); ignoring");
         }
       }
     }
