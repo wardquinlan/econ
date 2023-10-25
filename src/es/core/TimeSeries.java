@@ -1,6 +1,7 @@
 package es.core;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class TimeSeries {
   public static final int NULL = 0;
@@ -146,6 +147,28 @@ public class TimeSeries {
     return "[" + id + ", " + name + ", " + title + ", " + source + ", " + Utils.stringWithNULL(sourceId) + " (count=" + timeSeriesDataList.size() + ")]"; 
   }
   
+  @Override
+  public int hashCode() {
+    return Objects.hash(frequency, frequencyShort, id, name, notes, source, sourceId, timeSeriesDataList, title, type,
+        units, unitsShort);
+  }
+
+  @Override
+  public boolean equals(Object obj) {
+    if (this == obj)
+      return true;
+    if (obj == null)
+      return false;
+    if (getClass() != obj.getClass())
+      return false;
+    TimeSeries other = (TimeSeries) obj;
+    return Objects.equals(frequency, other.frequency) && Objects.equals(frequencyShort, other.frequencyShort)
+        && Objects.equals(id, other.id) && Objects.equals(name, other.name) && Objects.equals(notes, other.notes)
+        && Objects.equals(source, other.source) && Objects.equals(sourceId, other.sourceId)
+        && Objects.equals(timeSeriesDataList, other.timeSeriesDataList) && Objects.equals(title, other.title)
+        && type == other.type && Objects.equals(units, other.units) && Objects.equals(unitsShort, other.unitsShort);
+  }
+
   public String toStringVerbose() {
     StringBuffer sb = new StringBuffer(toString() + "\n");
     int i = 0;
