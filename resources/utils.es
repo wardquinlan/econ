@@ -156,3 +156,25 @@ function usage() {
   print('Series stored in datastore: ' + METRICS.numberOfSeries + ' (excluding backup series)');
   print('Number of records stored in datastore: ' + METRICS.numberOfRecords);
 }
+
+function defaults() {
+  print('defaults.panel.backgroundcolor = Color');
+  print('defaults.panel.dxincr = int');
+  print('defaults.panel.gridlinetextwidth = int');
+  print('defaults.panel.fontname = String');
+  print('defaults.panel.fontcolor = Color');
+  print('defaults.panel.fontsize = int');
+  print('defaults.panel.frequency = NONE | DAYS | MONTHS | YEARS');
+  print('defaults.panel.label = String');
+  print('defaults.chart.backgroundcolor = Color');
+  print('defaults.chart.linecolor = Color');
+  print('defaults.chart.rectcolor = Color');
+  print('defaults.chart.ngridlines = int');
+  print('defaults.chart.label = String');
+  print('defaults.chart.scaletype = LINEAR | LOG');
+  print('defaults.series.linecolor0 = Color');
+  print('defaults.series.linecolor1 = Color');
+  print('defaults.series.linecolor2 = Color');
+  print('defaults.series.linecolor3 = Color');
+}
+
