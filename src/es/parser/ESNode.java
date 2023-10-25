@@ -117,6 +117,10 @@ public class ESNode implements Evaluable {
         return true;
       }
       Object val2 = (rhs instanceof Evaluable ? ((Evaluable) rhs).evaluate(symbolTable) : rhs);
+      if (operator instanceof Eq || operator instanceof Ne) {
+        // don't try and generate time series if doing simple comparisons; use the equals() and notEquals() commands
+        return ((BinaryOperator) operator).exec(val1, val2);
+      }
       return executor.exec(val1, val2);
     }
   }

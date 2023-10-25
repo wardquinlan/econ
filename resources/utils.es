@@ -2,10 +2,10 @@
 # load() functions
 #################################################################################
 function loadSeries(series) {
+  if (series == null or series == 'undefined') {
+    throw 'cannot load empty series: ' + series;
+  }
   if (getType(series) != 'Series') {
-    if (series == null or series == 'undefined') {
-      throw 'cannot load empty series: ' + series;
-    }
     series = load(series);
   }
   if (getSize(series) == 0) {
