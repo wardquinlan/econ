@@ -214,7 +214,6 @@ public class TimeSeriesDAO {
       timeSeriesData.setValue(resultSet.getFloat(3));
       series.add(timeSeriesData);
     }
-    series.setBase(true);
     return series;
   }
   
@@ -252,7 +251,6 @@ public class TimeSeriesDAO {
       timeSeriesData.setValue(resultSet.getFloat(3));
       series.add(timeSeriesData);
     }
-    series.setBase(true);
     return series;
   }
   

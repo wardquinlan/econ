@@ -137,7 +137,6 @@ public class QTP implements Command {
       timeSeries.add(timeSeriesData);
     }
     Collections.sort(timeSeries.getTimeSeriesDataList());
-    timeSeries.setBase(true);
     return timeSeries;
   }
 }

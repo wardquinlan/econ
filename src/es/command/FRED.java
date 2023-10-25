@@ -85,7 +85,6 @@ public class FRED implements Command {
     timeSeries.setSource("FRED");
     meta(timeSeries, sourceId);
     data(timeSeries, sourceId, units);
-    timeSeries.setBase(true);
     return timeSeries;
   }
 

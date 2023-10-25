@@ -137,11 +137,8 @@ public class ESNode implements Evaluable {
         timeSeriesData.setValue(timeSeriesData1.getValue());
         timeSeries.add(timeSeriesData);
       }
-      if (timeSeries1.isBase()) {
-        // copy Id / Name metadata for 'base' series
-        timeSeries.setId(timeSeries1.getId());
-        timeSeries.setName(timeSeries1.getName());
-      }
+      timeSeries.setId(timeSeries1.getId());
+      timeSeries.setName(timeSeries1.getName());
       timeSeries.setSource(timeSeries1.getSource());
       timeSeries.setSourceId(timeSeries1.getSourceId());
       timeSeries.setUnits(timeSeries1.getUnits());

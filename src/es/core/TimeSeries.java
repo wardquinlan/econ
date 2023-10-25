@@ -9,9 +9,6 @@ public class TimeSeries {
   public static final int DATE = 3;
   
   private int type;
-  // base series are created via create(), load(), imports ... that type of thing.
-  // They signal that meta data also has to be copied.
-  private boolean base = false;
   private Integer id;
   private String name;
   private String title;
@@ -32,14 +29,6 @@ public class TimeSeries {
     return type;
   }
   
-  public boolean isBase() {
-    return base;
-  }
-
-  public void setBase(boolean base) {
-    this.base = base;
-  }
-
   public String getTypeAsString() {
     switch(type) {
     case FLOAT:
