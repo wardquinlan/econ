@@ -24,3 +24,5 @@ plot() can probably have extra params removed, but accept say up to 4 charts.  d
 
 printf()
 
+make the data() command an iterator as well
+
