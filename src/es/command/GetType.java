@@ -18,6 +18,7 @@ public class GetType implements Command {
   public List<String> getDetails() {
     List<String> list = new ArrayList<>();
     list.add("Returns type of 'object' represented as a String:");
+    list.add("  - 'null'");
     list.add("  - 'int'");
     list.add("  - 'float'");
     list.add("  - 'boolean'");
@@ -35,7 +36,9 @@ public class GetType implements Command {
   public Object run(SymbolTable symbolTable, File file, List<Object> params) throws Exception {
     Utils.validate(params, 1, 1);
     Object object = params.get(0);
-    if (object instanceof Integer) {
+    if (object == null) {
+      return "null";
+    } else if (object instanceof Integer) {
       return "int";
     } else if (object instanceof Float) {
       return "float";
