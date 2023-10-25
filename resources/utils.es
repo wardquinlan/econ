@@ -1,3 +1,51 @@
+#################################################################################
+# load() functions
+#################################################################################
+function loadSeries(series) {
+  if (series == null or series == 'undefined') {
+    throw 'cannot load series: ' + series;
+  }
+  if (getType(series) == 'int' or getType(series) == 'String') {
+    # try to load the series
+    series = load(series);
+  }
+  if (getSize(series) == 0) {
+    series = load(getId(series));
+  }
+  return series;
+}
+
+function autoload(series) {
+  series = loadSeries(series);
+  # don't load the backups...
+  if (getId(series) < 10000) {
+    name = getName(series);
+    gPut(name, series);
+  } 
+} 
+
+#################################################################################
+# update() functions
+#################################################################################
+function updateSeries(series) {
+  series = loadSeries(series);
+  if (getSource(series) == 'FRED' and getId(series) < 10000) {
+    id = getId(series);
+    name = getName(series);
+    log(INFO, 'updating ' + id + ':' + name + '...');
+    series = fred(name);
+    setId(series, id);
+    merge(series, '--with-inserts');
+  }
+}
+
+function updateAll() {
+  ds(updateSeries);
+}
+
+#################################################################################
+# reset() functions
+#################################################################################
 function resetId(id, idNew) {
   if (!isAdmin()) {
     throw 'you must be running in administrative mode to reset id\'s';
@@ -21,7 +69,7 @@ function resetName(name, nameNew) {
   if (getType(name) != 'String' or getType(nameNew) != 'String') {
     throw 'usage: resetName(String name, String nameNew);';
   }
-  if (name == UNDEFINED or nameNew == UNDEFINED) {
+  if (name == 'undefined' or nameNew == 'undefined') {
     throw 'usage: resetName(String name, String nameNew);';
   }
   if (exists(nameNew)) {
@@ -33,6 +81,9 @@ function resetName(name, nameNew) {
   save(S);
 }
 
+#################################################################################
+# backup()
+#################################################################################
 function backup(id) {
   if (!isAdmin()) {
     throw 'you must be running in administrative mode to do backups';
@@ -55,22 +106,45 @@ function backup(id) {
   save(S);
 }
 
-function highest(series) {
-  if (getType(series) == 'int' or getType(series) == 'String') {
-    series = load(series);
+#################################################################################
+# highest() / lowest() functions
+#################################################################################
+function hh(idx, d, v) {
+  if (v > gGet('METRICS.highest')) {
+    gPut('METRICS.highest', v);
   }
+}
+
+function ll(idx, d, v) {
+  if (v < gGet('METRICS.lowest')) {
+    gPut('METRICS.lowest', v);
+  }
+}
+
+function highest(series) {
+  series = loadSeries(series);
   gPut('METRICS.highest', get(series, 0));
   data(series, hh);
   return gGet('METRICS.highest');
 }
 
 function lowest(series) {
-  if (getType(series) == 'int' or getType(series) == 'String') {
-    series = load(series);
-  }
+  series = loadSeries(series);
   gPut('METRICS.lowest', get(series, 0));
   data(series, ll);
   return gGet('METRICS.lowest');
+}
+
+#################################################################################
+# usage() functions
+#################################################################################
+function metrics(series) {
+  series = loadSeries(series);
+  if (getId(series) < 10000) {
+    gPut('METRICS.numberOfSeries', METRICS.numberOfSeries + 1);
+    gPut('METRICS.numberOfRecords', METRICS.numberOfRecords + getSize(series));
+    print(getName(series) + ': ' + getSize(series));
+  }
 }
 
 function usage() {
@@ -83,20 +157,3 @@ function usage() {
   print('Series stored in datastore: ' + METRICS.numberOfSeries + ' (excluding backup series)');
   print('Number of records stored in datastore: ' + METRICS.numberOfRecords);
 }
-
-# this looks a bit like a callback, but it really isn't because it returns something
-function last(series) {
-  if (getType(series) == 'String' or getType(series) == 'int') {
-    # try and load the series
-    series = load(series);
-  }
-  if (getSize(series) == 0) {
-    throw getName(series) + ': no data';
-  }
-  return get(series, getSize(series) - 1);
-}
-
-function updateAll() {
-  ds(updateSeries);
-}
-
