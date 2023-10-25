@@ -27,7 +27,7 @@ import es.parser.SymbolTable;
 public class Plot implements Command {
   @Override
   public String getSummary() {
-    return "void    plot(Object object[, int dxincr[, int frequency]]);";
+    return "void    plot(Object object...);";
   }
   
   @Override
@@ -37,11 +37,7 @@ public class Plot implements Command {
     list.add("  - a Series");
     list.add("  - a context file name");
     list.add("");
-    list.add("Note that dxincr must be > 0 and that frequency must be 0 <= frequency <= 3, namely:");
-    list.add("  - NONE (0)");
-    list.add("  - DAYS (1)");
-    list.add("  - MONTHS (2)");
-    list.add("  - YEARS (3)");
+    list.add("Multiple Series may be plotted at once (currently up to 4)");
     return list;
   }
   
