@@ -11,7 +11,7 @@ import es.parser.SymbolTable;
 public class NotEquals implements Command {
   @Override
   public String getSummary() {
-    return "Series  notEquals(Series series1, Series series2);";
+    return "Object  notEquals(Object object, Object Object);";
   }
   
   @Override
@@ -23,7 +23,7 @@ public class NotEquals implements Command {
   
   @Override
   public String getReturns() {
-    return "A Series or a Boolean representing the equality between 'object1' and 'object2'";
+    return "A Series or a Boolean representing the inequality between 'object1' and 'object2'";
   }
   
   @Override
