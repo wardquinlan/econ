@@ -15,7 +15,7 @@ public class Series extends GUIObject {
 
   public Series(SymbolTable symbolTable) {
     super(symbolTable);
-    color = new Color((int) symbolTable.get("defaults.series.linecolor").getValue());
+    color = new Color((int) symbolTable.get("defaults.series.linecolor0").getValue());
   }
   
   public TimeSeries getTimeSeries() {

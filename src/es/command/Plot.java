@@ -1,5 +1,6 @@
 package es.command;
 
+import java.awt.Color;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.File;
@@ -50,7 +51,7 @@ public class Plot implements Command {
   
   @Override
   public Object run(SymbolTable symbolTable, File file, List<Object> params) throws Exception {
-    Utils.validate(params, 1, 3);
+    Utils.validate(params, 1, 4);
     Symbol symbol = symbolTable.get("settings.loaded");
     if (symbol == null || !((Boolean) symbol.getValue())) {
       throw new Exception("settings not loaded");
@@ -72,43 +73,34 @@ public class Plot implements Command {
         xmlParser = new XMLParser(new File(basename + File.separator + filename), 0, symbolTable);
       }
       ctx = xmlParser.parse();
-    } else if (params.get(0) instanceof TimeSeries) {
-      TimeSeries timeSeries = (TimeSeries) params.get(0);
-      Series series = new Series(symbolTable);
-      series.setType(Series.LINE); // TODO: in theory could support bar series - can look at series data type
-      series.setTimeSeries(timeSeries);
+    } else {
       Chart chart = new Chart(symbolTable);
-      chart.setLabel(Utils.stringWithNULL(timeSeries.getName()));
-      chart.getSeries().add(series);
+      chart.setLabel((String) symbolTable.get("defaults.chart.label").getValue());
+      for (int i = 0; i < params.size(); i++) {
+        if (!(params.get(i) instanceof TimeSeries)) {
+          throw new Exception("argument must be a Series: " + params.get(i));
+        }
+        TimeSeries timeSeries = (TimeSeries) params.get(i);
+        Series series = new Series(symbolTable);
+        switch (timeSeries.getType()) {
+          case TimeSeries.FLOAT:
+            series.setType(Series.LINE);
+            break;
+          case TimeSeries.BOOLEAN:
+            series.setType(Series.BACKGROUND);
+            break;
+          default:
+            throw new Exception("cannot plot this type of series: " + timeSeries.getType());
+        }
+        series.setColor(new Color((int) symbolTable.get("defaults.series.linecolor" + i).getValue()));
+        series.setTimeSeries(timeSeries);
+        chart.getSeries().add(series);
+      }
       Panel panel = new Panel(symbolTable);
-      panel.setLabel(Utils.stringWithNULL(timeSeries.getName()));
+      panel.setLabel((String) symbolTable.get("defaults.panel.label").getValue());
       panel.getCharts().add(chart);
-      if (params.size() >= 2) {
-        if (params.get(1) instanceof Integer) {
-          int dxIncr = (Integer) params.get(1);
-          if (dxIncr <= 0) {
-            throw new Exception("invalid dxincr: " + dxIncr);
-          }
-          panel.setDxIncr(dxIncr);
-        } else {
-          throw new Exception("argument must be an int: " + params.get(1));
-        }
-      }
-      if (params.size() == 3) {
-        if (params.get(2) instanceof Integer) {
-          int frequency = (Integer) params.get(2);
-          if (frequency != Panel.FREQUENCY_NONE && frequency != Panel.FREQUENCY_DAYS && frequency != Panel.FREQUENCY_MONTHS && frequency != Panel.FREQUENCY_YEARS) {
-            throw new Exception("invalid frequency: " + frequency);
-          }
-          panel.setFrequency(frequency);
-        } else {
-          throw new Exception("argument must be an int: " + params.get(2));
-        }
-      }
       ctx = new Context(symbolTable);
       ctx.getPanels().add(panel);
-    } else {
-      throw new Exception("argument must be a String or a Series: " + params.get(0));
     }
     new Frame(ctx);
 /*    
