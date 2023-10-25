@@ -34,14 +34,18 @@ public class SetName implements Command {
       throw new Exception(params.get(0) + " is not a Series");
     }
     
-    if (!(params.get(1) instanceof String)) {
-      throw new Exception(params.get(1) + " is not a String");
+    if (!(params.get(1) instanceof String) && params.get(1) != null) {
+      throw new Exception(params.get(1) + " is not a String (or null)");
     }
     
     TimeSeries timeSeries = (TimeSeries) params.get(0);
     String name = (String) params.get(1);
     if (timeSeries.getName() != null && !timeSeries.getName().equals(name)) {
       log.warn("resetting a name which has already been set: " + timeSeries.getName());
+    }
+    if (name == null) {
+      timeSeries.setName(null);
+      return null;
     }
     if (name.contains("\n")) {
       throw new Exception("invalid character(s)");

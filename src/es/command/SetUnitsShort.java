@@ -34,12 +34,16 @@ public class SetUnitsShort implements Command {
       throw new Exception(params.get(0) + " is not a Series");
     }
     
-    if (!(params.get(1) instanceof String)) {
-      throw new Exception(params.get(1) + " is not a String");
+    if (!(params.get(1) instanceof String) && params.get(1) != null) {
+      throw new Exception(params.get(1) + " is not a String (or null)");
     }
     
     TimeSeries timeSeries = (TimeSeries) params.get(0);
     String param = (String) params.get(1);
+    if (param == null) {
+      timeSeries.setUnitsShort(null);
+      return null;
+    }
     if (param.contains("\n")) {
       throw new Exception("invalid character(s)");
     }

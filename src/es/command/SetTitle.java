@@ -34,12 +34,16 @@ public class SetTitle implements Command {
       throw new Exception(params.get(0) + " is not a Series");
     }
     
-    if (!(params.get(1) instanceof String)) {
-      throw new Exception(params.get(1) + " is not a String");
+    if (!(params.get(1) instanceof String) && params.get(1) != null) {
+      throw new Exception(params.get(1) + " is not a String (or null)");
     }
     
     TimeSeries timeSeries = (TimeSeries) params.get(0);
     String title = (String) params.get(1);
+    if (title == null) {
+      timeSeries.setTitle(null);
+      return null;
+    }
     if (title.contains("\n")) {
       throw new Exception("invalid character(s)");
     }
