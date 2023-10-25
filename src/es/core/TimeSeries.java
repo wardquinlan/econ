@@ -149,8 +149,7 @@ public class TimeSeries {
   
   @Override
   public int hashCode() {
-    return Objects.hash(frequency, frequencyShort, id, name, notes, source, sourceId, timeSeriesDataList, title, type,
-        units, unitsShort);
+    return Objects.hash(id, name);
   }
 
   @Override
@@ -162,11 +161,7 @@ public class TimeSeries {
     if (getClass() != obj.getClass())
       return false;
     TimeSeries other = (TimeSeries) obj;
-    return Objects.equals(frequency, other.frequency) && Objects.equals(frequencyShort, other.frequencyShort)
-        && Objects.equals(id, other.id) && Objects.equals(name, other.name) && Objects.equals(notes, other.notes)
-        && Objects.equals(source, other.source) && Objects.equals(sourceId, other.sourceId)
-        && Objects.equals(timeSeriesDataList, other.timeSeriesDataList) && Objects.equals(title, other.title)
-        && type == other.type && Objects.equals(units, other.units) && Objects.equals(unitsShort, other.unitsShort);
+    return Objects.equals(id, other.id) && Objects.equals(name, other.name);
   }
 
   public String toStringVerbose() {
