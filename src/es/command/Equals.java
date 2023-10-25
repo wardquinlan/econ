@@ -1,4 +1,4 @@
-package es.parser;
+package es.command;
 
 public class Equals {
 
