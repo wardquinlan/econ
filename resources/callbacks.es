@@ -43,3 +43,14 @@ function metrics(series) {
   }
 }
 
+function hh(idx, d, v) {
+  if (v > gGet('METRICS.highest')) {
+    gPut('METRICS.highest', v);
+  }
+}
+
+function ll(idx, d, v) {
+  if (v < gGet('METRICS.lowest')) {
+    gPut('METRICS.lowest', v);
+  }
+}

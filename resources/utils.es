@@ -55,6 +55,24 @@ function backup(id) {
   save(S);
 }
 
+function highest(series) {
+  if (getType(series) == 'int' or getType(series) == 'String') {
+    series = load(series);
+  }
+  gPut('METRICS.highest', get(series, 0));
+  data(series, hh);
+  return gGet('METRICS.highest');
+}
+
+function lowest(series) {
+  if (getType(series) == 'int' or getType(series) == 'String') {
+    series = load(series);
+  }
+  gPut('METRICS.lowest', get(series, 0));
+  data(series, ll);
+  return gGet('METRICS.lowest');
+}
+
 function usage() {
   gPut('METRICS.numberOfSeries', 0);
   gPut('METRICS.numberOfRecords', 0);
