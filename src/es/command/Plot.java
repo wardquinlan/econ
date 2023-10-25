@@ -11,6 +11,7 @@ import java.util.Map;
 
 import javax.swing.JFrame;
 
+import es.core.Settings;
 import es.core.TimeSeries;
 import es.core.Utils;
 import es.gui.Chart;
@@ -102,22 +103,21 @@ public class Plot implements Command {
       ctx = new Context(symbolTable);
       ctx.getPanels().add(panel);
     }
-    new Frame(ctx);
-/*    
-    frame.addWindowListener(new WindowAdapter() {
-      @Override
-      public void windowClosing(WindowEvent e) {
-          log.debug("closing window");
-          synchronized (Lock.instance()) {
-            Lock.instance().notify();
-          }
+    JFrame frame = new Frame(ctx);
+    if (Settings.getInstance().testFunctions()) {
+      frame.addWindowListener(new WindowAdapter() {
+        @Override
+        public void windowClosing(WindowEvent e) {
+            log.debug("closing window");
+            synchronized (Lock.instance()) {
+              Lock.instance().notify();
+            }
+        }
+      });
+      synchronized (Lock.instance()) {
+        Lock.instance().wait();
       }
-    });
-
-    synchronized (Lock.instance()) {
-      Lock.instance().wait();
     }
-*/    
     return null;
   }
 }

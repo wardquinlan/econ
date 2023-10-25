@@ -6,22 +6,32 @@ import java.util.ArrayList;
 import es.parser.SymbolTable;
 
 public class Chart extends GUIObject {
+  public static final int SCALE_TYPE_LINEAR = 0;
+  public static final int SCALE_TYPE_LOG = 1;
   private Color backgroundColor;
   private Color lineColor;
   private Color rectColor;
   private String label;
   private int nGridLines;
   private int span = 100;
-  private Scaler scaler = new LinearScaler();
+  private Scaler scaler;
   private ArrayList<Float> gridlines = new ArrayList<>();
   private ArrayList<Series> series = new ArrayList<>();
   
-  public Chart(SymbolTable symbolTable) {
+  public Chart(SymbolTable symbolTable) throws Exception {
     super(symbolTable);
     backgroundColor = new Color((int) symbolTable.get("defaults.chart.backgroundcolor").getValue());
     lineColor = new Color((int) symbolTable.get("defaults.chart.linecolor").getValue());
     rectColor = new Color((int) symbolTable.get("defaults.chart.rectcolor").getValue());
     nGridLines = (int) symbolTable.get("defaults.chart.ngridlines").getValue();
+    int type = (int) symbolTable.get("defaults.chart.scaletype").getValue();
+    if (type == SCALE_TYPE_LINEAR) {
+      scaler = new LinearScaler();
+    } else if (type == SCALE_TYPE_LOG) {
+      scaler = new LogScaler();
+    } else {
+      throw new Exception("invalid scale type: " + type);
+    }
   }
   
   public String getLabel() {

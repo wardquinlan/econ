@@ -12,6 +12,7 @@ defaults.chart.linecolor = LightGray;
 defaults.chart.rectcolor = LightGray;
 defaults.chart.ngridlines = 40;
 defaults.chart.label = 'Chart';
+defaults.chart.scaletype = LINEAR;
 
 defaults.series.linecolor0 = Black;
 defaults.series.linecolor1 = Red;

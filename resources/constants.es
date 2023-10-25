@@ -156,3 +156,6 @@ const E = 2.718280;
 const INFO = 0;
 const WARN = 1;
 const ERROR = 2;
+
+const LINEAR = 0;
+const LOG = 1;
