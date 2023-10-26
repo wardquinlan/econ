@@ -100,7 +100,7 @@ public class Plot implements Command {
       ctx.getPanels().add(panel);
     }
     JFrame frame = new Frame(ctx);
-    if (Settings.getInstance().testFunctions()) {
+    if (Settings.getInstance().isTestMode()) {
       frame.addWindowListener(new WindowAdapter() {
         @Override
         public void windowClosing(WindowEvent e) {

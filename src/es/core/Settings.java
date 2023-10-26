@@ -3,7 +3,7 @@ package es.core;
 import org.apache.commons.cli.CommandLine;
 
 public class Settings {
-  private boolean testFunctions = false;
+  private boolean testMode = false;
   private boolean suppressAutoload = false;
   private boolean admin = false;
   private String version;
@@ -19,14 +19,14 @@ public class Settings {
   }
   
   public void setOptions(CommandLine cmd) {
-    testFunctions = cmd.hasOption("test");
+    testMode = cmd.hasOption("test");
     suppressAutoload = cmd.hasOption("suppress-autoload");
     admin = cmd.hasOption("admin");
     promptSuppressed = cmd.hasOption("suppress-prompt");
   }
 
-  public boolean testFunctions() {
-    return testFunctions;
+  public boolean isTestMode() {
+    return testMode;
   }
 
   public boolean suppressAutoload() {

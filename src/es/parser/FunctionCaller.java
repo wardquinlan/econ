@@ -164,7 +164,7 @@ public class FunctionCaller {
     
     // this might be relevant for other reasons, though: it is a way to modify a global scope from within a local scope
     commandMap.put("gPut", new GPut());
-    if (Settings.getInstance().testFunctions()) {
+    if (Settings.getInstance().isTestMode()) {
       commandMap.put("collapse", new Collapse());
       commandMap.put("normalize", new Normalize());
       commandMap.put("getOffset", new GetOffset());
