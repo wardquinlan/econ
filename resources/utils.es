@@ -1,7 +1,7 @@
 #################################################################################
-# load() functions
+# Load functions
 #################################################################################
-function loadSeries(series) {
+function ES:LoadSeries(series) {
   if (series == null) {
     throw 'cannot load series: ' + series;
   }
@@ -14,19 +14,22 @@ function loadSeries(series) {
   return series;
 }
 
-function autoload(series) {
+function ES:AutoLoad(series) {
   series = loadSeries(series);
   # don't load the backups...
   if (getId(series) < 10000) {
     name = getName(series);
     gPut(name, series);
   } 
-} 
+}
+
+loadSeries = ES:LoadSeries;
+autoLoad = ES:AutoLoad; 
 
 #################################################################################
-# update() functions
+# Update functions
 #################################################################################
-function updateSeries(series) {
+function ES:UpdateSeries(series) {
   series = loadSeries(series);
   if (getSource(series) == 'FRED' and getId(series) < 10000) {
     id = getId(series);
@@ -38,14 +41,17 @@ function updateSeries(series) {
   }
 }
 
-function updateAll() {
+function ES:UpdateAll() {
   ds(updateSeries);
 }
 
+updateSeries = ES:UpdateSeries;
+updateAll = ES:UpdateAll;
+
 #################################################################################
-# reset() functions
+# Reset functions
 #################################################################################
-function resetId(id, idNew) {
+function ES:ResetId(id, idNew) {
   if (!isAdmin()) {
     throw 'you must be running in administrative mode to reset id\'s';
   }
@@ -61,7 +67,7 @@ function resetId(id, idNew) {
   save(S);
 }
 
-function resetName(name, nameNew) {
+function ES:ResetName(name, nameNew) {
   if (!isAdmin()) {
     throw 'you must be running in administrative mode to reset name\'s';
   }
@@ -77,10 +83,13 @@ function resetName(name, nameNew) {
   save(S);
 }
 
+resetId = ES:ResetId;
+resetName = ES:ResetName;
+
 #################################################################################
-# backup()
+# Backup
 #################################################################################
-function backup(id) {
+function ES:Backup(id) {
   if (!isAdmin()) {
     throw 'you must be running in administrative mode to do backups';
   }
@@ -102,39 +111,46 @@ function backup(id) {
   save(S);
 }
 
+backup = ES:Backup;
+
 #################################################################################
-# highest() / lowest() functions
+# Highest / Lowest functions
 #################################################################################
-function hh(idx, d, v) {
+function ES:Hh(idx, d, v) {
   if (v > gGet('METRICS.highest')) {
     gPut('METRICS.highest', v);
   }
 }
 
-function ll(idx, d, v) {
+function ES:Ll(idx, d, v) {
   if (v < gGet('METRICS.lowest')) {
     gPut('METRICS.lowest', v);
   }
 }
 
-function highest(series) {
+function ES:Highest(series) {
   series = loadSeries(series);
   gPut('METRICS.highest', get(series, 0));
   data(series, hh);
   return gGet('METRICS.highest');
 }
 
-function lowest(series) {
+function ES:Lowest(series) {
   series = loadSeries(series);
   gPut('METRICS.lowest', get(series, 0));
   data(series, ll);
   return gGet('METRICS.lowest');
 }
 
+hh = ES:Hh;
+ll = ES:Ll;
+highest = ES:Highest;
+lowest = ES:Lowest;
+
 #################################################################################
-# usage() functions
+# Usage functions
 #################################################################################
-function metrics(series) {
+function ES:Metrics(series) {
   series = loadSeries(series);
   if (getId(series) < 10000) {
     gPut('METRICS.numberOfSeries', METRICS.numberOfSeries + 1);
@@ -143,7 +159,7 @@ function metrics(series) {
   }
 }
 
-function usage() {
+function ES:Usage() {
   gPut('METRICS.numberOfSeries', 0);
   gPut('METRICS.numberOfRecords', 0);
   print('Series Metrics');
@@ -154,7 +170,7 @@ function usage() {
   print('Number of records stored in datastore: ' + METRICS.numberOfRecords);
 }
 
-function defaults() {
+function ES:Defaults() {
   print('defaults.panel.backgroundcolor = Color');
   print('defaults.panel.dxincr = int');
   print('defaults.panel.gridlinetextwidth = int');
@@ -174,4 +190,8 @@ function defaults() {
   print('defaults.series.linecolor2 = Color');
   print('defaults.series.linecolor3 = Color');
 }
+
+metrics = ES:Metrics;
+usage = ES:Usage;
+defaults = ES:Defaults;
 

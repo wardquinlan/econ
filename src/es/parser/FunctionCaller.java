@@ -206,7 +206,7 @@ public class FunctionCaller {
       }
       for (String name: commandMap.keySet()) {
         Command command = commandMap.get(name);
-        if (!name.startsWith(("ES:"))) {
+        if (name.startsWith(("ES:"))) {
           System.out.println(command.getSummary());
         }
       }
