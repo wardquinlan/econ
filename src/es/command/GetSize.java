@@ -11,7 +11,7 @@ import es.parser.SymbolTable;
 public class GetSize implements Command {
   @Override
   public String getSummary() {
-    return "int     getSize(Series series);";
+    return "int     ES:GetSize(Series series);";
   }
   
   @Override

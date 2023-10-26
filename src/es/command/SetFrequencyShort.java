@@ -11,7 +11,7 @@ import es.parser.SymbolTable;
 public class SetFrequencyShort implements Command {
   @Override
   public String getSummary() {
-    return "void    setFrequencyShort(String series, String frequencyShort);";
+    return "void    ES:SetFrequencyShort(String series, String frequencyShort);";
   }
   
   @Override

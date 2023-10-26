@@ -11,7 +11,7 @@ import es.parser.SymbolTable;
 public class Normalize implements Command {
   @Override
   public String getSummary() {
-    return "Series  normalize(Series seriesCollapsed, Series series);";
+    return "Series  ES:Normalize(Series seriesCollapsed, Series series);";
   }
   
   @Override

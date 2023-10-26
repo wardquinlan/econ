@@ -11,7 +11,7 @@ import es.parser.SymbolTable;
 public class Create implements Command {
   @Override
   public String getSummary() {
-    return "Series  create(String name[, int type]);";
+    return "Series  ES:Create(String name[, int type]);";
   }
   
   @Override

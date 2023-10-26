@@ -10,7 +10,7 @@ import es.parser.SymbolTable;
 public class Defined implements Command {
   @Override
   public String getSummary() {
-    return "boolean defined(String symbolName);";
+    return "boolean ES:Defined(String symbolName);";
   }
   
   @Override

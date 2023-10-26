@@ -11,7 +11,7 @@ import es.parser.SymbolTable;
 public class Equals implements Command {
   @Override
   public String getSummary() {
-    return "Object  equals(Object object1, Object object2);";
+    return "Object  ES:Equals(Object object1, Object object2);";
   }
   
   @Override

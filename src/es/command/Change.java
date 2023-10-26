@@ -12,7 +12,7 @@ import es.parser.SymbolTable;
 public class Change implements Command {
   @Override
   public String getSummary() {
-    return "Series  change(Series series[, int n]);";
+    return "Series  ES:Change(Series series[, int n]);";
   }
   
   @Override

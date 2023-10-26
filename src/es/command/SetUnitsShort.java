@@ -11,7 +11,7 @@ import es.parser.SymbolTable;
 public class SetUnitsShort implements Command {
   @Override
   public String getSummary() {
-    return "void    setUnitsShort(String series, String unitsShort);";
+    return "void    ES:SetUnitsShort(String series, String unitsShort);";
   }
   
   @Override

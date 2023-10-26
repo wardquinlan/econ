@@ -10,7 +10,7 @@ import es.parser.SymbolTable;
 public class Log implements Command {
   @Override
   public String getSummary() {
-    return "void    log(int level, String message);";
+    return "void    ES:Log(int level, String message);";
   }
   
   @Override

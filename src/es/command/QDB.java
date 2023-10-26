@@ -21,7 +21,7 @@ import es.parser.SymbolTable;
 public class QDB implements Command {
   @Override
   public String getSummary() {
-    return "Series  qdb(String dbFilePath);";
+    return "Series  ES:Qdb(String dbFilePath);";
   }
   
   @Override

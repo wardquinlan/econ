@@ -11,7 +11,7 @@ import es.parser.SymbolTable;
 public class GetName implements Command {
   @Override
   public String getSummary() {
-    return "String  getName(Series series);";
+    return "String  ES:GetName(Series series);";
   }
   
   @Override

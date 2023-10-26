@@ -11,7 +11,7 @@ import es.parser.SymbolTable;
 public class GetFrequency implements Command {
   @Override
   public String getSummary() {
-    return "String  getFrequency(String series);";
+    return "String  ES:GetFrequency(String series);";
   }
   
   @Override

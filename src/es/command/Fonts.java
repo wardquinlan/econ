@@ -12,7 +12,7 @@ import es.parser.SymbolTable;
 public class Fonts implements Command {
   @Override
   public String getSummary() {
-    return "void    fonts();";
+    return "void    ES:Fonts();";
   }
   
   @Override

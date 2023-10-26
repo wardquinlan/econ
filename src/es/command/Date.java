@@ -12,7 +12,7 @@ import es.parser.SymbolTable;
 public class Date implements Command {
   @Override
   public String getSummary() {
-    return "Series  date(Series series);";
+    return "Series  ES:Date(Series series);";
   }
   
   @Override

@@ -11,7 +11,7 @@ import es.parser.SymbolTable;
 public class GetType implements Command {
   @Override
   public String getSummary() {
-    return "String  getType(Object object);";
+    return "String  ES:GetType(Object object);";
   }
   
   @Override

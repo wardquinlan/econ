@@ -10,7 +10,7 @@ import es.parser.SymbolTable;
 public class ParseFloat implements Command {
   @Override
   public String getSummary() {
-    return "void    parseFloat(String value);";
+    return "void    ES:ParseFloat(String value);";
   }
   
   @Override

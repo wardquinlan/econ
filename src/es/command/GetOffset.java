@@ -11,7 +11,7 @@ import es.parser.SymbolTable;
 public class GetOffset implements Command {
   @Override
   public String getSummary() {
-    return "int     getOffset(Series series);";
+    return "int     ES:GetOffset(Series series);";
   }
   
   @Override

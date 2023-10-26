@@ -12,7 +12,7 @@ import es.parser.SymbolTable;
 public class Average implements Command {
   @Override
   public String getSummary() {
-    return "Series  average(Series series, int n);";
+    return "Series  ES:Average(Series series, int n);";
   }
   
   @Override

@@ -21,7 +21,7 @@ import es.parser.SymbolTable;
 public class QTP implements Command {
   @Override
   public String getSummary() {
-    return "Series  qtp(String templateFilePath, String scope, String sourceId);";
+    return "Series  ES:Qtp(String templateFilePath, String scope, String sourceId);";
   }
   
   @Override

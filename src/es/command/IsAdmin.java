@@ -11,7 +11,7 @@ import es.parser.SymbolTable;
 public class IsAdmin implements Command {
   @Override
   public String getSummary() {
-    return "boolean isAdmin();";
+    return "boolean ES:IsAdmin();";
   }
   
   @Override

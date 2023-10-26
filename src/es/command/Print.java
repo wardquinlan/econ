@@ -10,7 +10,7 @@ import es.parser.SymbolTable;
 public class Print implements Command {
   @Override
   public String getSummary() {
-    return "void    print([Object object]);";
+    return "void    ES:Print([Object object]);";
   }
   
   @Override

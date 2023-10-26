@@ -11,7 +11,7 @@ import es.parser.SymbolTable;
 public class GGet implements Command {
   @Override
   public String getSummary() {
-    return "Object  gGet(String symbolName);";
+    return "Object  ES:GGet(String symbolName);";
   }
   
   @Override

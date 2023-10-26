@@ -12,7 +12,7 @@ import es.parser.SymbolTable;
 public class PChange implements Command {
   @Override
   public String getSummary() {
-    return "Series  pchange(Series series[, int n]);";
+    return "Series  ES:PChange(Series series[, int n]);";
   }
   
   @Override

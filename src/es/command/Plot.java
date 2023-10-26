@@ -26,7 +26,7 @@ import es.parser.SymbolTable;
 public class Plot implements Command {
   @Override
   public String getSummary() {
-    return "void    plot(Object object...);";
+    return "void    ES:Plot(Object object...);";
   }
   
   @Override

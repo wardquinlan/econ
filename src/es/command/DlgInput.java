@@ -12,7 +12,7 @@ import es.parser.SymbolTable;
 public class DlgInput implements Command {
   @Override
   public String getSummary() {
-    return "String  dlgInput([String prompt]);";
+    return "String  ES:DlgInput([String prompt]);";
   }
   
   @Override

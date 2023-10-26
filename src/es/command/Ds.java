@@ -16,7 +16,7 @@ public class Ds implements Command {
   
   @Override
   public String getSummary() {
-    return "void    ds([function fn]);";
+    return "void    ES:Ds([function fn]);";
   }
   
   @Override

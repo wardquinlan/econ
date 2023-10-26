@@ -12,7 +12,7 @@ import es.parser.SymbolTable;
 public class Ln implements Command {
   @Override
   public String getSummary() {
-    return "float   ln(Object object);";
+    return "float   ES:Ln(Object object);";
   }
   
   @Override

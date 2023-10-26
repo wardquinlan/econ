@@ -11,7 +11,7 @@ import es.parser.SymbolTable;
 public class GetSourceId implements Command {
   @Override
   public String getSummary() {
-    return "String  getSourceId(String series);";
+    return "String  ES:GetSourceId(String series);";
   }
   
   @Override

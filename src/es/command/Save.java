@@ -12,7 +12,7 @@ import es.parser.SymbolTable;
 public class Save implements Command {
   @Override
   public String getSummary() {
-    return "void    save(Series series);";
+    return "void    ES:Save(Series series);";
   }
   
   @Override

@@ -9,7 +9,7 @@ import es.parser.SymbolTable;
 public class Printf implements Command {
   @Override
   public String getSummary() {
-    return "void    printf(String format[, object...]);";
+    return "void    ES:Printf(String format[, object...]);";
   }
   
   @Override
