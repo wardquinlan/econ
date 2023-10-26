@@ -133,7 +133,7 @@ public class FunctionCaller {
     commandMap.put("getSourceId", new GetSourceId());
     commandMap.put("sum", new Sum());
     commandMap.put("change", new Change());
-    commandMap.put("pchange", new PChange());
+    commandMap.put("pChange", new PChange());
     commandMap.put("max", new es.command.Max());
     commandMap.put("min", new es.command.Min());
     commandMap.put("get", new Get());
@@ -184,11 +184,11 @@ public class FunctionCaller {
   }
   
   public boolean isFunction(String funcName) {
-    return funcName.equals("help") || commandMap.keySet().contains(funcName);
+    return funcName.equals("help") || funcName.equals("ES:Help") || commandMap.keySet().contains(funcName);
   }
   
   public Object invokeFunction(String funcName, SymbolTable symbolTable, File file, List<Object> params) throws Exception {
-    if (funcName.equals("help")) {
+    if (funcName.equals("help") || funcName.equals("ES:Help")) {
       if (params.size() == 1 && params.get(0) instanceof String) {
         Command command = commandMap.get(params.get(0));
         if (command != null) {
