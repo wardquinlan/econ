@@ -5,21 +5,21 @@ function ES:LoadSeries(series) {
   if (series == null) {
     throw 'cannot load series: ' + series;
   }
-  if (getType(series) != 'Series') {
-    series = load(series);
+  if (ES:GetType(series) != 'Series') {
+    series = ES:Load(series);
   }
-  if (getSize(series) == 0) {
-    series = load(getId(series));
+  if (ES:GetSize(series) == 0) {
+    series = ES:Load(ES:GetId(series));
   }
   return series;
 }
 
 function ES:AutoLoad(series) {
-  series = loadSeries(series);
+  series = ES:LoadSeries(series);
   # don't load the backups...
-  if (getId(series) < 10000) {
-    name = getName(series);
-    gPut(name, series);
+  if (ES:GetId(series) < 10000) {
+    name = ES:GetName(series);
+    ES:GPut(name, series);
   } 
 }
 
@@ -30,19 +30,19 @@ autoLoad = ES:AutoLoad;
 # Update functions
 #################################################################################
 function ES:UpdateSeries(series) {
-  series = loadSeries(series);
-  if (getSource(series) == 'FRED' and getId(series) < 10000) {
-    id = getId(series);
-    name = getName(series);
-    log(INFO, 'updating ' + id + ':' + name + '...');
-    series = fred(name);
-    setId(series, id);
-    merge(series, '--with-inserts');
+  series = ES:LoadSeries(series);
+  if (ES:GetSource(series) == 'FRED' and ES:GetId(series) < 10000) {
+    id = ES:GetId(series);
+    name = ES:GetName(series);
+    ES:Log(INFO, 'updating ' + id + ':' + name + '...');
+    series = ES:Fred(name);
+    ES:SetId(series, id);
+    ES:Merge(series, '--with-inserts');
   }
 }
 
 function ES:UpdateAll() {
-  ds(updateSeries);
+  ES:Ds(updateSeries);
 }
 
 updateSeries = ES:UpdateSeries;
@@ -52,35 +52,35 @@ updateAll = ES:UpdateAll;
 # Reset functions
 #################################################################################
 function ES:ResetId(id, idNew) {
-  if (!isAdmin()) {
+  if (!ES:IsAdmin()) {
     throw 'you must be running in administrative mode to reset id\'s';
   }
-  if (getType(id) != 'int' or getType(idNew) != 'int') {
-    throw 'usage: resetId(int id, int idNew);';
+  if (ES:GetType(id) != 'int' or ES:GetType(idNew) != 'int') {
+    throw 'usage: ES:ResetId(int id, int idNew);';
   }
-  if (exists(idNew)) {
+  if (ES:Exists(idNew)) {
     throw 'series already exists: ' + idNew;
   } 
-  S = load(id);
-  setId(S, idNew);
-  drop(id);
-  save(S);
+  S = ES:Load(id);
+  ES:SetId(S, idNew);
+  ES:Drop(id);
+  ES:Save(S);
 }
 
 function ES:ResetName(name, nameNew) {
-  if (!isAdmin()) {
+  if (!ES:IsAdmin()) {
     throw 'you must be running in administrative mode to reset name\'s';
   }
-  if (getType(name) != 'String' or getType(nameNew) != 'String') {
-    throw 'usage: resetName(String name, String nameNew);';
+  if (ES:GetType(name) != 'String' or ES:GetType(nameNew) != 'String') {
+    throw 'usage: ES:ResetName(String name, String nameNew);';
   }
-  if (exists(nameNew)) {
+  if (ES:Exists(nameNew)) {
     throw 'series already exists: ' + nameNew;
   } 
-  S = load(name);
-  setName(S, nameNew);
-  drop(getId(S));
-  save(S);
+  S = ES:Load(name);
+  ES:SetName(S, nameNew);
+  ES:Drop(ES:GetId(S));
+  ES:Save(S);
 }
 
 resetId = ES:ResetId;
@@ -90,25 +90,25 @@ resetName = ES:ResetName;
 # Backup
 #################################################################################
 function ES:Backup(id) {
-  if (!isAdmin()) {
+  if (!ES:IsAdmin()) {
     throw 'you must be running in administrative mode to do backups';
   }
-  if (getType(id) != 'int') {
-    throw 'usage: backup(int id);';
+  if (ES:GetType(id) != 'int') {
+    throw 'usage: ES:Backup(int id);';
   }
   if (id >= 10000) {
     throw 'id must be < 10000';
   }
-  S = load(id);
-  if (exists(getId(S) + 10000)) {
+  S = ES:Load(id);
+  if (ES:Exists(ES:GetId(S) + 10000)) {
     throw 'backup for series already exists: ' + id + '; drop the backup first and try again';
   }
-  print('backing up series ' + id + '...');
-  setName(S, getName(S) + '.bak');
-  setId(S, getId(S) + 10000);
-  print('backup series name = ' + getName(S));
-  print('backup series id = ' + getId(S));
-  save(S);
+  ES:Print('backing up series ' + id + '...');
+  ES:SetName(S, ES:GetName(S) + '.bak');
+  ES:SetId(S, ES:GetId(S) + 10000);
+  ES:Print('backup series name = ' + ES:GetName(S));
+  ES:Print('backup series id = ' + ES:GetId(S));
+  ES:Save(S);
 }
 
 backup = ES:Backup;
@@ -117,29 +117,29 @@ backup = ES:Backup;
 # Highest / Lowest functions
 #################################################################################
 function ES:Hh(idx, d, v) {
-  if (v > gGet('METRICS.highest')) {
-    gPut('METRICS.highest', v);
+  if (v > ES:GGet('METRICS.highest')) {
+    ES:GPut('METRICS.highest', v);
   }
 }
 
 function ES:Ll(idx, d, v) {
-  if (v < gGet('METRICS.lowest')) {
-    gPut('METRICS.lowest', v);
+  if (v < ES:GGet('METRICS.lowest')) {
+    ES:GPut('METRICS.lowest', v);
   }
 }
 
 function ES:Highest(series) {
-  series = loadSeries(series);
-  gPut('METRICS.highest', get(series, 0));
-  data(series, hh);
-  return gGet('METRICS.highest');
+  series = ES:LoadSeries(series);
+  ES:GPut('METRICS.highest', get(series, 0));
+  ES:Data(series, hh);
+  return ES:GGet('METRICS.highest');
 }
 
 function ES:Lowest(series) {
-  series = loadSeries(series);
-  gPut('METRICS.lowest', get(series, 0));
-  data(series, ll);
-  return gGet('METRICS.lowest');
+  series = ES:LoadSeries(series);
+  ES:GPut('METRICS.lowest', get(series, 0));
+  ES:Data(series, ll);
+  return ES:GGet('METRICS.lowest');
 }
 
 hh = ES:Hh;
@@ -151,47 +151,46 @@ lowest = ES:Lowest;
 # Usage functions
 #################################################################################
 function ES:Metrics(series) {
-  series = loadSeries(series);
-  if (getId(series) < 10000) {
-    gPut('METRICS.numberOfSeries', METRICS.numberOfSeries + 1);
-    gPut('METRICS.numberOfRecords', METRICS.numberOfRecords + getSize(series));
-    printf('%-20s%8d\n', getName(series), getSize(series));
+  series = ES:LoadSeries(series);
+  if (ES:GetId(series) < 10000) {
+    ES:GPut('METRICS.numberOfSeries', METRICS.numberOfSeries + 1);
+    ES:GPut('METRICS.numberOfRecords', METRICS.numberOfRecords + ES:GetSize(series));
+    ES:Printf('%-20s%8d\n', ES:GetName(series), ES:GetSize(series));
   }
 }
 
 function ES:Usage() {
-  gPut('METRICS.numberOfSeries', 0);
-  gPut('METRICS.numberOfRecords', 0);
-  print('Series Metrics');
-  print('----------------------------');
-  ds(metrics);
-  print('');
-  print('Series stored in datastore: ' + METRICS.numberOfSeries + ' (excluding backup series)');
-  print('Number of records stored in datastore: ' + METRICS.numberOfRecords);
+  ES:GPut('METRICS.numberOfSeries', 0);
+  ES:GPut('METRICS.numberOfRecords', 0);
+  ES:Print('Series Metrics');
+  ES:Print('----------------------------');
+  ES:Ds(metrics);
+  ES:Print('');
+  ES:Print('Series stored in datastore: ' + METRICS.numberOfSeries + ' (excluding backup series)');
+  ES:Print('Number of records stored in datastore: ' + METRICS.numberOfRecords);
 }
 
 function ES:Defaults() {
-  print('defaults.panel.backgroundcolor = Color');
-  print('defaults.panel.dxincr = int');
-  print('defaults.panel.gridlinetextwidth = int');
-  print('defaults.panel.fontname = String');
-  print('defaults.panel.fontcolor = Color');
-  print('defaults.panel.fontsize = int');
-  print('defaults.panel.frequency = NONE | DAYS | MONTHS | YEARS');
-  print('defaults.panel.label = String');
-  print('defaults.chart.backgroundcolor = Color');
-  print('defaults.chart.linecolor = Color');
-  print('defaults.chart.rectcolor = Color');
-  print('defaults.chart.ngridlines = int');
-  print('defaults.chart.label = String');
-  print('defaults.chart.scaletype = LINEAR | LOG');
-  print('defaults.series.linecolor0 = Color');
-  print('defaults.series.linecolor1 = Color');
-  print('defaults.series.linecolor2 = Color');
-  print('defaults.series.linecolor3 = Color');
+  ES:Print('defaults.panel.backgroundcolor = Color');
+  ES:Print('defaults.panel.dxincr = int');
+  ES:Print('defaults.panel.gridlinetextwidth = int');
+  ES:Print('defaults.panel.fontname = String');
+  ES:Print('defaults.panel.fontcolor = Color');
+  ES:Print('defaults.panel.fontsize = int');
+  ES:Print('defaults.panel.frequency = NONE | DAYS | MONTHS | YEARS');
+  ES:Print('defaults.panel.label = String');
+  ES:Print('defaults.chart.backgroundcolor = Color');
+  ES:Print('defaults.chart.linecolor = Color');
+  ES:Print('defaults.chart.rectcolor = Color');
+  ES:Print('defaults.chart.ngridlines = int');
+  ES:Print('defaults.chart.label = String');
+  ES:Print('defaults.chart.scaletype = LINEAR | LOG');
+  ES:Print('defaults.series.linecolor0 = Color');
+  ES:Print('defaults.series.linecolor1 = Color');
+  ES:Print('defaults.series.linecolor2 = Color');
+  ES:Print('defaults.series.linecolor3 = Color');
 }
 
 metrics = ES:Metrics;
 usage = ES:Usage;
 defaults = ES:Defaults;
-
