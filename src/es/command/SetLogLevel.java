@@ -13,7 +13,7 @@ import es.parser.SymbolTable;
 public class SetLogLevel implements Command {
   @Override
   public String getSummary() {
-    return "void    ES:SetLogLevel(int level);";
+    return "void    ES:SetLogLevel([int level]);";
   }
   
   @Override
@@ -21,7 +21,7 @@ public class SetLogLevel implements Command {
     List<String> list = new ArrayList<>();
     list.add("Sets the logging level to 'level', where 'level' is one of:");
     list.add("- DEBUG (0)");
-    list.add("- INFO  (1)");
+    list.add("- INFO  (1) (default)");
     list.add("- WARN  (2)");
     list.add("- ERROR (3)");
     return list;
@@ -34,11 +34,16 @@ public class SetLogLevel implements Command {
   
   @Override
   public Object run(SymbolTable symbolTable, File file, List<Object> params) throws Exception {
-    Utils.validate(params, 1, 1);
-    if (!(params.get(0) instanceof Integer)) {
-      throw new Exception(params.get(0) + " is not an int");
+    Utils.validate(params, 0, 1);
+    int level;
+    if (params.size() == 0) {
+      level = 1;
+    } else {
+      if (!(params.get(0) instanceof Integer)) {
+        throw new Exception(params.get(0) + " is not an int");
+      }
+      level = (Integer) params.get(0);
     }
-    int level = (Integer) params.get(0);
     switch(level) {
       case 0:
         Logger.getRootLogger().setLevel(Level.DEBUG);
