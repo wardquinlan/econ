@@ -3,7 +3,7 @@
 #################################################################################
 function ES:LoadSeries(series) {
   if (series == null) {
-    throw 'cannot load series: ' + series;
+    return null;
   }
   if (ES:GetType(series) != 'Series') {
     series = ES:Load(series);
