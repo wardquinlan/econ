@@ -146,31 +146,36 @@ backup = ES:Backup;
 #################################################################################
 # Highest / Lowest functions
 #################################################################################
-function ES:Hh(idx, d, v) {
-  if (v > ES:GGet('METRICS.highest')) {
-    ES:GPut('METRICS.highest', v);
-  }
-}
-
-function ES:Ll(idx, d, v) {
-  if (v < ES:GGet('METRICS.lowest')) {
-    ES:GPut('METRICS.lowest', v);
-  }
-}
 
 function ES:Highest(series) {
-  if (ES:GetType(series) == 'int' or ES:GetType(series) == 'String') {
-    series = ES:LoadSeries(series);
+  ES:Log(DEBUG, 'ES:Highest()');
+  function fn(idx, d, v) {
+    if (v > ES:GGet('METRICS.highest')) {
+      ES:Log(DEBUG, 'found larger value: ' + v);
+      ES:GPut('METRICS.highest', v);
+    }
   }
-  if (ES:GetSize(series) == 0) {
+
+  ES:Log(DEBUG, 'loading series');
+  series = ES:LoadSeries(series);
+  if (series == null or ES:GetSize(series) == 0) {
+    ES:Log(DEBUG, 'series is null or empty; returning null');
     return null;
   }
+  ES:Log(DEBUG, 'initializing with value ' + ES:Get(series, 0));
   ES:GPut('METRICS.highest', ES:Get(series, 0));
-  ES:Data(series, ES:Hh);
+  ES:Data(series, fn);
+  ES:Log(DEBUG, 'found highest value: ' + ES:GGet('METRICS.highest'));
   return ES:GGet('METRICS.highest');
 }
 
 function ES:Lowest(series) {
+  function ll(idx, d, v) {
+    if (v < ES:GGet('METRICS.lowest')) {
+      ES:GPut('METRICS.lowest', v);
+    }
+  }
+  
   if (ES:GetType(series) == 'int' or ES:GetType(series) == 'String') {
     series = ES:LoadSeries(series);
   }
@@ -178,7 +183,7 @@ function ES:Lowest(series) {
     return null;
   }
   ES:GPut('METRICS.lowest', ES:Get(series, 0));
-  ES:Data(series, ES:Ll);
+  ES:Data(series, ll);
   return ES:GGet('METRICS.lowest');
 }
 
