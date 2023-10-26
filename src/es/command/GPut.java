@@ -48,7 +48,7 @@ public class GPut implements Command {
     }
     for (int i = 1; i < symbolName.length(); i++) {
       char ch = symbolName.charAt(i);
-      if (!Character.isLetter(ch) && !Character.isDigit(ch) && ch != '_' && ch != '.') {
+      if (!Character.isLetter(ch) && !Character.isDigit(ch) && ch != '_' && ch != '.' && ch != ':') {
         throw new Exception("invalid symbol name: invalid character: " + ch);
       }
     }
