@@ -52,7 +52,7 @@
     <copy todir="${output}/includes" file="${resources}/settings.es"/>
     <copy todir="${output}/includes" file="${resources}/constants.es"/>
     <copy todir="${output}/includes" file="${resources}/defaults.es"/>
-    <copy todir="${output}/includes" file="${resources}/utils.es"/>
+    <copy todir="${output}/includes" file="${resources}/core.es"/>
     <echo file="${output}/es.d/es.properties">es.version=${version}${line.separator}</echo>
     <chmod file="${output}/es.sh" perm="755"/>
     <chmod file="${output}/createdb.sh" perm="755"/>
