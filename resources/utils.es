@@ -139,7 +139,7 @@ function metrics(series) {
   if (getId(series) < 10000) {
     gPut('METRICS.numberOfSeries', METRICS.numberOfSeries + 1);
     gPut('METRICS.numberOfRecords', METRICS.numberOfRecords + getSize(series));
-    print(getName(series) + ': ' + getSize(series));
+    printf('%-20s%8d\n', getName(series), getSize(series));
   }
 }
 
@@ -147,7 +147,7 @@ function usage() {
   gPut('METRICS.numberOfSeries', 0);
   gPut('METRICS.numberOfRecords', 0);
   print('Series Metrics');
-  print('--------------');
+  print('----------------------------');
   ds(metrics);
   print('');
   print('Series stored in datastore: ' + METRICS.numberOfSeries + ' (excluding backup series)');
