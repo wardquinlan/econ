@@ -3,11 +3,11 @@
 #################################################################################
 function ES:LoadSeries(series) {
   ES:Log(DEBUG, 'ES:LoadSeries()');
-  ES:Log(DEBUG, series);
   if (series == null) {
     ES:Log(WARN, 'series is null, returning null');
     return null;
   }
+  ES:Log(DEBUG, series);
   if (ES:GetType(series) == 'String') {
     if (ES:Exists(series)) {
       ES:Log(DEBUG, 'series exists in the datastore; loading');
