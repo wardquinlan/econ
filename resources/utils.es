@@ -37,10 +37,14 @@ function ES:LoadSeries(series) {
 }
 
 function ES:AutoLoad(series) {
+  ES:Log(DEBUG, 'ES:AutoLoad()');
+  ES:Log(DEBUG, series);
   series = ES:LoadSeries(series);
   # don't load the backups...
   if (ES:GetId(series) < 10000) {
+    ES:Log(DEBUG, 'id = ' + getId(series) + ' < 10000; putting series into global scope'); 
     name = ES:GetName(series);
+    ES:Log(DEBUG, 'name = ' + name);
     ES:GPut(name, series);
   } 
 }
@@ -52,8 +56,11 @@ autoLoad = ES:AutoLoad;
 # Update functions
 #################################################################################
 function ES:UpdateSeries(series) {
+  ES:Log(DEBUG, 'ES:UpdateSeries()');
+  ES:Log(DEBUG, series);
   series = ES:LoadSeries(series);
   if (ES:GetSource(series) == 'FRED' and ES:GetId(series) < 10000) {
+    ES:Log(DEBUG, 'series is a candidate for update(s); proceeding');
     id = ES:GetId(series);
     name = ES:GetName(series);
     ES:Log(INFO, 'updating ' + id + ':' + name + '...');
