@@ -2,7 +2,8 @@
 # Load functions
 #################################################################################
 function ES:LoadSeries(series) {
-  ES:Log(DEBUG, 'ES:LoadSeries(): ' + series);
+  ES:Log(DEBUG, 'ES:LoadSeries()');
+  ES:Log(DEBUG, series);
   if (series == null) {
     ES:Log(WARN, 'series is null, returning null');
     return null;

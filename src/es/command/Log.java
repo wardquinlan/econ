@@ -36,10 +36,7 @@ public class Log implements Command {
       throw new Exception(params.get(0) + " is not an int");
     }
     int level = (Integer) params.get(0);
-    if (!(params.get(1) instanceof String)) {
-      throw new Exception(params.get(1) + " is not a String");
-    }
-    String message = (String) params.get(1);
+    String message = params.get(1).toString();
     switch(level) {
       case 0:
         log.debug(message);
