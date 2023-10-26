@@ -21,7 +21,7 @@ function ES:LoadSeries(series) {
     if (ES:GetId(series) != null and ES:Exists(ES:GetId(series))) {
       return ES:Load(ES:GetId(series));
     }
-    return null;
+    return series;
   }
   ES:Log(WARN, 'ES:LoadSeries: unexpected argument: ' + series);
   return null;
@@ -145,8 +145,11 @@ function ES:Highest(series) {
   if (ES:GetType(series) == 'int' or ES:GetType(series) == 'String') {
     series = ES:LoadSeries(series);
   }
+  if (ES:GetSize(series) == 0) {
+    return null;
+  }
   ES:GPut('METRICS.highest', ES:Get(series, 0));
-  ES:Data(series, hh);
+  ES:Data(series, ES:Hh);
   return ES:GGet('METRICS.highest');
 }
 
@@ -154,8 +157,11 @@ function ES:Lowest(series) {
   if (ES:GetType(series) == 'int' or ES:GetType(series) == 'String') {
     series = ES:LoadSeries(series);
   }
+  if (ES:GetSize(series) == 0) {
+    return null;
+  }
   ES:GPut('METRICS.lowest', ES:Get(series, 0));
-  ES:Data(series, ll);
+  ES:Data(series, ES:Ll);
   return ES:GGet('METRICS.lowest');
 }
 
