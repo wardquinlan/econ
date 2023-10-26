@@ -4,19 +4,22 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.log4j.Level;
+import org.apache.log4j.Logger;
+
 import es.core.Utils;
 import es.parser.SymbolTable;
 
-public class Log implements Command {
+public class SetLogLevel implements Command {
   @Override
   public String getSummary() {
-    return "void    ES:Log(int level, String message);";
+    return "void    ES:SetLogLevel(int level);";
   }
   
   @Override
   public List<String> getDetails() {
     List<String> list = new ArrayList<>();
-    list.add("Log the status message 'message' to the logging system, using logging level 'level', where level is one of:");
+    list.add("Sets the logging level to 'level', where 'level' is one of:");
     list.add("- DEBUG (0)");
     list.add("- INFO  (1)");
     list.add("- WARN  (2)");
@@ -31,27 +34,23 @@ public class Log implements Command {
   
   @Override
   public Object run(SymbolTable symbolTable, File file, List<Object> params) throws Exception {
-    Utils.validate(params, 2, 2);
+    Utils.validate(params, 1, 1);
     if (!(params.get(0) instanceof Integer)) {
       throw new Exception(params.get(0) + " is not an int");
     }
     int level = (Integer) params.get(0);
-    if (!(params.get(1) instanceof String)) {
-      throw new Exception(params.get(1) + " is not a String");
-    }
-    String message = (String) params.get(1);
     switch(level) {
       case 0:
-        log.debug(message);
+        Logger.getRootLogger().setLevel(Level.DEBUG);
         break;
       case 1:
-        log.info(message);
+        Logger.getRootLogger().setLevel(Level.INFO);
         break;
       case 2:
-        log.warn(message);
+        Logger.getRootLogger().setLevel(Level.WARN);
         break;
       case 3:
-        log.error(message);
+        Logger.getRootLogger().setLevel(Level.ERROR);
         break;
       default:
         throw new Exception("invalid logging level: " + level);
