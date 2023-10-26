@@ -2,28 +2,36 @@
 # Load functions
 #################################################################################
 function ES:LoadSeries(series) {
+  ES:Log(DEBUG, 'ES:LoadSeries(): ' + series);
   if (series == null) {
+    ES:Log(WARN, 'series is null, returning null');
     return null;
   }
   if (ES:GetType(series) == 'String') {
     if (ES:Exists(series)) {
+      ES:Log(DEBUG, 'series exists in the datastore; loading');
       return ES:Load(series);
     }
+    ES:Log(DEBUG, 'attempting to load series from FRED');
     return ES:Fred(series);
   }
   if (ES:GetType(series) == 'int') {
     if (ES:Exists(series)) {
+      ES:Log(DEBUG, 'series exists in the datastore; loading');
       return ES:Load(series);
     }
+    ES:Log(WARN, 'series not found; returning null');
     return null; 
   }
   if (ES:GetType(series) == 'Series') {
     if (ES:GetId(series) != null and ES:Exists(ES:GetId(series))) {
+      ES:Log(DEBUG, 'series exists in the datastore; loading');
       return ES:Load(ES:GetId(series));
     }
+    ES:Log(WARN, 'series does not existing in the datastore, returning series as is');
     return series;
   }
-  ES:Log(WARN, 'ES:LoadSeries: unexpected argument: ' + series);
+  ES:Log(WARN, 'unable to find the series, returning null');
   return null;
 }
 
