@@ -5,13 +5,26 @@ function ES:LoadSeries(series) {
   if (series == null) {
     return null;
   }
-  if (ES:GetType(series) != 'Series') {
-    series = ES:Load(series);
+  if (ES:GetType(series) == 'String') {
+    if (ES:Exists(series)) {
+      return ES:Load(series);
+    }
+    return ES:Fred(series);
   }
-  if (ES:GetSize(series) == 0) {
-    series = ES:Load(ES:GetId(series));
+  if (ES:GetType(series) == 'int') {
+    if (ES:Exists(series)) {
+      return ES:Load(series);
+    }
+    return null; 
   }
-  return series;
+  if (ES:GetType(series) == 'Series') {
+    if (ES:GetId(series) != null and ES:Exists(ES:GetId(series))) {
+      return ES:Load(ES:GetId(series));
+    }
+    return null;
+  }
+  ES:Log(WARN, 'ES:LoadSeries: unexpected argument: ' + series);
+  return null;
 }
 
 function ES:AutoLoad(series) {
