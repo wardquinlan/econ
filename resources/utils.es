@@ -182,30 +182,35 @@ function ES:Lowest(series) {
   return ES:GGet('METRICS.lowest');
 }
 
-hh = ES:Hh;
-ll = ES:Ll;
 highest = ES:Highest;
 lowest = ES:Lowest;
 
 #################################################################################
 # Usage functions
 #################################################################################
-function ES:Metrics(series) {
-  series = ES:LoadSeries(series);
-  if (ES:GetId(series) < 10000) {
-    ES:GPut('METRICS.numberOfSeries', METRICS.numberOfSeries + 1);
-    ES:GPut('METRICS.numberOfRecords', METRICS.numberOfRecords + ES:GetSize(series));
-    ES:Printf('%-20s%8d\n', ES:GetName(series), ES:GetSize(series));
-  }
-}
 
 function ES:Usage() {
+  function metrics(series) {
+    ES:Log(DEBUG, 'ES:Metrics()');
+    ES:Assert(series != null, 'series is unexpectedly null');
+    ES:Log(DEBUG, series);
+    series = ES:LoadSeries(series);
+    ES:Assert(series != null, 'series is unexpectedly null');
+    if (ES:GetId(series) < 10000) {
+      ES:Log(DEBUG, 'series id < 10000; is a candidate for metrics');
+      ES:GPut('METRICS.numberOfSeries', METRICS.numberOfSeries + 1);
+      ES:GPut('METRICS.numberOfRecords', METRICS.numberOfRecords + ES:GetSize(series));
+      ES:Printf('%-20s%8d\n', ES:GetName(series), ES:GetSize(series));
+    }
+  }
+  
+  ES:Log(DEBUG, 'ES:Usage()');
   ES:GPut('METRICS.numberOfSeries', 0);
   ES:GPut('METRICS.numberOfRecords', 0);
   ES:Print('Series Metrics');
   ES:Print('----------------------------');
   ES:Ds(metrics);
-  ES:Print('');
+  ES:Print();
   ES:Print('Series stored in datastore: ' + METRICS.numberOfSeries + ' (excluding backup series)');
   ES:Print('Number of records stored in datastore: ' + METRICS.numberOfRecords);
 }
@@ -231,6 +236,5 @@ function ES:Defaults() {
   ES:Print('defaults.series.linecolor3 = Color');
 }
 
-metrics = ES:Metrics;
 usage = ES:Usage;
 defaults = ES:Defaults;
