@@ -142,14 +142,18 @@ function ES:Ll(idx, d, v) {
 }
 
 function ES:Highest(series) {
-  series = ES:LoadSeries(series);
+  if (ES:GetType(series) == 'int' or ES:GetType(series) == 'String') {
+    series = ES:LoadSeries(series);
+  }
   ES:GPut('METRICS.highest', ES:Get(series, 0));
   ES:Data(series, hh);
   return ES:GGet('METRICS.highest');
 }
 
 function ES:Lowest(series) {
-  series = ES:LoadSeries(series);
+  if (ES:GetType(series) == 'int' or ES:GetType(series) == 'String') {
+    series = ES:LoadSeries(series);
+  }
   ES:GPut('METRICS.lowest', ES:Get(series, 0));
   ES:Data(series, ll);
   return ES:GGet('METRICS.lowest');
