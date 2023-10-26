@@ -71,6 +71,7 @@ function ES:UpdateSeries(series) {
 }
 
 function ES:UpdateAll() {
+  ES:Log(DEBUG, 'ES:UpdateAll()');
   ES:Ds(updateSeries);
 }
 
@@ -185,18 +186,6 @@ hh = ES:Hh;
 ll = ES:Ll;
 highest = ES:Highest;
 lowest = ES:Lowest;
-
-#################################################################################
-# Series Type function
-#################################################################################
-function ES:GetSeriesType(series) {
-  if (ES:GetType(series) != 'Series' or ES:GetSize(series) == 0) {
-    return null;
-  }
-  return ES:GetType(ES:Get(series, 0));
-}
-
-getSeriesType = ES:GetSeriesType;
 
 #################################################################################
 # Usage functions
