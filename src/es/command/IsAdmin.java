@@ -29,6 +29,6 @@ public class IsAdmin implements Command {
   @Override
   public Object run(SymbolTable symbolTable, File file, List<Object> params) throws Exception {
     Utils.validate(params, 0, 0);
-    return Settings.getInstance().isAdmin();
+    return Settings.getInstance().isAdminMode();
   }
 }

@@ -4,8 +4,8 @@ import org.apache.commons.cli.CommandLine;
 
 public class Settings {
   private boolean testMode = false;
-  private boolean suppressAutoload = false;
-  private boolean admin = false;
+  private boolean autoloadSuppressed = false;
+  private boolean adminMode = false;
   private String version;
   private boolean promptSuppressed = false;
   
@@ -20,8 +20,8 @@ public class Settings {
   
   public void setOptions(CommandLine cmd) {
     testMode = cmd.hasOption("test");
-    suppressAutoload = cmd.hasOption("suppress-autoload");
-    admin = cmd.hasOption("admin");
+    autoloadSuppressed = cmd.hasOption("suppress-autoload");
+    adminMode = cmd.hasOption("admin");
     promptSuppressed = cmd.hasOption("suppress-prompt");
   }
 
@@ -29,12 +29,12 @@ public class Settings {
     return testMode;
   }
 
-  public boolean suppressAutoload() {
-    return suppressAutoload;
+  public boolean isAutoloadSuppressed() {
+    return autoloadSuppressed;
   }
 
-  public boolean isAdmin() {
-    return admin;
+  public boolean isAdminMode() {
+    return adminMode;
   }
   
   public boolean isPromptSuppressed() {

@@ -32,10 +32,13 @@ public class Status implements Command {
   @Override
   public Object run(SymbolTable symbolTable, File file, List<Object> params) throws Exception {
     Utils.validate(params, 0, 0);
-    System.out.println("version      : " + Settings.getInstance().getVersion());
-    System.out.println("datastore    : " + (TimeSeriesDAO.getInstance().getDatastore() == null ? "not connected" : TimeSeriesDAO.getInstance().getDatastore()));
-    System.out.println("admin mode   : " + Settings.getInstance().isAdmin());
-    System.out.println("logging level: " + Logger.getRootLogger().getLevel());
+    System.out.println("version                : " + Settings.getInstance().getVersion());
+    System.out.println("datastore              : " + (TimeSeriesDAO.getInstance().getDatastore() == null ? "not connected" : TimeSeriesDAO.getInstance().getDatastore()));
+    System.out.println("admin mode             : " + Settings.getInstance().isAdminMode());
+    System.out.println("suppress prompt mode   : " + Settings.getInstance().isPromptSuppressed());
+    System.out.println("suppress autoload mode : " + Settings.getInstance().isAutoloadSuppressed());
+    System.out.println("test mode              : " + Settings.getInstance().isTestMode());
+    System.out.println("logging level          : " + Logger.getRootLogger().getLevel());
     return null;
   }
 }

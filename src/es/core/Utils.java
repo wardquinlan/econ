@@ -478,7 +478,7 @@ public class Utils {
   }
   
   public static void validateIsAdmin() throws Exception {
-    if (!Settings.getInstance().isAdmin()) {
+    if (!Settings.getInstance().isAdminMode()) {
       throw new Exception("you must be running in administrative mode to do this");
     }
   }

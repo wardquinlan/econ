@@ -121,7 +121,7 @@ public class Main {
       
       SymbolTable symbolTable = new SymbolTable();
       File file = new File(System.getenv("ES_HOME") + File.separator + ".es");
-      if (file.exists() && !Settings.getInstance().suppressAutoload()) {
+      if (file.exists() && !Settings.getInstance().isAutoloadSuppressed()) {
         log.info("found autoload file '.es'; loading...");
         Tokenizer tokenizer = new Tokenizer(file, 0);
         evaluateWithExit(tokenizer, symbolTable);
@@ -144,7 +144,7 @@ public class Main {
         while (true) {
           try {
             if (!Settings.getInstance().isPromptSuppressed()) {
-              if (Settings.getInstance().isAdmin()) {
+              if (Settings.getInstance().isAdminMode()) {
                 System.out.print("ES # ");
               } else {
                 System.out.print("ES $ ");
