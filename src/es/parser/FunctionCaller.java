@@ -1,6 +1,7 @@
 package es.parser;
 
 import java.io.File;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
@@ -171,6 +172,15 @@ public class FunctionCaller {
       commandMap.put("qdb", new QDB());
       commandMap.put("qtp", new QTP());
     }
+    // make ES: aliases for all the commands
+    Map<String, Command> map = new HashMap<>();
+    for (String key: commandMap.keySet()) {
+      String fn = "ES:" + Character.toUpperCase(key.charAt(0)) + key.substring(1);
+      //System.out.println(key + " => " + fn);
+      //System.out.println(commandMap.get(key));
+      map.put(fn, commandMap.get(key));
+    }
+    commandMap.putAll(map);
   }
   
   public boolean isFunction(String funcName) {
@@ -196,7 +206,9 @@ public class FunctionCaller {
       }
       for (String name: commandMap.keySet()) {
         Command command = commandMap.get(name);
-        System.out.println(command.getSummary());
+        if (!name.startsWith(("ES:"))) {
+          System.out.println(command.getSummary());
+        }
       }
       return null;
     }
