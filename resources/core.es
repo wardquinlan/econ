@@ -1,3 +1,6 @@
+const ES:BACKUP_BASE = 10000;
+const ES:BACKUP_EXT = '.BAK';
+
 #################################################################################
 # Load functions
 #################################################################################
@@ -41,8 +44,8 @@ function ES:AutoLoad(series) {
   :Log(DEBUG, series);
   series = ES:Load(series);
   # don't load the backups...
-  if (:GetId(series) < 10000) {
-    :Log(DEBUG, 'id = ' + :GetId(series) + ' < 10000; putting series into global scope'); 
+  if (:GetId(series) < ES:BACKUP_BASE) {
+    :Log(DEBUG, 'id = ' + :GetId(series) + ' < ES:BACKUP_BASE; putting series into global scope'); 
     name = :GetName(series);
     :Log(DEBUG, 'name = ' + name);
     :GPut(name, series);
@@ -56,7 +59,7 @@ function ES:Update(series) {
   :Log(DEBUG, 'ES:Update()');
   :Log(DEBUG, series);
   series = ES:Load(series);
-  if (:GetSource(series) == 'FRED' and :GetId(series) < 10000) {
+  if (:GetSource(series) == 'FRED' and :GetId(series) < ES:BACKUP_BASE) {
     :Log(DEBUG, 'series is a candidate for update(s); proceeding');
     id = :GetId(series);
     name = :GetName(series);
@@ -111,25 +114,50 @@ function ES:ResetName(name, nameNew) {
 # Backup function
 #################################################################################
 function ES:Backup(id) {
+  :Log(DEBUG, 'ES:Backup()');
   if (!:IsAdmin()) {
-    throw 'you must be running in administrative mode to do backups';
+    :DlgMessage('You must be running in administrative mode to do this', ERROR);
+    return;
   }
-  if (:GetType(id) != 'int') {
-    throw 'usage: ES:Backup(int id);';
+  if (id == null) {
+    id = :DlgInput('Enter series id');
+    if (id == null) {
+      return;
+    }
+    id = :ParseInt(id);
+    if (id == null) {
+      :DlgMessage('Invalid series id', ERROR);
+      return;
+    }
+  } else {
+    if (:GetType(id) != 'int') {
+      :DlgMessage('Invalid series id', ERROR);
+      return;
+    }
   }
-  if (id >= 10000) {
-    throw 'id must be < 10000';
+  series = ES:Load(id);
+  if (series == null) {
+    :DlgMessage('Series does not exist', ERROR);
+    return;
   }
-  S = ES:Load(id);
-  if (:Exists(:GetId(S) + 10000)) {
-    throw 'backup for series already exists: ' + id + '; drop the backup first and try again';
+  :Log(DEBUG, 'backing up series');
+  :Log(DEBUG, series);
+  if (:GetId(series) >= ES:BACKUP_BASE) {
+    :DlgMessage('Cannot backup a series already backed up', ERROR);
+    return;
   }
-  :Print('backing up series ' + id + '...');
-  :SetName(S, :GetName(S) + '.bak');
-  :SetId(S, :GetId(S) + 10000);
-  :Print('backup series name = ' + :GetName(S));
-  :Print('backup series id = ' + :GetId(S));
-  :Save(S);
+  if (:Exists(:GetId(series) + ES:BACKUP_BASE)) {
+    :DlgMessage('Cannot backup series: already exists: ' + :GetId(series) + ES:BACKUP_BASE);
+    return;
+  }
+  if (!:DlgConfirm()) {
+    return;
+  }
+  :Log(DEBUG, 'backing up series ' + id);
+  :SetName(series, :GetName(series) + ES:BACKUP_EXT);
+  :SetId(series, :GetId(series) + ES:BACKUP_BASE);
+  :Save(series);
+  :DlgMessage('Backup complete for ' + :GetId(series));
 }
 
 #################################################################################
@@ -182,7 +210,6 @@ function ES:Lowest(series) {
 #################################################################################
 # Usage functions
 #################################################################################
-
 function ES:Usage() {
   function m(series) {
     :Log(DEBUG, 'm()');
@@ -190,8 +217,8 @@ function ES:Usage() {
     :Log(DEBUG, series);
     series = ES:Load(series);
     :Assert(series != null, 'series is unexpectedly null');
-    if (:GetId(series) < 10000) {
-      :Log(DEBUG, 'series id < 10000; is a candidate for metrics');
+    if (:GetId(series) < ES:BACKUP_BASE) {
+      :Log(DEBUG, 'series id < ES:BACKUP_BASE; is a candidate for metrics');
       :GPut('METRICS.numberOfSeries', METRICS.numberOfSeries + 1);
       :GPut('METRICS.numberOfRecords', METRICS.numberOfRecords + :GetSize(series));
       :Printf('%-20s%8d\n', :GetName(series), :GetSize(series));

@@ -19,9 +19,9 @@ public class DlgMessage implements Command {
   public List<String> getDetails() {
     List<String> list = new ArrayList<>();
     list.add("Shows a dialog box displaying the message 'message', where 'messageType' is one of:");
-    list.add("  - INFO (0) (default)");
-    list.add("  - WARN (1)");
-    list.add("  - ERROR (2)");
+    list.add("  - INFO (1) (default)");
+    list.add("  - WARN (2)");
+    list.add("  - ERROR (3)");
     return list;
   }
   
@@ -43,11 +43,11 @@ public class DlgMessage implements Command {
         throw new Exception("invalid message type");
       }
       int tmp = (int) params.get(1);
-      if (tmp == 0) {
+      if (tmp == 1) {
         messageType = JOptionPane.INFORMATION_MESSAGE;
-      } else if (tmp == 1) {
-        messageType = JOptionPane.WARNING_MESSAGE;
       } else if (tmp == 2) {
+        messageType = JOptionPane.WARNING_MESSAGE;
+      } else if (tmp == 3) {
         messageType = JOptionPane.ERROR_MESSAGE;
       } else {
         throw new Exception("invalid message type");

@@ -30,7 +30,7 @@ public class DlgConfirm implements Command {
   @Override
   public Object run(SymbolTable symbolTable, File file, List<Object> params) throws Exception {
     Utils.validate(params, 0, 1);
-    String prompt = "Confirm:";
+    String prompt = "Are you sure?";
     if (params.size() > 0) {
       if (!(params.get(0) instanceof String)) {
         throw new Exception("invalid message");
