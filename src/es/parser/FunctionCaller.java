@@ -176,10 +176,10 @@ public class FunctionCaller {
       commandMap.put("qdb", new QDB());
       commandMap.put("qtp", new QTP());
     }
-    // make ES: aliases for all the commands
+    // make namespace aliases for all the commands
     Map<String, Command> map = new HashMap<>();
     for (String key: commandMap.keySet()) {
-      String fn = "ES:" + Character.toUpperCase(key.charAt(0)) + key.substring(1);
+      String fn = Utils.ROOT_NAMESPACE + Character.toUpperCase(key.charAt(0)) + key.substring(1);
       //System.out.println(key + " => " + fn);
       //System.out.println(commandMap.get(key));
       map.put(fn, commandMap.get(key));
@@ -188,11 +188,11 @@ public class FunctionCaller {
   }
   
   public boolean isFunction(String funcName) {
-    return funcName.equals("help") || funcName.equals("ES:Help") || commandMap.keySet().contains(funcName);
+    return funcName.equals("help") || funcName.equals(Utils.ROOT_NAMESPACE + "Help") || commandMap.keySet().contains(funcName);
   }
   
   public Object invokeFunction(String funcName, SymbolTable symbolTable, File file, List<Object> params) throws Exception {
-    if (funcName.equals("help") || funcName.equals("ES:Help")) {
+    if (funcName.equals("help") || funcName.equals(Utils.ROOT_NAMESPACE + "Help")) {
       if (params.size() == 1 && params.get(0) instanceof String) {
         Command command = commandMap.get(params.get(0));
         if (command != null) {
@@ -210,7 +210,7 @@ public class FunctionCaller {
       }
       for (String name: commandMap.keySet()) {
         Command command = commandMap.get(name);
-        if (name.startsWith(("ES:"))) {
+        if (name.startsWith((Utils.ROOT_NAMESPACE))) {
           System.out.println(command.getSummary());
         }
       }

@@ -10,7 +10,7 @@ import es.parser.SymbolTable;
 public class Assert implements Command {
   @Override
   public String getSummary() {
-    return "void    ES:Assert(boolean condition[, String message]);";
+    return "void    " + Utils.ROOT_NAMESPACE + "Assert(boolean condition[, String message]);";
   }
   
   @Override

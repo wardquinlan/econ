@@ -1,78 +1,78 @@
 #################################################################################
 # Load functions
 #################################################################################
-function ES:LoadSeries(series) {
-  ES:Log(DEBUG, 'ES:LoadSeries()');
+function ES:Load(series) {
+  :Log(DEBUG, 'ES:Load()');
   if (series == null) {
-    ES:Log(WARN, 'series is null, returning null');
+    :Log(WARN, 'series is null, returning null');
     return null;
   }
-  ES:Log(DEBUG, series);
-  if (ES:GetType(series) == 'String') {
-    if (ES:Exists(series)) {
-      ES:Log(DEBUG, 'series exists in the datastore; loading');
-      return ES:Load(series);
+  :Log(DEBUG, series);
+  if (:GetType(series) == 'String') {
+    if (:Exists(series)) {
+      :Log(DEBUG, 'series exists in the datastore; loading');
+      return :Load(series);
     }
-    ES:Log(DEBUG, 'attempting to load series from FRED');
-    return ES:Fred(series);
+    :Log(DEBUG, 'attempting to load series from FRED');
+    return :Fred(series);
   }
-  if (ES:GetType(series) == 'int') {
-    if (ES:Exists(series)) {
-      ES:Log(DEBUG, 'series exists in the datastore; loading');
-      return ES:Load(series);
+  if (:GetType(series) == 'int') {
+    if (:Exists(series)) {
+      :Log(DEBUG, 'series exists in the datastore; loading');
+      return :Load(series);
     }
-    ES:Log(WARN, 'series not found; returning null');
+    :Log(WARN, 'series not found; returning null');
     return null; 
   }
-  if (ES:GetType(series) == 'Series') {
-    if (ES:GetId(series) != null and ES:Exists(ES:GetId(series))) {
-      ES:Log(DEBUG, 'series exists in the datastore; loading');
-      return ES:Load(ES:GetId(series));
+  if (:GetType(series) == 'Series') {
+    if (:GetId(series) != null and :Exists(:GetId(series))) {
+      :Log(DEBUG, 'series exists in the datastore; loading');
+      return :Load(:GetId(series));
     }
-    ES:Log(WARN, 'series does not existing in the datastore, returning series as is');
+    :Log(DEBUG, 'series does not exist in the datastore, returning series as is');
     return series;
   }
-  ES:Log(WARN, 'unable to find the series, returning null');
+  :Log(WARN, 'unable to find the series, returning null');
   return null;
 }
 
 function ES:AutoLoad(series) {
-  ES:Log(DEBUG, 'ES:AutoLoad()');
-  ES:Log(DEBUG, series);
-  series = ES:LoadSeries(series);
+  :Log(DEBUG, 'ES:AutoLoad()');
+  :Log(DEBUG, series);
+  series = ES:Load(series);
   # don't load the backups...
-  if (ES:GetId(series) < 10000) {
-    ES:Log(DEBUG, 'id = ' + getId(series) + ' < 10000; putting series into global scope'); 
-    name = ES:GetName(series);
-    ES:Log(DEBUG, 'name = ' + name);
-    ES:GPut(name, series);
+  if (:GetId(series) < 10000) {
+    :Log(DEBUG, 'id = ' + getId(series) + ' < 10000; putting series into global scope'); 
+    name = :GetName(series);
+    :Log(DEBUG, 'name = ' + name);
+    :GPut(name, series);
   } 
 }
 
-loadSeries = ES:LoadSeries;
+loadSeries = ES:Load;
 autoLoad = ES:AutoLoad; 
 
 #################################################################################
 # Update functions
 #################################################################################
 function ES:UpdateSeries(series) {
-  ES:Log(DEBUG, 'ES:UpdateSeries()');
-  ES:Log(DEBUG, series);
-  series = ES:LoadSeries(series);
-  if (ES:GetSource(series) == 'FRED' and ES:GetId(series) < 10000) {
-    ES:Log(DEBUG, 'series is a candidate for update(s); proceeding');
-    id = ES:GetId(series);
-    name = ES:GetName(series);
-    ES:Log(INFO, 'updating ' + id + ':' + name + '...');
-    series = ES:Fred(name);
-    ES:SetId(series, id);
-    ES:Merge(series, '--with-inserts');
+  :Log(DEBUG, 'ES:UpdateSeries()');
+  :Log(DEBUG, series);
+  series = ES:Load(series);
+  if (:GetSource(series) == 'FRED' and :GetId(series) < 10000) {
+    :Log(DEBUG, 'series is a candidate for update(s); proceeding');
+    id = :GetId(series);
+    name = :GetName(series);
+    :Log(INFO, 'updating ' + id + ':' + name + '...');
+    series = :Fred(name);
+    :SetId(series, id);
+    :Merge(series, '--with-inserts');
   }
 }
 
 function ES:UpdateAll() {
-  ES:Log(DEBUG, 'ES:UpdateAll()');
-  ES:Ds(updateSeries);
+  :Log(DEBUG, 'ES:UpdateAll()');
+  :Ds(updateSeries);
 }
 
 updateSeries = ES:UpdateSeries;
@@ -82,35 +82,35 @@ updateAll = ES:UpdateAll;
 # Reset functions
 #################################################################################
 function ES:ResetId(id, idNew) {
-  if (!ES:IsAdmin()) {
+  if (!:IsAdmin()) {
     throw 'you must be running in administrative mode to reset id\'s';
   }
-  if (ES:GetType(id) != 'int' or ES:GetType(idNew) != 'int') {
+  if (:GetType(id) != 'int' or :GetType(idNew) != 'int') {
     throw 'usage: ES:ResetId(int id, int idNew);';
   }
-  if (ES:Exists(idNew)) {
+  if (:Exists(idNew)) {
     throw 'series already exists: ' + idNew;
   } 
   S = ES:Load(id);
-  ES:SetId(S, idNew);
-  ES:Drop(id);
-  ES:Save(S);
+  :SetId(S, idNew);
+  :Drop(id);
+  :Save(S);
 }
 
 function ES:ResetName(name, nameNew) {
-  if (!ES:IsAdmin()) {
+  if (!:IsAdmin()) {
     throw 'you must be running in administrative mode to reset name\'s';
   }
-  if (ES:GetType(name) != 'String' or ES:GetType(nameNew) != 'String') {
+  if (:GetType(name) != 'String' or :GetType(nameNew) != 'String') {
     throw 'usage: ES:ResetName(String name, String nameNew);';
   }
-  if (ES:Exists(nameNew)) {
+  if (:Exists(nameNew)) {
     throw 'series already exists: ' + nameNew;
   } 
   S = ES:Load(name);
-  ES:SetName(S, nameNew);
-  ES:Drop(ES:GetId(S));
-  ES:Save(S);
+  :SetName(S, nameNew);
+  :Drop(:GetId(S));
+  :Save(S);
 }
 
 resetId = ES:ResetId;
@@ -120,25 +120,25 @@ resetName = ES:ResetName;
 # Backup function
 #################################################################################
 function ES:Backup(id) {
-  if (!ES:IsAdmin()) {
+  if (!:IsAdmin()) {
     throw 'you must be running in administrative mode to do backups';
   }
-  if (ES:GetType(id) != 'int') {
+  if (:GetType(id) != 'int') {
     throw 'usage: ES:Backup(int id);';
   }
   if (id >= 10000) {
     throw 'id must be < 10000';
   }
   S = ES:Load(id);
-  if (ES:Exists(ES:GetId(S) + 10000)) {
+  if (:Exists(:GetId(S) + 10000)) {
     throw 'backup for series already exists: ' + id + '; drop the backup first and try again';
   }
-  ES:Print('backing up series ' + id + '...');
-  ES:SetName(S, ES:GetName(S) + '.bak');
-  ES:SetId(S, ES:GetId(S) + 10000);
-  ES:Print('backup series name = ' + ES:GetName(S));
-  ES:Print('backup series id = ' + ES:GetId(S));
-  ES:Save(S);
+  :Print('backing up series ' + id + '...');
+  :SetName(S, :GetName(S) + '.bak');
+  :SetId(S, :GetId(S) + 10000);
+  :Print('backup series name = ' + :GetName(S));
+  :Print('backup series id = ' + :GetId(S));
+  :Save(S);
 }
 
 backup = ES:Backup;
@@ -147,47 +147,47 @@ backup = ES:Backup;
 # Highest / Lowest functions
 #################################################################################
 function ES:Highest(series) {
-  ES:Log(DEBUG, 'ES:Highest()');
+  :Log(DEBUG, 'ES:Highest()');
   function fn(idx, d, v) {
-    if (v > ES:GGet('METRICS.highest')) {
-      ES:Log(DEBUG, 'found larger value: ' + v);
-      ES:GPut('METRICS.highest', v);
+    if (v > :GGet('METRICS.highest')) {
+      :Log(DEBUG, 'found larger value: ' + v);
+      :GPut('METRICS.highest', v);
     }
   }
 
-  ES:Log(DEBUG, 'loading series');
-  series = ES:LoadSeries(series);
-  if (series == null or ES:GetSize(series) == 0) {
-    ES:Log(DEBUG, 'series is null or empty; returning null');
+  :Log(DEBUG, 'loading series');
+  series = :Load(series);
+  if (series == null or :GetSize(series) == 0) {
+    :Log(DEBUG, 'series is null or empty; returning null');
     return null;
   }
-  ES:Log(DEBUG, 'initializing with value ' + ES:Get(series, 0));
-  ES:GPut('METRICS.highest', ES:Get(series, 0));
-  ES:Data(series, fn);
-  ES:Log(DEBUG, 'found highest value: ' + ES:GGet('METRICS.highest'));
-  return ES:GGet('METRICS.highest');
+  :Log(DEBUG, 'initializing with value ' + :Get(series, 0));
+  :GPut('METRICS.highest', :Get(series, 0));
+  :Data(series, fn);
+  :Log(DEBUG, 'found highest value: ' + :GGet('METRICS.highest'));
+  return :GGet('METRICS.highest');
 }
 
 function ES:Lowest(series) {
-  ES:Log(DEBUG, 'ES:Lowest()');
+  :Log(DEBUG, 'ES:Lowest()');
   function fn(idx, d, v) {
-    if (v < ES:GGet('METRICS.lowest')) {
-      ES:Log(DEBUG, 'found smaller value: ' + v);
-      ES:GPut('METRICS.lowest', v);
+    if (v < :GGet('METRICS.lowest')) {
+      :Log(DEBUG, 'found smaller value: ' + v);
+      :GPut('METRICS.lowest', v);
     }
   }
 
-  ES:Log(DEBUG, 'loading series');  
-  series = ES:LoadSeries(series);
-  if (series == null or ES:GetSize(series) == 0) {
-    ES:Log(DEBUG, 'series is null or empty; returning null');
+  :Log(DEBUG, 'loading series');  
+  series = :Load(series);
+  if (series == null or :GetSize(series) == 0) {
+    :Log(DEBUG, 'series is null or empty; returning null');
     return null;
   }
-  ES:Log(DEBUG, 'initializing with value ' + ES:Get(series, 0));
-  ES:GPut('METRICS.lowest', ES:Get(series, 0));
-  ES:Data(series, fn);
-  ES:Log(DEBUG, 'found lowest value: ' + ES:GGet('METRICS.lowest'));
-  return ES:GGet('METRICS.lowest');
+  :Log(DEBUG, 'initializing with value ' + :Get(series, 0));
+  :GPut('METRICS.lowest', :Get(series, 0));
+  :Data(series, fn);
+  :Log(DEBUG, 'found lowest value: ' + :GGet('METRICS.lowest'));
+  return :GGet('METRICS.lowest');
 }
 
 highest = ES:Highest;
@@ -198,50 +198,50 @@ lowest = ES:Lowest;
 #################################################################################
 
 function ES:Usage() {
-  function metrics(series) {
-    ES:Log(DEBUG, 'ES:Metrics()');
-    ES:Assert(series != null, 'series is unexpectedly null');
-    ES:Log(DEBUG, series);
-    series = ES:LoadSeries(series);
-    ES:Assert(series != null, 'series is unexpectedly null');
-    if (ES:GetId(series) < 10000) {
-      ES:Log(DEBUG, 'series id < 10000; is a candidate for metrics');
-      ES:GPut('METRICS.numberOfSeries', METRICS.numberOfSeries + 1);
-      ES:GPut('METRICS.numberOfRecords', METRICS.numberOfRecords + ES:GetSize(series));
-      ES:Printf('%-20s%8d\n', ES:GetName(series), ES:GetSize(series));
+  function m(series) {
+    :Log(DEBUG, 'm()');
+    :Assert(series != null, 'series is unexpectedly null');
+    :Log(DEBUG, series);
+    series = ES:Load(series);
+    :Assert(series != null, 'series is unexpectedly null');
+    if (:GetId(series) < 10000) {
+      :Log(DEBUG, 'series id < 10000; is a candidate for metrics');
+      :GPut('METRICS.numberOfSeries', METRICS.numberOfSeries + 1);
+      :GPut('METRICS.numberOfRecords', METRICS.numberOfRecords + :GetSize(series));
+      :Printf('%-20s%8d\n', :GetName(series), :GetSize(series));
     }
   }
   
-  ES:Log(DEBUG, 'ES:Usage()');
-  ES:GPut('METRICS.numberOfSeries', 0);
-  ES:GPut('METRICS.numberOfRecords', 0);
-  ES:Print('Series Metrics');
-  ES:Print('----------------------------');
-  ES:Ds(metrics);
-  ES:Print();
-  ES:Print('Series stored in datastore: ' + METRICS.numberOfSeries + ' (excluding backup series)');
-  ES:Print('Number of records stored in datastore: ' + METRICS.numberOfRecords);
+  :Log(DEBUG, 'ES:Usage()');
+  :GPut('METRICS.numberOfSeries', 0);
+  :GPut('METRICS.numberOfRecords', 0);
+  :Print('Series Metrics');
+  :Print('----------------------------');
+  :Ds(m);
+  :Print();
+  :Print('Series stored in datastore: ' + METRICS.numberOfSeries + ' (excluding backup series)');
+  :Print('Number of records stored in datastore: ' + METRICS.numberOfRecords);
 }
 
 function ES:Defaults() {
-  ES:Print('defaults.panel.backgroundcolor = Color');
-  ES:Print('defaults.panel.dxincr = int');
-  ES:Print('defaults.panel.gridlinetextwidth = int');
-  ES:Print('defaults.panel.fontname = String');
-  ES:Print('defaults.panel.fontcolor = Color');
-  ES:Print('defaults.panel.fontsize = int');
-  ES:Print('defaults.panel.frequency = NONE | DAYS | MONTHS | YEARS');
-  ES:Print('defaults.panel.label = String');
-  ES:Print('defaults.chart.backgroundcolor = Color');
-  ES:Print('defaults.chart.linecolor = Color');
-  ES:Print('defaults.chart.rectcolor = Color');
-  ES:Print('defaults.chart.ngridlines = int');
-  ES:Print('defaults.chart.label = String');
-  ES:Print('defaults.chart.scaletype = LINEAR | LOG');
-  ES:Print('defaults.series.linecolor0 = Color');
-  ES:Print('defaults.series.linecolor1 = Color');
-  ES:Print('defaults.series.linecolor2 = Color');
-  ES:Print('defaults.series.linecolor3 = Color');
+  :Print('defaults.panel.backgroundcolor = Color');
+  :Print('defaults.panel.dxincr = int');
+  :Print('defaults.panel.gridlinetextwidth = int');
+  :Print('defaults.panel.fontname = String');
+  :Print('defaults.panel.fontcolor = Color');
+  :Print('defaults.panel.fontsize = int');
+  :Print('defaults.panel.frequency = NONE | DAYS | MONTHS | YEARS');
+  :Print('defaults.panel.label = String');
+  :Print('defaults.chart.backgroundcolor = Color');
+  :Print('defaults.chart.linecolor = Color');
+  :Print('defaults.chart.rectcolor = Color');
+  :Print('defaults.chart.ngridlines = int');
+  :Print('defaults.chart.label = String');
+  :Print('defaults.chart.scaletype = LINEAR | LOG');
+  :Print('defaults.series.linecolor0 = Color');
+  :Print('defaults.series.linecolor1 = Color');
+  :Print('defaults.series.linecolor2 = Color');
+  :Print('defaults.series.linecolor3 = Color');
 }
 
 usage = ES:Usage;
