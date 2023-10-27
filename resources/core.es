@@ -42,7 +42,7 @@ function ES:AutoLoad(series) {
   series = ES:Load(series);
   # don't load the backups...
   if (:GetId(series) < 10000) {
-    :Log(DEBUG, 'id = ' + getId(series) + ' < 10000; putting series into global scope'); 
+    :Log(DEBUG, 'id = ' + :GetId(series) + ' < 10000; putting series into global scope'); 
     name = :GetName(series);
     :Log(DEBUG, 'name = ' + name);
     :GPut(name, series);

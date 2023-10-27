@@ -13,10 +13,10 @@ sources.fred.baseurl = "https://api.stlouisfed.org/fred";
 # used to mark that settings have completed loading
 settings.loaded = true;
 
-print("Running '" + version() + "'");
-print();
-print("For color definitions refer to: https://htmlcolorcodes.com/color-names");
-print();
-print("Type 'help();' to list all commands");
-print("Type 'help(\"command\");' to display help for a specific command");
-print();
+:Print("Running '" + :Version() + "'");
+:Print();
+:Print("For color definitions refer to: https://htmlcolorcodes.com/color-names");
+:Print();
+:Print("Type 'help();' to list all commands");
+:Print("Type 'help(\"command\");' to display help for a specific command");
+:Print();

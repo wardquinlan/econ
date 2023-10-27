@@ -92,91 +92,92 @@ public class FunctionCaller {
   static final int TIME_SERIES_DATA_COL_WIDTHS[] = {5, 10, 10};
 
   public FunctionCaller() {
-    commandMap.put("exit", new Exit());
-    commandMap.put("print", new Print());
-    commandMap.put("help", new Help());
-    commandMap.put("load", new Load());
-    commandMap.put("plot", new Plot());
-    commandMap.put("ds", new Ds());
-    commandMap.put("meta", new Meta());
-    commandMap.put("cat", new Cat());
-    commandMap.put("create", new Create());
-    commandMap.put("insert", new Insert());
-    commandMap.put("getSize", new GetSize());
-    commandMap.put("connect", new Connect());
-    commandMap.put("save", new Save());
-    commandMap.put("setId", new SetId());
-    commandMap.put("setTitle", new SetTitle());
-    commandMap.put("setNotes", new SetNotes());
-    commandMap.put("setName", new SetName());
-    commandMap.put("today", new Today());
-    commandMap.put("fred", new FRED());
-    commandMap.put("timestamp", new Timestamp());
-    commandMap.put("ln", new Ln());
-    commandMap.put("log", new es.command.Log());
-    commandMap.put("date", new es.command.Date());
-    commandMap.put("average", new Average());
-    commandMap.put("merge", new Merge());
-    commandMap.put("delete", new Delete());
-    commandMap.put("update", new Update());
-    commandMap.put("drop", new Drop());
-    commandMap.put("setSourceId", new SetSourceId());
-    commandMap.put("setSource", new SetSource());
-    commandMap.put("status", new Status());
-    commandMap.put("version", new Version());
-    commandMap.put("data", new Data());
-    commandMap.put("isConnected", new IsConnected());
-    commandMap.put("isAdmin", new IsAdmin());
-    commandMap.put("getId", new GetId());
-    commandMap.put("getName", new GetName());
-    commandMap.put("getTitle", new GetTitle());
-    commandMap.put("getNotes", new GetNotes());
-    commandMap.put("getSource", new GetSource());
-    commandMap.put("getSourceId", new GetSourceId());
-    commandMap.put("sum", new Sum());
-    commandMap.put("change", new Change());
-    commandMap.put("pChange", new PChange());
-    commandMap.put("max", new es.command.Max());
-    commandMap.put("min", new es.command.Min());
-    commandMap.put("get", new Get());
-    commandMap.put("assert", new Assert());
-    commandMap.put("defined", new Defined());
-    commandMap.put("exists", new Exists());
-    commandMap.put("getType", new GetType());
-    commandMap.put("getUnits", new GetUnits());
-    commandMap.put("getFrequency", new GetFrequency());
-    commandMap.put("getUnitsShort", new GetUnitsShort());
-    commandMap.put("getFrequencyShort", new GetFrequencyShort());
-    commandMap.put("setUnits", new SetUnits());
-    commandMap.put("setFrequency", new SetFrequency());
-    commandMap.put("setUnitsShort", new SetUnitsShort());
-    commandMap.put("setFrequencyShort", new SetFrequencyShort());
-    commandMap.put("stdev", new StdDev());
-    commandMap.put("gGet", new GGet());
-    commandMap.put("dlgInput", new DlgInput());
-    commandMap.put("dlgMessage", new DlgMessage());
-    commandMap.put("parseFloat", new ParseFloat());
-    commandMap.put("parseInt", new ParseInt());
-    commandMap.put("dlgConfirm", new DlgConfirm());
-    commandMap.put("equals", new Equals());
-    commandMap.put("notEquals", new NotEquals());
-    commandMap.put("printf", new Printf());
-    commandMap.put("setLogLevel", new SetLogLevel());
-    commandMap.put("getSeriesType", new GetSeriesType());
+    commandMap.put(":Exit", new Exit());
+    commandMap.put(":Print", new Print());
+    commandMap.put(":Help", new Help());
+    commandMap.put(":Load", new Load());
+    commandMap.put(":Plot", new Plot());
+    commandMap.put(":Ds", new Ds());
+    commandMap.put(":Meta", new Meta());
+    commandMap.put(":Cat", new Cat());
+    commandMap.put(":Create", new Create());
+    commandMap.put(":Insert", new Insert());
+    commandMap.put(":GetSize", new GetSize());
+    commandMap.put(":Connect", new Connect());
+    commandMap.put(":Save", new Save());
+    commandMap.put(":SetId", new SetId());
+    commandMap.put(":SetTitle", new SetTitle());
+    commandMap.put(":SetNotes", new SetNotes());
+    commandMap.put(":SetName", new SetName());
+    commandMap.put(":Today", new Today());
+    commandMap.put(":Fred", new FRED());
+    commandMap.put(":Timestamp", new Timestamp());
+    commandMap.put(":Ln", new Ln());
+    commandMap.put(":Log", new es.command.Log());
+    commandMap.put(":Date", new es.command.Date());
+    commandMap.put(":Average", new Average());
+    commandMap.put(":Merge", new Merge());
+    commandMap.put(":Delete", new Delete());
+    commandMap.put(":Update", new Update());
+    commandMap.put(":Drop", new Drop());
+    commandMap.put(":SetSourceId", new SetSourceId());
+    commandMap.put(":SetSource", new SetSource());
+    commandMap.put(":Status", new Status());
+    commandMap.put(":Version", new Version());
+    commandMap.put(":Data", new Data());
+    commandMap.put(":IsConnected", new IsConnected());
+    commandMap.put(":IsAdmin", new IsAdmin());
+    commandMap.put(":GetId", new GetId());
+    commandMap.put(":GetName", new GetName());
+    commandMap.put(":GetTitle", new GetTitle());
+    commandMap.put(":GetNotes", new GetNotes());
+    commandMap.put(":GetSource", new GetSource());
+    commandMap.put(":GetSourceId", new GetSourceId());
+    commandMap.put(":Sum", new Sum());
+    commandMap.put(":Change", new Change());
+    commandMap.put(":PChange", new PChange());
+    commandMap.put(":Max", new es.command.Max());
+    commandMap.put(":Min", new es.command.Min());
+    commandMap.put(":Get", new Get());
+    commandMap.put(":Assert", new Assert());
+    commandMap.put(":Defined", new Defined());
+    commandMap.put(":Exists", new Exists());
+    commandMap.put(":GetType", new GetType());
+    commandMap.put(":GetUnits", new GetUnits());
+    commandMap.put(":GetFrequency", new GetFrequency());
+    commandMap.put(":GetUnitsShort", new GetUnitsShort());
+    commandMap.put(":GetFrequencyShort", new GetFrequencyShort());
+    commandMap.put(":SetUnits", new SetUnits());
+    commandMap.put(":SetFrequency", new SetFrequency());
+    commandMap.put(":SetUnitsShort", new SetUnitsShort());
+    commandMap.put(":SetFrequencyShort", new SetFrequencyShort());
+    commandMap.put(":Stdev", new StdDev());
+    commandMap.put(":GGet", new GGet());
+    commandMap.put(":DlgInput", new DlgInput());
+    commandMap.put(":DlgMessage", new DlgMessage());
+    commandMap.put(":ParseFloat", new ParseFloat());
+    commandMap.put(":ParseInt", new ParseInt());
+    commandMap.put(":DlgConfirm", new DlgConfirm());
+    commandMap.put(":Equals", new Equals());
+    commandMap.put(":NotEquals", new NotEquals());
+    commandMap.put(":Printf", new Printf());
+    commandMap.put(":SetLogLevel", new SetLogLevel());
+    commandMap.put(":GetSeriesType", new GetSeriesType());
     // I can't think of a way to use this to conditionally include files.  If we create an 'if' block, then all the constants (or whatever) are in the
     // scope of the if block.  So this doesn't work.
     
     // this might be relevant for other reasons, though: it is a way to modify a global scope from within a local scope
-    commandMap.put("gPut", new GPut());
+    commandMap.put(":GPut", new GPut());
     if (Settings.getInstance().isTestMode()) {
-      commandMap.put("collapse", new Collapse());
-      commandMap.put("normalize", new Normalize());
-      commandMap.put("getOffset", new GetOffset());
-      commandMap.put("fonts", new Fonts());
-      commandMap.put("qdb", new QDB());
-      commandMap.put("qtp", new QTP());
+      commandMap.put(":Collapse", new Collapse());
+      commandMap.put(":Normalize", new Normalize());
+      commandMap.put(":GetOffset", new GetOffset());
+      commandMap.put(":Fonts", new Fonts());
+      commandMap.put(":Qdb", new QDB());
+      commandMap.put(":Qtp", new QTP());
     }
     // make namespace aliases for all the commands
+    /*
     Map<String, Command> map = new HashMap<>();
     for (String key: commandMap.keySet()) {
       String fn = Utils.ROOT_NAMESPACE + Character.toUpperCase(key.charAt(0)) + key.substring(1);
@@ -185,6 +186,7 @@ public class FunctionCaller {
       map.put(fn, commandMap.get(key));
     }
     commandMap.putAll(map);
+    */
   }
   
   public boolean isFunction(String funcName) {
