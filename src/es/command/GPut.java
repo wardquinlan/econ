@@ -43,8 +43,8 @@ public class GPut implements Command {
     if (symbolName.length() == 0) {
       throw new Exception("invalid symbol name: empty string");
     }
-    if (!Character.isLetter(symbolName.charAt(0))) {
-      throw new Exception("invalid symbol name: must start with a letter");
+    if (symbolName.charAt(0) != ':' && !Character.isLetter(symbolName.charAt(0))) {
+      throw new Exception("invalid symbol name: must start with a letter or a ':'");
     }
     for (int i = 1; i < symbolName.length(); i++) {
       char ch = symbolName.charAt(i);
@@ -52,5 +52,6 @@ public class GPut implements Command {
         throw new Exception("invalid symbol name: invalid character: " + ch);
       }
     }
+    Utils.checkNameSpace(symbolName);
   }
 }

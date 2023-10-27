@@ -46,6 +46,22 @@ public class Utils {
     1000f, 2000f, 3000f, 4000f, 5000f, 6000f, 7000f, 8000f, 9000f
   };
   
+  public static void checkNameSpace(String symbol) throws Exception {
+    int nLetters = 0;
+    int nColons = 0;
+    for (int i = 0; i < symbol.length(); i++) {
+      char ch = symbol.charAt(i);
+      if (ch == ':') {
+        nColons++;
+      }
+      if (Character.isLetter(ch)) {
+        nLetters++;
+      }
+    }
+    if (nLetters == 0 || nColons > 1) {
+      throw new Exception("invalid namespace: " + symbol);
+    }
+  }
   public static float findDYGridLines(int nGridLines, MinMaxPair pair) throws Exception {
     int idx = 0;
     while (pair.getMinValue() + nGridLines * rgnum[idx] < pair.getMaxValue() && idx < rgnum.length) {

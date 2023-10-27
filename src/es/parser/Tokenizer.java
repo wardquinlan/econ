@@ -12,6 +12,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import es.core.ESIterator;
+import es.core.Utils;
 
 public class Tokenizer {
   private static Log log = LogFactory.getFactory().getInstance(Tokenizer.class);
@@ -57,13 +58,14 @@ public class Tokenizer {
         } else if (val == '.' && Character.isWhitespace(rdr.peek())) {
           Token tk = new Token(Token.INC);
           list.add(tk);
-        } else if (Character.isLetter(val)) {
+        } else if (Character.isLetter(val) || val == ':') {
           Token tk = null;
           StringBuffer sb = new StringBuffer();
           sb.append((char) val);
           while (Character.isLetter(rdr.peek()) || Character.isDigit(rdr.peek()) || rdr.peek() == '_' || rdr.peek() == '.' || rdr.peek() == ':') {
             sb.append((char) rdr.read());
           }
+          Utils.checkNameSpace(sb.toString());
           if (sb.toString().equals("include")) {
             tk = new Token(Token.INC);
           } else if (sb.toString().equals("const")) {
