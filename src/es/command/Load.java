@@ -11,7 +11,7 @@ import es.parser.SymbolTable;
 public class Load implements Command {
   @Override
   public String getSummary() {
-    return "Series  ES:Load(Object object);";
+    return "Series  " + Utils.ROOT_NAMESPACE + "Load(Object object);";
   }
 
   @Override

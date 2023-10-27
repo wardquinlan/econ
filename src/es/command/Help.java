@@ -10,7 +10,7 @@ import es.parser.SymbolTable;
 public class Help implements Command {
   @Override
   public String getSummary() {
-    return "void    ES:Help([String command]);";
+    return "void    " + Utils.ROOT_NAMESPACE + "Help([String command]);";
   }
   
   @Override

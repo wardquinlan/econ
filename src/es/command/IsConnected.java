@@ -11,7 +11,7 @@ import es.parser.SymbolTable;
 public class IsConnected implements Command {
   @Override
   public String getSummary() {
-    return "boolean ES:IsConnected();";
+    return "boolean " + Utils.ROOT_NAMESPACE + "IsConnected();";
   }
   
   @Override

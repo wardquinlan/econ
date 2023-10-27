@@ -12,7 +12,7 @@ import es.parser.SymbolTable;
 public class Max implements Command {
   @Override
   public String getSummary() {
-    return "Object  ES:Max(Object object1, Object object2);";
+    return "Object  " + Utils.ROOT_NAMESPACE + "Max(Object object1, Object object2);";
   }
   
   @Override

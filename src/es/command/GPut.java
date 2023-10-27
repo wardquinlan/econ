@@ -11,7 +11,7 @@ import es.parser.SymbolTable;
 public class GPut implements Command {
   @Override
   public String getSummary() {
-    return "void    ES:GPut(String symbolName, Object value);";
+    return "void    " + Utils.ROOT_NAMESPACE + "GPut(String symbolName, Object value);";
   }
   
   @Override

@@ -11,7 +11,7 @@ import es.parser.SymbolTable;
 public class GetSource implements Command {
   @Override
   public String getSummary() {
-    return "String  ES:GetSource(String series);";
+    return "String  " + Utils.ROOT_NAMESPACE + "GetSource(String series);";
   }
   
   @Override

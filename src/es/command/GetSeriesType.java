@@ -11,7 +11,7 @@ import es.parser.SymbolTable;
 public class GetSeriesType implements Command {
   @Override
   public String getSummary() {
-    return "String  ES:GetSeriesType(Series series);";
+    return "String  " + Utils.ROOT_NAMESPACE + "GetSeriesType(Series series);";
   }
   
   @Override

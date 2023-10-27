@@ -14,7 +14,7 @@ import es.parser.SymbolTable;
 public class Insert implements Command {
   @Override
   public String getSummary() {
-    return "void    ES:Insert(Series series, String date, Object value);";
+    return "void    " + Utils.ROOT_NAMESPACE + "Insert(Series series, String date, Object value);";
   }
   
   @Override
