@@ -185,11 +185,11 @@ public class ChartRenderer {
   public float[] calculateGridlines(MinMaxPair pair) throws Exception {
     float gridLines[] = new float[chart.getNGridLines()];
     float dyGridLines = Utils.findDYGridLines(chart.getNGridLines(), pair);
-    log.debug("dyGridLines=" + dyGridLines);
+    log.trace("dyGridLines=" + dyGridLines);
     float yGridLine = (float) Math.ceil(pair.getMinValue() / dyGridLines) * dyGridLines;
     int count = 0; 
     while (count < chart.getNGridLines()) {
-      log.debug("yGridLine=" + yGridLine);
+      log.trace("yGridLine=" + yGridLine);
       gridLines[count] = yGridLine;
       yGridLine += dyGridLines;
       count++;

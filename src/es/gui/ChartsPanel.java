@@ -80,7 +80,7 @@ public class ChartsPanel extends JPanel {
     
     // collapse all time series into a single, consolidated time series
     timeSeriesCollapsed = Utils.collapse(list);
-    log.debug("collapsed series=" + timeSeriesCollapsed.toStringVerbose());
+    log.trace("collapsed series=" + timeSeriesCollapsed.toStringVerbose());
   }
 
   @Override

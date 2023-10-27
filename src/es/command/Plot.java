@@ -74,7 +74,7 @@ public class Plot implements Command {
       chart.setLabel((String) symbolTable.get("defaults.chart.label").getValue());
       for (int i = 0; i < params.size(); i++) {
         if (!(params.get(i) instanceof TimeSeries)) {
-          log.info("argument is not a Series, ignoring: " + params.get(i));
+          log.debug("argument is not a Series, ignoring: " + params.get(i));
           continue;
         }
         TimeSeries timeSeries = (TimeSeries) params.get(i);

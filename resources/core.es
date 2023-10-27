@@ -4,7 +4,7 @@
 function ES:Load(series) {
   :Log(DEBUG, 'ES:Load()');
   if (series == null) {
-    :Log(WARN, 'series is null, returning null');
+    :Log(DEBUG, 'series is null, returning null');
     return null;
   }
   :Log(DEBUG, series);
@@ -21,7 +21,7 @@ function ES:Load(series) {
       :Log(DEBUG, 'series exists in the datastore; loading');
       return :Load(series);
     }
-    :Log(WARN, 'series not found; returning null');
+    :Log(DEBUG, 'series not found; returning null');
     return null; 
   }
   if (:GetType(series) == 'Series') {
@@ -156,7 +156,7 @@ function ES:Highest(series) {
   }
 
   :Log(DEBUG, 'loading series');
-  series = :Load(series);
+  series = ES:Load(series);
   if (series == null or :GetSize(series) == 0) {
     :Log(DEBUG, 'series is null or empty; returning null');
     return null;
@@ -178,7 +178,7 @@ function ES:Lowest(series) {
   }
 
   :Log(DEBUG, 'loading series');  
-  series = :Load(series);
+  series = ES:Load(series);
   if (series == null or :GetSize(series) == 0) {
     :Log(DEBUG, 'series is null or empty; returning null');
     return null;
