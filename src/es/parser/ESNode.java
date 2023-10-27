@@ -121,6 +121,21 @@ public class ESNode implements Evaluable {
         // don't try and generate time series if doing simple comparisons; use the equals() and notEquals() commands
         return ((BinaryOperator) operator).exec(val1, val2);
       }
+      if (operator instanceof Plus) {
+        // special cases for operator Plus that involve Strings (including Dates)
+        if (val1 instanceof String && val2 instanceof TimeSeries) {
+          // don't call the evaluator when adding the time series to a string
+          return ((BinaryOperator) operator).exec(val1, val2);
+        }
+        if (val1 instanceof TimeSeries && val2 instanceof String) {
+          // we don't support adding a string to a time series
+          throw new Exception("cannot add a string to a time series: " + val1);
+        }
+        if (val1 instanceof TimeSeries && val2 instanceof TimeSeries && ((TimeSeries) val1).getType() == TimeSeries.DATE) {
+          // we don't support adding a time series to another time series of type DATE
+          throw new Exception("cannot add a time series to another time series of type DATE: " + val1);
+        }
+      }
       return executor.exec(val1, val2);
     }
   }
