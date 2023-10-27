@@ -49,14 +49,11 @@ function ES:AutoLoad(series) {
   } 
 }
 
-loadSeries = ES:Load;
-autoLoad = ES:AutoLoad; 
-
 #################################################################################
 # Update functions
 #################################################################################
-function ES:UpdateSeries(series) {
-  :Log(DEBUG, 'ES:UpdateSeries()');
+function ES:Update(series) {
+  :Log(DEBUG, 'ES:Update()');
   :Log(DEBUG, series);
   series = ES:Load(series);
   if (:GetSource(series) == 'FRED' and :GetId(series) < 10000) {
@@ -72,11 +69,8 @@ function ES:UpdateSeries(series) {
 
 function ES:UpdateAll() {
   :Log(DEBUG, 'ES:UpdateAll()');
-  :Ds(updateSeries);
+  :Ds(ES:Update);
 }
-
-updateSeries = ES:UpdateSeries;
-updateAll = ES:UpdateAll;
 
 #################################################################################
 # Reset functions
@@ -113,9 +107,6 @@ function ES:ResetName(name, nameNew) {
   :Save(S);
 }
 
-resetId = ES:ResetId;
-resetName = ES:ResetName;
-
 #################################################################################
 # Backup function
 #################################################################################
@@ -140,8 +131,6 @@ function ES:Backup(id) {
   :Print('backup series id = ' + :GetId(S));
   :Save(S);
 }
-
-backup = ES:Backup;
 
 #################################################################################
 # Highest / Lowest functions
@@ -189,9 +178,6 @@ function ES:Lowest(series) {
   :Log(DEBUG, 'found lowest value: ' + :GGet('METRICS.lowest'));
   return :GGet('METRICS.lowest');
 }
-
-highest = ES:Highest;
-lowest = ES:Lowest;
 
 #################################################################################
 # Usage functions
@@ -243,6 +229,3 @@ function ES:Defaults() {
   :Print('defaults.series.linecolor2 = Color');
   :Print('defaults.series.linecolor3 = Color');
 }
-
-usage = ES:Usage;
-defaults = ES:Defaults;
