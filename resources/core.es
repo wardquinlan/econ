@@ -5,12 +5,11 @@ const ES:BACKUP_EXT = '.BAK';
 # Load functions
 #################################################################################
 function ES:Load(series) {
-  :Log(DEBUG, 'ES:Load()');
+  :Log(DEBUG, 'ES:Load(): ' + series);
   if (series == null) {
     :Log(DEBUG, 'series is null, returning null');
     return null;
   }
-  :Log(DEBUG, series);
   if (:GetType(series) == 'String') {
     if (:Exists(series)) {
       :Log(DEBUG, 'series exists in the datastore; loading');
@@ -40,8 +39,7 @@ function ES:Load(series) {
 }
 
 function ES:AutoLoad(series) {
-  :Log(DEBUG, 'ES:AutoLoad()');
-  :Log(DEBUG, series);
+  :Log(DEBUG, 'ES:AutoLoad(): ' + series);
   series = ES:Load(series);
   # don't load the backups...
   if (:GetId(series) < ES:BACKUP_BASE) {
@@ -56,8 +54,7 @@ function ES:AutoLoad(series) {
 # Update functions
 #################################################################################
 function ES:Update(series) {
-  :Log(DEBUG, 'ES:Update()');
-  :Log(DEBUG, series);
+  :Log(DEBUG, 'ES:Update(): ' + series);
   series = ES:Load(series);
   if (:GetSource(series) == 'FRED' and :GetId(series) < ES:BACKUP_BASE) {
     :Log(DEBUG, 'series is a candidate for update(s); proceeding');
@@ -114,7 +111,7 @@ function ES:ResetName(name, nameNew) {
 # Backup function
 #################################################################################
 function ES:Backup(id) {
-  :Log(DEBUG, 'ES:Backup()');
+  :Log(DEBUG, 'ES:Backup(): ' + id);
   if (!:IsAdmin()) {
     :DlgMessage('You must be running in administrative mode to do this', ERROR);
     return;
@@ -164,7 +161,7 @@ function ES:Backup(id) {
 # Highest / Lowest functions
 #################################################################################
 function ES:Highest(series) {
-  :Log(DEBUG, 'ES:Highest()');
+  :Log(DEBUG, 'ES:Highest(): ' + series);
   function fn(idx, d, v) {
     if (v > :GGet('METRICS.highest')) {
       :Log(DEBUG, 'found larger value: ' + v);
@@ -186,7 +183,7 @@ function ES:Highest(series) {
 }
 
 function ES:Lowest(series) {
-  :Log(DEBUG, 'ES:Lowest()');
+  :Log(DEBUG, 'ES:Lowest(): ' + series);
   function fn(idx, d, v) {
     if (v < :GGet('METRICS.lowest')) {
       :Log(DEBUG, 'found smaller value: ' + v);
@@ -212,7 +209,7 @@ function ES:Lowest(series) {
 #################################################################################
 function ES:Usage() {
   function m(series) {
-    :Log(DEBUG, 'm()');
+    :Log(DEBUG, 'm(): ' + series);
     :Assert(series != null, 'series is unexpectedly null');
     :Log(DEBUG, series);
     series = ES:Load(series);
