@@ -64,6 +64,13 @@ public class Utils {
       throw new Exception("invalid namespace: " + symbol);
     }
   }
+  
+  public static void validateRootNameSpaceWrite(String symbol) throws Exception {
+    if (symbol.charAt(0) == ':') {
+      throw new Exception("cannot write to the root namespace: " + symbol);
+    }
+  }
+  
   public static float findDYGridLines(int nGridLines, MinMaxPair pair) throws Exception {
     int idx = 0;
     while (pair.getMinValue() + nGridLines * rgnum[idx] < pair.getMaxValue() && idx < rgnum.length) {

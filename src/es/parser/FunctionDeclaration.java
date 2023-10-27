@@ -3,12 +3,15 @@ package es.parser;
 import java.util.ArrayList;
 import java.util.List;
 
+import es.core.Utils;
+
 public class FunctionDeclaration extends Statement {
   private String name;
   private List<String> params = new ArrayList<>();
   private List<Statement> statements = new ArrayList<>();
   
-  public FunctionDeclaration(String name) {
+  public FunctionDeclaration(String name) throws Exception {
+    Utils.validateRootNameSpaceWrite(name);
     this.name = name;
   }
   
