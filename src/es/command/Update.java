@@ -13,7 +13,7 @@ import es.parser.SymbolTable;
 public class Update implements Command {
   @Override
   public String getSummary() {
-    return "void    ES:Update(Series series, String date[, Object value]);";
+    return "void    " + Utils.ROOT_NAMESPACE + "Update(Series series, String date[, Object value]);";
   }
   
   @Override

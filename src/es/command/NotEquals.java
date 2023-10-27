@@ -11,7 +11,7 @@ import es.parser.SymbolTable;
 public class NotEquals implements Command {
   @Override
   public String getSummary() {
-    return "Object  ES:NotEquals(Object object, Object Object);";
+    return "Object  " + Utils.ROOT_NAMESPACE + "NotEquals(Object object, Object Object);";
   }
   
   @Override

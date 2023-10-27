@@ -12,7 +12,7 @@ import es.parser.SymbolTable;
 public class Min implements Command {
   @Override
   public String getSummary() {
-    return "Object  ES:Min(Object object1, Object object2);";
+    return "Object  " + Utils.ROOT_NAMESPACE + "Min(Object object1, Object object2);";
   }
   
   @Override

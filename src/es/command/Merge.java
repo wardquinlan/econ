@@ -13,7 +13,7 @@ import es.parser.SymbolTable;
 public class Merge implements Command {
   @Override
   public String getSummary() {
-    return "void    ES:Merge(Series series, String options...);";
+    return "void    " + Utils.ROOT_NAMESPACE + "Merge(Series series, String options...);";
   }
   
   @Override

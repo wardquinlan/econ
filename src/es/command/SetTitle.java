@@ -11,7 +11,7 @@ import es.parser.SymbolTable;
 public class SetTitle implements Command {
   @Override
   public String getSummary() {
-    return "void    ES:SetTitle(Series series, String title);";
+    return "void    " + Utils.ROOT_NAMESPACE + "SetTitle(Series series, String title);";
   }
   
   @Override

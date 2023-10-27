@@ -13,7 +13,7 @@ import es.parser.SymbolTable;
 public class SetLogLevel implements Command {
   @Override
   public String getSummary() {
-    return "void    ES:SetLogLevel([int level]);";
+    return "void    " + Utils.ROOT_NAMESPACE + "SetLogLevel([int level]);";
   }
   
   @Override

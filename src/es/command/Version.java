@@ -11,7 +11,7 @@ import es.parser.SymbolTable;
 public class Version implements Command {
   @Override
   public String getSummary() {
-    return "String  ES:Version();";
+    return "String  " + Utils.ROOT_NAMESPACE + "Version();";
   }
   
   @Override

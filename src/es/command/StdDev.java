@@ -12,7 +12,7 @@ import es.parser.SymbolTable;
 public class StdDev implements Command {
   @Override
   public String getSummary() {
-    return "Series  ES:Stdev(Series series, int n);";
+    return "Series  " + Utils.ROOT_NAMESPACE + "Stdev(Series series, int n);";
   }
   
   @Override

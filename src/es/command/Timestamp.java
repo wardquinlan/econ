@@ -11,7 +11,7 @@ import es.parser.SymbolTable;
 public class Timestamp implements Command {
   @Override
   public String getSummary() {
-    return "String  ES:Timestamp();";
+    return "String  " + Utils.ROOT_NAMESPACE + "Timestamp();";
   }
   
   @Override

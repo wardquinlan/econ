@@ -4,12 +4,13 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+import es.core.Utils;
 import es.parser.SymbolTable;
 
 public class Printf implements Command {
   @Override
   public String getSummary() {
-    return "void    ES:Printf(String format[, object...]);";
+    return "void    " + Utils.ROOT_NAMESPACE + "Printf(String format[, object...]);";
   }
   
   @Override

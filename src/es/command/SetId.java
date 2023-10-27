@@ -12,7 +12,7 @@ import es.parser.SymbolTable;
 public class SetId implements Command {
   @Override
   public String getSummary() {
-    return "void    ES:SetId(Series series, int id);";
+    return "void    " + Utils.ROOT_NAMESPACE + "SetId(Series series, int id);";
   }
   
   @Override

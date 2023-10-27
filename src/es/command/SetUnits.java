@@ -11,7 +11,7 @@ import es.parser.SymbolTable;
 public class SetUnits implements Command {
   @Override
   public String getSummary() {
-    return "void    ES:SetUnits(String series, String units);";
+    return "void    " + Utils.ROOT_NAMESPACE + "SetUnits(String series, String units);";
   }
   
   @Override

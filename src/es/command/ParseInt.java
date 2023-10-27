@@ -10,7 +10,7 @@ import es.parser.SymbolTable;
 public class ParseInt implements Command {
   @Override
   public String getSummary() {
-    return "void    ES:ParseInt(String value);";
+    return "void    " + Utils.ROOT_NAMESPACE + "ParseInt(String value);";
   }
   
   @Override

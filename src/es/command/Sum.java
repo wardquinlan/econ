@@ -12,7 +12,7 @@ import es.parser.SymbolTable;
 public class Sum implements Command {
   @Override
   public String getSummary() {
-    return "Series  ES:Sum(Series series, int n);";
+    return "Series  " + Utils.ROOT_NAMESPACE + "Sum(Series series, int n);";
   }
   
   @Override

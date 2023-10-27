@@ -11,7 +11,7 @@ import es.parser.SymbolTable;
 public class Today implements Command {
   @Override
   public String getSummary() {
-    return "String  ES:Today();";
+    return "String  " + Utils.ROOT_NAMESPACE + "Today();";
   }
   
   @Override

@@ -11,7 +11,7 @@ import es.parser.SymbolTable;
 public class SetNotes implements Command {
   @Override
   public String getSummary() {
-    return "void    ES:SetNotes(Series series, String notes);";
+    return "void    " + Utils.ROOT_NAMESPACE + "SetNotes(Series series, String notes);";
   }
   
   @Override

@@ -14,7 +14,7 @@ import es.parser.SymbolTable;
 public class Status implements Command {
   @Override
   public String getSummary() {
-    return "void    ES:Status();";
+    return "void    " + Utils.ROOT_NAMESPACE + "Status();";
   }
   
   @Override
