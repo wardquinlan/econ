@@ -16,7 +16,7 @@ public class Cat implements Command {
   
   @Override
   public String getSummary() {
-    return "void    ES:Cat([function fn]);";
+    return "void    " + Utils.ROOT_NAMESPACE + "Cat([function fn]);";
   }
   
   @Override

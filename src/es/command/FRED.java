@@ -30,7 +30,7 @@ public class FRED implements Command {
   
   @Override
   public String getSummary() {
-    return "Series  ES:Fred(String sourceId[, String units]);";
+    return "Series  " + Utils.ROOT_NAMESPACE + "Fred(String sourceId[, String units]);";
   }
   
   @Override

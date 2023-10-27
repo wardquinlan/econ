@@ -13,7 +13,7 @@ import es.parser.SymbolTable;
 public class Delete implements Command {
   @Override
   public String getSummary() {
-    return "void    ES:Delete(Series series, String date);";
+    return "void    " + Utils.ROOT_NAMESPACE + "Delete(Series series, String date);";
   }
   
   @Override

@@ -10,7 +10,7 @@ import es.parser.SymbolTable;
 public class Exit implements Command {
   @Override
   public String getSummary() {
-    return "void    ES:Exit([int code]);";
+    return "void    " + Utils.ROOT_NAMESPACE + "Exit([int code]);";
   }
   
   @Override

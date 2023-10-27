@@ -12,7 +12,7 @@ import es.parser.SymbolTable;
 public class DlgConfirm implements Command {
   @Override
   public String getSummary() {
-    return "boolean ES:DlgConfirm([String prompt]);";
+    return "boolean " + Utils.ROOT_NAMESPACE + "DlgConfirm([String prompt]);";
   }
   
   @Override

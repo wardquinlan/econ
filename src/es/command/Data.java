@@ -17,7 +17,7 @@ public class Data implements Command {
   
   @Override
   public String getSummary() {
-    return "void    ES:Data(Object object[, function fn]);";
+    return "void    " + Utils.ROOT_NAMESPACE + "Data(Object object[, function fn]);";
   }
   
   @Override

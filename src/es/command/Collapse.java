@@ -11,7 +11,7 @@ import es.parser.SymbolTable;
 public class Collapse implements Command {
   @Override
   public String getSummary() {
-    return "Series  ES:Collapse([Series series, ...]);";
+    return "Series  " + Utils.ROOT_NAMESPACE + "Collapse([Series series, ...]);";
   }
   
   @Override

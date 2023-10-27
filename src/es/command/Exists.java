@@ -11,7 +11,7 @@ import es.parser.SymbolTable;
 public class Exists implements Command {
   @Override
   public String getSummary() {
-    return "boolean ES:Exists(Object object);";
+    return "boolean " + Utils.ROOT_NAMESPACE + "Exists(Object object);";
   }
 
   @Override

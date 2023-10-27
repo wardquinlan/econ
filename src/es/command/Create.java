@@ -11,7 +11,7 @@ import es.parser.SymbolTable;
 public class Create implements Command {
   @Override
   public String getSummary() {
-    return "Series  ES:Create(String name[, int type]);";
+    return "Series  " + Utils.ROOT_NAMESPACE + "Create(String name[, int type]);";
   }
   
   @Override

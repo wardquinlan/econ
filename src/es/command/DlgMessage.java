@@ -12,7 +12,7 @@ import es.parser.SymbolTable;
 public class DlgMessage implements Command {
   @Override
   public String getSummary() {
-    return "void    ES:DlgMessage(String message[, int messageType]);";
+    return "void    " + Utils.ROOT_NAMESPACE + "DlgMessage(String message[, int messageType]);";
   }
   
   @Override
