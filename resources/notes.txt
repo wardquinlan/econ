@@ -25,5 +25,6 @@ includes
 Can simply do at the Evaluation level, not at the Tokenizer level.  We don't have to worry about if () because there is no change of scope in an if statement.  It has to be done at evaluation because the include might be an expression, which has to be evaluated.  In a way, then, it is a bit like calling a function.
 
 Also support :GetEnv(name);
+Also support :GetProperty(name);
 
 
