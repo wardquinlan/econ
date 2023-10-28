@@ -23,6 +23,12 @@ The catch is a bit like a function call in that it takes a single 'parameter'. A
 includes
 
 Can simply do at the Evaluation level, not at the Tokenizer level.  We don't have to worry about if () because there is no change of scope in an if statement.  It has to be done at evaluation because the include might be an expression, which has to be evaluated.  In a way, then, it is a bit like calling a function.
+=> basically, at evaluation time, we have to evaluate the include expression so we know what to include, then
+we have to instantiate a new parser/tokenizer/evaluator, passing the current symbol table, and then run the evaluation.
+=> I also thought maybe the parser could call the evaluator just on the include expression.  But that won't work.  It might
+be a string that was evaluated in previous code.
+=> So -> all of this has to be done at evaluation time
+=> Evaluator just loads and evaluates the include using the *current* symbol table, not a child symbol table.  A bit like an IF statement
 
 Also support :GetEnv(name);
 Also support :GetProperty(name);
