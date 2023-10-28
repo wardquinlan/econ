@@ -36,6 +36,9 @@ public class FunctionCall implements Evaluable {
     }
     FunctionCaller functionCaller = new FunctionCaller();
     Object result = functionCaller.invokeFunction(name, symbolTable, file, params2);
+    if (result instanceof Return) {
+      result = ((Return) result).getValue();
+    }
     return result;
   }
   

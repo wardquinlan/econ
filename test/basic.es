@@ -1,12 +1,6 @@
 function f() {
-  if (false) {
-  } else {
-    print('error');
-    return;
-  }
+  return 7;
 }
 
-a = f();
-print(a);
-return a;
-
+f();
+#:Print(f());

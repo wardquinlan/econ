@@ -23,5 +23,6 @@ include 'T1.es';
 include 'T2.es';
 include 'T3.es';
 include 'T4.es';
+include 'returns.es';
 
 print("*** TESTS COMPLETED SUCCESSFULLY ***");

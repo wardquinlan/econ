@@ -13,7 +13,7 @@ public class Evaluator {
     while (true) {
       Object object = statement.evaluate(symbolTable);
       if (object instanceof Return) {
-        return ((Return) object).getValue();
+        return object;
       }
       if (!itr.hasNext()) {
         break;

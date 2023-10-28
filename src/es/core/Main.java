@@ -22,6 +22,7 @@ import org.apache.commons.logging.LogFactory;
 
 import es.parser.Evaluator;
 import es.parser.Parser;
+import es.parser.Return;
 import es.parser.Statement;
 import es.parser.SymbolTable;
 import es.parser.Token;
@@ -40,12 +41,17 @@ public class Main {
         Evaluator e = new Evaluator(symbolTable);
         Statement statement = itr2.next();
         Object result = e.evaluate(statement, itr2);
-        if (result != null) {
-          if (result instanceof Integer) {
-            log.info("exiting with status code " + (Integer) result);
-            System.exit((Integer) result);
+        if (result instanceof Return) {
+          Return ret = (Return) result;
+          if (ret.getValue() == null) {
+            log.debug("exiting with status code 0");
+            System.exit(0);
           }
-          log.info("evaluator returned non-integral result (" + result + "); ignoring");
+          if (ret.getValue() instanceof Integer) {
+            System.exit((Integer) ret.getValue());
+          }
+          log.warn("evaluator returned with non-integer result; exiting with status code 0: " + ret.getValue());
+          System.exit(0);
         }
       }
     }
