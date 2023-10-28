@@ -1,7 +1,5 @@
 If we overflow gridline array, we get an array out of bounds.  Should probably fix this.
 
-String getSeriesType(Series series); # returns float, date, boolean
-
 We might also want to add a new column to TIME_SERIES:
 
 LAST_MERGED TIMESTAMP;
@@ -15,4 +13,10 @@ X rewrite assert() and exitif() as es functions (?)
   => risky b.c. of use in test scripts.  I removed exitif().
 
 Think about reintroducing ReturnResult. (For now, I only return int's from top level.)  Not sure which is best.
+=> I already have Return.  I think I can just return Return from Evaluator.evaluate().  And then in Main, see if I get a Return or another object.
+=> shouldn't in theory be that big a deal
+
+try / catch
+
+The catch is a bit like a function call in that it takes a single 'parameter'. And it should have its own child symbol table.
 
