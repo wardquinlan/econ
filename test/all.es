@@ -1,5 +1,7 @@
 print('*** RUNNING ALL TESTS ***');
 
+include 'aliases.es';
+:SetLogLevel(DEBUG);
 include 'plus.es';
 include 'minus.es';
 include 'mult.es';
