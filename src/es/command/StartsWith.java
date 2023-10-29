@@ -7,22 +7,22 @@ import java.util.List;
 import es.core.Utils;
 import es.parser.SymbolTable;
 
-public class EndsWith implements Command {
+public class StartsWith implements Command {
   @Override
   public String getSummary() {
-    return "boolean " + Utils.ROOT_NAMESPACE + "EndsWith(String string, String end);";
+    return "boolean " + Utils.ROOT_NAMESPACE + "StartsWith(String string, String start);";
   }
   
   @Override
   public List<String> getDetails() {
     List<String> list = new ArrayList<>();
-    list.add("Returns true if 'string' ends with 'end'");
+    list.add("Returns true if 'string' starts with 'start'");
     return list;
   }
   
   @Override
   public String getReturns() {
-    return "true if 'string' ends with 'end'; otherwise false";
+    return "true if 'string' starts with 'starts'; otherwise false";
   }
   
   @Override
@@ -35,7 +35,7 @@ public class EndsWith implements Command {
       throw new Exception(params.get(1) + " is not a String");
     }
     String string = (String) params.get(0);
-    String end = (String) params.get(1);
-    return string.endsWith(end);
+    String start = (String) params.get(1);
+    return string.startsWith(start);
   }
 }

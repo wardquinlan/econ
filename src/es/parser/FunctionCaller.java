@@ -74,6 +74,7 @@ import es.command.SetSourceId;
 import es.command.SetTitle;
 import es.command.SetUnits;
 import es.command.SetUnitsShort;
+import es.command.StartsWith;
 import es.command.GetSize;
 import es.command.Status;
 import es.command.StdDev;
@@ -166,6 +167,7 @@ public class FunctionCaller {
     commandMap.put(":GetSeriesType", new GetSeriesType());
     commandMap.put(":GetEnv", new GetEnv());
     commandMap.put(":EndsWith", new EndsWith());
+    commandMap.put(":StartsWith", new StartsWith());
     // I can't think of a way to use this to conditionally include files.  If we create an 'if' block, then all the constants (or whatever) are in the
     // scope of the if block.  So this doesn't work.
     
