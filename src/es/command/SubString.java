@@ -10,32 +10,39 @@ import es.parser.SymbolTable;
 public class SubString implements Command {
   @Override
   public String getSummary() {
-    return "boolean " + Utils.ROOT_NAMESPACE + "EndsWith(String string, String end);";
+    return "String  " + Utils.ROOT_NAMESPACE + "SubString(String string, int beginIndex[, int endIndex]);";
   }
   
   @Override
   public List<String> getDetails() {
     List<String> list = new ArrayList<>();
-    list.add("Returns true if 'string' ends with 'end'");
+    list.add("Returns the substring of 'string', beginning at 'beginIndex', and optionally ending at endIndex - 1");
     return list;
   }
   
   @Override
   public String getReturns() {
-    return "true if 'string' ends with 'end'; otherwise false";
+    return "Substring of 'string";
   }
   
   @Override
   public Object run(SymbolTable symbolTable, File file, List<Object> params) throws Exception {
-    Utils.validate(params, 2, 2);
+    Utils.validate(params, 2, 3);
     if (!(params.get(0) instanceof String)) {
       throw new Exception(params.get(0) + " is not a String");
     }
-    if (!(params.get(1) instanceof String)) {
-      throw new Exception(params.get(1) + " is not a String");
-    }
     String string = (String) params.get(0);
-    String end = (String) params.get(1);
-    return string.endsWith(end);
+    if (!(params.get(1) instanceof Integer)) {
+      throw new Exception(params.get(1) + " is not an int");
+    }
+    int beginIndex = (Integer) params.get(1);
+    int endIndex = string.length();
+    if (params.size() == 3) {
+      if (!(params.get(2) instanceof Integer)) {
+        throw new Exception(params.get(2) + " is not an int");
+      }
+      endIndex = (Integer) params.get(2);
+    }
+    return string.substring(beginIndex, endIndex);
   }
 }
