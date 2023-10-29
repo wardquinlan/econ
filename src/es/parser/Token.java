@@ -40,6 +40,8 @@ public class Token {
   public static final int ELSE     = 34; // else
   public static final int THROW    = 35; // throw
   public static final int NULL     = 36; // null
+  public static final int TRY      = 37; // try
+  public static final int CATCH    = 38; // catch
   
   public static Map<Integer, String> map = new HashMap<Integer, String>();
   static {
@@ -76,6 +78,8 @@ public class Token {
     map.put(IF,      "IF");
     map.put(ELSE,    "ELSE");
     map.put(NULL,    "NULL");
+    map.put(TRY,     "TRY");
+    map.put(CATCH,   " CATCH");
   }
   
   private int type;

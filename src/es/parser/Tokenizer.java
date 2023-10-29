@@ -80,6 +80,10 @@ public class Tokenizer {
             tk = new Token(Token.ELSE);
           } else if (sb.toString().equals("throw")) {
             tk = new Token(Token.THROW);
+          } else if (sb.toString().equals("try")) {
+            tk = new Token(Token.TRY);
+          } else if (sb.toString().equals("catch")) {
+            tk = new Token(Token.CATCH);
           } else if (sb.toString().equals("return")) {
             tk = new Token(Token.RETURN);
           } else if (sb.toString().equals("and")) {
