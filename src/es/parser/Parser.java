@@ -50,6 +50,8 @@ public class Parser {
       list.add(parseThrow(tk, itr));
     } else if (tk.getType() == Token.IF) {
       list.add(parseIf(tk, itr));
+    } else if (tk.getType() == Token.TRY) {
+      list.add(parseTry(tk, itr));
     } else {
       list.add(parseSimpleStatement(tk, itr));
     }
@@ -70,6 +72,35 @@ public class Parser {
     } else {
       parseStatement(list, tk, itr);
     }
+  }
+  
+  private Statement parseTry(Token tk, ESIterator<Token> itr) throws Exception {
+    if (!itr.hasNext()) {
+      throw new Exception("syntax error: missing try opening brace");
+    }
+    tk = itr.next();
+    if (tk.getType() != Token.LBRACE) {
+      throw new Exception("syntax error: missing try opening brace");
+    }
+    List<Statement> listTry = new ArrayList<>();
+    parseBlock(listTry, tk, itr);
+    if (!itr.hasNext()) {
+      throw new Exception("syntax error: missing catch clause");
+    }
+    tk = itr.next();
+    if (tk.getType() != Token.CATCH) {
+      throw new Exception("syntax error: missing catch clause");
+    }
+    if (!itr.hasNext()) {
+      throw new Exception("syntax error: missing catch opening brace");
+    }
+    tk = itr.next();
+    if (tk.getType() != Token.LBRACE) {
+      throw new Exception("syntax error: missing catch opening brace");
+    }
+    List<Statement> listCatch = new ArrayList<>();
+    parseBlock(listCatch, tk, itr);
+    return null;
   }
   
   private Statement parseIf(Token tk, ESIterator<Token> itr) throws Exception {
