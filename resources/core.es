@@ -258,10 +258,25 @@ function ES:Defaults() {
 # StartsWith / EndsWith functions
 #################################################################################
 function ES:StartsWith(string, prefix) {
+  :Log(DEBUG, 'ES:StartsWith(): ' + string + ':' + prefix);
   if (:GetLength(prefix) > :GetLength(string)) {
     return false;
   }
-  :Log(DEBUG, 'substring = ' + :SubString(string, 0, :GetLength(prefix)));
-  return (:SubString(string, 0, :GetLength(prefix)) == prefix);
+  ss = :SubString(string, 0, :GetLength(prefix));
+  :Log(DEBUG, 'substring = ' + ss);
+  return ss == prefix;
 }
 
+function ES:EndsWith(string, suffix) {
+  :Log(DEBUG, 'ES:EndsWith(): ' + string + ':' + suffix);
+  if (:GetLength(suffix) > :GetLength(string)) {
+    return false;
+  }
+  if (:GetLength(suffix) == 0) {
+    :Log(DEBUG, 'suffix length = 0, returning true');
+    return true;
+  }
+  ss = :SubString(string, :GetLength(string) - :GetLength(suffix), :GetLength(string));
+  :Log(DEBUG, 'substring = ' + ss);
+  return ss == suffix;
+}
