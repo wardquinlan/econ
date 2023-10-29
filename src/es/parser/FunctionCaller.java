@@ -21,7 +21,7 @@ import es.command.DlgInput;
 import es.command.DlgMessage;
 import es.command.Drop;
 import es.command.Ds;
-import es.command.EndsWith;
+import es.command.SubString;
 import es.command.Equals;
 import es.command.Exists;
 import es.command.Exit;
@@ -166,7 +166,7 @@ public class FunctionCaller {
     commandMap.put(":SetLogLevel", new SetLogLevel());
     commandMap.put(":GetSeriesType", new GetSeriesType());
     commandMap.put(":GetEnv", new GetEnv());
-    commandMap.put(":SubString", new EndsWith());
+    commandMap.put(":SubString", new SubString());
     commandMap.put(":GetLength", new GetLength());
     // I can't think of a way to use this to conditionally include files.  If we create an 'if' block, then all the constants (or whatever) are in the
     // scope of the if block.  So this doesn't work.

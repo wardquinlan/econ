@@ -7,7 +7,7 @@ import java.util.List;
 import es.core.Utils;
 import es.parser.SymbolTable;
 
-public class EndsWith implements Command {
+public class SubString implements Command {
   @Override
   public String getSummary() {
     return "boolean " + Utils.ROOT_NAMESPACE + "EndsWith(String string, String end);";
