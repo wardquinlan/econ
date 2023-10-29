@@ -22,7 +22,7 @@ public class SubString implements Command {
   
   @Override
   public String getReturns() {
-    return "Substring of 'string";
+    return "Substring of 'string'";
   }
   
   @Override
