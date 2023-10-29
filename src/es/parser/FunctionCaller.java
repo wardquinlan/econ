@@ -201,7 +201,11 @@ public class FunctionCaller {
   public Object invokeFunction(String funcName, SymbolTable symbolTable, File file, List<Object> params) throws Exception {
     if (funcName.equals("help") || funcName.equals(Utils.ROOT_NAMESPACE + "Help")) {
       if (params.size() == 1 && params.get(0) instanceof String) {
-        Command command = commandMap.get(params.get(0));
+        String cmd = (String) params.get(0);
+        if (!cmd.startsWith(":")) {
+          cmd = ":" + cmd;
+        }
+        Command command = commandMap.get(cmd);
         if (command != null) {
           System.out.println(command.getSummary());
           System.out.println();
