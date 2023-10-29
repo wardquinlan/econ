@@ -92,6 +92,28 @@ public class Parser {
       throw new Exception("syntax error: missing catch clause");
     }
     if (!itr.hasNext()) {
+      throw new Exception("syntax error: missing exception");
+    }
+    tk = itr.next();
+    if (tk.getType() != Token.LPAREN) {
+      throw new Exception("syntax error: missing exception");
+    }
+    if (!itr.hasNext()) {
+      throw new Exception("syntax error: missing exception");
+    }
+    tk = itr.next();
+    if (tk.getType() != Token.SYMBOL) {
+      throw new Exception("syntax error: invalid exception");
+    }
+    String ex = (String) tk.getValue();
+    if (!itr.hasNext()) {
+      throw new Exception("syntax error: invalid exception");
+    }
+    tk = itr.next();
+    if (tk.getType() != Token.RPAREN) {
+      throw new Exception("syntax error: invalid exception");
+    }
+    if (!itr.hasNext()) {
       throw new Exception("syntax error: missing catch opening brace");
     }
     tk = itr.next();
