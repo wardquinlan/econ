@@ -1,6 +1,5 @@
-function f() {
-  return 7;
+try {
+  throw 'rats';
+} catch (ex) {
+  print(ex);
 }
-
-f();
-#:Print(f());

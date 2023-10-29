@@ -51,7 +51,10 @@ public class Parser {
     } else if (tk.getType() == Token.IF) {
       list.add(parseIf(tk, itr));
     } else if (tk.getType() == Token.TRY) {
-      list.add(parseTry(tk, itr));
+      Statement st = parseTry(tk, itr);
+      System.out.println(st);
+      list.add(st);
+      //list.add(parseTry(tk, itr));
     } else {
       list.add(parseSimpleStatement(tk, itr));
     }
@@ -122,7 +125,10 @@ public class Parser {
     }
     List<Statement> listCatch = new ArrayList<>();
     parseBlock(listCatch, tk, itr);
-    return null;
+    TryCatchStatement statement = new TryCatchStatement(ex);
+    statement.getTryBody().addAll(listTry);
+    statement.getCatchBody().addAll(listCatch);
+    return statement;
   }
   
   private Statement parseIf(Token tk, ESIterator<Token> itr) throws Exception {
