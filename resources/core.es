@@ -253,3 +253,15 @@ function ES:Defaults() {
   :Print('defaults.series.linecolor2 = Color');
   :Print('defaults.series.linecolor3 = Color');
 }
+
+#################################################################################
+# StartsWith / EndsWith functions
+#################################################################################
+function ES:StartsWith(string, prefix) {
+  if (:GetLength(prefix) > :GetLength(string)) {
+    return false;
+  }
+  :Log(DEBUG, 'substring = ' + :SubString(string, 0, :GetLength(prefix)));
+  return (:SubString(string, 0, :GetLength(prefix)) == prefix);
+}
+
