@@ -16,7 +16,7 @@ public class SubString implements Command {
   @Override
   public List<String> getDetails() {
     List<String> list = new ArrayList<>();
-    list.add("Returns the substring of 'string', beginning at 'beginIndex', and optionally ending at endIndex - 1");
+    list.add("Returns the substring of 'string', beginning at 'beginIndex', and optionally ending at 'endIndex' - 1");
     return list;
   }
   
