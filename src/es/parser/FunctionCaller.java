@@ -1,7 +1,6 @@
 package es.parser;
 
 import java.io.File;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
@@ -22,6 +21,7 @@ import es.command.DlgInput;
 import es.command.DlgMessage;
 import es.command.Drop;
 import es.command.Ds;
+import es.command.EndsWith;
 import es.command.Equals;
 import es.command.Exists;
 import es.command.Exit;
@@ -165,6 +165,7 @@ public class FunctionCaller {
     commandMap.put(":SetLogLevel", new SetLogLevel());
     commandMap.put(":GetSeriesType", new GetSeriesType());
     commandMap.put(":GetEnv", new GetEnv());
+    commandMap.put(":EndsWith", new EndsWith());
     // I can't think of a way to use this to conditionally include files.  If we create an 'if' block, then all the constants (or whatever) are in the
     // scope of the if block.  So this doesn't work.
     
