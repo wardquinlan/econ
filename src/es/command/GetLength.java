@@ -7,7 +7,7 @@ import java.util.List;
 import es.core.Utils;
 import es.parser.SymbolTable;
 
-public class StartsWith implements Command {
+public class GetLength implements Command {
   @Override
   public String getSummary() {
     return "boolean " + Utils.ROOT_NAMESPACE + "StartsWith(String string, String start);";
