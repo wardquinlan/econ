@@ -166,8 +166,8 @@ public class FunctionCaller {
     commandMap.put(":SetLogLevel", new SetLogLevel());
     commandMap.put(":GetSeriesType", new GetSeriesType());
     commandMap.put(":GetEnv", new GetEnv());
-    commandMap.put(":EndsWith", new EndsWith());
-    commandMap.put(":StartsWith", new GetLength());
+    commandMap.put(":SubString", new EndsWith());
+    commandMap.put(":GetLength", new GetLength());
     // I can't think of a way to use this to conditionally include files.  If we create an 'if' block, then all the constants (or whatever) are in the
     // scope of the if block.  So this doesn't work.
     
