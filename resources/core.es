@@ -84,7 +84,7 @@ function ES:ResetId(id, idNew) {
   :Log(DEBUG, 'ES:ResetId(' + id + ', ' + idNew + ')');
   try {
     if (!:IsAdmin()) {
-      throw 'you must be running in administrative mode to reset id\'s';
+      throw 'you must be running in administrative mode to reset ids';
     }
     if (:GetType(id) != 'int' or :GetType(idNew) != 'int') {
       throw 'id and idNew must be int\'s';
@@ -92,7 +92,7 @@ function ES:ResetId(id, idNew) {
     if (ES:Exists(idNew)) {
       throw 'id already exists: ' + idNew;
     } 
-    S = ES:Load(id);
+    S = :Load(id);
     if (S == null) {
       throw 'unable to load id: ' + id;
     }
@@ -105,19 +105,27 @@ function ES:ResetId(id, idNew) {
 }
 
 function ES:ResetName(name, nameNew) {
-  if (!:IsAdmin()) {
-    throw 'you must be running in administrative mode to reset name\'s';
+  :Log(DEBUG, 'ES:ResetName(' + name + ', ' + nameNew + ')');
+  try {
+    if (!:IsAdmin()) {
+      throw 'you must be running in administrative mode to reset names';
+    }
+    if (:GetType(name) != 'String' or :GetType(nameNew) != 'String') {
+      throw 'name and nameNew must be Strings';
+    }
+    if (ES:Exists(nameNew)) {
+      throw 'series already exists: ' + nameNew;
+    } 
+    S = :Load(name);
+    if (S == null) {
+      throw 'unable to load name: ' + name;
+    }
+    :SetName(S, nameNew);
+    :Drop(:GetId(S));
+    :Save(S);
+  } catch(ex) {
+    :DlgMessage('Unable to Reset Name: ' + ex, ERROR);
   }
-  if (:GetType(name) != 'String' or :GetType(nameNew) != 'String') {
-    throw 'usage: ES:ResetName(String name, String nameNew);';
-  }
-  if (ES:Exists(nameNew)) {
-    throw 'series already exists: ' + nameNew;
-  } 
-  S = ES:Load(name);
-  :SetName(S, nameNew);
-  :Drop(:GetId(S));
-  :Save(S);
 }
 
 #################################################################################
