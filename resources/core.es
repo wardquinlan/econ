@@ -242,8 +242,7 @@ function ES:Lowest(object) {
 #################################################################################
 function ES:Usage() {
   function m(object) {
-    ES:Assert(series != null, 'series is unexpectedly null');
-    :Log(DEBUG, object);
+    ES:Assert(object != null, 'object is unexpectedly null');
     series = ES:Load(object);
     ES:Assert(series != null, 'series is unexpectedly null');
     if (:GetId(series) < ES:BACKUP_BASE) {
