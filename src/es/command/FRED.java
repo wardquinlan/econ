@@ -13,6 +13,8 @@ import javax.net.ssl.HttpsURLConnection;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NamedNodeMap;
@@ -27,6 +29,8 @@ import es.parser.SymbolTable;
 public class FRED implements Command {
   private String BASEURL;
   private String APIKEY;
+
+  private static final Log log = LogFactory.getFactory().getInstance(FRED.class);
   
   @Override
   public String getSummary() {
@@ -83,8 +87,13 @@ public class FRED implements Command {
     
     TimeSeries timeSeries = new TimeSeries(TimeSeries.FLOAT);
     timeSeries.setSource("FRED");
-    meta(timeSeries, sourceId);
-    data(timeSeries, sourceId, units);
+    try {
+      meta(timeSeries, sourceId);
+      data(timeSeries, sourceId, units);
+    } catch(Exception ex) {
+      log.warn("could not download meta / data from FRED, returning null: " + ex.getMessage());
+      return null;
+    }
     return timeSeries;
   }
 
