@@ -5,7 +5,7 @@ const ES:BACKUP_EXT = '.BAK';
 # Load functions
 #################################################################################
 function ES:Load(series) {
-  :Log(DEBUG, 'ES:Load(): ' + series);
+  :Log(DEBUG, 'ES:Load(' + series + ')');
   if (series == null) {
     :Log(DEBUG, 'series is null, returning null');
     return null;
@@ -39,7 +39,7 @@ function ES:Load(series) {
 }
 
 function ES:AutoLoad(series) {
-  :Log(DEBUG, 'ES:AutoLoad(): ' + series);
+  :Log(DEBUG, 'ES:AutoLoad(' + series + ')');
   series = ES:Load(series);
   # don't load the backups...
   if (:GetId(series) < ES:BACKUP_BASE) {
@@ -54,7 +54,7 @@ function ES:AutoLoad(series) {
 # Update functions
 #################################################################################
 function ES:Update(series) {
-  :Log(DEBUG, 'ES:Update(): ' + series);
+  :Log(DEBUG, 'ES:Update(' + series + ')');
   series = ES:Load(series);
   if (:GetSource(series) == 'FRED' and :GetId(series) < ES:BACKUP_BASE) {
     :Log(DEBUG, 'series is a candidate for update(s); proceeding');
@@ -111,7 +111,7 @@ function ES:ResetName(name, nameNew) {
 # Backup function
 #################################################################################
 function ES:Backup(id) {
-  :Log(DEBUG, 'ES:Backup(): ' + id);
+  :Log(DEBUG, 'ES:Backup(' + id + ')');
   if (!:IsAdmin()) {
     :DlgMessage('You must be running in administrative mode to do this', ERROR);
     return;
