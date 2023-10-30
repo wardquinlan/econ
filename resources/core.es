@@ -161,8 +161,9 @@ function ES:Backup(id) {
 # Highest / Lowest functions
 #################################################################################
 function ES:Highest(series) {
-  :Log(DEBUG, 'ES:Highest(): ' + series);
+  :Log(DEBUG, 'ES:Highest(' + series + ')');
   function fn(idx, d, v) {
+    :Log(DEBUG, 'fn(' + idx + ', ' + d + ', ' + v + ')');
     if (v > :GGet('METRICS.highest')) {
       :Log(DEBUG, 'found larger value: ' + v);
       :GPut('METRICS.highest', v);
@@ -183,8 +184,9 @@ function ES:Highest(series) {
 }
 
 function ES:Lowest(series) {
-  :Log(DEBUG, 'ES:Lowest(): ' + series);
+  :Log(DEBUG, 'ES:Lowest(' + series + ')');
   function fn(idx, d, v) {
+    :Log(DEBUG, 'fn(' + idx + ', ' + d + ', ' + v + ')');
     if (v < :GGet('METRICS.lowest')) {
       :Log(DEBUG, 'found smaller value: ' + v);
       :GPut('METRICS.lowest', v);
@@ -209,7 +211,7 @@ function ES:Lowest(series) {
 #################################################################################
 function ES:Usage() {
   function m(series) {
-    :Log(DEBUG, 'm(): ' + series);
+    :Log(DEBUG, 'm(' + series + ')');
     :Assert(series != null, 'series is unexpectedly null');
     :Log(DEBUG, series);
     series = ES:Load(series);
