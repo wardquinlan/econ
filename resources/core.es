@@ -81,19 +81,24 @@ function ES:UpdateAll() {
 # Reset functions
 #################################################################################
 function ES:ResetId(id, idNew) {
-  if (!:IsAdmin()) {
-    throw 'you must be running in administrative mode to reset id\'s';
+  :Log(DEBUG, 'ES:ResetId(' + id + ', ' + idNew + ')');
+  try {
+    if (!:IsAdmin()) {
+      throw 'you must be running in administrative mode to reset id\'s';
+    }
+    if (:GetType(id) != 'int' or :GetType(idNew) != 'int') {
+      throw 'id and idNew must be int\'s';
+    }
+    if (ES:Exists(idNew)) {
+      throw 'id already exists: ' + idNew;
+    } 
+    S = ES:Load(id);
+    :SetId(S, idNew);
+    :Drop(id);
+    :Save(S);
+  } catch(ex) {
+    :DlgMessage('Unable to Reset ID: ' + ex, ERROR);
   }
-  if (:GetType(id) != 'int' or :GetType(idNew) != 'int') {
-    throw 'usage: ES:ResetId(int id, int idNew);';
-  }
-  if (ES:Exists(idNew)) {
-    throw 'series already exists: ' + idNew;
-  } 
-  S = ES:Load(id);
-  :SetId(S, idNew);
-  :Drop(id);
-  :Save(S);
 }
 
 function ES:ResetName(name, nameNew) {
