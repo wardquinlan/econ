@@ -12,7 +12,7 @@ import es.parser.SymbolTable;
 public class Iterate implements Command {
   @Override
   public String getSummary() {
-    return "void    " + Utils.ROOT_NAMESPACE + "Iterator(function fn[, Object arg1, ...]);";
+    return "void    " + Utils.ROOT_NAMESPACE + "Iterate(function fn[, Object arg1, ...]);";
   }
   
   @Override
