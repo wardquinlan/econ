@@ -4,8 +4,8 @@ const ES:BACKUP_EXT = '.BAK';
 #################################################################################
 # Load / Exist functions
 #################################################################################
-function ES:Load(series) {
-  :Log(DEBUG, 'ES:Load(' + series + ')');
+function ES:Load(series, fred) {
+  :Log(DEBUG, 'ES:Load(' + series + ', ' + fred + ')');
   if (series == null) {
     :Log(DEBUG, 'series is null, returning null');
     return null;
@@ -13,25 +13,37 @@ function ES:Load(series) {
   if (:GetType(series) == 'String') {
     if (ES:Exists(series)) {
       :Log(DEBUG, 'series exists in the datastore; loading');
-      return :Load(series);
+      L = :Load(series);
+      :Log(DEBUG, 'loaded series = ' + L);
+      return L;
     }
-    :Log(DEBUG, 'attempting to load series from FRED');
-    return :Fred(series);
+    if (fred != null and fred) {
+      :Log(DEBUG, 'attempting to load series from FRED');
+      F = :Fred(series);
+      :Log(DEBUG, 'downloaded series = ' + F);
+      return F;
+    } else {
+      :Log(DEBUG, 'fred flag not set, bypassing :Fred() call');
+    }
   }
   if (:GetType(series) == 'int') {
     if (ES:Exists(series)) {
       :Log(DEBUG, 'series exists in the datastore; loading');
-      return :Load(series);
+      L = :Load(series);
+      :Log(DEBUG, 'loaded series = ' + L);
+      return L;
     }
     :Log(DEBUG, 'series not found; returning null');
     return null; 
   }
   if (:GetType(series) == 'Series') {
     if (:GetId(series) != null and ES:Exists(:GetId(series))) {
-      :Log(DEBUG, 'series exists in the datastore; loading');
-      return :Load(:GetId(series));
+      :Log(DEBUG, 'series exists in the datastore; reloading');
+      L = :Load(:GetId(series));
+      :Log(DEBUG, 'reloaded series = ' + L);
+      return L;
     }
-    :Log(DEBUG, 'series does not exist in the datastore, returning series as is');
+    :Log(DEBUG, 'series does not exist in the datastore, returning series as is: ' + series);
     return series;
   }
   :Log(WARN, 'unable to find the series, returning null');
@@ -181,10 +193,9 @@ function ES:Backup(id) {
 #################################################################################
 # Highest / Lowest functions
 #################################################################################
-function ES:Highest(series) {
-  :Log(DEBUG, 'ES:Highest(' + series + ')');
+function ES:Highest(object) {
+  :Log(DEBUG, 'ES:Highest(' + object + ')');
   function fn(idx, d, v) {
-    :Log(DEBUG, 'fn(' + idx + ', ' + d + ', ' + v + ')');
     if (v > :GGet('METRICS.highest')) {
       :Log(DEBUG, 'found larger value: ' + v);
       :GPut('METRICS.highest', v);
@@ -192,7 +203,7 @@ function ES:Highest(series) {
   }
 
   :Log(DEBUG, 'loading series');
-  series = ES:Load(series);
+  series = ES:Load(object);
   if (series == null or :GetSize(series) == 0) {
     :Log(DEBUG, 'series is null or empty; returning null');
     return null;
@@ -204,10 +215,9 @@ function ES:Highest(series) {
   return :GGet('METRICS.highest');
 }
 
-function ES:Lowest(series) {
-  :Log(DEBUG, 'ES:Lowest(' + series + ')');
+function ES:Lowest(object) {
+  :Log(DEBUG, 'ES:Lowest(' + object + ')');
   function fn(idx, d, v) {
-    :Log(DEBUG, 'fn(' + idx + ', ' + d + ', ' + v + ')');
     if (v < :GGet('METRICS.lowest')) {
       :Log(DEBUG, 'found smaller value: ' + v);
       :GPut('METRICS.lowest', v);
@@ -215,7 +225,7 @@ function ES:Lowest(series) {
   }
 
   :Log(DEBUG, 'loading series');  
-  series = ES:Load(series);
+  series = ES:Load(object);
   if (series == null or :GetSize(series) == 0) {
     :Log(DEBUG, 'series is null or empty; returning null');
     return null;
@@ -231,11 +241,10 @@ function ES:Lowest(series) {
 # Usage functions
 #################################################################################
 function ES:Usage() {
-  function m(series) {
-    :Log(DEBUG, 'm(' + series + ')');
+  function m(object) {
     ES:Assert(series != null, 'series is unexpectedly null');
-    :Log(DEBUG, series);
-    series = ES:Load(series);
+    :Log(DEBUG, object);
+    series = ES:Load(object);
     ES:Assert(series != null, 'series is unexpectedly null');
     if (:GetId(series) < ES:BACKUP_BASE) {
       :Log(DEBUG, 'series id < ES:BACKUP_BASE; is a candidate for metrics');
