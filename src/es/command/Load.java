@@ -29,10 +29,6 @@ public class Load implements Command {
   @Override
   public Object run(SymbolTable symbolTable, File file, List<Object> params) throws Exception {
     Utils.validate(params, 1, 1);
-    TimeSeries timeSeries =  Utils.load(params.get(0));
-    if (timeSeries == null) {
-      throw new Exception(params.get(0) + " not found");
-    }
-    return timeSeries;
+    return Utils.load(params.get(0));
   }
 }
