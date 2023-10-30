@@ -205,7 +205,7 @@ public class FunctionCaller {
   public void alias(String alias, String name) throws Exception {
     Command cmd = commandMap.get(name);
     if (cmd == null) {
-      throw new Exception("name not found: " + name);
+      throw new Exception("system function not found: " + name);
     }
     Utils.checkNameSpace(alias);
     Utils.validateRootNameSpaceWrite(alias);
