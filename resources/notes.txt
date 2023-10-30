@@ -9,16 +9,6 @@ We just update each series with the last merge time.  It can be NULL for backwar
 - while statement - and BREAK and CONTINUE
 X allow the writing of const's if they are the same value
   => too many use cases esp. considering TimeSeries objects
-X rewrite assert() and exitif() as es functions (?)
-  => risky b.c. of use in test scripts.  I removed exitif().
-
-Think about reintroducing ReturnResult. (For now, I only return int's from top level.)  Not sure which is best.
-=> I already have Return.  I think I can just return Return from Evaluator.evaluate().  And then in Main, see if I get a Return or another object.
-=> shouldn't in theory be that big a deal
-
-try / catch => Test
-
-The catch is a bit like a function call in that it takes a single 'parameter'. And it should have its own child symbol table.
 
 includes => ??
 
@@ -30,16 +20,8 @@ be a string that was evaluated in previous code.
 => So -> all of this has to be done at evaluation time
 => Evaluator just loads and evaluates the include using the *current* symbol table, not a child symbol table.  A bit like an IF statement
 
-New Function, taking var # of args:
+make aliases es and then write things like this, for each built in function (but not for fancy ones, like ES:Load):
 
-:Iterate(fn, arg1, arg2, ...);
-
-Where fn is:
-
-function fn(arg) {
+function ES:Log(level, message) {
+  :Log(level, message);
 }
-
-=> Calls fn for each argument
-
-Also => I can now probably re-write :Assert() as ES:Assert()
-
