@@ -12,15 +12,15 @@ public class ThrowStatement extends Statement {
     if (expr instanceof Evaluable) {
       Evaluable evaluable = (Evaluable) expr;
       Object result = evaluable.evaluate(symbolTable);
-      if (result == null) {
-        throw new Exception("cannot throw a null result");
+      if (!(result instanceof String)) {
+        throw new Exception("invalid exception: can only throw String exceptions");
       }
-      throw new ESException(result);
+      throw new Exception((String) result);
     }
-    if (expr == null) {
-      throw new Exception("cannot throw a null result");
+    if (!(expr instanceof String)) {
+      throw new Exception("invalid exception: can only throw String exceptions");
     }
-    throw new ESException(expr);
+    throw new Exception((String) expr);
   }
   
   @Override
