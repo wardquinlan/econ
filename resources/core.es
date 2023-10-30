@@ -11,7 +11,7 @@ function ES:Load(series) {
     return null;
   }
   if (:GetType(series) == 'String') {
-    if (:Exists(series)) {
+    if (ES:Exists(series)) {
       :Log(DEBUG, 'series exists in the datastore; loading');
       return :Load(series);
     }
@@ -19,7 +19,7 @@ function ES:Load(series) {
     return :Fred(series);
   }
   if (:GetType(series) == 'int') {
-    if (:Exists(series)) {
+    if (ES:Exists(series)) {
       :Log(DEBUG, 'series exists in the datastore; loading');
       return :Load(series);
     }
@@ -27,7 +27,7 @@ function ES:Load(series) {
     return null; 
   }
   if (:GetType(series) == 'Series') {
-    if (:GetId(series) != null and :Exists(:GetId(series))) {
+    if (:GetId(series) != null and ES:Exists(:GetId(series))) {
       :Log(DEBUG, 'series exists in the datastore; loading');
       return :Load(:GetId(series));
     }
@@ -38,9 +38,9 @@ function ES:Load(series) {
   return null;
 }
 
-function ES:Exists(series) {
-  :Log(DEBUG, 'ES:Exists(' + series + ')');
-  return !(:Load(series) == null);
+function ES:Exists(object) {
+  :Log(DEBUG, 'ES:Exists(' + object + ')');
+  return !(:Load(object) == null);
 }
 
 function ES:AutoLoad(series) {
@@ -87,7 +87,7 @@ function ES:ResetId(id, idNew) {
   if (:GetType(id) != 'int' or :GetType(idNew) != 'int') {
     throw 'usage: ES:ResetId(int id, int idNew);';
   }
-  if (:Exists(idNew)) {
+  if (ES:Exists(idNew)) {
     throw 'series already exists: ' + idNew;
   } 
   S = ES:Load(id);
@@ -103,7 +103,7 @@ function ES:ResetName(name, nameNew) {
   if (:GetType(name) != 'String' or :GetType(nameNew) != 'String') {
     throw 'usage: ES:ResetName(String name, String nameNew);';
   }
-  if (:Exists(nameNew)) {
+  if (ES:Exists(nameNew)) {
     throw 'series already exists: ' + nameNew;
   } 
   S = ES:Load(name);
@@ -148,7 +148,7 @@ function ES:Backup(id) {
     :DlgMessage('Cannot backup a series already backed up', ERROR);
     return;
   }
-  if (:Exists(:GetId(series) + ES:BACKUP_BASE)) {
+  if (ES:Exists(:GetId(series) + ES:BACKUP_BASE)) {
     :DlgMessage('Cannot backup series: already exists: ' + :GetId(series) + ES:BACKUP_BASE);
     return;
   }

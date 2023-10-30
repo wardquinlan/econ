@@ -22,7 +22,6 @@ import es.command.Drop;
 import es.command.Ds;
 import es.command.SubString;
 import es.command.Equals;
-import es.command.Exists;
 import es.command.Exit;
 import es.command.FRED;
 import es.command.Fonts;
@@ -143,7 +142,7 @@ public class FunctionCaller {
     commandMap.put(":Get", new Get());
     //commandMap.put(":Assert", new Assert());
     commandMap.put(":Defined", new Defined());
-    commandMap.put(":Exists", new Exists());
+    //commandMap.put(":Exists", new Exists());
     commandMap.put(":GetType", new GetType());
     commandMap.put(":GetUnits", new GetUnits());
     commandMap.put(":GetFrequency", new GetFrequency());
