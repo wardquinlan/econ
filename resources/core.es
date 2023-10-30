@@ -93,6 +93,9 @@ function ES:ResetId(id, idNew) {
       throw 'id already exists: ' + idNew;
     } 
     S = ES:Load(id);
+    if (S == null) {
+      throw 'unable to load id: ' + id;
+    }
     :SetId(S, idNew);
     :Drop(id);
     :Save(S);
