@@ -138,6 +138,11 @@ function ES:RefreshMetaData(object) {
   }
 }
 
+function ES:RefreshAll() {
+  :Log(DEBUG, 'ES:RefreshAll()');
+  :Ds(ES:RefreshMetaData);
+}
+
 #################################################################################
 # Reset functions
 #################################################################################
