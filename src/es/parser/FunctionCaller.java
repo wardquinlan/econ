@@ -46,6 +46,7 @@ import es.command.Help;
 import es.command.Insert;
 import es.command.IsAdmin;
 import es.command.IsConnected;
+import es.command.Iterator;
 import es.command.Ln;
 import es.command.Load;
 import es.command.Merge;
@@ -168,6 +169,7 @@ public class FunctionCaller {
     commandMap.put(":GetEnv", new GetEnv());
     commandMap.put(":SubString", new SubString());
     commandMap.put(":GetLength", new GetLength());
+    commandMap.put(":Iterator", new Iterator());
     // I can't think of a way to use this to conditionally include files.  If we create an 'if' block, then all the constants (or whatever) are in the
     // scope of the if block.  So this doesn't work.
     
