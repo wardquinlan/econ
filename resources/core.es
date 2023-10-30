@@ -217,10 +217,10 @@ function ES:Lowest(series) {
 function ES:Usage() {
   function m(series) {
     :Log(DEBUG, 'm(' + series + ')');
-    :Assert(series != null, 'series is unexpectedly null');
+    ES:Assert(series != null, 'series is unexpectedly null');
     :Log(DEBUG, series);
     series = ES:Load(series);
-    :Assert(series != null, 'series is unexpectedly null');
+    ES:Assert(series != null, 'series is unexpectedly null');
     if (:GetId(series) < ES:BACKUP_BASE) {
       :Log(DEBUG, 'series id < ES:BACKUP_BASE; is a candidate for metrics');
       :GPut('METRICS.numberOfSeries', METRICS.numberOfSeries + 1);
