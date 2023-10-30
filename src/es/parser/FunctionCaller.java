@@ -202,8 +202,8 @@ public class FunctionCaller {
     if (funcName.equals("help") || funcName.equals(Utils.ROOT_NAMESPACE + "Help")) {
       if (params.size() == 1 && params.get(0) instanceof String) {
         String cmd = (String) params.get(0);
-        if (!cmd.startsWith(":")) {
-          cmd = ":" + cmd;
+        if (!cmd.startsWith(Utils.ROOT_NAMESPACE)) {
+          cmd = Utils.ROOT_NAMESPACE + cmd;
         }
         Command command = commandMap.get(cmd);
         if (command != null) {
