@@ -59,4 +59,12 @@ try {
   :Log(DEBUG, 'Test 5 complete');
 }
 
+try {
+  :Log(DEBUG, 'Test 6');
+  :Load();
+} catch(e) {
+  :Log(DEBUG, e);
+  assert(e == 'missing argument(s)');
+}
+
 print('TRY/CATCH TESTS PASSED');
