@@ -13,12 +13,12 @@ public class ThrowStatement extends Statement {
       Evaluable evaluable = (Evaluable) expr;
       Object result = evaluable.evaluate(symbolTable);
       if (!(result instanceof String)) {
-        throw new Exception("invalid exception: can only throw String exceptions");
+        throw new Exception("invalid: can only throw String exceptions");
       }
       throw new Exception((String) result);
     }
     if (!(expr instanceof String)) {
-      throw new Exception("invalid exception: can only throw String exceptions");
+      throw new Exception("invalid: can only throw String exceptions");
     }
     throw new Exception((String) expr);
   }
