@@ -51,10 +51,7 @@ public class Parser {
     } else if (tk.getType() == Token.IF) {
       list.add(parseIf(tk, itr));
     } else if (tk.getType() == Token.TRY) {
-      Statement st = parseTry(tk, itr);
-      System.out.println(st);
-      list.add(st);
-      //list.add(parseTry(tk, itr));
+      list.add(parseTry(tk, itr));
     } else {
       list.add(parseSimpleStatement(tk, itr));
     }

@@ -1,5 +1,11 @@
 try {
-  throw 'rats';
-} catch (ex) {
-  print(ex);
+  if (true) {
+    throw 'crap';
+  }
+} catch(ex) {
+  print('an exception occurred: ' + ex);
+  return;
+  assert(false);
 }
+
+print('done');
