@@ -152,7 +152,7 @@ function ES:Backup(id) {
     if (id == null) {
       id = :DlgInput('Enter series id');
       if (id == null) {
-        return;
+        throw 'Cancelled by user';
       }
       id = :ParseInt(id);
       if (id == null) {
@@ -180,7 +180,7 @@ function ES:Backup(id) {
     :SetName(series, :GetName(series) + ES:BACKUP_EXT);
     :SetId(series, :GetId(series) + ES:BACKUP_BASE);
     :Save(series);
-    :DlgMessage('Backup complete for ' + :GetId(series));
+    :DlgMessage('Backup complete for ' + id);
   } catch(ex) {
     :DlgMessage('Unable to perform backup: ' + ex, ERROR);
   }
