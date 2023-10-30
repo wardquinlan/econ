@@ -9,7 +9,7 @@ import es.parser.FunctionCaller;
 import es.parser.FunctionDeclaration;
 import es.parser.SymbolTable;
 
-public class Iterator implements Command {
+public class Iterate implements Command {
   @Override
   public String getSummary() {
     return "void    " + Utils.ROOT_NAMESPACE + "Iterator(function fn[, Object arg1, ...]);";
