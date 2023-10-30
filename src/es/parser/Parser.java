@@ -25,8 +25,6 @@ public class Parser {
     tokenNodeMap.put(Token.DIV, ESNode.DIV);
     tokenNodeMap.put(Token.EXP, ESNode.EXP);
   }
-  // just for checks of existing functions, does not actually invoke the function from here...
-  private FunctionCaller functionCaller = new FunctionCaller();
 
   public ESIterator<Statement> parse(Token tk, ESIterator<Token> itr) throws Exception {
     List<Statement> list = new ArrayList<Statement>();
@@ -175,7 +173,7 @@ public class Parser {
       throw new Exception("syntax error: invalid function name");
     }
     String name = (String) tk.getValue();
-    if (functionCaller.isFunction(name)) {
+    if (FunctionCaller.getInstance().isFunction(name)) {
       throw new Exception("syntax error: invalid function name (use of a built-in function name)");
     }
     FunctionDeclaration functionDeclaration = new FunctionDeclaration(name);

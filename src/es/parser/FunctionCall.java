@@ -34,8 +34,7 @@ public class FunctionCall implements Evaluable {
     for (Object param: params) {
       params2.add((param instanceof Evaluable ? ((Evaluable) param).evaluate(symbolTable) : param));
     }
-    FunctionCaller functionCaller = new FunctionCaller();
-    Object result = functionCaller.invokeFunction(name, symbolTable, file, params2);
+    Object result = FunctionCaller.getInstance().invokeFunction(name, symbolTable, file, params2);
     if (result instanceof Return) {
       result = ((Return) result).getValue();
     }

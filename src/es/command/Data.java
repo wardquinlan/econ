@@ -76,14 +76,13 @@ public class Data implements Command {
       throw new Exception(params.get(1) + " is not a function");
     }
     FunctionDeclaration functionDeclaration = (FunctionDeclaration) params.get(1);
-    FunctionCaller functionCaller = new FunctionCaller();
     for (int i = 0; i < timeSeries.getTimeSeriesDataList().size(); i++) {
       TimeSeriesData timeSeriesData = timeSeries.getTimeSeriesDataList().get(i);
       List<Object> list2 = new ArrayList<>();
       list2.add(i);
       list2.add(Utils.DATE_FORMAT.format(timeSeriesData.getDate()));
       list2.add(timeSeriesData.getValue());
-      functionCaller.invokeFunction(functionDeclaration.getName(), symbolTable, file, list2);
+      FunctionCaller.getInstance().invokeFunction(functionDeclaration.getName(), symbolTable, file, list2);
     }
     return null;
   }

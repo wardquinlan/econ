@@ -69,14 +69,13 @@ public class Cat implements Command {
       throw new Exception(params.get(0) + " is not a function");
     }
     FunctionDeclaration functionDeclaration = (FunctionDeclaration) params.get(0);
-    FunctionCaller functionCaller = new FunctionCaller();
     for(String key: symbolTable.keySet()) {
       Symbol symbol = symbolTable.get(key);
       if (symbol.getValue() instanceof TimeSeries) {
         TimeSeries timeSeries = (TimeSeries) symbol.getValue();
         List<Object> list = new ArrayList<>();
         list.add(timeSeries);
-        functionCaller.invokeFunction(functionDeclaration.getName(), symbolTable, file, list);
+        FunctionCaller.getInstance().invokeFunction(functionDeclaration.getName(), symbolTable, file, list);
       }
     }
     return null;

@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
+import es.command.Alias;
 import es.command.Average;
 import es.command.Cat;
 import es.command.Change;
@@ -92,7 +93,13 @@ public class FunctionCaller {
   static final int TIME_SERIES_COL_WIDTHS[] = {5, 20, 30, 12, 30};
   static final int TIME_SERIES_DATA_COL_WIDTHS[] = {5, 10, 10};
 
-  public FunctionCaller() {
+  private static FunctionCaller instance = new FunctionCaller();
+  
+  public static FunctionCaller getInstance() {
+    return instance;
+  }
+  
+  private FunctionCaller() {
     commandMap.put(":Exit", new Exit());
     commandMap.put(":Print", new Print());
     commandMap.put(":Help", new Help());
@@ -168,6 +175,7 @@ public class FunctionCaller {
     commandMap.put(":SubString", new SubString());
     commandMap.put(":GetLength", new GetLength());
     commandMap.put(":Iterate", new Iterate());
+    commandMap.put(":Alias", new Alias());
     // I can't think of a way to use this to conditionally include files.  If we create an 'if' block, then all the constants (or whatever) are in the
     // scope of the if block.  So this doesn't work.
     
@@ -192,6 +200,16 @@ public class FunctionCaller {
     }
     commandMap.putAll(map);
     */
+  }
+  
+  public void alias(String alias, String name) throws Exception {
+    Command cmd = commandMap.get(name);
+    if (cmd == null) {
+      throw new Exception("name not found: " + name);
+    }
+    Utils.checkNameSpace(alias);
+    Utils.validateRootNameSpaceWrite(alias);
+    commandMap.put(alias, cmd);
   }
   
   public boolean isFunction(String funcName) {

@@ -36,11 +36,10 @@ public class Iterate implements Command {
       throw new Exception(params.get(0) + " is not a function");
     }
     FunctionDeclaration functionDeclaration = (FunctionDeclaration) params.get(0);
-    FunctionCaller functionCaller = new FunctionCaller();
     for(int i = 1; i < params.size(); i++) {
       List<Object> list = new ArrayList<>();
       list.add(params.get(i));
-      functionCaller.invokeFunction(functionDeclaration.getName(), symbolTable, file, list);
+      FunctionCaller.getInstance().invokeFunction(functionDeclaration.getName(), symbolTable, file, list);
     }
     return null;
   }

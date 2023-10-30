@@ -63,11 +63,10 @@ public class Ds implements Command {
     }
     FunctionDeclaration functionDeclaration = (FunctionDeclaration) params.get(0);
     List<TimeSeries> list = TimeSeriesDAO.getInstance().listSeries();
-    FunctionCaller functionCaller = new FunctionCaller();
     for (TimeSeries timeSeries: list) {
       List<Object> list2 = new ArrayList<>();
       list2.add(timeSeries);
-      functionCaller.invokeFunction(functionDeclaration.getName(), symbolTable, file, list2);
+      FunctionCaller.getInstance().invokeFunction(functionDeclaration.getName(), symbolTable, file, list2);
     }
     return null;
   }
