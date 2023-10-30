@@ -292,7 +292,7 @@ function ES:Assert(condition, message) {
     if (message == null) {
       throw '*** ASSERTION FAILED ***';
     } else {
-      throw message;
+      throw '*** ASSERTION FAILED *** : ' + message;
     }
   }
 }

@@ -1,10 +1,4 @@
-function assert(condition, message) {
-  if (message == null) {
-    :Assert(condition);
-  } else {
-    :Assert(condition, message);
-  }
-}
+assert = ES:Assert;
 
 function create(name, type) {
   if (type == null) {
