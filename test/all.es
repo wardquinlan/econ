@@ -25,5 +25,6 @@ include 'T3.es';
 include 'T4.es';
 include 'returns.es';
 include 'strings.es';
+include 'trycatch.es';
 
 print("*** TESTS COMPLETED SUCCESSFULLY ***");
