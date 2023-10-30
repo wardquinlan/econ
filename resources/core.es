@@ -94,48 +94,47 @@ function ES:UpdateAll() {
   :Ds(ES:Update);
 }
 
-function ES:RefreshMetaData(id) {
-  :Log(DEBUG, 'ES:RefreshMetaData(' + id + ')');
-  try {
-    if (!:IsAdmin()) {
-      throw 'you must be running in administrative mode to refresh metadata';
-    }
-    if (id == null) {
-      id = :DlgInput('Enter series id');
-      if (id == null) {
-        throw 'Cancelled by user';
-      }
-      id = :ParseInt(id);
-      if (id == null) {
-        throw 'Invalid series id';
-      }
-    } else {
-      if (:GetType(id) != 'int') {
-        throw 'Invalid series id';
-      }
-    }
-    series = :Load(id);
-    if (series == null) {
-      throw 'Series does not exist: ' + id;
-    }
-    if (:GetSource(series) != 'FRED') {
-      throw 'Series source is not FRED';
-    }
-    F = :Fred(:GetSourceId(series));
-    if (F == null) {
-      throw 'Series not found in FRED database: ' + series;
-    }
+function ES:RefreshMetaData(object) {
+  :Log(DEBUG, 'ES:RefreshMetaData(' + object + ')');
+  if (!:IsAdmin()) {
+    throw 'you must be running in administrative mode to refresh metadata';
+  }
+  series = ES:Load(object);
+  if (series == null) {
+    throw 'Series does not exist: ' + object;
+  }
+  if (:GetId(series) == null) {
+    throw 'Series id does not exist: ' + object;
+  }
+  if (:GetId(series) >= ES:BACKUP_BASE) {
+    :Log(DEBUG, 'ignoring series with id ' + :GetId(series));
+    return;
+  }
+  if (:GetSource(series) != 'FRED') {
+    :Log(DEBUG, 'Series source is not FRED, nothing to do');
+    return;
+  }
+  F = :Fred(:GetSourceId(series));
+  if (F == null) {
+    throw 'Series not found in FRED database: ' + series;
+  }
+  changed = false;
+  if (:GetTitle(series) != :GetTitle(F)) {
+    :Log(INFO, 'series ' + :GetId(series) + ' title has changed to: ' + :GetTitle(F));
     :SetTitle(series, :GetTitle(F));
-    :SetUnits(series, :GetUnits(F));
-    :SetUnitsShort(series, :GetUnits(F));
-    :SetFrequency(series, :GetFrequency(F));
-    :SetFrequencyShort(series, :GetFrequencyShort(F));
+    changed = true;
+  }
+  if (:GetNotes(series) != :GetNotes(F)) {
+    :Log(INFO, 'series ' + :GetId(series) + ' notes has changed to: ' + :GetNotes(F));
     :SetNotes(series, :GetNotes(F));
+    changed = true;
+  }
+  if (changed) {
     :Log(DEBUG, 'merging series: ' + series);
     #:Meta(series);
     :Merge(series, '--with-metadata');
-  } catch(ex) {
-    :DlgMessage('Unable to refresh metadata: ' + ex, ERROR);
+  } else {
+    :Log(INFO, 'series metadata has not changed, nothing to do');
   }
 }
 
