@@ -52,7 +52,12 @@ function ES:Load(series, fred) {
 
 function ES:Exists(object) {
   :Log(DEBUG, 'ES:Exists(' + object + ')');
-  return !(:Load(object) == null);
+  try {
+    return :Load(object) != null;
+  } catch(ex) {
+    :Log(DEBUG, 'object does not exist: ' + ex);
+    return false;
+  }
 }
 
 function ES:AutoLoad(series) {
@@ -70,9 +75,9 @@ function ES:AutoLoad(series) {
 #################################################################################
 # Update functions
 #################################################################################
-function ES:Update(series) {
-  :Log(DEBUG, 'ES:Update(' + series + ')');
-  series = ES:Load(series);
+function ES:Update(object) {
+  :Log(DEBUG, 'ES:Update(' + object + ')');
+  series = ES:Load(object);
   if (:GetSource(series) == 'FRED' and :GetId(series) < ES:BACKUP_BASE) {
     :Log(DEBUG, 'series is a candidate for update(s); proceeding');
     id = :GetId(series);
@@ -87,6 +92,51 @@ function ES:Update(series) {
 function ES:UpdateAll() {
   :Log(DEBUG, 'ES:UpdateAll()');
   :Ds(ES:Update);
+}
+
+function ES:RefreshMetaData(id) {
+  :Log(DEBUG, 'ES:RefreshMetaData(' + id + ')');
+  try {
+    if (!:IsAdmin()) {
+      throw 'you must be running in administrative mode to refresh metadata';
+    }
+    if (id == null) {
+      id = :DlgInput('Enter series id');
+      if (id == null) {
+        throw 'Cancelled by user';
+      }
+      id = :ParseInt(id);
+      if (id == null) {
+        throw 'Invalid series id';
+      }
+    } else {
+      if (:GetType(id) != 'int') {
+        throw 'Invalid series id';
+      }
+    }
+    series = :Load(id);
+    if (series == null) {
+      throw 'Series does not exist: ' + id;
+    }
+    if (:GetSource(series) != 'FRED') {
+      throw 'Series source is not FRED';
+    }
+    F = :Fred(:GetSourceId(series));
+    if (F == null) {
+      throw 'Series not found in FRED database: ' + series;
+    }
+    :SetTitle(series, :GetTitle(F));
+    :SetUnits(series, :GetUnits(F));
+    :SetUnitsShort(series, :GetUnits(F));
+    :SetFrequency(series, :GetFrequency(F));
+    :SetFrequencyShort(series, :GetFrequencyShort(F));
+    :SetNotes(series, :GetNotes(F));
+    :Log(DEBUG, 'merging series: ' + series);
+    #:Meta(series);
+    :Merge(series, '--with-metadata');
+  } catch(ex) {
+    :DlgMessage('Unable to refresh metadata: ' + ex, ERROR);
+  }
 }
 
 #################################################################################
