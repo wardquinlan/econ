@@ -258,7 +258,7 @@ function ES:Defaults() {
 # StartsWith / EndsWith functions
 #################################################################################
 function ES:StartsWith(string, prefix) {
-  :Log(DEBUG, 'ES:StartsWith(): ' + string + ':' + prefix);
+  :Log(DEBUG, 'ES:StartsWith(' + string + ', ' + prefix + ')');
   if (:GetLength(prefix) > :GetLength(string)) {
     return false;
   }
@@ -268,7 +268,7 @@ function ES:StartsWith(string, prefix) {
 }
 
 function ES:EndsWith(string, suffix) {
-  :Log(DEBUG, 'ES:EndsWith(): ' + string + ':' + suffix);
+  :Log(DEBUG, 'ES:EndsWith(' + string + ', ' + suffix + ')');
   if (:GetLength(suffix) > :GetLength(string)) {
     return false;
   }
@@ -279,4 +279,18 @@ function ES:EndsWith(string, suffix) {
   ss = :SubString(string, :GetLength(string) - :GetLength(suffix), :GetLength(string));
   :Log(DEBUG, 'substring = ' + ss);
   return ss == suffix;
+}
+
+#################################################################################
+# Assert
+#################################################################################
+function ES:Assert(condition, message) {
+  :Log(DEBUG, 'ES:Assert(' + condition + ', ' + message + ')');
+  if (!condition) {
+    if (message == null) {
+      throw '*** ASSERTION FAILED ***';
+    } else {
+      throw message;
+    }
+  }
 }
