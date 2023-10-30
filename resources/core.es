@@ -145,49 +145,45 @@ function ES:ResetName(name, nameNew) {
 #################################################################################
 function ES:Backup(id) {
   :Log(DEBUG, 'ES:Backup(' + id + ')');
-  if (!:IsAdmin()) {
-    :DlgMessage('You must be running in administrative mode to do this', ERROR);
-    return;
-  }
-  if (id == null) {
-    id = :DlgInput('Enter series id');
+  try {
+    if (!:IsAdmin()) {
+      throw 'You must be running in administrative mode to do this';
+    }
     if (id == null) {
-      return;
+      id = :DlgInput('Enter series id');
+      if (id == null) {
+        return;
+      }
+      id = :ParseInt(id);
+      if (id == null) {
+        throw 'Invalid series id';
+      }
+    } else {
+      if (:GetType(id) != 'int') {
+        throw 'Invalid series id';
+      }
     }
-    id = :ParseInt(id);
-    if (id == null) {
-      :DlgMessage('Invalid series id', ERROR);
-      return;
+    series = ES:Load(id);
+    if (series == null) {
+      throw 'Series does not exist';
     }
-  } else {
-    if (:GetType(id) != 'int') {
-      :DlgMessage('Invalid series id', ERROR);
-      return;
+    if (:GetId(series) >= ES:BACKUP_BASE) {
+      throw 'Cannot backup a series already backed up';
     }
+    if (ES:Exists(:GetId(series) + ES:BACKUP_BASE)) {
+      throw 'Cannot backup series: already exists: ' + (:GetId(series) + ES:BACKUP_BASE);
+    }
+    if (!:DlgConfirm()) {
+      throw 'Cancelled by user';
+    }
+    :Log(DEBUG, 'backing up series: ' + series);
+    :SetName(series, :GetName(series) + ES:BACKUP_EXT);
+    :SetId(series, :GetId(series) + ES:BACKUP_BASE);
+    :Save(series);
+    :DlgMessage('Backup complete for ' + :GetId(series));
+  } catch(ex) {
+    :DlgMessage('Unable to perform backup: ' + ex, ERROR);
   }
-  series = ES:Load(id);
-  if (series == null) {
-    :DlgMessage('Series does not exist', ERROR);
-    return;
-  }
-  :Log(DEBUG, 'backing up series');
-  :Log(DEBUG, series);
-  if (:GetId(series) >= ES:BACKUP_BASE) {
-    :DlgMessage('Cannot backup a series already backed up', ERROR);
-    return;
-  }
-  if (ES:Exists(:GetId(series) + ES:BACKUP_BASE)) {
-    :DlgMessage('Cannot backup series: already exists: ' + :GetId(series) + ES:BACKUP_BASE);
-    return;
-  }
-  if (!:DlgConfirm()) {
-    return;
-  }
-  :Log(DEBUG, 'backing up series ' + id);
-  :SetName(series, :GetName(series) + ES:BACKUP_EXT);
-  :SetId(series, :GetId(series) + ES:BACKUP_BASE);
-  :Save(series);
-  :DlgMessage('Backup complete for ' + :GetId(series));
 }
 
 #################################################################################
