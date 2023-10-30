@@ -1,7 +1,5 @@
 package es.parser;
 
-import es.core.Utils;
-
 public class ThrowStatement extends Statement {
   private Object expr;
 
@@ -17,10 +15,12 @@ public class ThrowStatement extends Statement {
       if (result == null) {
         throw new Exception("cannot throw a null result");
       }
-      throw new Exception(result.toString());
+      throw new ESException(result);
     }
-    Utils.ASSERT(expr != null, "cannot throw a null result");
-    throw new Exception(expr.toString());
+    if (expr == null) {
+      throw new Exception("cannot throw a null result");
+    }
+    throw new ESException(expr);
   }
   
   @Override

@@ -33,7 +33,7 @@ public class TryCatchStatement extends Statement {
       }
     } catch(Exception ex) {
       SymbolTable childSymbolTable = new SymbolTable(symbolTable);
-      childSymbolTable.localPut(exceptionName, new Symbol(exceptionName, ex.getMessage()));
+      childSymbolTable.localPut(exceptionName, new Symbol(exceptionName, (ex instanceof ESException ? ((ESException) ex).getValue() : ex.getMessage())));
       ESIterator<Statement> itr = new ESIterator<>(catchBody);
       if (itr.hasNext()) {
         Evaluator e = new Evaluator(childSymbolTable);
