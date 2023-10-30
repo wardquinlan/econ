@@ -2,7 +2,7 @@ const ES:BACKUP_BASE = 10000;
 const ES:BACKUP_EXT = '.BAK';
 
 #################################################################################
-# Load functions
+# Load / Exist functions
 #################################################################################
 function ES:Load(series) {
   :Log(DEBUG, 'ES:Load(' + series + ')');
@@ -36,6 +36,11 @@ function ES:Load(series) {
   }
   :Log(WARN, 'unable to find the series, returning null');
   return null;
+}
+
+function ES:Exists(series) {
+  :Log(DEBUG, 'ES:Exists(' + series + ')');
+  return !(:Load(series) == null);
 }
 
 function ES:AutoLoad(series) {
