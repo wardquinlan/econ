@@ -142,7 +142,7 @@ public class FunctionCaller {
     commandMap.put(":Max", new es.command.Max());
     commandMap.put(":Min", new es.command.Min());
     commandMap.put(":Get", new Get());
-    commandMap.put(":Assert", new Assert());
+    //commandMap.put(":Assert", new Assert());
     commandMap.put(":Defined", new Defined());
     commandMap.put(":Exists", new Exists());
     commandMap.put(":GetType", new GetType());
