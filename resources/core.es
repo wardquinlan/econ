@@ -93,7 +93,8 @@ function ES:LastUpdated(object) {
   :Log(DEBUG, 'ES:LastUpdated(' + object + ')');
   series = ES:Load(object);
   D = :Date(series);
-  :Printf('%-6d%-22s%s\n', :GetId(series), :GetName(series), :Get(D, :GetSize(D) - 1));
+  :Printf('%-6d%-22s%-5s%s\n', :GetId(series), :GetName(series), :GetFrequencyShort(series), 
+                               :Get(D, :GetSize(D) - 1));
 }
 
 function ES:LastUpdatedReport() {
