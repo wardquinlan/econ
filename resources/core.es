@@ -143,6 +143,41 @@ function ES:RefreshAll() {
   :Ds(ES:RefreshMetaData);
 }
 
+function ES:CheckMetaData(object) {
+  :Log(DEBUG, 'ES:CheckMetaData(' + object + ')');
+  series = ES:Load(object);
+  if (series == null) {
+    throw 'Series does not exist: ' + object;
+  }
+  if (:GetId(series) == null) {
+    throw 'Series id does not exist: ' + object;
+  }
+  if (:GetId(series) >= ES:BACKUP_BASE) {
+    :Log(DEBUG, 'ignoring series with id ' + :GetId(series));
+    return;
+  }
+  if (:GetSource(series) != 'FRED') {
+    :Log(DEBUG, 'Series source is not FRED, nothing to do');
+    return;
+  }
+  F = :Fred(:GetSourceId(series));
+  if (F == null) {
+    throw 'Series not found in FRED database: ' + series;
+  }
+  changed = false;
+  if (:GetTitle(series) != :GetTitle(F)) {
+    :Log(INFO, 'series ' + :GetId(series) + ' title has changed to: ' + :GetTitle(F));
+    changed = true;
+  }
+  if (:GetNotes(series) != :GetNotes(F)) {
+    :Log(INFO, 'series ' + :GetId(series) + ' notes has changed to: ' + :GetNotes(F));
+    changed = true;
+  }
+  if (!changed) {
+    :Log(INFO, 'series ' + :GetId(series) + ' has not changed');
+  }
+}
+
 #################################################################################
 # Reset functions
 #################################################################################
