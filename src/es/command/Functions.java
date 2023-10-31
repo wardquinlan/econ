@@ -22,7 +22,7 @@ public class Functions implements Command {
   @Override
   public List<String> getDetails() {
     List<String> list = new ArrayList<>();
-    list.add("Displays a list of user-defined functions");
+    list.add("Lists user functions and user/system aliases");
     return list;
   }
   
@@ -53,6 +53,8 @@ public class Functions implements Command {
     for (String fn: valueSet) {
       System.out.println(fn);
     }
+    System.out.println();
+    System.out.println("(Note: to see the list of system functions, just type ':Help();')");
     System.out.println();
     System.out.println("Aliases to User-Defined Functions");
     System.out.println("---------------------------------");
