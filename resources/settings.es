@@ -17,6 +17,6 @@ settings.loaded = true;
 :Print();
 :Print("For color definitions refer to: https://htmlcolorcodes.com/color-names");
 :Print();
-:Print("Type 'help();' to list all commands");
-:Print("Type 'help(\"command\");' to display help for a specific command");
+:Print("Type ':Help();' to list all commands");
+:Print("Type ':Help(\'command\');' to display help for a specific command");
 :Print();
