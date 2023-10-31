@@ -77,6 +77,11 @@ function ES:AutoLoad(series) {
 #################################################################################
 function ES:Update(object) {
   :Log(DEBUG, 'ES:Update(' + object + ')');
+  if (object == null) {
+    :Log(DEBUG, 'invoking :Ds()');
+    :Ds(ES:Update);
+    return;
+  }
   series = ES:Load(object);
   if (:GetSource(series) == 'FRED' and :GetId(series) < ES:BACKUP_BASE) {
     :Log(DEBUG, 'series is a candidate for update(s); proceeding');
@@ -91,26 +96,26 @@ function ES:Update(object) {
 
 function ES:LastUpdated(object) {
   :Log(DEBUG, 'ES:LastUpdated(' + object + ')');
+  if (object == null) {
+    :Log(DEBUG, 'invoking :Ds()');
+    :Ds(ES:LastUpdated);
+    return;
+  }
   series = ES:Load(object);
   D = :Date(series);
   :Printf('%-6d%-22s%-5s%s\n', :GetId(series), :GetName(series), :GetFrequencyShort(series), 
                                :Get(D, :GetSize(D) - 1));
 }
 
-function ES:LastUpdatedReport() {
-  :Log(DEBUG, 'ES:LastUpdaetdReport()');
-  :Ds(ES:LastUpdated);
-}
-
-function ES:UpdateAll() {
-  :Log(DEBUG, 'ES:UpdateAll()');
-  :Ds(ES:Update);
-}
-
-function ES:RefreshMetaData(object) {
-  :Log(DEBUG, 'ES:RefreshMetaData(' + object + ')');
+function ES:Refresh(object) {
+  :Log(DEBUG, 'ES:Refresh(' + object + ')');
   if (!:IsAdmin()) {
-    throw 'you must be running in administrative mode to refresh metadata';
+    throw 'you must be running in administrative mode to refresh';
+  }
+  if (object == null) {
+    :Log(DEBUG, 'invoking :Ds()');
+    :Ds(ES:Refresh);
+    return;
   }
   series = ES:Load(object);
   if (series == null) {
@@ -149,11 +154,6 @@ function ES:RefreshMetaData(object) {
   } else {
     :Log(INFO, 'series metadata has not changed, nothing to do');
   }
-}
-
-function ES:RefreshAll() {
-  :Log(DEBUG, 'ES:RefreshAll()');
-  :Ds(ES:RefreshMetaData);
 }
 
 function ES:CheckMetaData(object) {
