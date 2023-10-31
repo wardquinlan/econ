@@ -34,13 +34,24 @@ public class Functions implements Command {
   public Object run(SymbolTable symbolTable, File file, List<Object> params) throws Exception {
     Utils.validate(params, 0, 0);
     Set<String> valueSet = new TreeSet<>();
+    Set<String> aliasSet = new TreeSet<>();
+    
     for(String key: symbolTable.keySet()) {
       Symbol symbol = symbolTable.get(key);
       if (symbol.getValue() instanceof FunctionDeclaration) {
-        valueSet.add(symbol.getValue().toString());
+        FunctionDeclaration decl = (FunctionDeclaration) symbol.getValue();
+        if (key.equals(decl.getName())) {
+          valueSet.add(decl.toString());
+        } else {
+          aliasSet.add(key + " -> " + decl.toString());
+        }
       }
     }
     for (String fn: valueSet) {
+      System.out.println(fn);
+    }
+    System.out.println();
+    for (String fn: aliasSet) {
       System.out.println(fn);
     }
     return null;
