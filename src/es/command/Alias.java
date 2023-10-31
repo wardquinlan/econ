@@ -29,7 +29,7 @@ public class Alias implements Command {
   @Override
   public Object run(SymbolTable symbolTable, File file, List<Object> params) throws Exception {
     if (params.size() == 0) {
-      FunctionCaller.getInstance().alias();
+      alias();
       return null;
     }
     Utils.validate(params, 2, 2);
@@ -39,7 +39,24 @@ public class Alias implements Command {
     if (!(params.get(1) instanceof String)) {
       throw new Exception(params.get(1) + " is not a String");
     }
-    FunctionCaller.getInstance().alias((String) params.get(0), (String) params.get(1));
+    alias((String) params.get(0), (String) params.get(1));
     return null;
+  }
+
+  public void alias() {
+    for (String key: FunctionCaller.getInstance().getAliasMap().keySet()) {
+      System.out.println(key + " -> " + FunctionCaller.getInstance().getAliasMap().get(key) + "()");
+    }
+  }
+  
+  public void alias(String alias, String name) throws Exception {
+    Command cmd = FunctionCaller.getInstance().getCommandMap().get(name);
+    if (cmd == null) {
+      throw new Exception("system function not found: " + name);
+    }
+    Utils.checkNameSpace(alias);
+    Utils.validateRootNameSpaceWrite(alias);
+    FunctionCaller.getInstance().getCommandMap().put(alias, cmd);
+    FunctionCaller.getInstance().getAliasMap().put(alias, name);
   }
 }

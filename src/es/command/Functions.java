@@ -48,15 +48,27 @@ public class Functions implements Command {
         }
       }
     }
+    System.out.println("User-Defined Functions");
+    System.out.println("----------------------");
     for (String fn: valueSet) {
       System.out.println(fn);
     }
     System.out.println();
+    System.out.println("Aliases to User-Defined Functions");
+    System.out.println("---------------------------------");
     for (String fn: aliasSet) {
       System.out.println(fn);
     }
     System.out.println();
-    FunctionCaller.getInstance().alias();
+    System.out.println("Aliases to System Functions");
+    System.out.println("---------------------------");
+    alias();
     return null;
+  }
+
+  public void alias() {
+    for (String key: FunctionCaller.getInstance().getAliasMap().keySet()) {
+      System.out.println(key + " -> " + FunctionCaller.getInstance().getAliasMap().get(key) + "()");
+    }
   }
 }

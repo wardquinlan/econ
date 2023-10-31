@@ -92,9 +92,6 @@ public class FunctionCaller {
   private Map<String, Command> commandMap = new TreeMap<>();
   private Map<String, String> aliasMap = new TreeMap<>();
 
-  static final int TIME_SERIES_COL_WIDTHS[] = {5, 20, 30, 12, 30};
-  static final int TIME_SERIES_DATA_COL_WIDTHS[] = {5, 10, 10};
-
   private static FunctionCaller instance = new FunctionCaller();
   
   public static FunctionCaller getInstance() {
@@ -187,61 +184,29 @@ public class FunctionCaller {
       commandMap.put(":Qtp", new QTP());
     }
   }
-  
-  public void alias() {
-    for (String key: aliasMap.keySet()) {
-      System.out.println(key + " -> " + aliasMap.get(key) + "()");
-    }
+
+  public Map<String, Command> getCommandMap() {
+    return commandMap;
   }
-  
-  public void alias(String alias, String name) throws Exception {
-    Command cmd = commandMap.get(name);
-    if (cmd == null) {
-      throw new Exception("system function not found: " + name);
-    }
-    Utils.checkNameSpace(alias);
-    Utils.validateRootNameSpaceWrite(alias);
-    commandMap.put(alias, cmd);
-    aliasMap.put(alias, name);
+
+  public Map<String, String> getAliasMap() {
+    return aliasMap;
   }
-  
-  public boolean isFunction(String funcName) {
-    return funcName.equals("help") || funcName.equals(Utils.ROOT_NAMESPACE + "Help") || commandMap.keySet().contains(funcName);
+
+  public boolean isSystemFunction(String funcName) {
+    // Note: we do not check for aliases
+    return commandMap.keySet().contains(funcName);
   }
   
   public Object invokeFunction(String funcName, SymbolTable symbolTable, File file, List<Object> params) throws Exception {
-    if (funcName.equals("help") || funcName.equals(Utils.ROOT_NAMESPACE + "Help")) {
-      if (params.size() == 1 && params.get(0) instanceof String) {
-        String cmd = (String) params.get(0);
-        if (!cmd.startsWith(Utils.ROOT_NAMESPACE)) {
-          cmd = Utils.ROOT_NAMESPACE + cmd;
-        }
-        Command command = commandMap.get(cmd);
-        if (command != null) {
-          System.out.println(command.getSummary());
-          System.out.println();
-          for (String detail: command.getDetails()) {
-            System.out.println(detail);
-          }
-          if (command.getReturns() != null) {
-            System.out.println();
-            System.out.println("Returns: " + command.getReturns());
-          }
-          return null;
-        }
-      }
-      for (String name: commandMap.keySet()) {
-        Command command = commandMap.get(name);
-        if (name.startsWith((Utils.ROOT_NAMESPACE))) {
-          System.out.println(command.getSummary());
-        }
-      }
-      return null;
-    }
     if (commandMap.get(funcName) != null) {
-      // call built-in function
-      return commandMap.get(funcName).run(symbolTable, file, params);
+      return invokeSystemFunction(funcName, symbolTable, file, params);
+    } else {
+      return invokeUserFunction(funcName, symbolTable, file, params);
     }
+  }
+
+  private Object invokeUserFunction(String funcName, SymbolTable symbolTable, File file, List<Object> params) throws Exception {
     if (symbolTable.get(funcName) == null || !(symbolTable.get(funcName).getValue() instanceof FunctionDeclaration)) {
       throw new Exception("symbol not found or symbol is not a function: " + funcName);
     }
@@ -264,5 +229,9 @@ public class FunctionCaller {
       return e.evaluate(statement, itr);
     }
     return null;
+  }
+  
+  private Object invokeSystemFunction(String funcName, SymbolTable symbolTable, File file, List<Object> params) throws Exception {
+    return commandMap.get(funcName).run(symbolTable, file, params);
   }
 }
