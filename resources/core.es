@@ -158,6 +158,11 @@ function ES:RefreshAll() {
 
 function ES:CheckMetaData(object) {
   :Log(DEBUG, 'ES:CheckMetaData(' + object + ')');
+  if (object == null) {
+    :Log(DEBUG, 'invoking :Ds()');
+    :Ds(ES:CheckMetaData);
+    return;
+  }
   series = ES:Load(object);
   if (series == null) {
     throw 'Series does not exist: ' + object;
