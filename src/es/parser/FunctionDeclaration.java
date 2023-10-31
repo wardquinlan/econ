@@ -36,6 +36,16 @@ public class FunctionDeclaration extends Statement {
 
   @Override
   public String toString() {
-    return "{FunctionDeclaration: }";
+    StringBuffer sb = new StringBuffer("{FunctionDeclaration: ");
+    sb.append(name);
+    sb.append("(");
+    for (int i = 0; i < params.size(); i++) {
+      sb.append(params.get(i));
+      if (i != params.size() - 1) {
+        sb.append(", ");
+      }
+    }
+    sb.append(")}");
+    return sb.toString();
   }
 }
