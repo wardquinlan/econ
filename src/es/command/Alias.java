@@ -28,6 +28,10 @@ public class Alias implements Command {
   
   @Override
   public Object run(SymbolTable symbolTable, File file, List<Object> params) throws Exception {
+    if (params.size() == 0) {
+      FunctionCaller.getInstance().alias();
+      return null;
+    }
     Utils.validate(params, 2, 2);
     if (!(params.get(0) instanceof String)) {
       throw new Exception(params.get(0) + " is not a String");
@@ -35,8 +39,7 @@ public class Alias implements Command {
     if (!(params.get(1) instanceof String)) {
       throw new Exception(params.get(1) + " is not a String");
     }
-    FunctionCaller functionCaller = FunctionCaller.getInstance();
-    functionCaller.alias((String) params.get(0), (String) params.get(1));
+    FunctionCaller.getInstance().alias((String) params.get(0), (String) params.get(1));
     return null;
   }
 }

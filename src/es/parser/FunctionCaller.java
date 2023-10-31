@@ -90,6 +90,7 @@ import es.core.Utils;
 
 public class FunctionCaller {
   private Map<String, Command> commandMap = new TreeMap<>();
+  private Map<String, String> aliasMap = new TreeMap<>();
 
   static final int TIME_SERIES_COL_WIDTHS[] = {5, 20, 30, 12, 30};
   static final int TIME_SERIES_DATA_COL_WIDTHS[] = {5, 10, 10};
@@ -148,9 +149,7 @@ public class FunctionCaller {
     commandMap.put(":Max", new es.command.Max());
     commandMap.put(":Min", new es.command.Min());
     commandMap.put(":Get", new Get());
-    //commandMap.put(":Assert", new Assert());
     commandMap.put(":Defined", new Defined());
-    //commandMap.put(":Exists", new Exists());
     commandMap.put(":GetType", new GetType());
     commandMap.put(":GetUnits", new GetUnits());
     commandMap.put(":GetFrequency", new GetFrequency());
@@ -178,10 +177,6 @@ public class FunctionCaller {
     commandMap.put(":Iterate", new Iterate());
     commandMap.put(":Alias", new Alias());
     commandMap.put(":Functions", new Functions());
-    // I can't think of a way to use this to conditionally include files.  If we create an 'if' block, then all the constants (or whatever) are in the
-    // scope of the if block.  So this doesn't work.
-    
-    // this might be relevant for other reasons, though: it is a way to modify a global scope from within a local scope
     commandMap.put(":GPut", new GPut());
     if (Settings.getInstance().isTestMode()) {
       commandMap.put(":Collapse", new Collapse());
@@ -191,17 +186,12 @@ public class FunctionCaller {
       commandMap.put(":Qdb", new QDB());
       commandMap.put(":Qtp", new QTP());
     }
-    // make namespace aliases for all the commands
-    /*
-    Map<String, Command> map = new HashMap<>();
-    for (String key: commandMap.keySet()) {
-      String fn = Utils.ROOT_NAMESPACE + Character.toUpperCase(key.charAt(0)) + key.substring(1);
-      //System.out.println(key + " => " + fn);
-      //System.out.println(commandMap.get(key));
-      map.put(fn, commandMap.get(key));
+  }
+  
+  public void alias() {
+    for (String key: aliasMap.keySet()) {
+      System.out.println(key + " -> " + aliasMap.get(key) + "()");
     }
-    commandMap.putAll(map);
-    */
   }
   
   public void alias(String alias, String name) throws Exception {
@@ -212,6 +202,7 @@ public class FunctionCaller {
     Utils.checkNameSpace(alias);
     Utils.validateRootNameSpaceWrite(alias);
     commandMap.put(alias, cmd);
+    aliasMap.put(alias, name);
   }
   
   public boolean isFunction(String funcName) {

@@ -7,6 +7,7 @@ import java.util.Set;
 import java.util.TreeSet;
 
 import es.core.Utils;
+import es.parser.FunctionCaller;
 import es.parser.FunctionDeclaration;
 import es.parser.Symbol;
 import es.parser.SymbolTable;
@@ -41,7 +42,7 @@ public class Functions implements Command {
       if (symbol.getValue() instanceof FunctionDeclaration) {
         FunctionDeclaration decl = (FunctionDeclaration) symbol.getValue();
         if (key.equals(decl.getName())) {
-          valueSet.add(decl.toString());
+          valueSet.add(decl.toString() + ";");
         } else {
           aliasSet.add(key + " -> " + decl.toString());
         }
@@ -54,6 +55,8 @@ public class Functions implements Command {
     for (String fn: aliasSet) {
       System.out.println(fn);
     }
+    System.out.println();
+    FunctionCaller.getInstance().alias();
     return null;
   }
 }
