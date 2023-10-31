@@ -89,6 +89,18 @@ function ES:Update(object) {
   }
 }
 
+function ES:LastUpdated(object) {
+  :Log(DEBUG, 'ES:LastUpdated(' + object + ')');
+  series = ES:Load(object);
+  D = :Date(series);
+  :Printf('%-6d%-22s%s\n', :GetId(series), :GetName(series), :Get(D, :GetSize(D) - 1));
+}
+
+function ES:LastUpdatedReport() {
+  :Log(DEBUG, 'ES:LastUpdaetdReport()');
+  :Ds(ES:LastUpdated);
+}
+
 function ES:UpdateAll() {
   :Log(DEBUG, 'ES:UpdateAll()');
   :Ds(ES:Update);
