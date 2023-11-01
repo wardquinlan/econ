@@ -27,5 +27,6 @@ include 'returns.es';
 include 'strings.es';
 include 'trycatch.es';
 include 'references.es';
+include 'const.es';
 
 print("*** TESTS COMPLETED SUCCESSFULLY ***");
