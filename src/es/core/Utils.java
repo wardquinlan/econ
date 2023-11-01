@@ -17,6 +17,9 @@ import es.gui.MinMaxPair;
 import es.gui.Panel;
 import es.gui.Scaler;
 import es.gui.Series;
+import es.parser.FunctionDeclaration;
+import es.parser.Symbol;
+import es.parser.SymbolTable;
 
 public class Utils {
   private static Log log = LogFactory.getFactory().getInstance(Utils.class);
@@ -515,6 +518,19 @@ public class Utils {
     
     if (params.size() > max) {
       throw new Exception("too many arguments");
+    }
+  }
+  
+  public static void functionReferenceCheck(SymbolTable symbolTable, String name) throws Exception {
+    // check for function references to name
+    for (String key: symbolTable.keySet()) {
+      Symbol symbol = symbolTable.get(key);
+      if (symbol.getValue() instanceof FunctionDeclaration) {
+        FunctionDeclaration decl = (FunctionDeclaration) symbol.getValue();
+        if (!symbol.getName().equals(name) && !symbol.getName().equals(decl.getName())) {
+          throw new Exception("function declaration has references: " + decl.getName());
+        }
+      }
     }
   }
 }
