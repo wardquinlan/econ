@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
-import es.command.Alias;
+import es.command.SystemAlias;
 import es.command.Average;
 import es.command.Cat;
 import es.command.Change;
@@ -172,7 +172,7 @@ public class FunctionCaller {
     commandMap.put(":SubString", new SubString());
     commandMap.put(":GetLength", new GetLength());
     commandMap.put(":Iterate", new Iterate());
-    commandMap.put(":Alias", new Alias());
+    commandMap.put(":Alias", new SystemAlias());
     commandMap.put(":Functions", new Functions());
     commandMap.put(":GPut", new GPut());
     if (Settings.getInstance().isTestMode()) {

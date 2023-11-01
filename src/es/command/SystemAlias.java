@@ -8,7 +8,7 @@ import es.core.Utils;
 import es.parser.FunctionCaller;
 import es.parser.SymbolTable;
 
-public class Alias implements Command {
+public class SystemAlias implements Command {
   @Override
   public String getSummary() {
     return "void    " + Utils.ROOT_NAMESPACE + "Alias(String alias, String systemFunction);";

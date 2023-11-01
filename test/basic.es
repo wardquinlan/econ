@@ -3,8 +3,7 @@
 function fn() {
   function fn() {}
   
-  p = fn;
-  #p = null;
+  :GPut('p', fn);
   fn = null;
 }
 fn();

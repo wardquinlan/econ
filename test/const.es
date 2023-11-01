@@ -46,18 +46,19 @@ function C:FN4() {
   pfn = C:FN4;
   C:FN4 = null; # this should work because it is local
   #:GGet('C:FN4');
-  C:FN4 = null; # this should also work because it is local
+  :GPut('C:FN4', null); # this should also work because it is local
 }
+#pfn = C:FN4;
 C:FN4();
 #C:FN4 = null;
 
-#function fn() {
-#  :Print('hello');
-#  #function fn() {}
-#  p = fn;
-#  fn = null;
-#  :Print(fn);
-#}
-#fn();
+function fn() {
+  :Print('hello');
+  #function fn() {}
+  p = fn;
+  fn = null;
+  :Print(fn);
+}
+fn();
 
 print('CONST/REF TESTS PASSED');
