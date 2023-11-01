@@ -42,6 +42,15 @@ function C:FN3() {
 }
 C:FN3();
 
+function C:FN4() {
+  pfn = C:FN4;
+  C:FN4 = null; # this should work because it is local
+  #:GGet('C:FN4');
+  C:FN4 = null; # this should also work because it is local
+}
+C:FN4();
+#C:FN4 = null;
+
 #function fn() {
 #  :Print('hello');
 #  #function fn() {}

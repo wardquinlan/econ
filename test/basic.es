@@ -3,8 +3,8 @@
 function fn() {
   function fn() {}
   
-  #p = fn;
-  p = null;
+  p = fn;
+  #p = null;
   fn = null;
 }
 fn();
