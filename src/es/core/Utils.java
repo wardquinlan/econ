@@ -527,7 +527,9 @@ public class Utils {
       Symbol symbol = symbolTable.get(key);
       if (symbol.getValue() instanceof FunctionDeclaration) {
         FunctionDeclaration decl = (FunctionDeclaration) symbol.getValue();
-        if (!symbol.getName().equals(lvalueName) && !symbol.getName().equals(decl.getName())) {
+        if (lvalueName.equals(decl.getName()) && 
+            !symbol.getName().equals(lvalueName) && 
+            !symbol.getName().equals(decl.getName())) {
           throw new Exception("function declaration has references: " + decl.getName());
         }
       }
