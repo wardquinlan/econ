@@ -46,4 +46,13 @@ function h() {
 h();
 h = null;
 
+function fn() {
+  :Print('hello');
+  p = fn;
+  fn = null;
+  :Print(fn);
+}
+
+fn();
+
 print('REFERENCES TESTS PASSED');
