@@ -1,6 +1,7 @@
 package es.parser;
 
 import java.util.ArrayList;
+import java.util.Formatter;
 import java.util.List;
 
 import es.core.Utils;
@@ -56,7 +57,14 @@ public class FunctionDeclaration extends Statement {
         sb.append(", ");
       }
     }
-    sb.append(")");
+
+    Formatter formatter = new Formatter();
+    try {
+      sb.append(") [0x" + formatter.format("%x", hashCode()).toString() + "]");
+    } finally {
+      formatter.close();
+    }
+    
     return sb.toString();
   }
 }

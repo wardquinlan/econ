@@ -40,7 +40,7 @@ public class Functions implements Command {
       if (symbol.getValue() instanceof FunctionDeclaration) {
         FunctionDeclaration decl = (FunctionDeclaration) symbol.getValue();
         if (key.equals(decl.getName())) {
-          valueSet.add(decl.toString() + ";");
+          valueSet.add(decl.toString());
         }
       }
     }
