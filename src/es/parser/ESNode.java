@@ -172,6 +172,18 @@ public class ESNode implements Evaluable {
       if (symbol.isConstant()) {
         throw new Exception("cannot overwrite symbol with a constant: " + symbol.getName());
       }
+      if (symbolT.getValue() instanceof FunctionDeclaration) {
+        // check for references to this function
+        for (String key: symbolTable.keySet()) {
+          Symbol symbolRef = symbolTable.get(key);
+          if (symbolRef.getValue() instanceof FunctionDeclaration) {
+            FunctionDeclaration decl = (FunctionDeclaration) symbolRef.getValue();
+            if (!symbol.getName().equals(symbolRef.getName()) && !symbolRef.getName().equals(decl.getName())) {
+              throw new Exception("cannot re-assign function declaration: has references " + decl.getName());
+            }
+          }
+        }
+      }
     }
     Symbol symbolNew = new Symbol(symbol.getName(), val, symbol.isConstant());
     symbolTable.put(symbolNew.getName(), symbolNew);
