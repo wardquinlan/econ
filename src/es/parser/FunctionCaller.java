@@ -220,7 +220,7 @@ public class FunctionCaller {
     Utils.ASSERT(functionDeclaration.getParams().size() == params.size(), "function parmeters size mismatch");
     SymbolTable childSymbolTable = new SymbolTable(symbolTable);
     for (int i = 0; i < params.size(); i++) {
-      childSymbolTable.localPut(functionDeclaration.getParams().get(i), new Symbol(functionDeclaration.getParams().get(i), params.get(i)));
+      childSymbolTable.put(functionDeclaration.getParams().get(i), new Symbol(functionDeclaration.getParams().get(i), params.get(i)));
     }
     ESIterator<Statement> itr = new ESIterator<>(functionDeclaration.getStatements());
     if (itr.hasNext()) {

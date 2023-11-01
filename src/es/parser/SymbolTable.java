@@ -25,6 +25,10 @@ public class SymbolTable {
     return symbol;
   }
   
+  public void put(String symbolName, Symbol symbol) {
+    map.put(symbolName, symbol);
+  }
+  
   public Symbol globalGet(String symbolName) {
     SymbolTable symbolTable = this;
     while (symbolTable.getParent() != null) {
@@ -45,38 +49,12 @@ public class SymbolTable {
     symbolTable.put(symbolName, symbol);
   }
 
-  public void put(String symbolName, Symbol symbol) {
-    map.put(symbolName, symbol);
-  }
-  
-  public void localPut(String symbolName, Symbol symbol) {
-    map.put(symbolName, symbol);
-  }
-
-/*
-  public void put(String symbolName, Symbol symbol) {
-    if (map.get(symbolName) != null) {
-      // if already in local symbol table
-      map.put(symbolName, symbol);
-    } else if (parent != null && parent.get(symbolName) != null) {
-      // if already in parent symbol table
-      parent.put(symbolName, symbol);
-    } else {
-      // if in neither
-      map.put(symbolName, symbol);
-    }
-  }
-*/
-  
   public Set<String> keySet() {
     Set<String> set = new HashSet<String>();
+    if (parent != null) {
+      set.addAll(parent.keySet());
+    }
     set.addAll(map.keySet());
-    if (parent == null) {
-      return set;
-    }
-    for (String key: parent.keySet()) {
-      set.add(key);
-    }
     return set;
   }
 
