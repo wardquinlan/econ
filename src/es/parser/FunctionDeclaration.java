@@ -17,6 +17,7 @@ public class FunctionDeclaration extends Statement {
   
   @Override
   public Object evaluate(SymbolTable symbolTable) throws Exception {
+    Utils.functionReferenceCheck(symbolTable, name);
     Symbol symbolNew = new Symbol(name, this);
     symbolTable.put(name, symbolNew);
     return null;
