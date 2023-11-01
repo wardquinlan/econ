@@ -522,22 +522,25 @@ public class Utils {
   }
   
   public static void functionReferenceCheck(SymbolTable symbolTable, Symbol symbolLValue) throws Exception {
-    String lvalueName = symbolLValue.getName();
-    Symbol symbolExisting = symbolTable.localGet(symbolLValue.getName());
+    String lvalue = symbolLValue.getName();
+    Symbol symbolExisting = symbolTable.localGet(lvalue);
     if (symbolExisting == null || !(symbolExisting.getValue() instanceof FunctionDeclaration)) {
       return;
     }
     FunctionDeclaration declExisting = (FunctionDeclaration) symbolExisting.getValue();
+    if (!lvalue.equals(declExisting.getName())) {
+      return;
+    }
     for (String key: symbolTable.localKeySet()) {
       Symbol symbol = symbolTable.localGet(key);
       if (symbol.getValue() instanceof FunctionDeclaration) {
         FunctionDeclaration decl = (FunctionDeclaration) symbol.getValue();
+        log.debug("lvalue name=" + lvalue);
         log.debug("symbol name=" + symbol.getName());
-        log.debug("lvalue name=" + lvalueName);
         log.debug("decl hashcode=" + decl.hashCode());
         log.debug("declExisting hashcode=" + declExisting.hashCode());
-        if (!symbol.getName().equals(lvalueName) && declExisting.hashCode() == decl.hashCode()) {
-          throw new Exception("function declaration is referenced: " + decl.getName());
+        if (!lvalue.equals(symbol.getName()) && declExisting.hashCode() == decl.hashCode()) {
+          throw new Exception("function declaration '" + decl.getName() + "' is referenced by '" + symbol.getName() + "'");
         }
       }
     }
