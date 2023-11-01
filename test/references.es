@@ -26,4 +26,24 @@ try {
   print('Exception thrown, as expected');
 }
 
+function h() {
+  print('h() called');
+  try {
+    p = h;
+    h = null;
+    print('SHOULD NOT ARRIVE HERE!!!');
+  } catch(ex) {
+    print('Exception thrown, as expected');
+  }
+  p = null;
+  h = 3; # goes into local scope
+  p = h;
+  h = null;
+  print(p);
+  print('SHOULD ARRIVE HERE');
+}
+
+h();
+h = null;
+
 print('REFERENCES TESTS PASSED');
