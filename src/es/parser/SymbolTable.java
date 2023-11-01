@@ -49,6 +49,7 @@ public class SymbolTable {
       symbolTable = symbolTable.getParent();
     }
     Utils.symbolConstCheck(symbolTable, symbol);
+    Utils.functionReferenceCheck(symbolTable, symbol);
     symbolTable.put(symbolName, symbol);
   }
 

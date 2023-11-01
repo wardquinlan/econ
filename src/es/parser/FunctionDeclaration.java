@@ -9,6 +9,7 @@ public class FunctionDeclaration extends Statement {
   private String name;
   private List<String> params = new ArrayList<>();
   private List<Statement> statements = new ArrayList<>();
+  private boolean constant = false;
   
   public FunctionDeclaration(String name) throws Exception {
     Utils.validateRootNameSpaceWrite(name);
@@ -17,14 +18,23 @@ public class FunctionDeclaration extends Statement {
   
   @Override
   public Object evaluate(SymbolTable symbolTable) throws Exception {
-    Symbol symbol = new Symbol(name, this, true);
+    Symbol symbol = new Symbol(name, this, isConstant());
     Utils.symbolConstCheck(symbolTable, symbol);
+    Utils.functionReferenceCheck(symbolTable, symbol);
     symbolTable.put(name, symbol);
     return null;
   }
   
   public String getName() {
     return name;
+  }
+
+  public boolean isConstant() {
+    return constant;
+  }
+
+  public void setConstant(boolean constant) {
+    this.constant = constant;
   }
 
   public List<String> getParams() {
