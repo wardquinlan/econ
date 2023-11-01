@@ -523,14 +523,20 @@ public class Utils {
   
   public static void functionReferenceCheck(SymbolTable symbolTable, Symbol symbolLValue) throws Exception {
     String lvalueName = symbolLValue.getName();
+    Symbol symbolExisting = symbolTable.localGet(symbolLValue.getName());
+    if (symbolExisting == null || !(symbolExisting.getValue() instanceof FunctionDeclaration)) {
+      return;
+    }
+    FunctionDeclaration declExisting = (FunctionDeclaration) symbolExisting.getValue();
     for (String key: symbolTable.localKeySet()) {
-      Symbol symbol = symbolTable.get(key);
+      Symbol symbol = symbolTable.localGet(key);
       if (symbol.getValue() instanceof FunctionDeclaration) {
         FunctionDeclaration decl = (FunctionDeclaration) symbol.getValue();
-        if (lvalueName.equals(decl.getName()) && 
-            symbolTable.localGet(lvalueName) != null && // only if lvalueName is within the current scope
-            !symbol.getName().equals(lvalueName) && 
-            !symbol.getName().equals(decl.getName())) {
+        log.debug("symbol name=" + symbol.getName());
+        log.debug("lvalue name=" + lvalueName);
+        log.debug("decl hashcode=" + decl.hashCode());
+        log.debug("declExisting hashcode=" + declExisting.hashCode());
+        if (!symbol.getName().equals(lvalueName) && declExisting.hashCode() == decl.hashCode()) {
           throw new Exception("function declaration is referenced: " + decl.getName());
         }
       }

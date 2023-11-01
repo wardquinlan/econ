@@ -1,11 +1,11 @@
+:SetLogLevel(0);
 
 function fn() {
-  :Print('hello');
-  #function fn() {}
+  function fn() {}
+  
   p = fn;
+  p = null;
   fn = null;
-  :Print(fn);
 }
-
 fn();
 
