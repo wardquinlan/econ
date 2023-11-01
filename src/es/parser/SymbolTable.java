@@ -44,6 +44,9 @@ public class SymbolTable {
   }
   
   public void globalPut(String symbolName, Symbol symbol) throws Exception {
+    if (symbol.getValue() instanceof FunctionDeclaration) {
+      throw new Exception("cannot put a function declaration into the global scope: " + ((FunctionDeclaration) symbol.getValue()).getName());
+    }
     SymbolTable symbolTable = this;
     while (symbolTable.getParent() != null) {
       symbolTable = symbolTable.getParent();
