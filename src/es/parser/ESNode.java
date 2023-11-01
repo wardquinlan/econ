@@ -164,18 +164,18 @@ public class ESNode implements Evaluable {
       timeSeries.setTitle(timeSeries1.getTitle());
       val = timeSeries;
     }
-    Symbol symbolT = symbolTable.get(symbol.getName());
-    if (symbolT != null) {
-      if (symbolT.isConstant()) {
-        throw new Exception("symbol is already defined as a constant: " + symbolT.getName());
+    Symbol symbolExisting = symbolTable.get(symbol.getName());
+    if (symbolExisting != null) {
+      if (symbolExisting.isConstant()) {
+        throw new Exception("symbol is already defined as a constant: " + symbolExisting.getName());
       }
       if (symbol.isConstant()) {
         throw new Exception("cannot overwrite symbol with a constant: " + symbol.getName());
       }
     }
     Utils.functionReferenceCheck(symbolTable, symbol.getName());
-    Symbol symbolNew = new Symbol(symbol.getName(), val, symbol.isConstant());
-    symbolTable.put(symbolNew.getName(), symbolNew);
+    symbol.setValue(val);
+    symbolTable.put(symbol.getName(), symbol);
     return val;
   }
   
