@@ -25,6 +25,10 @@ public class SymbolTable {
     return symbol;
   }
   
+  public Symbol localGet(String symbolName) {
+    return map.get(symbolName);
+  }
+
   public void put(String symbolName, Symbol symbol) {
     map.put(symbolName, symbol);
   }
@@ -58,6 +62,10 @@ public class SymbolTable {
     return set;
   }
 
+  public Set<String> localKeySet() {
+    return map.keySet();
+  }
+  
   public SymbolTable getParent() {
     return parent;
   }

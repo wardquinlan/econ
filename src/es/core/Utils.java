@@ -523,11 +523,12 @@ public class Utils {
   
   public static void functionReferenceCheck(SymbolTable symbolTable, Symbol symbolLValue) throws Exception {
     String lvalueName = symbolLValue.getName();
-    for (String key: symbolTable.keySet()) {
+    for (String key: symbolTable.localKeySet()) {
       Symbol symbol = symbolTable.get(key);
       if (symbol.getValue() instanceof FunctionDeclaration) {
         FunctionDeclaration decl = (FunctionDeclaration) symbol.getValue();
         if (lvalueName.equals(decl.getName()) && 
+            symbolTable.localGet(lvalueName) != null && // only if lvalueName is within the current scope
             !symbol.getName().equals(lvalueName) && 
             !symbol.getName().equals(decl.getName())) {
           throw new Exception("function declaration has references: " + decl.getName());
@@ -537,7 +538,7 @@ public class Utils {
   }
   
   public static void symbolConstCheck(SymbolTable symbolTable, Symbol symbolLValue) throws Exception {
-    Symbol symbolExisting = symbolTable.get(symbolLValue.getName());
+    Symbol symbolExisting = symbolTable.localGet(symbolLValue.getName());
     if (symbolExisting != null) {
       if (symbolExisting.isConstant()) {
         throw new Exception("symbol is already defined as a constant: " + symbolExisting.getName());
