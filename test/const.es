@@ -11,14 +11,11 @@ try {
 
 function C:FN1() {
   C:PFN = C:FN1;
-  C:FN1 = null;
 }
 C:FN1();
-C:FN1 = null;
 
-const function C:FN2() {
+function C:FN2() {
   C:PFN = C:FN2;
-  C:FN2 = null;
 }
 C:FN2();
 try {

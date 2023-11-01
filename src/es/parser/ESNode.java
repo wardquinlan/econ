@@ -165,7 +165,6 @@ public class ESNode implements Evaluable {
       val = timeSeries;
     }
     Utils.symbolConstCheck(symbolTable, symbol);
-    Utils.functionReferenceCheck(symbolTable, symbol);
     symbol.setValue(val);
     symbolTable.put(symbol.getName(), symbol);
     return val;

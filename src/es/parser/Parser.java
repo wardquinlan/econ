@@ -40,12 +40,7 @@ public class Parser {
   }
   
   private void parseStatement(List<Statement> list, Token tk, ESIterator<Token> itr) throws Exception {
-    if (tk.getType() == Token.CONST && itr.hasNext() && itr.peek().getType() == Token.FUNCDECL) {
-      itr.next();
-      FunctionDeclaration functionDeclaration = (FunctionDeclaration) parseFunction(tk, itr);
-      functionDeclaration.setConstant(true);
-      list.add(functionDeclaration);
-    } else if (tk.getType() == Token.FUNCDECL) {
+    if (tk.getType() == Token.FUNCDECL) {
       list.add(parseFunction(tk, itr));
     } else if (tk.getType() == Token.RETURN) {
       list.add(parseReturn(tk, itr));

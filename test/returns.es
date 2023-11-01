@@ -1,13 +1,13 @@
 print('RUNNING RETURNS TESTS');
 
-function f() {
+function ff() {
 }
 
-function g() {
+function gg() {
   return;
 }
 
-function h() {
+function hh() {
   return 7;
 }
 
@@ -31,9 +31,9 @@ function outer3() {
   return inner3();
 }
 
-assert(f() == null);
-assert(g() == null);
-assert(h() == 7);
+assert(ff() == null);
+assert(gg() == null);
+assert(hh() == 7);
 assert(outer1() == null);
 assert(outer2() == null);
 assert(outer3() == 'abc');

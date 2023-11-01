@@ -1,6 +1,6 @@
 print('RUNNING NULL TESTS');
 
-function f() {
+function fn() {
   assert(defined('a'));
   assert(a == null);
   a = 5;
@@ -18,5 +18,5 @@ assert(3 != null);
 assert(true != null);
 assert('abc' != null);
 
-f();
+fn();
 assert(a == null);
