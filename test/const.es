@@ -60,4 +60,22 @@ try {
 }
 
 :Print('----------------');
+
+const f7 = 7;
+try {
+  f7 = 7;
+} catch (ex) {
+  :Print('exception thrown, as expected: ' + ex);
+}
+
+:Print('----------------');
+
+f8 = 8;
+try {
+  const f8 = 8;
+} catch (ex) {
+  :Print('exception thrown, as expected: ' + ex);
+}
+
+:Print('----------------');
 :Print('CONST/REF TESTS PASSED');
