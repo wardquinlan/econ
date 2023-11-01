@@ -11,9 +11,9 @@
   <property name="output" value="output"/>
   <property name="classes" value="classes"/>
   <tstamp>
-       <format property="tstamp" pattern="yyyyMMdd_HHmmss"/>
+       <format property="tstamp" pattern="yyyy-MM-dd_HH:mm:ss"/>
   </tstamp>
-  <property name="version" value="B_${tstamp}"/>
+  <property name="version" value="Build_${tstamp}"/>
 
   <path id="buildpath">
     <pathelement location="${lib}/log4j-1.2.14.jar"/>
