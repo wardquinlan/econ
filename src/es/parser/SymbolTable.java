@@ -5,6 +5,8 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+import es.core.Utils;
+
 public class SymbolTable {
   private SymbolTable parent;
   private Map<String, Symbol> map = new HashMap<String, Symbol>();
@@ -46,10 +48,8 @@ public class SymbolTable {
     while (symbolTable.getParent() != null) {
       symbolTable = symbolTable.getParent();
     }
-    Symbol tmp = symbolTable.get(symbolName);
-    if (tmp != null && tmp.isConstant()) {
-      throw new Exception("symbol is already defined as a const: " + symbolName);
-    }
+    Utils.symbolConstCheck(symbolTable, symbol);
+    Utils.functionReferenceCheck(symbolTable, symbol);
     symbolTable.put(symbolName, symbol);
   }
 
