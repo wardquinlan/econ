@@ -11,13 +11,13 @@ import es.parser.SymbolTable;
 public class SystemAlias implements Command {
   @Override
   public String getSummary() {
-    return "void    " + Utils.ROOT_NAMESPACE + "Alias(String alias, String systemFunction);";
+    return "void    " + Utils.ROOT_NAMESPACE + "SystemAlias(String alias, String systemFunction);";
   }
 
   @Override
   public List<String> getDetails() {
     List<String> list = new ArrayList<>();
-    list.add("Creates the alias 'alias' to ES System Function 'systemFunction'");
+    list.add("Creates the system alias 'alias' to ES System Function 'systemFunction'");
     return list;
   }
 
