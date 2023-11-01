@@ -521,13 +521,13 @@ public class Utils {
     }
   }
   
-  public static void functionReferenceCheck(SymbolTable symbolTable, String name) throws Exception {
+  public static void functionReferenceCheck(SymbolTable symbolTable, String lvalueName) throws Exception {
     // check for function references to name
     for (String key: symbolTable.keySet()) {
       Symbol symbol = symbolTable.get(key);
       if (symbol.getValue() instanceof FunctionDeclaration) {
         FunctionDeclaration decl = (FunctionDeclaration) symbol.getValue();
-        if (!symbol.getName().equals(name) && !symbol.getName().equals(decl.getName())) {
+        if (!symbol.getName().equals(lvalueName) && !symbol.getName().equals(decl.getName())) {
           throw new Exception("function declaration has references: " + decl.getName());
         }
       }
