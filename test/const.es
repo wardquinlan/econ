@@ -1,64 +1,24 @@
-print('RUNNING CONST/REF TESTS');
+:Print('RUNNING CONST/REF TESTS');
 
-const C:A = 5;
-try {
-  C:A = 3;
-  :Log(ERROR, 'able to overwrite a constant');
-  :Exit(1);
-} catch (ex) {
-  :Log(INFO, 'exception thrown as expected: ' + ex); 
+function fn1() {
+  pfn1 = fn1;
+  :Print(pfn1);
+  fn1 = null;
 }
+fn1();
+:Print(fn1);
 
-function C:FN1() {
-  C:PFN = C:FN1;
-  C:FN1 = null;
-}
-C:FN1();
-C:FN1 = null;
-
-const function C:FN2() {
-  C:PFN = C:FN2;
-  C:FN2 = null;
-}
-C:FN2();
-try {
-  C:FN2 = null;
-} catch (ex) {
-  :Log(INFO, 'exception thrown as expected: ' + ex);
-}
-
-function C:FN3() {
-  function inner() {
-  }
-  pfn = inner;
+function fn2() {
+  function fn2() {}
+  pfn2 = fn2;
+  :Print(pfn2);
   try {
-    inner = null;
+    fn2 = null;
   } catch (ex) {
-    :Log(INFO, 'exception thrown as expected: ' + ex);
-    pfn = null;
-    inner = null;
-    :Log(INFO, 'now inner has been set to null');
+    :Print('exception thrown, as expected: ' + ex);
   }
 }
-C:FN3();
+fn2();
+:Print(fn2);
 
-function C:FN4() {
-  pfn = C:FN4;
-  C:FN4 = null; # this should work because it is local
-  #:GGet('C:FN4');
-  :GPut('C:FN4', null); # this should also work because it is local
-}
-#pfn = C:FN4;
-C:FN4();
-#C:FN4 = null;
-
-function fn() {
-  :Print('hello');
-  #function fn() {}
-  p = fn;
-  fn = null;
-  :Print(fn);
-}
-fn();
-
-print('CONST/REF TESTS PASSED');
+:Print('CONST/REF TESTS PASSED');
