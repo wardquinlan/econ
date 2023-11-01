@@ -11,20 +11,19 @@ import es.parser.FunctionDeclaration;
 import es.parser.Symbol;
 import es.parser.SymbolTable;
 
-public class Functions implements Command {
-  
+public class UserAlias implements Command {
   @Override
   public String getSummary() {
-    return "void    " + Utils.ROOT_NAMESPACE + "Functions();";
+    return "void    " + Utils.ROOT_NAMESPACE + "UserAlias();";
   }
-  
+
   @Override
   public List<String> getDetails() {
     List<String> list = new ArrayList<>();
-    list.add("Lists user functions.");
+    list.add("Lists all user aliases.");
     return list;
   }
-  
+
   @Override
   public String getReturns() {
     return null;
@@ -33,18 +32,18 @@ public class Functions implements Command {
   @Override
   public Object run(SymbolTable symbolTable, File file, List<Object> params) throws Exception {
     Utils.validate(params, 0, 0);
-    Set<String> valueSet = new TreeSet<>();
+    Set<String> aliasSet = new TreeSet<>();
     
     for(String key: symbolTable.keySet()) {
       Symbol symbol = symbolTable.get(key);
       if (symbol.getValue() instanceof FunctionDeclaration) {
         FunctionDeclaration decl = (FunctionDeclaration) symbol.getValue();
-        if (key.equals(decl.getName())) {
-          valueSet.add(decl.toString() + ";");
+        if (!key.equals(decl.getName())) {
+          aliasSet.add(key + "() -> " + decl.toString());
         }
       }
     }
-    for (String fn: valueSet) {
+    for (String fn: aliasSet) {
       System.out.println(fn);
     }
     System.out.println();

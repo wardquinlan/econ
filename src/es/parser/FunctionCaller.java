@@ -83,6 +83,7 @@ import es.command.Sum;
 import es.command.Timestamp;
 import es.command.Today;
 import es.command.Update;
+import es.command.UserAlias;
 import es.command.Version;
 import es.core.ESIterator;
 import es.core.Settings;
@@ -172,7 +173,8 @@ public class FunctionCaller {
     commandMap.put(":SubString", new SubString());
     commandMap.put(":GetLength", new GetLength());
     commandMap.put(":Iterate", new Iterate());
-    commandMap.put(":Alias", new SystemAlias());
+    commandMap.put(":SystemAlias", new SystemAlias());
+    commandMap.put(":UserAlias", new UserAlias());
     commandMap.put(":Functions", new Functions());
     commandMap.put(":GPut", new GPut());
     if (Settings.getInstance().isTestMode()) {

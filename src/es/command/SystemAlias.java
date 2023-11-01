@@ -11,13 +11,14 @@ import es.parser.SymbolTable;
 public class SystemAlias implements Command {
   @Override
   public String getSummary() {
-    return "void    " + Utils.ROOT_NAMESPACE + "SystemAlias(String alias, String systemFunction);";
+    return "void    " + Utils.ROOT_NAMESPACE + "SystemAlias([String alias, String systemFunction]);";
   }
 
   @Override
   public List<String> getDetails() {
     List<String> list = new ArrayList<>();
-    list.add("Creates the system alias 'alias' to ES System Function 'systemFunction'");
+    list.add("If 'alias' and 'systemFunction' are present, creates the system alias 'alias' to ES System Function 'systemFunction'.");
+    list.add("Otherwise, lists all system aliases.");
     return list;
   }
 
@@ -47,6 +48,7 @@ public class SystemAlias implements Command {
     for (String key: FunctionCaller.getInstance().getAliasMap().keySet()) {
       System.out.println(key + "() -> " + FunctionCaller.getInstance().getAliasMap().get(key) + "()");
     }
+    System.out.println();
   }
   
   public void alias(String alias, String name) throws Exception {
