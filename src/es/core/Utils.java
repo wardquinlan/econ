@@ -531,7 +531,7 @@ public class Utils {
             symbolTable.localGet(lvalueName) != null && // only if lvalueName is within the current scope
             !symbol.getName().equals(lvalueName) && 
             !symbol.getName().equals(decl.getName())) {
-          throw new Exception("function declaration has references: " + decl.getName());
+          throw new Exception("function declaration is referenced: " + decl.getName());
         }
       }
     }
