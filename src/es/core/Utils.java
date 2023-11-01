@@ -521,8 +521,8 @@ public class Utils {
     }
   }
   
-  public static void functionReferenceCheck(SymbolTable symbolTable, String lvalueName) throws Exception {
-    // check for function references to name
+  public static void functionReferenceCheck(SymbolTable symbolTable, Symbol symbolLValue) throws Exception {
+    String lvalueName = symbolLValue.getName();
     for (String key: symbolTable.keySet()) {
       Symbol symbol = symbolTable.get(key);
       if (symbol.getValue() instanceof FunctionDeclaration) {
@@ -532,6 +532,18 @@ public class Utils {
             !symbol.getName().equals(decl.getName())) {
           throw new Exception("function declaration has references: " + decl.getName());
         }
+      }
+    }
+  }
+  
+  public static void symbolConstCheck(SymbolTable symbolTable, Symbol symbolLValue) throws Exception {
+    Symbol symbolExisting = symbolTable.get(symbolLValue.getName());
+    if (symbolExisting != null) {
+      if (symbolExisting.isConstant()) {
+        throw new Exception("symbol is already defined as a constant: " + symbolExisting.getName());
+      }
+      if (symbolLValue.isConstant()) {
+        throw new Exception("cannot overwrite symbol with a constant: " + symbolLValue.getName());
       }
     }
   }

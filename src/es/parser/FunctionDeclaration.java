@@ -18,9 +18,10 @@ public class FunctionDeclaration extends Statement {
   
   @Override
   public Object evaluate(SymbolTable symbolTable) throws Exception {
-    Utils.functionReferenceCheck(symbolTable, name);
-    Symbol symbolNew = new Symbol(name, this, isConstant());
-    symbolTable.put(name, symbolNew);
+    Symbol symbol = new Symbol(name, this, isConstant());
+    Utils.symbolConstCheck(symbolTable, symbol);
+    Utils.functionReferenceCheck(symbolTable, symbol);
+    symbolTable.put(name, symbol);
     return null;
   }
   
