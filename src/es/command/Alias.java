@@ -45,7 +45,7 @@ public class Alias implements Command {
 
   public void alias() {
     for (String key: FunctionCaller.getInstance().getAliasMap().keySet()) {
-      System.out.println(key + " -> " + FunctionCaller.getInstance().getAliasMap().get(key) + "()");
+      System.out.println(key + "() -> " + FunctionCaller.getInstance().getAliasMap().get(key) + "()");
     }
   }
   

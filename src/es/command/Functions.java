@@ -44,7 +44,7 @@ public class Functions implements Command {
         if (key.equals(decl.getName())) {
           valueSet.add(decl.toString() + ";");
         } else {
-          aliasSet.add(key + " -> " + decl.toString());
+          aliasSet.add(key + "() -> " + decl.toString());
         }
       }
     }
@@ -70,7 +70,7 @@ public class Functions implements Command {
 
   public void alias() {
     for (String key: FunctionCaller.getInstance().getAliasMap().keySet()) {
-      System.out.println(key + " -> " + FunctionCaller.getInstance().getAliasMap().get(key) + "()");
+      System.out.println(key + "() -> " + FunctionCaller.getInstance().getAliasMap().get(key) + "()");
     }
   }
 }
