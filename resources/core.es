@@ -4,7 +4,7 @@ const ES:BACKUP_EXT = '.BAK';
 #################################################################################
 # Load / Exist functions
 #################################################################################
-function ES:Load(series, fred) {
+const function ES:Load(series, fred) {
   :Log(DEBUG, 'ES:Load(' + series + ', ' + fred + ')');
   if (series == null) {
     :Log(DEBUG, 'series is null, returning null');
@@ -50,7 +50,7 @@ function ES:Load(series, fred) {
   return null;
 }
 
-function ES:Exists(object) {
+const function ES:Exists(object) {
   :Log(DEBUG, 'ES:Exists(' + object + ')');
   try {
     return :Load(object) != null;
@@ -60,7 +60,7 @@ function ES:Exists(object) {
   }
 }
 
-function ES:AutoLoad(series) {
+const function ES:AutoLoad(series) {
   :Log(DEBUG, 'ES:AutoLoad(' + series + ')');
   series = ES:Load(series);
   # don't load the backups...
@@ -75,7 +75,7 @@ function ES:AutoLoad(series) {
 #################################################################################
 # Update functions
 #################################################################################
-function ES:Update(object) {
+const function ES:Update(object) {
   :Log(DEBUG, 'ES:Update(' + object + ')');
   if (object == null) {
     :Log(DEBUG, 'invoking :Ds()');
@@ -94,7 +94,7 @@ function ES:Update(object) {
   }
 }
 
-function ES:LastUpdated(object) {
+const function ES:LastUpdated(object) {
   :Log(DEBUG, 'ES:LastUpdated(' + object + ')');
   if (object == null) {
     :Log(DEBUG, 'invoking :Ds()');
@@ -107,7 +107,7 @@ function ES:LastUpdated(object) {
                                :Get(D, :GetSize(D) - 1));
 }
 
-function ES:Refresh(object) {
+const function ES:Refresh(object) {
   :Log(DEBUG, 'ES:Refresh(' + object + ')');
   if (!:IsAdmin()) {
     throw 'you must be running in administrative mode to refresh';
@@ -156,7 +156,7 @@ function ES:Refresh(object) {
   }
 }
 
-function ES:CheckMetaData(object) {
+const function ES:CheckMetaData(object) {
   :Log(DEBUG, 'ES:CheckMetaData(' + object + ')');
   if (object == null) {
     :Log(DEBUG, 'invoking :Ds()');
@@ -199,7 +199,7 @@ function ES:CheckMetaData(object) {
 #################################################################################
 # Reset functions
 #################################################################################
-function ES:ResetId(id, idNew) {
+const function ES:ResetId(id, idNew) {
   :Log(DEBUG, 'ES:ResetId(' + id + ', ' + idNew + ')');
   try {
     if (!:IsAdmin()) {
@@ -223,7 +223,7 @@ function ES:ResetId(id, idNew) {
   }
 }
 
-function ES:ResetName(name, nameNew) {
+const function ES:ResetName(name, nameNew) {
   :Log(DEBUG, 'ES:ResetName(' + name + ', ' + nameNew + ')');
   try {
     if (!:IsAdmin()) {
@@ -250,7 +250,7 @@ function ES:ResetName(name, nameNew) {
 #################################################################################
 # Backup function
 #################################################################################
-function ES:Backup(id) {
+const function ES:Backup(id) {
   :Log(DEBUG, 'ES:Backup(' + id + ')');
   try {
     if (!:IsAdmin()) {
@@ -296,7 +296,7 @@ function ES:Backup(id) {
 #################################################################################
 # Highest / Lowest functions
 #################################################################################
-function ES:Highest(object) {
+const function ES:Highest(object) {
   :Log(DEBUG, 'ES:Highest(' + object + ')');
   function fn(idx, d, v) {
     if (v > :GGet('METRICS.highest')) {
@@ -318,7 +318,7 @@ function ES:Highest(object) {
   return :GGet('METRICS.highest');
 }
 
-function ES:Lowest(object) {
+const function ES:Lowest(object) {
   :Log(DEBUG, 'ES:Lowest(' + object + ')');
   function fn(idx, d, v) {
     if (v < :GGet('METRICS.lowest')) {
@@ -343,7 +343,7 @@ function ES:Lowest(object) {
 #################################################################################
 # Usage functions
 #################################################################################
-function ES:Usage() {
+const function ES:Usage() {
   function m(object) {
     ES:Assert(object != null, 'object is unexpectedly null');
     series = ES:Load(object);
@@ -367,7 +367,7 @@ function ES:Usage() {
   :Print('Number of records stored in datastore: ' + METRICS.numberOfRecords);
 }
 
-function ES:Defaults() {
+const function ES:Defaults() {
   :Print('defaults.panel.backgroundcolor = Color');
   :Print('defaults.panel.dxincr = int');
   :Print('defaults.panel.gridlinetextwidth = int');
@@ -391,7 +391,7 @@ function ES:Defaults() {
 #################################################################################
 # StartsWith / EndsWith functions
 #################################################################################
-function ES:StartsWith(string, prefix) {
+const function ES:StartsWith(string, prefix) {
   :Log(DEBUG, 'ES:StartsWith(' + string + ', ' + prefix + ')');
   if (:GetLength(prefix) > :GetLength(string)) {
     return false;
@@ -401,7 +401,7 @@ function ES:StartsWith(string, prefix) {
   return ss == prefix;
 }
 
-function ES:EndsWith(string, suffix) {
+const function ES:EndsWith(string, suffix) {
   :Log(DEBUG, 'ES:EndsWith(' + string + ', ' + suffix + ')');
   if (:GetLength(suffix) > :GetLength(string)) {
     return false;
@@ -418,7 +418,7 @@ function ES:EndsWith(string, suffix) {
 #################################################################################
 # Assert
 #################################################################################
-function ES:Assert(condition, message) {
+const function ES:Assert(condition, message) {
   :Log(DEBUG, 'ES:Assert(' + condition + ', ' + message + ')');
   if (!condition) {
     if (message == null) {
