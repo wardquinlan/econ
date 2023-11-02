@@ -6,6 +6,7 @@ import java.util.List;
 
 import es.core.TimeSeries;
 import es.core.Utils;
+import es.parser.FunctionDeclaration;
 import es.parser.SymbolTable;
 
 public class GetType implements Command {
@@ -48,6 +49,8 @@ public class GetType implements Command {
       return "String";
     } else if (object instanceof TimeSeries) {
       return "Series";
+    } else if (object instanceof FunctionDeclaration) {
+      return "Function";
     } else {
       throw new Exception("unknown type: " + object);
     }
