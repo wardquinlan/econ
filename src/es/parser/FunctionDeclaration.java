@@ -49,6 +49,9 @@ public class FunctionDeclaration extends Statement {
   @Override
   public String toString() {
     StringBuffer sb = new StringBuffer();
+    if (constant) {
+      sb.append("const ");
+    }
     sb.append(name);
     sb.append("(");
     for (int i = 0; i < params.size(); i++) {
