@@ -41,6 +41,17 @@ try {
 :Print('pfn3=' + pfn3);
 :Print('fn3=' + fn3);
 
+const function fn3b() {}
+function fn4b() {
+  try {
+    :GPut('fn3b', 'abc');
+    assert(false);
+  } catch (ex) {
+    :Print('exception thrown, as expected: ' + ex);
+  }
+}
+fn4b();
+
 :Print('----------------');
 
 const function fn5() {}
@@ -49,6 +60,16 @@ try {
 } catch (ex) {
   :Print('exception thrown, as expected: ' + ex);
 }
+
+function fn5b() {
+  try {
+    function fn5() {}
+    :Print('exception not thrown, as expected');
+  } catch (ex) {
+    assert(false);
+  }
+}
+fn5b();
 
 :Print('----------------');
 

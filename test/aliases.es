@@ -1,4 +1,6 @@
-assert = ES:Assert;
+if (!:Defined('assert')) {
+  assert = ES:Assert;
+}
 
 function create(name, type) {
   if (type == null) {
