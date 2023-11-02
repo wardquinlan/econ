@@ -54,5 +54,6 @@ public class GPut implements Command {
     }
     Utils.checkNameSpace(symbolName);
     Utils.validateRootNameSpaceWrite(symbolName);
+    Utils.validateSystemFunctionWrite(symbolName);
   }
 }
