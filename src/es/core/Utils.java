@@ -20,6 +20,7 @@ import es.gui.Series;
 import es.parser.FunctionDeclaration;
 import es.parser.Symbol;
 import es.parser.SymbolTable;
+import es.parser.FunctionCaller;
 
 public class Utils {
   private static Log log = LogFactory.getFactory().getInstance(Utils.class);
@@ -71,6 +72,12 @@ public class Utils {
   public static void validateRootNameSpaceWrite(String symbol) throws Exception {
     if (symbol.charAt(0) == ':') {
       throw new Exception("cannot write to the root namespace: " + symbol);
+    }
+  }
+  
+  public static void validateSystemFunctionWrite(String symbol) throws Exception {
+    if (FunctionCaller.getInstance().isSystemFunction(symbol)) {
+      throw new Exception("cannot overwrite a system function: " + symbol);
     }
   }
   

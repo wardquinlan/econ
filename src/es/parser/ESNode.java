@@ -140,6 +140,7 @@ public class ESNode implements Evaluable {
     Utils.ASSERT(lhs instanceof Symbol, "lhs is not a Symbol");
     Symbol symbol = (Symbol) lhs;
     Utils.validateRootNameSpaceWrite(symbol.getName());
+    Utils.validateSystemFunctionWrite(symbol.getName());
     Object val = (rhs instanceof Evaluable ? ((Evaluable) rhs).evaluate(symbolTable) : rhs);
     if (val instanceof TimeSeries) {
       // need to make a copy of TimeSeries

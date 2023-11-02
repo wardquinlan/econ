@@ -14,6 +14,7 @@ public class FunctionDeclaration extends Statement {
   
   public FunctionDeclaration(String name) throws Exception {
     Utils.validateRootNameSpaceWrite(name);
+    Utils.validateSystemFunctionWrite(name);
     this.name = name;
   }
   
