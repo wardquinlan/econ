@@ -25,4 +25,11 @@ public class MergeData {
   public void setTimeSeriesMerge(TimeSeries timeSeriesMerge) {
     this.timeSeriesMerge = timeSeriesMerge;
   }
+
+  public boolean isModified() {
+    return timeSeriesInsert.getTimeSeriesDataList().size() > 0 ||
+           timeSeriesUpdate.getTimeSeriesDataList().size() > 0 ||
+           timeSeriesDelete.getTimeSeriesDataList().size() > 0 ||
+           timeSeriesMerge != null;
+  }
 }

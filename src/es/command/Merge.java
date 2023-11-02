@@ -13,7 +13,7 @@ import es.parser.SymbolTable;
 public class Merge implements Command {
   @Override
   public String getSummary() {
-    return "void    " + Utils.ROOT_NAMESPACE + "Merge(Series series, String options...);";
+    return "boolean " + Utils.ROOT_NAMESPACE + "Merge(Series series, String options...);";
   }
   
   @Override
@@ -31,7 +31,7 @@ public class Merge implements Command {
   
   @Override
   public String getReturns() {
-    return null;
+    return "true if a merge has actually taken place; false otherwise";
   }
   
   @Override
@@ -90,19 +90,16 @@ public class Merge implements Command {
       throw new Exception("series title is null");
     }
     MergeData mergeData = Utils.prepareMerge(timeSeriesCat, timeSeriesDS, mergeInserts, mergeUpdates, mergeDeletes, mergeMetaData);
-    if (!mergeMetaData &&
-        mergeData.getTimeSeriesInsert().size() == 0 &&
-        mergeData.getTimeSeriesUpdate().size() == 0 &&
-        mergeData.getTimeSeriesDelete().size() == 0) {
+    if (!mergeData.isModified()) {
       log.info("nothing to merge: " + timeSeriesCat.getId());
-      return null;
+      return mergeData.isModified();
     }
     if (dryRun) {
       log.info("suppressing physical merge with --dry-run option");
-      return null;
+      return mergeData.isModified();
     }
     TimeSeriesDAO.getInstance().merge(mergeData);
     log.info("series merged: " + timeSeriesCat.getId());
-    return null;
+    return mergeData.isModified();
   }
 }

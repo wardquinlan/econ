@@ -78,9 +78,12 @@ const function ES:AutoLoad(series) {
 const function ES:Update(object) {
   :Log(DEBUG, 'ES:Update(' + object + ')');
   if (object == null) {
+    :Log(DEBUG, 'setting MERGE.modified to false');
+    :GPut('MERGE.modified', false);
     :Log(DEBUG, 'invoking :Ds()');
     :Ds(ES:Update);
-    return;
+    :Log(DEBUG, 'result of overall merge is: ' + :GGet('MERGE.modified'));
+    return :GGet('MERGE.modified');
   }
   series = ES:Load(object);
   if (:GetSource(series) == 'FRED' and :GetId(series) < ES:BACKUP_BASE) {
@@ -90,8 +93,12 @@ const function ES:Update(object) {
     :Log(INFO, 'updating ' + id + ':' + name + '...');
     series = :Fred(name);
     :SetId(series, id);
-    :Merge(series, '--with-inserts');
+    flag = :Merge(series, '--with-inserts');
+    :Log(DEBUG, 'result of individual merge is: ' + flag);
+    :GPut('MERGE.modified', flag);
   }
+  :Log(DEBUG, 'returning individual merge result: ' + :GGet('MERGE.modified'));
+  return :GGet('MERGE.modified');
 }
 
 const function ES:LastUpdated(object) {
@@ -150,10 +157,11 @@ const function ES:Refresh(object) {
   if (changed) {
     :Log(DEBUG, 'merging series: ' + series);
     #:Meta(series);
-    :Merge(series, '--with-metadata');
+    return :Merge(series, '--with-metadata');
   } else {
     :Log(INFO, 'series metadata has not changed, nothing to do');
   }
+  return false;
 }
 
 const function ES:CheckMetaData(object) {
