@@ -52,6 +52,13 @@ function fn4b() {
 }
 fn4b();
 
+function fn3c() {}
+try {
+  :GPut('fn3c', fn3c);
+} catch (ex) {
+  :Print('exception thrown, as expected: ' + ex);
+}
+
 :Print('----------------');
 
 const function fn5() {}
