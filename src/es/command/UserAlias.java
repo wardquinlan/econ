@@ -39,7 +39,7 @@ public class UserAlias implements Command {
       if (symbol.getValue() instanceof FunctionDeclaration) {
         FunctionDeclaration decl = (FunctionDeclaration) symbol.getValue();
         if (!key.equals(decl.getName())) {
-          aliasSet.add(key + "() -> " + decl.toString());
+          aliasSet.add((symbol.isConstant() ? "const " : "") + key + "() -> " + decl.toString());
         }
       }
     }
