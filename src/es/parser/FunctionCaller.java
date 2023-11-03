@@ -82,6 +82,7 @@ import es.command.Status;
 import es.command.StdDev;
 import es.command.Sum;
 import es.command.Timestamp;
+import es.command.ToString;
 import es.command.Today;
 import es.command.Update;
 import es.command.UserAlias;
@@ -179,6 +180,7 @@ public class FunctionCaller {
     commandMap.put(":Functions", new Functions());
     commandMap.put(":GPut", new GPut());
     commandMap.put(":Random", new Random());
+    commandMap.put(":ToString", new ToString());
     if (Settings.getInstance().isTestMode()) {
       commandMap.put(":Collapse", new Collapse());
       commandMap.put(":Normalize", new Normalize());
