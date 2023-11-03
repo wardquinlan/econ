@@ -302,11 +302,12 @@ const function ES:Backup(id) {
 #################################################################################
 # Highest / Lowest functions
 #################################################################################
-const function ES:Highest(object) {
-  :Log(DEBUG, 'ES:Highest(' + object + ')');
+const function ES:Highest(object, withDate) {
+  :Log(DEBUG, 'ES:Highest(' + object + ', ' + withDate + ')');
   function fn(idx, d, v) {
     if (v > :GGet('METRICS.highest')) {
-      :Log(DEBUG, 'found larger value: ' + v);
+      :Log(DEBUG, 'found larger value: ' + d + ' => ' + v);
+      :GPut('METRICS.date.highest', d);
       :GPut('METRICS.highest', v);
     }
   }
@@ -317,33 +318,20 @@ const function ES:Highest(object) {
     :Log(DEBUG, 'series is null or empty; returning null');
     return null;
   }
+  if (withDate == true) {
+    :Log(DEBUG, 'initializing with date ' + :Get(:Date(series), 0));
+    :GPut('METRICS.date.highest', :Get(:Date(series), 0));
+  }
   :Log(DEBUG, 'initializing with value ' + :Get(series, 0));
   :GPut('METRICS.highest', :Get(series, 0));
   :Data(series, fn);
-  :Log(DEBUG, 'found highest value: ' + :GGet('METRICS.highest'));
-  return :GGet('METRICS.highest');
-}
-
-const function ES:Lowest(object) {
-  :Log(DEBUG, 'ES:Lowest(' + object + ')');
-  function fn(idx, d, v) {
-    if (v < :GGet('METRICS.lowest')) {
-      :Log(DEBUG, 'found smaller value: ' + v);
-      :GPut('METRICS.lowest', v);
-    }
+  if (withDate == true) {
+    :Log(DEBUG, 'found highest value: ' + :GGet('METRICS.date.highest') + ' => ' + :GGet('METRICS.highest'));
+    return '' + :GGet('METRICS.date.highest') + ' => ' + :GGet('METRICS.highest');
+  } else {
+    :Log(DEBUG, 'found highest value: ' + :GGet('METRICS.highest'));
+    return :GGet('METRICS.highest');
   }
-
-  :Log(DEBUG, 'loading series');  
-  series = ES:Load(object);
-  if (series == null or :GetSize(series) == 0) {
-    :Log(DEBUG, 'series is null or empty; returning null');
-    return null;
-  }
-  :Log(DEBUG, 'initializing with value ' + :Get(series, 0));
-  :GPut('METRICS.lowest', :Get(series, 0));
-  :Data(series, fn);
-  :Log(DEBUG, 'found lowest value: ' + :GGet('METRICS.lowest'));
-  return :GGet('METRICS.lowest');
 }
 
 #################################################################################
