@@ -334,6 +334,38 @@ const function ES:Highest(object, withDate) {
   }
 }
 
+const function ES:Lowest(object, withDate) {
+  :Log(DEBUG, 'ES:Lowest(' + object + ', ' + withDate + ')');
+  function fn(idx, d, v) {
+    if (v < :GGet('METRICS.lowest')) {
+      :Log(DEBUG, 'found smaller value: ' + d + ' => ' + v);
+      :GPut('METRICS.date.lowest', d);
+      :GPut('METRICS.lowest', v);
+    }
+  }
+
+  :Log(DEBUG, 'loading series');
+  series = ES:Load(object);
+  if (series == null or :GetSize(series) == 0) {
+    :Log(DEBUG, 'series is null or empty; returning null');
+    return null;
+  }
+  if (withDate == true) {
+    :Log(DEBUG, 'initializing with date ' + :Get(:Date(series), 0));
+    :GPut('METRICS.date.lowest', :Get(:Date(series), 0));
+  }
+  :Log(DEBUG, 'initializing with value ' + :Get(series, 0));
+  :GPut('METRICS.lowest', :Get(series, 0));
+  :Data(series, fn);
+  if (withDate == true) {
+    :Log(DEBUG, 'found lowest value: ' + :GGet('METRICS.date.lowest') + ' => ' + :GGet('METRICS.lowest'));
+    return '' + :GGet('METRICS.date.lowest') + ' => ' + :GGet('METRICS.lowest');
+  } else {
+    :Log(DEBUG, 'found lowest value: ' + :GGet('METRICS.lowest'));
+    return :GGet('METRICS.lowest');
+  }
+}
+
 #################################################################################
 # Usage functions
 #################################################################################
