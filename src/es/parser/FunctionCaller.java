@@ -63,6 +63,7 @@ import es.command.Print;
 import es.command.Printf;
 import es.command.QDB;
 import es.command.QTP;
+import es.command.Random;
 import es.command.Save;
 import es.command.SetFrequency;
 import es.command.SetFrequencyShort;
@@ -177,6 +178,7 @@ public class FunctionCaller {
     commandMap.put(":UserAlias", new UserAlias());
     commandMap.put(":Functions", new Functions());
     commandMap.put(":GPut", new GPut());
+    commandMap.put(":Random", new Random());
     if (Settings.getInstance().isTestMode()) {
       commandMap.put(":Collapse", new Collapse());
       commandMap.put(":Normalize", new Normalize());
