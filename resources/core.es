@@ -50,16 +50,20 @@ const function ES:Exists(object) {
   }
 }
 
-const function ES:AutoLoad(series) {
-  :Log(DEBUG, 'ES:AutoLoad(' + series + ')');
-  series = ES:Load(series);
-  # don't load the backups...
-  if (:GetId(series) < ES:BACKUP_BASE) {
-    :Log(DEBUG, 'id = ' + :GetId(series) + ' < ES:BACKUP_BASE; putting series into global scope'); 
-    name = :GetName(series);
-    :Log(DEBUG, 'name = ' + name);
-    :GPut(name, series);
-  } 
+const function ES:AutoLoad(object) {
+  :Log(DEBUG, 'ES:AutoLoad(' + object + ')');
+  series = ES:Load(object);
+  if (series == null) {
+    :Log(DEBUG, 'can\'t autoload series: not found (null)');
+    return;
+  }
+  if (:GetId(series) >= ES:BACKUP_BASE) {
+    :Log(DEBUG, 'skipping autoload of series because it is a backup: ' + series);
+    return;
+  }
+  :Log(DEBUG, 'id = ' + :GetId(series) + ' < ES:BACKUP_BASE; putting series into global scope'); 
+  :Log(DEBUG, 'name = ' + :GetName(series));
+  :GPut(:GetName(series), series);
 }
 
 #################################################################################
@@ -76,19 +80,23 @@ const function ES:Update(object) {
     return :GGet('MERGE.modified');
   }
   series = ES:Load(object);
+  if (series == null) {
+    :Log(DEBUG, 'series not found, returning false');
+    return false;
+  }
+  flag = false;
   if (:GetSource(series) == 'FRED' and :GetId(series) < ES:BACKUP_BASE) {
     :Log(DEBUG, 'series is a candidate for update(s); proceeding');
     id = :GetId(series);
-    name = :GetName(series);
-    :Log(INFO, 'updating ' + id + ':' + name + '...');
-    series = :Fred(name);
+    :Log(INFO, 'updating ' + id + ':' + :GetName(series) + '...');
+    series = :Fred(:GetName(series));
     :SetId(series, id);
     flag = :Merge(series, '--with-inserts');
     :Log(DEBUG, 'result of individual merge is: ' + flag);
     :GPut('MERGE.modified', flag);
   }
-  :Log(DEBUG, 'returning individual merge result: ' + :GGet('MERGE.modified'));
-  return :GGet('MERGE.modified');
+  :Log(DEBUG, 'returning individual merge result: ' + flag);
+  return flag;
 }
 
 const function ES:LastUpdated(object) {
