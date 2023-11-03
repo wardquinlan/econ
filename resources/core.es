@@ -4,50 +4,40 @@ const ES:BACKUP_EXT = '.BAK';
 #################################################################################
 # Load / Exist functions
 #################################################################################
-const function ES:Load(series, fred) {
-  :Log(DEBUG, 'ES:Load(' + series + ', ' + fred + ')');
-  if (series == null) {
-    :Log(DEBUG, 'series is null, returning null');
-    return null;
-  }
-  if (:GetType(series) == 'String') {
-    if (ES:Exists(series)) {
-      :Log(DEBUG, 'series exists in the datastore; loading');
-      L = :Load(series);
+const function ES:Load(object, fred) {
+  :Log(DEBUG, 'ES:Load(' + object + ', ' + fred + ')');
+  if (:GetType(object) == 'String') {
+    L = :Load(object);
+    if (L != null) {
       :Log(DEBUG, 'loaded series = ' + L);
       return L;
     }
     if (fred != null and fred) {
       :Log(DEBUG, 'attempting to load series from FRED');
-      F = :Fred(series);
+      F = :Fred(object);
       :Log(DEBUG, 'downloaded series = ' + F);
       return F;
-    } else {
-      :Log(DEBUG, 'fred flag not set, bypassing :Fred() call');
     }
-  }
-  if (:GetType(series) == 'int') {
-    if (ES:Exists(series)) {
-      :Log(DEBUG, 'series exists in the datastore; loading');
-      L = :Load(series);
+    :Log(DEBUG, 'fred flag not set, bypassing :Fred() call; returning null');
+    return null;
+  } else if (:GetType(object) == 'int') {
+    L = :Load(object);
+    if (L != null) {
       :Log(DEBUG, 'loaded series = ' + L);
       return L;
     }
     :Log(DEBUG, 'series not found; returning null');
     return null; 
-  }
-  if (:GetType(series) == 'Series') {
-    if (:GetId(series) != null and ES:Exists(:GetId(series))) {
-      :Log(DEBUG, 'series exists in the datastore; reloading');
-      L = :Load(:GetId(series));
-      :Log(DEBUG, 'reloaded series = ' + L);
-      return L;
+  } else if (:GetType(object) == 'Series') {
+    if (:GetId(object) != null) {
+      :Log(DEBUG, 'attempting to reload series from the datastore: ' + object);
+      return :Load(:GetId(object));
     }
-    :Log(DEBUG, 'series does not exist in the datastore, returning series as is: ' + series);
-    return series;
+    :Log(DEBUG, 'series does not exist in the datastore, returning series as is: ' + object);
+    return object;
+  } else {
+    throw 'unable to load series: unexpected type: ' + :GetType(object);
   }
-  :Log(WARN, 'unable to find the series, returning null');
-  return null;
 }
 
 const function ES:Exists(object) {
