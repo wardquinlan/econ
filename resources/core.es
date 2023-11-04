@@ -443,9 +443,6 @@ const function ES:EndsWith(string, suffix) {
 }
 
 const function ES:ToString(object) {
-  if (object == null) {
-    return 'null';
-  }
   return '' + object;
 }
 
