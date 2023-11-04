@@ -415,7 +415,7 @@ const function ES:Defaults() {
 }
 
 #################################################################################
-# StartsWith / EndsWith functions
+# String functions
 #################################################################################
 const function ES:StartsWith(string, prefix) {
   :Log(DEBUG, 'ES:StartsWith(' + string + ', ' + prefix + ')');
@@ -439,6 +439,13 @@ const function ES:EndsWith(string, suffix) {
   ss = :SubString(string, :GetLength(string) - :GetLength(suffix), :GetLength(string));
   :Log(DEBUG, 'substring = ' + ss);
   return ss == suffix;
+}
+
+const function ES:ToString(object) {
+  if (object == null) {
+    return 'null';
+  }
+  return '' + object;
 }
 
 #################################################################################
