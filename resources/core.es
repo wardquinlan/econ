@@ -36,7 +36,8 @@ const function ES:Load(object, fred) {
     :Log(DEBUG, 'series does not exist in the datastore, returning series as is: ' + object);
     return object;
   } else {
-    throw 'unable to load series: unexpected type: ' + :GetType(object);
+    :Log(DEBUG, 'unable to load series: unsupported type: ' + :GetType(object));
+    return null;
   }
 }
 
