@@ -44,6 +44,10 @@ public class Token {
   public static final int CATCH    = 38; // catch
   public static final int INCR     = 39; // ++
   public static final int DECR     = 40; // --
+  public static final int WHILE    = 41; // while
+  public static final int FOR      = 42; // for
+  public static final int BREAK    = 43; // break
+  public static final int CONTINUE = 44; // continue
   
   public static Map<Integer, String> map = new HashMap<Integer, String>();
   static {
@@ -81,7 +85,13 @@ public class Token {
     map.put(ELSE,    "ELSE");
     map.put(NULL,    "NULL");
     map.put(TRY,     "TRY");
-    map.put(CATCH,   " CATCH");
+    map.put(CATCH,   "CATCH");
+    map.put(INCR,    "INCR");
+    map.put(DECR,    "DECR");
+    map.put(WHILE,   "WHILE");
+    map.put(FOR,     "FOR");
+    map.put(BREAK,   "BREAK");
+    map.put(CONTINUE,"CONTINUE");
   }
   
   private int type;

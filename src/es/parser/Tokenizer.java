@@ -76,6 +76,14 @@ public class Tokenizer {
             tk = new Token(Token.FUNCDECL);
           } else if (sb.toString().equals("if")) {
             tk = new Token(Token.IF);
+          } else if (sb.toString().equals("while")) {
+            tk = new Token(Token.WHILE);
+          } else if (sb.toString().equals("for")) {
+            tk = new Token(Token.FOR);
+          } else if (sb.toString().equals("break")) {
+            tk = new Token(Token.BREAK);
+          } else if (sb.toString().equals("continue")) {
+            tk = new Token(Token.CONTINUE);
           } else if (sb.toString().equals("else")) {
             tk = new Token(Token.ELSE);
           } else if (sb.toString().equals("throw")) {
