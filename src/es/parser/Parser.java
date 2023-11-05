@@ -55,11 +55,24 @@ public class Parser {
       list.add(parseIf(tk, itr));
     } else if (tk.getType() == Token.WHILE) {
       list.add(parseWhile(tk, itr));
+    } else if (tk.getType() == Token.BREAK) {
+      list.add(parseBreak(tk, itr));
     } else if (tk.getType() == Token.TRY) {
       list.add(parseTry(tk, itr));
     } else {
       list.add(parseSimpleStatement(tk, itr));
     }
+  }
+  
+  private Statement parseBreak(Token tk, ESIterator<Token> itr) throws Exception {
+    if (!itr.hasNext()) {
+      throw new Exception("syntax error: invalid break");
+    }
+    tk = itr.next();
+    if (tk.getType() != Token.SEMI) {
+      throw new Exception("syntax error: invalid break");
+    }
+    return new BreakStatement();
   }
   
   private void parseBlock(List<Statement> list, Token tk, ESIterator<Token> itr) throws Exception {
