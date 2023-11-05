@@ -515,6 +515,16 @@ public class Parser {
       node.setRhs(val2);
       return node;
     }
+    if (tk.getType() == Token.DECR) {
+      if (!itr.hasNext()) {
+        throw new Exception("syntax error: missing RHS");
+      }
+      tk = itr.next();
+      Object val2 = primary(tk, itr);
+      ESNode node = new ESNode(ESNode.DECR);
+      node.setRhs(val2);
+      return node;
+    }
     if (tk.getType() == Token.SYMBOL) {
       String name = (String) tk.getValue();
       if (itr.hasNext() && itr.peek().getType() == Token.ASSIGN) {
@@ -563,6 +573,11 @@ public class Parser {
       } else if (itr.hasNext() && itr.peek().getType() == Token.INCR) {
         itr.next();
         ESNode node = new ESNode(ESNode.INCR);
+        node.setLhs(new Symbol(name));
+        return node;
+      } else if (itr.hasNext() && itr.peek().getType() == Token.DECR) {
+        itr.next();
+        ESNode node = new ESNode(ESNode.DECR);
         node.setLhs(new Symbol(name));
         return node;
       } else {
