@@ -25,6 +25,8 @@ public class ESNode implements Evaluable {
   public static final int MULT     = 15; // *
   public static final int DIV      = 16; // /
   public static final int EXP      = 17; // ^
+  public static final int INCR     = 18; // ++
+  public static final int DECR     = 19; // --
 
   public static Map<Integer, String> map = new HashMap<Integer, String>();
   static {
@@ -45,6 +47,8 @@ public class ESNode implements Evaluable {
     map.put(MULT,    "MULT");
     map.put(DIV,     "DIV");
     map.put(EXP,     "EXP");
+    map.put(INCR,    "INCR");
+    map.put(DECR,    "DECR");
   }
   
   private static final Map<Integer, Operator> operatorMap = new HashMap<>();
@@ -99,6 +103,12 @@ public class ESNode implements Evaluable {
   public Object evaluate(SymbolTable symbolTable) throws Exception {
     if (type == ASSIGN) {
       return evaluateAssignment(symbolTable);
+    }
+    if (type == INCR) {
+      if (lhs == null) {
+        UnaryOperator operator = new PreIncr(symbolTable);
+        return operator.exec(rhs);
+      }
     }
     Operator operator = operatorMap.get(type);
     Utils.ASSERT(operator != null, "operator not found");

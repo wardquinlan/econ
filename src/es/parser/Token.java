@@ -42,6 +42,8 @@ public class Token {
   public static final int NULL     = 36; // null
   public static final int TRY      = 37; // try
   public static final int CATCH    = 38; // catch
+  public static final int INCR     = 39; // ++
+  public static final int DECR     = 40; // --
   
   public static Map<Integer, String> map = new HashMap<Integer, String>();
   static {

@@ -505,6 +505,16 @@ public class Parser {
       node.setRhs(val2);
       return node;
     }
+    if (tk.getType() == Token.INCR) {
+      if (!itr.hasNext()) {
+        throw new Exception("syntax error: missing RHS");
+      }
+      tk = itr.next();
+      Object val2 = primary(tk, itr);
+      ESNode node = new ESNode(ESNode.INCR);
+      node.setRhs(val2);
+      return node;
+    }
     if (tk.getType() == Token.SYMBOL) {
       String name = (String) tk.getValue();
       if (itr.hasNext() && itr.peek().getType() == Token.ASSIGN) {

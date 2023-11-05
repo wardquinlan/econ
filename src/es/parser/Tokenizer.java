@@ -171,6 +171,14 @@ public class Tokenizer {
           rdr.read();
           Token tk = new Token(Token.NE);
           list.add(tk);
+        } else if (val == '+' && rdr.peek() == '+') {
+          rdr.read();
+          Token tk = new Token(Token.INCR);
+          list.add(tk);
+        } else if (val == '-' && rdr.peek() == '-') {
+          rdr.read();
+          Token tk = new Token(Token.DECR);
+          list.add(tk);
         } else if (val == '!') {
           Token tk = new Token(Token.NOT);
           list.add(tk);
