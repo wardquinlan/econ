@@ -18,6 +18,9 @@ public class Evaluator {
       if (object instanceof Break) {
         throw new Exception("invalid use of break statement");
       }
+      if (object instanceof Continue) {
+        throw new Exception("invalid use of continue statement");
+      }
       if (!itr.hasNext()) {
         break;
       }

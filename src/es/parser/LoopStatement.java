@@ -31,6 +31,9 @@ public class LoopStatement extends Statement {
           if (result2 instanceof Break) {
             break whileloop;
           }
+          if (result2 instanceof Continue) {
+            break forloop;
+          }
         }
       }
     }

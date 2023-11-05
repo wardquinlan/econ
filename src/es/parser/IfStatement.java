@@ -29,20 +29,14 @@ public class IfStatement extends Statement {
     if (result) {
       for (Statement statement: ifBody) {
         Object result2 = statement.evaluate(symbolTable);
-        if (result2 instanceof Return) {
-          return result2;
-        }
-        if (result2 instanceof Break) {
+        if (result2 instanceof Return || result2 instanceof Break || result2 instanceof Continue) {
           return result2;
         }
       }
     } else {
       for (Statement statement: elseBody) {
         Object result2 = statement.evaluate(symbolTable);
-        if (result2 instanceof Return) {
-          return result2;
-        }
-        if (result2 instanceof Break) {
+        if (result2 instanceof Return || result2 instanceof Break || result2 instanceof Continue) {
           return result2;
         }
       }
