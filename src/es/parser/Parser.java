@@ -53,6 +53,8 @@ public class Parser {
       list.add(parseThrow(tk, itr));
     } else if (tk.getType() == Token.IF) {
       list.add(parseIf(tk, itr));
+    } else if (tk.getType() == Token.WHILE) {
+      list.add(parseWhile(tk, itr));
     } else if (tk.getType() == Token.TRY) {
       list.add(parseTry(tk, itr));
     } else {
@@ -128,6 +130,35 @@ public class Parser {
     TryCatchStatement statement = new TryCatchStatement(ex);
     statement.getTryBody().addAll(listTry);
     statement.getCatchBody().addAll(listCatch);
+    return statement;
+  }
+  
+  private Statement parseWhile(Token tk, ESIterator<Token> itr) throws Exception {
+    if (!itr.hasNext()) {
+      throw new Exception("syntax error: missing predicate");
+    }
+    tk = itr.next();
+    if (tk.getType() != Token.LPAREN) {
+      throw new Exception("syntax error: invalid predicate");
+    }
+    if (!itr.hasNext()) {
+      throw new Exception("syntax error: invalid predicate");
+    }
+    tk = itr.next();
+    Object predicate = expression(tk, itr);
+    if (!itr.hasNext()) {
+      throw new Exception("syntax error: invalid predicate");
+    }
+    tk = itr.next();
+    if (tk.getType() != Token.RPAREN) {
+      throw new Exception("syntax error: invalid predicate");
+    }
+    if (!itr.hasNext()) {
+      throw new Exception("syntax error: invalid while body");
+    }
+    tk = itr.next();
+    LoopStatement statement = new LoopStatement(predicate);
+    parseBlock(statement.getBody(), tk, itr);
     return statement;
   }
   
