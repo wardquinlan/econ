@@ -18,6 +18,9 @@ public class PostIncr extends IncrDecrOperator {
     if (!(symbol.getValue() instanceof Integer)) {
       throw new Exception("postincr: lhs is not integral: " + symbol.getName());
     }
+    if (symbol.isConstant()) {
+      throw new Exception("preincr: lhs is const: " + symbol.getName());
+    }
     int value = (Integer) symbol.getValue();
     symbol.setValue(value + 1);
     return value;

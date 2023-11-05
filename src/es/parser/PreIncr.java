@@ -18,6 +18,9 @@ public class PreIncr extends IncrDecrOperator {
     if (!(symbol.getValue() instanceof Integer)) {
       throw new Exception("preincr: rhs is not integral: " + symbol.getName());
     }
+    if (symbol.isConstant()) {
+      throw new Exception("preincr: rhs is const: " + symbol.getName());
+    }
     int value = (Integer) symbol.getValue();
     value++;
     symbol.setValue(value);
