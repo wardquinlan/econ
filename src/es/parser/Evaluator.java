@@ -15,6 +15,9 @@ public class Evaluator {
       if (object instanceof Return) {
         return object;
       }
+      if (object instanceof Break) {
+        throw new Exception("invalid use of break statement");
+      }
       if (!itr.hasNext()) {
         break;
       }

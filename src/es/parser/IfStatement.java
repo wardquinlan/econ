@@ -32,11 +32,17 @@ public class IfStatement extends Statement {
         if (result2 instanceof Return) {
           return result2;
         }
+        if (result2 instanceof Break) {
+          return result2;
+        }
       }
     } else {
       for (Statement statement: elseBody) {
         Object result2 = statement.evaluate(symbolTable);
         if (result2 instanceof Return) {
+          return result2;
+        }
+        if (result2 instanceof Break) {
           return result2;
         }
       }

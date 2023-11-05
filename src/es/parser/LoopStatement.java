@@ -28,6 +28,9 @@ public class LoopStatement extends Statement {
           if (result2 instanceof Return) {
             return result2;
           }
+          if (result2 instanceof Break) {
+            break whileloop;
+          }
         }
       }
     }
