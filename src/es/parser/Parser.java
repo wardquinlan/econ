@@ -560,6 +560,11 @@ public class Parser {
           }
         }
         return functionCall;
+      } else if (itr.hasNext() && itr.peek().getType() == Token.INCR) {
+        itr.next();
+        ESNode node = new ESNode(ESNode.INCR);
+        node.setLhs(new Symbol(name));
+        return node;
       } else {
         return new Symbol(name);
       }
