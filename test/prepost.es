@@ -41,4 +41,34 @@ try {
   :Print('exception thrown, as expected: ' + ex);
 }
 
+function preIncr() {
+  assert(++a == 1);
+  assert(a == 1);
+} 
+
+function postIncr() {
+  assert(a++ == 0);
+  assert(a == 1);
+} 
+
+function preDecr() {
+  assert(--a == -1);
+  assert(a == -1);
+} 
+
+function postDecr() {
+  assert(a-- == 0);
+  assert(a == -1);
+} 
+
+a = 0;
+preIncr();
+assert(a == 0);
+postIncr();
+assert(a == 0);
+preDecr();
+assert(a == 0);
+postDecr();
+assert(a == 0);
+
 :Print('PRE/POST TESTS PASSED');
