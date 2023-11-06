@@ -7,11 +7,13 @@ import javax.swing.JTabbedPane;
 import javax.swing.ToolTipManager;
 import javax.swing.UIManager;
 
+import es.core.Settings;
+
 public class Frame extends JFrame {
   private static final long serialVersionUID = 4488715210063650680L;
 
   public Frame(Context ctx) throws Exception {
-    super("ES");
+    super("ES - " + Settings.getInstance().getVersion());
     UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
     JTabbedPane tabbedPane = new JTabbedPane();
     for (Panel panel: ctx.getPanels()) {
