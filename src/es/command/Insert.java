@@ -89,7 +89,7 @@ public class Insert implements Command {
     timeSeriesData.setValue(value);
     timeSeries.add(timeSeriesData);
     Collections.sort(timeSeries.getTimeSeriesDataList());
-    log.info("observation inserted at " + Utils.DATE_FORMAT.format(date));
+    log.debug("observation inserted at " + Utils.DATE_FORMAT.format(date));
     return null;
   }
 }
