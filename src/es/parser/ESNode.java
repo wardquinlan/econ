@@ -105,24 +105,9 @@ public class ESNode implements Evaluable {
       return evaluateAssignment(symbolTable);
     }
     if (type == INCR || type == DECR) {
-      UnaryOperator operator;
       Utils.ASSERT((lhs != null && rhs == null) || (lhs == null && rhs != null), "both/neither lhs/rhs are null");
-      if (type == INCR && rhs != null) {
-        operator = new PreIncr(symbolTable);
-        return operator.exec(rhs);
-      } else if (type == INCR && lhs != null) {
-        operator = new PostIncr(symbolTable);
-        return operator.exec(lhs);
-      } else if (type == DECR && rhs != null) {
-        operator = new PreDecr(symbolTable);
-        return operator.exec(rhs);
-      } else if (type == DECR && lhs != null) {
-        operator = new PostDecr(symbolTable);
-        return operator.exec(lhs);
-      } else {
-        Utils.ASSERT(false, "unexpected INCR / DECR state");
-        return null;
-      }
+      UnaryOperator operator = new IncrDecr(symbolTable, this);
+      return operator.exec(lhs != null ? lhs : rhs);
     }
     Operator operator = operatorMap.get(type);
     Utils.ASSERT(operator != null, "operator not found");
