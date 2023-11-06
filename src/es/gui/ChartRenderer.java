@@ -76,7 +76,9 @@ public class ChartRenderer {
     
     // Draw the label
     g.setColor(panel.getFontColor());
-    if (chart.getLabel() != null) {
+    if (chart.getLabel() == null) {
+      log.warn("chart label is null");
+    } else {
       g.drawString(chart.getLabel(), CHART_HPADDING, yBase - CHART_VPADDING);
     }
     
@@ -102,7 +104,11 @@ public class ChartRenderer {
     
     // Draw the label
     g.setColor(panel.getFontColor());
-    g.drawString(chart.getLabel(), CHART_HPADDING, yBase - CHART_VPADDING);
+    if (chart.getLabel() == null) {
+      log.warn("chart label is null");
+    } else {
+      g.drawString(chart.getLabel(), CHART_HPADDING, yBase - CHART_VPADDING);
+    }
   }
   
   public void drawVerticalGridlines(boolean withMonthLegend, int idxBase) {
