@@ -53,6 +53,10 @@ public class LoopStatement extends Statement {
   }
 
   public boolean evaluatePredicate(SymbolTable symbolTable) throws Exception {
+    if (predicate == null) {
+      // empty predicates are true in for statements
+      return true;
+    }
     if (predicate instanceof Boolean) {
       return (Boolean) predicate;
     } else if (predicate instanceof Evaluable) {
