@@ -10,7 +10,13 @@ public class LoopStatement extends Statement {
   private List<Statement> body = new ArrayList<>();
 
   public LoopStatement(Object predicate) {
+    this(predicate, null, null);
+  }
+  
+  public LoopStatement(Object predicate, Object pre, Object post) {
     this.predicate = predicate;
+    this.pre = pre;
+    this.post = post;
   }
 
   @Override

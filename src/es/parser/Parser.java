@@ -55,6 +55,8 @@ public class Parser {
       list.add(parseIf(tk, itr));
     } else if (tk.getType() == Token.WHILE) {
       list.add(parseWhile(tk, itr));
+    } else if (tk.getType() == Token.FOR) {
+      list.add(parseFor(tk, itr));
     } else if (tk.getType() == Token.BREAK) {
       list.add(parseBreak(tk, itr));
     } else if (tk.getType() == Token.CONTINUE) {
@@ -184,6 +186,69 @@ public class Parser {
     }
     tk = itr.next();
     LoopStatement statement = new LoopStatement(predicate);
+    parseBlock(statement.getBody(), tk, itr);
+    return statement;
+  }
+  
+  private Statement parseFor(Token tk, ESIterator<Token> itr) throws Exception {
+    Object pre = null;
+    Object post = null;
+    Object predicate = null;
+    
+    if (!itr.hasNext()) {
+      throw new Exception("syntax error: missing semi colon");
+    }
+    tk = itr.next();
+    if (tk.getType() != Token.LPAREN) {
+      throw new Exception("syntax error: missing left paren");
+    }
+    if (!itr.hasNext()) {
+      throw new Exception("syntax error: missing semi colon");
+    }
+    tk = itr.next();
+    if (tk.getType() != Token.SEMI) {
+      pre = expression(tk, itr);
+      if (!itr.hasNext()) {
+        throw new Exception("syntax error: missing semi colon");
+      }
+      tk = itr.next();
+      if (tk.getType() != Token.SEMI) {
+        throw new Exception("syntax error: missing semi");
+      }
+    }
+    if (!itr.hasNext()) {
+      throw new Exception("syntax error: missing semi colon");
+    }
+    tk = itr.next();
+    if (tk.getType() != Token.SEMI) {
+      predicate = expression(tk, itr);
+      if (!itr.hasNext()) {
+        throw new Exception("syntax error: missing semi colon");
+      }
+      tk = itr.next();
+      if (tk.getType() != Token.SEMI) {
+        throw new Exception("syntax error: missing semi");
+      }
+    }
+    if (!itr.hasNext()) {
+      throw new Exception("syntax error: missing right paren");
+    }
+    tk = itr.next();
+    if (tk.getType() != Token.RPAREN) {
+      post = expression(tk, itr);
+      if (!itr.hasNext()) {
+        throw new Exception("syntax error: missing right paren");
+      }
+      tk = itr.next();
+      if (tk.getType() != Token.RPAREN) {
+        throw new Exception("syntax error: missing right paren");
+      }
+    }
+    if (!itr.hasNext()) {
+      throw new Exception("syntax error: missing for body");
+    }
+    tk = itr.next();
+    LoopStatement statement = new LoopStatement(predicate, pre, post);
     parseBlock(statement.getBody(), tk, itr);
     return statement;
   }
