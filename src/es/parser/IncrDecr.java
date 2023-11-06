@@ -1,13 +1,20 @@
 package es.parser;
 
+import es.core.TimeSeries;
 import es.core.Utils;
 
-public class IncrDecr extends IncrDecrOperator {
+public class IncrDecr implements UnaryOperator {
+  private SymbolTable symbolTable;
   private ESNode node;
   
   public IncrDecr(SymbolTable symbolTable, ESNode node) {
-    super(symbolTable);
+    this.symbolTable = symbolTable;
     this.node = node;
+  }
+
+  @Override
+  public int getAssociatedSeriesType() {
+    return TimeSeries.NULL;
   }
   
   @Override
