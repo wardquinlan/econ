@@ -213,7 +213,7 @@ public class Parser {
       }
       tk = itr.next();
       if (tk.getType() != Token.SEMI) {
-        throw new Exception("syntax error: missing semi");
+        throw new Exception("syntax error: missing semi colon");
       }
     }
     if (!itr.hasNext()) {
