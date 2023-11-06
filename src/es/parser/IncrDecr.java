@@ -30,9 +30,8 @@ public class IncrDecr extends IncrDecrOperator {
     if (node.getType() == ESNode.INCR) {
       if (node.getLhs() != null) {
         // post-increment
-        symbol.setValue(value);
+        symbol.setValue(value + 1);
         symbolTable.put(symbol.getName(), symbol);
-        value++;
       } else {
         // pre-increment
         value++;
@@ -42,9 +41,8 @@ public class IncrDecr extends IncrDecrOperator {
     } else if (node.getType() == ESNode.DECR) {
       if (node.getLhs() != null) {
         // post-decrement
-        symbol.setValue(value);
+        symbol.setValue(value + -1);
         symbolTable.put(symbol.getName(), symbol);
-        value--;
       } else {
         // pre-decrement
         value--;
