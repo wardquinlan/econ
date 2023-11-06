@@ -2,10 +2,10 @@ package es.parser;
 
 import es.core.Utils;
 
-public class PreIncr extends IncrDecrOperator {
+public class IncrDecr extends IncrDecrOperator {
   private ESNode node;
   
-  public PreIncr(SymbolTable symbolTable, ESNode node) {
+  public IncrDecr(SymbolTable symbolTable, ESNode node) {
     super(symbolTable);
     this.node = node;
   }
