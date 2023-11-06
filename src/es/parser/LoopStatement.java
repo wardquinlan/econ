@@ -21,6 +21,9 @@ public class LoopStatement extends Statement {
 
   @Override
   public Object evaluate(SymbolTable symbolTable) throws Exception {
+    if (pre instanceof Evaluable) {
+      ((Evaluable) pre).evaluate(symbolTable);
+    }
     whileloop:
     while (evaluatePredicate(symbolTable)) {
       forloop:
@@ -41,6 +44,9 @@ public class LoopStatement extends Statement {
             break forloop;
           }
         }
+      }
+      if (post instanceof Evaluable) {
+        ((Evaluable) post).evaluate(symbolTable);
       }
     }
     return null;
