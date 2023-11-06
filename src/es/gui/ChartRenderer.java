@@ -76,7 +76,9 @@ public class ChartRenderer {
     
     // Draw the label
     g.setColor(panel.getFontColor());
-    g.drawString(chart.getLabel(), CHART_HPADDING, yBase - CHART_VPADDING);
+    if (chart.getLabel() != null) {
+      g.drawString(chart.getLabel(), CHART_HPADDING, yBase - CHART_VPADDING);
+    }
     
     g.setColor(chart.getRectColor());
     for (int y = yBase + CHART_HATCHES; y < yBase + chartHeight - CHART_SEPARATOR - 1; y += CHART_HATCHES) {
