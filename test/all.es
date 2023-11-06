@@ -28,5 +28,6 @@ include 'strings.es';
 include 'trycatch.es';
 include 'const.es';
 include 'prepost.es';
+include 'loop.es';
 
 print("*** TESTS COMPLETED SUCCESSFULLY ***");
