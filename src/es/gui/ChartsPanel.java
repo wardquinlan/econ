@@ -45,9 +45,14 @@ public class ChartsPanel extends JPanel {
     gridPanel.setBorder(BorderFactory.createLineBorder(Color.BLUE));
     setLayout(null);
     setFocusable(true);
+    Color rectColor = new Color((int) ctx.get("defaults.chart.rectcolor"));
     addMouseListener(new MouseAdapter() {
       @Override
       public void mouseClicked(MouseEvent event) {
+        Graphics2D g = (Graphics2D) getGraphics();
+        g.setColor(rectColor);
+        g.drawLine(0, event.getY(), getWidth(), event.getY());
+        g.drawLine(event.getX(), 0, event.getX(), getHeight());
         requestFocus();
       }
     });
@@ -66,6 +71,9 @@ public class ChartsPanel extends JPanel {
           return;
         case KeyEvent.VK_END:
           keyEnd();
+          return;
+        case KeyEvent.VK_F5:
+          repaint();
           return;
         }
       }
