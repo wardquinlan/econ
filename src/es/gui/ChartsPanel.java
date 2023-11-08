@@ -1,14 +1,18 @@
 package es.gui;
 
+import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Point;
+import java.awt.Stroke;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseMotionAdapter;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -35,6 +39,12 @@ public class ChartsPanel extends JPanel {
   private final TimeSeries timeSeriesCollapsed;
   private int idxBase;
   private boolean firstInvokation = true;
+  private List<Point> points = new ArrayList<>();
+  private List<Line> lines = new ArrayList<>();
+  private Point src;
+  private Point dest;
+  private Color rectColor;
+  private Stroke stroke;
   
   public ChartsPanel(Context ctx, Panel panel) {
     super();
@@ -45,15 +55,36 @@ public class ChartsPanel extends JPanel {
     gridPanel.setBorder(BorderFactory.createLineBorder(Color.BLUE));
     setLayout(null);
     setFocusable(true);
-    Color rectColor = new Color((int) ctx.get("defaults.chart.rectcolor"));
+    rectColor = new Color((int) ctx.get("defaults.chart.rectcolor"));
+    stroke = new BasicStroke(5);
     addMouseListener(new MouseAdapter() {
       @Override
       public void mouseClicked(MouseEvent event) {
+        requestFocus();
+        points.add(new Point(event.getX(), event.getY()));
+        repaint();
+      }
+      
+      @Override
+      public void mousePressed(MouseEvent event) {
+        src = event.getPoint();
+      }
+      
+      @Override
+      public void mouseReleased(MouseEvent event) {
+        dest = event.getPoint();
+        lines.add(new Line(src, dest));
+        repaint();
+      }
+    });
+    addMouseMotionListener(new MouseMotionAdapter() {
+      @Override
+      public void mouseDragged(MouseEvent event) {
         Graphics2D g = (Graphics2D) getGraphics();
         g.setColor(rectColor);
-        g.drawLine(0, event.getY(), getWidth(), event.getY());
-        g.drawLine(event.getX(), 0, event.getX(), getHeight());
-        requestFocus();
+        g.setStroke(stroke);
+        g.drawLine(src.x, src.y, event.getX(), event.getY());
+        repaint();
       }
     });
     addKeyListener(new KeyAdapter() {
@@ -91,6 +122,18 @@ public class ChartsPanel extends JPanel {
     log.trace("collapsed series=" + timeSeriesCollapsed.toStringVerbose());
   }
 
+  private void drawDecorations(Graphics2D g) {
+    g.setColor(rectColor);
+    g.setStroke(stroke);
+    for (Point point: points) {
+      g.drawLine(0, point.y, getWidth(), point.y);
+      g.drawLine(point.x, 0, point.x, getHeight());
+    }
+    for (Line line: lines) {
+      g.drawLine(line.getSrc().x, line.getSrc().y, line.getDest().x, line.getDest().y);
+    }
+  }
+  
   @Override
   public void paintComponent(Graphics g) {
     super.paintComponent(g);
@@ -145,6 +188,8 @@ public class ChartsPanel extends JPanel {
       // advance to the next chart
       yBase += chartHeight;
     }
+    
+    drawDecorations((Graphics2D) g);
   }
 
   private void keyLeft() {
