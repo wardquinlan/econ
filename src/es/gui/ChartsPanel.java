@@ -130,6 +130,12 @@ public class ChartsPanel extends JPanel {
             tabbedPane.setSelectedIndex(index);
           }
           return;
+        case KeyEvent.VK_Z:
+          if (event.isControlDown() && decorations.size() > 0) {
+            decorations.remove(decorations.size() - 1);
+            repaint();
+          }
+          return;
         case KeyEvent.VK_F5:
           clearDecorations();
           repaint();
