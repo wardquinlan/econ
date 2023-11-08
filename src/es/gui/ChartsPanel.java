@@ -137,6 +137,7 @@ public class ChartsPanel extends JPanel {
           }
           return;
         case KeyEvent.VK_F5:
+        case KeyEvent.VK_ESCAPE:
           clearDecorations();
           repaint();
           return;
