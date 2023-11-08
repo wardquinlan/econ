@@ -2,6 +2,7 @@ package es.gui;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
+import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -59,6 +60,7 @@ public class ChartsPanel extends JPanel {
     setFocusable(true);
     colorDecorations = new Color((int) ctx.get("defaults.panel.decorations.color"));
     strokeDecorations = new BasicStroke((int) ctx.get("defaults.panel.decorations.stroke"));
+    setCursor(new Cursor(Cursor.CROSSHAIR_CURSOR));
     addMouseListener(new MouseAdapter() {
       @Override
       public void mouseClicked(MouseEvent event) {
