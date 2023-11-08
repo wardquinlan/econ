@@ -64,7 +64,9 @@ public class ChartsPanel extends JPanel {
       @Override
       public void mouseClicked(MouseEvent event) {
         requestFocus();
-        points.add(new Point(event.getX(), event.getY()));
+        if (event.getButton() != MouseEvent.BUTTON1) {
+          points.add(new Point(event.getX(), event.getY()));
+        }
         repaint();
       }
       
@@ -76,7 +78,9 @@ public class ChartsPanel extends JPanel {
       @Override
       public void mouseReleased(MouseEvent event) {
         dest = event.getPoint();
-        lines.add(new Line(src, dest));
+        if (src.getX() != dest.getX() || src.getY() != dest.getY()) {
+          lines.add(new Line(src, dest));
+        }
         repaint();
       }
     });
