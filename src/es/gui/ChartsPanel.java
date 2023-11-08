@@ -43,8 +43,8 @@ public class ChartsPanel extends JPanel {
   private List<Line> lines = new ArrayList<>();
   private Point src;
   private Point dest;
-  private Color rectColor;
-  private Stroke stroke;
+  private Color colorDecorations;
+  private Stroke strokeDecorations;
   
   public ChartsPanel(Context ctx, Panel panel) {
     super();
@@ -55,8 +55,8 @@ public class ChartsPanel extends JPanel {
     gridPanel.setBorder(BorderFactory.createLineBorder(Color.BLUE));
     setLayout(null);
     setFocusable(true);
-    rectColor = new Color((int) ctx.get("defaults.chart.rectcolor"));
-    stroke = new BasicStroke(5);
+    colorDecorations = new Color((int) ctx.get("defaults.panel.decorations.color"));
+    strokeDecorations = new BasicStroke((int) ctx.get("defaults.panel.decorations.stroke"));
     addMouseListener(new MouseAdapter() {
       @Override
       public void mouseClicked(MouseEvent event) {
@@ -81,8 +81,8 @@ public class ChartsPanel extends JPanel {
       @Override
       public void mouseDragged(MouseEvent event) {
         Graphics2D g = (Graphics2D) getGraphics();
-        g.setColor(rectColor);
-        g.setStroke(stroke);
+        g.setColor(colorDecorations);
+        g.setStroke(strokeDecorations);
         g.drawLine(src.x, src.y, event.getX(), event.getY());
         repaint();
       }
@@ -104,6 +104,8 @@ public class ChartsPanel extends JPanel {
           keyEnd();
           return;
         case KeyEvent.VK_F5:
+          lines.clear();
+          points.clear();
           repaint();
           return;
         }
@@ -123,8 +125,8 @@ public class ChartsPanel extends JPanel {
   }
 
   private void drawDecorations(Graphics2D g) {
-    g.setColor(rectColor);
-    g.setStroke(stroke);
+    g.setColor(colorDecorations);
+    g.setStroke(strokeDecorations);
     for (Point point: points) {
       g.drawLine(0, point.y, getWidth(), point.y);
       g.drawLine(point.x, 0, point.x, getHeight());
