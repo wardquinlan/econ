@@ -95,15 +95,19 @@ public class ChartsPanel extends JPanel {
       public void keyPressed(KeyEvent event) {
         switch (event.getKeyCode()) {
         case KeyEvent.VK_LEFT:
+          clearDecorations();
           keyLeft();
           return;
         case KeyEvent.VK_RIGHT:
+          clearDecorations();
           keyRight();
           return;
         case KeyEvent.VK_HOME:
+          clearDecorations();
           keyHome();
           return;
         case KeyEvent.VK_END:
+          clearDecorations();
           keyEnd();
           return;
         case KeyEvent.VK_SPACE:
