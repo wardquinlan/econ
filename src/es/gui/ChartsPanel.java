@@ -45,6 +45,8 @@ public class ChartsPanel extends JPanel {
   private Point dest;
   private Color colorDecorations;
   private Stroke strokeDecorations;
+  private int widthOrig = 0;
+  private int heightOrig = 0;
   
   public ChartsPanel(Context ctx, Panel panel) {
     super();
@@ -104,8 +106,7 @@ public class ChartsPanel extends JPanel {
           keyEnd();
           return;
         case KeyEvent.VK_F5:
-          lines.clear();
-          points.clear();
+          clearDecorations();
           repaint();
           return;
         }
@@ -124,7 +125,19 @@ public class ChartsPanel extends JPanel {
     log.trace("collapsed series=" + timeSeriesCollapsed.toStringVerbose());
   }
 
+  private void clearDecorations() {
+    lines.clear();
+    points.clear();
+  }
+  
   private void drawDecorations(Graphics2D g) {
+    // handle panel resizing
+    if (widthOrig != getWidth() || heightOrig != getHeight()) {
+      clearDecorations();
+      widthOrig = getWidth();
+      heightOrig = getHeight();
+      return;
+    }
     g.setColor(colorDecorations);
     g.setStroke(strokeDecorations);
     for (Point point: points) {
@@ -190,7 +203,6 @@ public class ChartsPanel extends JPanel {
       // advance to the next chart
       yBase += chartHeight;
     }
-    
     drawDecorations((Graphics2D) g);
   }
 
