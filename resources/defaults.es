@@ -7,7 +7,7 @@ defaults.panel.fontsize = 12;
 defaults.panel.frequency = YEARS;
 defaults.panel.label = 'Panel';
 defaults.panel.decorations.color = Red;
-defaults.panel.decorations.stroke = 2;
+defaults.panel.decorations.stroke = 1;
 
 defaults.chart.backgroundcolor = White;
 defaults.chart.linecolor = LightGray;
