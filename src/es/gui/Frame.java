@@ -17,7 +17,7 @@ public class Frame extends JFrame {
     UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
     JTabbedPane tabbedPane = new JTabbedPane();
     for (Panel panel: ctx.getPanels()) {
-      ChartsPanel chartsPanel = new ChartsPanel(ctx, panel);
+      ChartsPanel chartsPanel = new ChartsPanel(ctx, panel, tabbedPane);
       chartsPanel.setToolTipText("");
       tabbedPane.addTab(panel.getLabel(), chartsPanel);
     }

@@ -19,6 +19,7 @@ import java.util.Map;
 
 import javax.swing.BorderFactory;
 import javax.swing.JPanel;
+import javax.swing.JTabbedPane;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -48,7 +49,7 @@ public class ChartsPanel extends JPanel {
   private int widthOrig = 0;
   private int heightOrig = 0;
   
-  public ChartsPanel(Context ctx, Panel panel) {
+  public ChartsPanel(Context ctx, Panel panel, JTabbedPane tabbedPane) {
     super();
     this.ctx = ctx;
     this.panel = panel;
@@ -104,6 +105,23 @@ public class ChartsPanel extends JPanel {
           return;
         case KeyEvent.VK_END:
           keyEnd();
+          return;
+        case KeyEvent.VK_SPACE:
+          if (tabbedPane.getTabCount() > 0) {
+            int index;
+            if (event.isShiftDown()) {
+              index = tabbedPane.getSelectedIndex() - 1;
+              if (index == -1) {
+                index = tabbedPane.getTabCount() - 1;
+              }
+            } else {
+              index = tabbedPane.getSelectedIndex() + 1;
+              if (index == tabbedPane.getTabCount()) {
+                index = 0;
+              }
+            }
+            tabbedPane.setSelectedIndex(index);
+          }
           return;
         case KeyEvent.VK_F5:
           clearDecorations();
