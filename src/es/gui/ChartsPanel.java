@@ -40,8 +40,7 @@ public class ChartsPanel extends JPanel {
   private final TimeSeries timeSeriesCollapsed;
   private int idxBase;
   private boolean firstInvokation = true;
-  private List<Point> points = new ArrayList<>();
-  private List<Line> lines = new ArrayList<>();
+  private List<Object> decorations = new ArrayList<>();
   private Point src;
   private Point dest;
   private Color colorDecorations;
@@ -65,7 +64,7 @@ public class ChartsPanel extends JPanel {
       public void mouseClicked(MouseEvent event) {
         requestFocus();
         if (event.getButton() != MouseEvent.BUTTON1) {
-          points.add(new Point(event.getX(), event.getY()));
+          decorations.add(new Point(event.getX(), event.getY()));
         }
         repaint();
       }
@@ -79,7 +78,7 @@ public class ChartsPanel extends JPanel {
       public void mouseReleased(MouseEvent event) {
         dest = event.getPoint();
         if (src.getX() != dest.getX() || src.getY() != dest.getY()) {
-          lines.add(new Line(src, dest));
+          decorations.add(new Line(src, dest));
         }
         repaint();
       }
@@ -152,8 +151,7 @@ public class ChartsPanel extends JPanel {
   }
 
   private void clearDecorations() {
-    lines.clear();
-    points.clear();
+    decorations.clear();
   }
   
   private void drawDecorations(Graphics2D g) {
@@ -166,12 +164,15 @@ public class ChartsPanel extends JPanel {
     }
     g.setColor(colorDecorations);
     g.setStroke(strokeDecorations);
-    for (Point point: points) {
-      g.drawLine(0, point.y, getWidth(), point.y);
-      g.drawLine(point.x, 0, point.x, getHeight());
-    }
-    for (Line line: lines) {
-      g.drawLine(line.getSrc().x, line.getSrc().y, line.getDest().x, line.getDest().y);
+    for (Object decoration: decorations) {
+      if (decoration instanceof Point) {
+        Point point = (Point) decoration;
+        g.drawLine(0, point.y, getWidth(), point.y);
+        g.drawLine(point.x, 0, point.x, getHeight());
+      } else if (decoration instanceof Line) {
+        Line line = (Line) decoration;
+        g.drawLine(line.getSrc().x, line.getSrc().y, line.getDest().x, line.getDest().y);
+      }
     }
   }
   
