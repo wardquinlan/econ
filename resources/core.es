@@ -413,6 +413,8 @@ const function ES:Defaults() {
   :Print('defaults.series.linecolor1 = Color');
   :Print('defaults.series.linecolor2 = Color');
   :Print('defaults.series.linecolor3 = Color');
+  :Print('defaults.panel.decorations.color = Color');
+  :Print('defaults.panel.decorations.stroke = int');
 }
 
 #################################################################################
