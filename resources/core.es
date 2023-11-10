@@ -527,4 +527,9 @@ const function ES:Scale(series, scale) {
   S = :Create(:GetName(series) + '-scaled');
   D = :Date(series);
   :Insert(S, :Get(D, 0), :Get(series, 0));
+  for (i = 1; i < :GetSize(series); i++) {
+    totalScale = scale * (:Get(series, i) - :Get(series, i - 1)) / :Get(series, i - 1);
+    :Insert(S, :Get(D, i), (1 + totalScale) * :Get(series, i - 1));
+  }
+  return S;
 }
