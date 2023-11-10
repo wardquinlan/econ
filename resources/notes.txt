@@ -25,3 +25,16 @@ make aliases es and then write things like this, for each built in function (but
 function ES:Log(level, message) {
   :Log(level, message);
 }
+
+DATES refactoring.
+
+Introduce D() alias to :Date()
+=> as a part of this, introduce :GetDate(series) which returns a (raw, native) date
+
+
+Check for system function names when declaring function params.  Eg:
+
+function fn(merge) { print(merge); }
+
+=> should be disallowed if merge is a system alias
+

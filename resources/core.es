@@ -461,3 +461,37 @@ const function ES:Assert(condition, message) {
     }
   }
 }
+
+#################################################################################
+# ES:Chop(series, date1, date2)
+#
+# Chops series so that its contents ranges from date1 to date2 (inclusive) only
+#
+# series: the series to chop
+# date1 : the start date
+# date2 : the end date
+#
+# Returns: the chopped series
+#################################################################################
+const function ES:Chop(series, date1, date2) {
+  :Log(DEBUG, 'ES:Chop(' + series + ', ' + date1 + ', ' + date2 + ')');
+  if (:GetType(series) != 'Series') {
+    throw 'ES:Chop: not a Series: ' + series;
+  } else if (:GetSeriesType(series) != 'float') {
+    throw 'ES:Chop: unsupported series type: ' + :GetSeriesType(series);
+  }
+  S = :Create(:GetName(series));
+  D = :Date(series);
+  if (date1 == null) {
+    date1 = :Get(D, 0);
+  }
+  if (date2 == null) {
+    date2 = :Get(D, :GetSize(D) - 1);
+  }
+  for (i = 0; i < :GetSize(D); i++) {
+    if (:Get(D, i) >= date1 and :Get(D, i) <= date2) {
+      :Insert(S, :Get(D, i), :Get(series, i));
+    }
+  }
+  return S;
+}
