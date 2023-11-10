@@ -477,8 +477,12 @@ const function ES:Chop(series, date1, date2) {
   :Log(DEBUG, 'ES:Chop(' + series + ', ' + date1 + ', ' + date2 + ')');
   if (:GetType(series) != 'Series') {
     throw 'ES:Chop: not a Series: ' + series;
-  } else if (:GetSeriesType(series) != 'float') {
+  }
+  if (:GetSeriesType(series) != 'float') {
     throw 'ES:Chop: unsupported series type: ' + :GetSeriesType(series);
+  }
+  if (:GetSize(series) == 0) {
+    throw 'ES:Chop: cannot chop an empty series: ' + series;
   }
   S = :Create(:GetName(series) + '-chopped');
   D = :Date(series);
@@ -494,4 +498,33 @@ const function ES:Chop(series, date1, date2) {
     }
   }
   return S;
+}
+
+#################################################################################
+# ES:Scale(series, scale)
+#
+# Scales a series by a factor of 'scale'
+#
+# series: the series to scale
+# scale : the scaling factor
+#
+# Returns: the scaled series
+#################################################################################
+const function ES:Scale(series, scale) {
+  :Log(DEBUG, 'ES:Scale(' + series + ', ' + scale + ')');
+  if (:GetType(series) != 'Series') {
+    throw 'ES:Scale: not a Series: ' + series;
+  }
+  if (:GetSeriesType(series) != 'float') {
+    throw 'ES:Scale: unsupported series type: ' + :GetSeriesType(series);
+  }
+  if (:GetSize(series) == 0) {
+    throw 'ES:Scale: cannot scale an empty series: ' + series;
+  }
+  if (:GetType(scale) != 'int' and :GetType(scale) != 'float') {
+    throw 'ES:Scale: unsupported scaling type: ' + scale;
+  }
+  S = :Create(:GetName(series) + '-scaled');
+  D = :Date(series);
+  :Insert(S, :Get(D, 0), :Get(series, 0));
 }
