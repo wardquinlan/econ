@@ -524,7 +524,7 @@ const function ES:Scale(series, scale) {
   if (:GetType(scale) != 'int' and :GetType(scale) != 'float') {
     throw 'ES:Scale: unsupported scaling type: ' + scale;
   }
-  S = :Create(:GetName(series) + '-scaled');
+  S = :Create(:GetName(series) + '-scaled [x' + scale + ']');
   D = :Date(series);
   :Insert(S, :Get(D, 0), :Get(series, 0));
   for (i = 1; i < :GetSize(series); i++) {
