@@ -480,7 +480,7 @@ const function ES:Chop(series, date1, date2) {
   } else if (:GetSeriesType(series) != 'float') {
     throw 'ES:Chop: unsupported series type: ' + :GetSeriesType(series);
   }
-  S = :Create(:GetName(series));
+  S = :Create(:GetName(series) + '-chopped');
   D = :Date(series);
   if (date1 == null) {
     date1 = :Get(D, 0);
