@@ -319,8 +319,8 @@ const function ES:Highest(object, withDate) {
     return null;
   }
   if (withDate == true) {
-    :Log(DEBUG, 'initializing with date ' + :Get(:Date(series), 0));
-    :GPut('METRICS.date.highest', :Get(:Date(series), 0));
+    :Log(DEBUG, 'initializing with date ' + :GetDate(series, 0));
+    :GPut('METRICS.date.highest', :GetDate(series, 0));
   }
   :Log(DEBUG, 'initializing with value ' + :Get(series, 0));
   :GPut('METRICS.highest', :Get(series, 0));
@@ -351,8 +351,8 @@ const function ES:Lowest(object, withDate) {
     return null;
   }
   if (withDate == true) {
-    :Log(DEBUG, 'initializing with date ' + :Get(:Date(series), 0));
-    :GPut('METRICS.date.lowest', :Get(:Date(series), 0));
+    :Log(DEBUG, 'initializing with date ' + :GetDate(series, 0));
+    :GPut('METRICS.date.lowest', :GetDate(series, 0));
   }
   :Log(DEBUG, 'initializing with value ' + :Get(series, 0));
   :GPut('METRICS.lowest', :Get(series, 0));
