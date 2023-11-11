@@ -108,9 +108,8 @@ const function ES:LastUpdated(object) {
     return;
   }
   series = ES:Load(object);
-  D = :Date(series);
   :Printf('%-6d%-22s%-5s%s\n', :GetId(series), :GetName(series), :GetFrequencyShort(series), 
-                               :Get(D, :GetSize(D) - 1));
+                               :GetDate(series, :GetSize(series) - 1));
 }
 
 const function ES:Refresh(object) {
@@ -485,16 +484,15 @@ const function ES:Chop(series, date1, date2) {
     throw 'ES:Chop: cannot chop an empty series: ' + series;
   }
   S = :Create(:GetName(series) + '-chopped');
-  D = :Date(series);
   if (date1 == null) {
-    date1 = :Get(D, 0);
+    date1 = :GetDate(series, 0);
   }
   if (date2 == null) {
-    date2 = :Get(D, :GetSize(D) - 1);
+    date2 = :GetDate(series, :GetSize(series) - 1);
   }
-  for (i = 0; i < :GetSize(D); i++) {
-    if (:Get(D, i) >= date1 and :Get(D, i) <= date2) {
-      :Insert(S, :Get(D, i), :Get(series, i));
+  for (i = 0; i < :GetSize(series); i++) {
+    if (:GetDate(series, i) >= date1 and :GetDate(series, i) <= date2) {
+      :Insert(S, :GetDate(series, i), :Get(series, i));
     }
   }
   return S;
