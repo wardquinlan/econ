@@ -30,6 +30,7 @@ import es.command.Functions;
 import es.command.GGet;
 import es.command.GPut;
 import es.command.Get;
+import es.command.GetDate;
 import es.command.GetEnv;
 import es.command.GetFrequency;
 import es.command.GetFrequencyShort;
@@ -179,6 +180,7 @@ public class FunctionCaller {
     commandMap.put(":Functions", new Functions());
     commandMap.put(":GPut", new GPut());
     commandMap.put(":Random", new Random());
+    commandMap.put(":GetDate", new GetDate());
     if (Settings.getInstance().isTestMode()) {
       commandMap.put(":Collapse", new Collapse());
       commandMap.put(":Normalize", new Normalize());
