@@ -523,11 +523,10 @@ const function ES:Scale(series, scale) {
     throw 'ES:Scale: unsupported scaling type: ' + scale;
   }
   S = :Create(:GetName(series) + '-scaled [x' + scale + ']');
-  D = :Date(series);
-  :Insert(S, :Get(D, 0), :Get(series, 0));
+  :Insert(S, :GetDate(series, 0), :Get(series, 0));
   for (i = 1; i < :GetSize(series); i++) {
     totalScale = scale * (:Get(series, i) - :Get(series, i - 1)) / :Get(series, i - 1);
-    :Insert(S, :Get(D, i), (1 + totalScale) * :Get(S, i - 1));
+    :Insert(S, :GetDate(series, i), (1 + totalScale) * :Get(S, i - 1));
   }
   return S;
 }
