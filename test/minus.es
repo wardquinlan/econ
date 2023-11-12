@@ -23,4 +23,7 @@ assert(get(T, 1) == get(T1, 1));
 assert(get(T, 2) == get(T1, 2));
 assert(get(T, 3) == get(T1, 3));
 
+D = :Date('2023-11-17') - 5;
+assert(D == '2023-11-12');
+
 print('MINUS TESTS PASSED');

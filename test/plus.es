@@ -64,4 +64,11 @@ assert(get(T, 3) == 12);
 assert(get(T, 4) == 13);
 assert(get(T, 5) == 16);
 
+D = '2023-11-17' + 5;
+assert(D == '2023-11-175');
+D = :Date('2023-11-17') + 5;
+assert(D == '2023-11-22');
+D = 5 + :Date('2023-11-17');
+assert(D == '2023-11-22');
+
 print('PLUS TESTS PASSED');
