@@ -1,5 +1,7 @@
 package es.parser;
 
+import java.util.Date;
+
 import es.core.TimeSeries;
 import es.core.TimeSeriesData;
 import es.core.Utils;
@@ -44,6 +46,10 @@ public class Executor {
       return exec((TimeSeries) val1, (String) val2);
     } else if (val1 instanceof String && val2 instanceof TimeSeries) {
       return exec((String) val1, (TimeSeries) val2);
+    } else if (val1 instanceof TimeSeries && val2 instanceof Date) {
+      return exec((TimeSeries) val1, (Date) val2);
+    } else if (val1 instanceof Date && val2 instanceof TimeSeries) {
+      return exec((Date) val1, (TimeSeries) val2);
     } else if (val1 instanceof TimeSeries && val2 instanceof Boolean) {
       return exec((TimeSeries) val1, (Boolean) val2);
     } else if (val1 instanceof Boolean && val2 instanceof TimeSeries) {
@@ -80,6 +86,34 @@ public class Executor {
   }
   
   private Object exec(TimeSeries timeSeries1, String val) throws Exception {
+    Date date = Utils.DATE_FORMAT.parse(val);
+    TimeSeries timeSeries = new TimeSeries(operator.getAssociatedSeriesType());
+    for (TimeSeriesData timeSeriesData1: timeSeries1.getTimeSeriesDataList()) {
+      if (timeSeriesData1.getValue() != null) {
+        TimeSeriesData timeSeriesData = new TimeSeriesData();
+        timeSeriesData.setDate(timeSeriesData1.getDate());
+        timeSeriesData.setValue(((BinaryOperator) operator).exec(timeSeriesData1.getValue(), date));
+        timeSeries.add(timeSeriesData);
+      }
+    }
+    return timeSeries;
+  }
+  
+  private Object exec(String val, TimeSeries timeSeries1) throws Exception {
+    Date date = Utils.DATE_FORMAT.parse(val);
+    TimeSeries timeSeries = new TimeSeries(operator.getAssociatedSeriesType());
+    for (TimeSeriesData timeSeriesData1: timeSeries1.getTimeSeriesDataList()) {
+      if (timeSeriesData1.getValue() != null) {
+        TimeSeriesData timeSeriesData = new TimeSeriesData();
+        timeSeriesData.setDate(timeSeriesData1.getDate());
+        timeSeriesData.setValue(((BinaryOperator) operator).exec(date, timeSeriesData1.getValue()));
+        timeSeries.add(timeSeriesData);
+      }
+    }
+    return timeSeries;
+  }
+
+  private Object exec(TimeSeries timeSeries1, Date val) throws Exception {
     TimeSeries timeSeries = new TimeSeries(operator.getAssociatedSeriesType());
     for (TimeSeriesData timeSeriesData1: timeSeries1.getTimeSeriesDataList()) {
       if (timeSeriesData1.getValue() != null) {
@@ -92,7 +126,7 @@ public class Executor {
     return timeSeries;
   }
   
-  private Object exec(String val, TimeSeries timeSeries1) throws Exception {
+  private Object exec(Date val, TimeSeries timeSeries1) throws Exception {
     TimeSeries timeSeries = new TimeSeries(operator.getAssociatedSeriesType());
     for (TimeSeriesData timeSeriesData1: timeSeries1.getTimeSeriesDataList()) {
       if (timeSeriesData1.getValue() != null) {

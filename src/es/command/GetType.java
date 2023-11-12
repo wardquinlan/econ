@@ -51,6 +51,8 @@ public class GetType implements Command {
       return "Series";
     } else if (object instanceof FunctionDeclaration) {
       return "Function";
+    } else if (object instanceof java.util.Date) {
+      return "Date";
     } else {
       throw new Exception("unknown type: " + object);
     }

@@ -61,7 +61,7 @@ public class Insert implements Command {
       if (params.size() > 2) {
         throw new Exception("too many arguments");
       }
-      value = params.get(1);
+      value = date;
     } else if (timeSeries.getType() == TimeSeries.FLOAT) {
       Utils.validate(params, 3, 3);
       if (params.get(2) instanceof Integer) {

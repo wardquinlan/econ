@@ -1,6 +1,9 @@
 package es.parser;
 
+import java.util.Date;
+
 import es.core.TimeSeries;
+import es.core.Utils;
 
 public class Eq implements BinaryOperator {
   @Override
@@ -20,6 +23,14 @@ public class Eq implements BinaryOperator {
       return val1.equals(val2);
     } else if (val1 instanceof TimeSeries && val2 instanceof TimeSeries) {
       return val1.equals(val2);
+    } else if (val1 instanceof Date && val2 instanceof Date) {
+      return val1.equals(val2);
+    } else if (val1 instanceof Date && val2 instanceof String) {
+      Date date = Utils.DATE_FORMAT.parse((String) val2);
+      return val1.equals(date);
+    } else if (val1 instanceof String && val2 instanceof Date) {
+      Date date = Utils.DATE_FORMAT.parse((String) val1);
+      return date.equals(val2);
     } else if (val1 == null && val2 == null) {
       return true;
     } else {
