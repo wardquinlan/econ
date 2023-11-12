@@ -12,25 +12,29 @@ import es.parser.SymbolTable;
 public class Date implements Command {
   @Override
   public String getSummary() {
-    return "Series  " + Utils.ROOT_NAMESPACE + "Date(Series series);";
+    return "Object  " + Utils.ROOT_NAMESPACE + "Date([Object object[);";
   }
   
   @Override
   public List<String> getDetails() {
     List<String> list = new ArrayList<>();
-    list.add("Creates a series of type 'date' whose values are the dates of 'series'");
+    list.add("If 'object' is not present, creates and returns today's date");
+    list.add("If 'object' is a Series, creates and returns a series of type 'date' whose values are the dates of 'series'.");
+    list.add("If 'object' is a String in the formation 'yyyy-mm-dd', creates a new Date object representing said String.");
     return list;
   }
   
   @Override
   public String getReturns() {
-    return "The new date series";
+    return "The new Date or Date series.";
   }
   
   @Override
   public Object run(SymbolTable symbolTable, File file, List<Object> params) throws Exception {
-    Utils.validate(params, 1, 1);
-    
+    Utils.validate(params, 0, 1);
+    if (params.size() == 0) {
+      return Utils.DATE_FORMAT.parse(Utils.DATE_FORMAT.format(new java.util.Date()));
+    }
     if (params.get(0) instanceof TimeSeries) {
       TimeSeries timeSeries1 = (TimeSeries) params.get(0);
       TimeSeries timeSeries = new TimeSeries(TimeSeries.DATE);
