@@ -543,10 +543,10 @@ public class Utils {
       Symbol symbol = symbolTable.localGet(key);
       if (symbol.getValue() instanceof FunctionDeclaration) {
         FunctionDeclaration decl = (FunctionDeclaration) symbol.getValue();
-        log.debug("lvalue name=" + lvalue);
-        log.debug("symbol name=" + symbol.getName());
-        log.debug("decl hashcode=" + decl.hashCode());
-        log.debug("declExisting hashcode=" + declExisting.hashCode());
+        log.trace("lvalue name=" + lvalue);
+        log.trace("symbol name=" + symbol.getName());
+        log.trace("decl hashcode=" + decl.hashCode());
+        log.trace("declExisting hashcode=" + declExisting.hashCode());
         if (!lvalue.equals(symbol.getName()) && declExisting.hashCode() == decl.hashCode()) {
           throw new Exception("function declaration '" + decl.getName() + "' is referenced by '" + symbol.getName() + "'");
         }

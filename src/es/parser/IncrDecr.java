@@ -48,7 +48,7 @@ public class IncrDecr implements UnaryOperator {
     } else if (node.getType() == ESNode.DECR) {
       if (node.getLhs() != null) {
         // post-decrement
-        symbol.setValue(value + -1);
+        symbol.setValue(value - 1);
         symbolTable.put(symbol.getName(), symbol);
       } else {
         // pre-decrement
