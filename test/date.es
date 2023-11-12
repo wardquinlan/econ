@@ -30,22 +30,42 @@ insert(D, '2022-12-02');
 insert(D, '2022-12-03');
 insert(D, '2022-12-04');
 
-print('true true true false:');
+print('1 - true true true false:');
 data(D <= '2022-12-03');
-print('true true false false:');
+print('2 - true true false false:');
 data(D < '2022-12-03');
-print('false false true true:');
+print('3 - false false true true:');
 data(D >= '2022-12-03');
-print('false false false true:');
+print('4 - false false false true:');
 data(D > '2022-12-03');
 
-print('true true true false:');
+print('5 - true true true false:');
 data(D <= :Date('2022-12-03'));
-print('true true false false:');
+print('6 - true true false false:');
 data(D < :Date('2022-12-03'));
-print('false false true true:');
+print('7 - false false true true:');
 data(D >= :Date('2022-12-03'));
-print('false false false true:');
+print('8 - false false false true:');
 data(D > :Date('2022-12-03'));
+
+###
+
+print('9 - true true true false:');
+data('2022-12-03' >= D);
+print('10 - true true false false:');
+data('2022-12-03' > D);
+print('11 - false false true true:');
+data('2022-12-03' <= D);
+print('12 - false false false true:');
+data('2022-12-03' < D);
+
+print('13 - true true true false:');
+data(:Date('2022-12-03') >= D);
+print('14 - true true false false:');
+data(:Date('2022-12-03') > D);
+print('15 - false false true true:');
+data(:Date('2022-12-03') <= D);
+print('16 - false false false true:');
+data(:Date('2022-12-03') < D);
 
 :Print('DATE TESTS PASSED');
