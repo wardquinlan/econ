@@ -25,6 +25,8 @@ public class GetType implements Command {
     list.add("  - 'boolean'");
     list.add("  - 'String'");
     list.add("  - 'Series'");
+    list.add("  - 'Function'");
+    list.add("  - 'Date'");
     return list;
   }
   

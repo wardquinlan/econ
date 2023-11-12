@@ -45,7 +45,7 @@ public class GetSeriesType implements Command {
       case TimeSeries.BOOLEAN:
         return "boolean";
       case TimeSeries.DATE:
-        return "date";
+        return "Date";
       default:
         throw new Exception("unknown type: " + timeSeries.getType());
     }
