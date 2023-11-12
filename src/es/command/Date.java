@@ -40,8 +40,10 @@ public class Date implements Command {
       TimeSeries timeSeries = new TimeSeries(TimeSeries.DATE);
       for (TimeSeriesData timeSeriesData1: timeSeries1.getTimeSeriesDataList()) {
         TimeSeriesData timeSeriesData = new TimeSeriesData();
+        // so dates are formatted consistently.  Dates read in from the database do not have associated times b.c. they are DATEs
+        java.util.Date date = new java.util.Date(timeSeriesData1.getDate().getTime());
         timeSeriesData.setDate(timeSeriesData1.getDate());
-        timeSeriesData.setValue(timeSeriesData1.getDate());
+        timeSeriesData.setValue(date);
         timeSeries.add(timeSeriesData);
       }
       return timeSeries;
