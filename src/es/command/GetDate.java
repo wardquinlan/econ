@@ -44,6 +44,6 @@ public class GetDate implements Command {
     if (index < 0 || index >= timeSeries.size()) {
       throw new Exception("out of bounds: " + index);
     }
-    return Utils.DATE_FORMAT.format(timeSeries.get(index).getDate());
+    return new java.util.Date(timeSeries.get(index).getDate().getTime());
   }
 }
