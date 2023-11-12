@@ -301,7 +301,7 @@ public class Parser {
     }
     String name = (String) tk.getValue();
     if (FunctionCaller.getInstance().isSystemFunction(name)) {
-      throw new Exception("syntax error: invalid function name (use of a system function name)");
+      throw new Exception("syntax error: invalid function name (use of a system function name): " + name);
     }
     FunctionDeclaration functionDeclaration = new FunctionDeclaration(name);
     if (!itr.hasNext()) {
