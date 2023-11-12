@@ -29,5 +29,6 @@ include 'trycatch.es';
 include 'const.es';
 include 'prepost.es';
 include 'loop.es';
+include 'date.es';
 
 print("*** TESTS COMPLETED SUCCESSFULLY ***");
