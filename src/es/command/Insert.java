@@ -14,7 +14,7 @@ import es.parser.SymbolTable;
 public class Insert implements Command {
   @Override
   public String getSummary() {
-    return "void    " + Utils.ROOT_NAMESPACE + "Insert(Series series, String date, Object value);";
+    return "void    " + Utils.ROOT_NAMESPACE + "Insert(Series series, Object date[, Object value]);";
   }
   
   @Override
@@ -23,7 +23,7 @@ public class Insert implements Command {
     list.add("Inserts data into a series, where:");
     list.add("");
     list.add("  - 'series' is the series in question");
-    list.add("  - 'date' is the date, in the format yyyy-mm-dd");
+    list.add("  - 'date' is the date, as either a String (in the format 'yyyy-mm-dd'), or as a Date");
     list.add("  - 'value' is the value (must be an int, a float, or a boolean");
     return list;
   }
@@ -42,20 +42,19 @@ public class Insert implements Command {
       throw new Exception(params.get(0) + " is not a Series");
     }
     TimeSeries timeSeries = (TimeSeries) params.get(0);
-
-    if (!(params.get(1) instanceof String)) {
-      throw new Exception(params.get(1) + " is not a String");
+    Date date;
+    if (params.get(1) instanceof String) {
+      date = Utils.DATE_FORMAT.parse((String) params.get(1));
+    } else if (params.get(1) instanceof Date) {
+      date = (Date) params.get(1);
+    } else {
+      throw new Exception(params.get(1) + " is not a String nor a Date");
     }
-    if (((String) params.get(1)).length() != 10) {
-      throw new Exception("'date' must be of the format YYYY-MM-DD");
-    }
-    Date date = Utils.DATE_FORMAT.parse((String) params.get(1));
     for(TimeSeriesData timeSeriesData: timeSeries.getTimeSeriesDataList()) {
       if (timeSeriesData.getDate().equals(date)) {
         throw new Exception("that date already exists: " + Utils.DATE_FORMAT.format(date));
       }
     }
-    
     Object value = null;
     if (timeSeries.getType() == TimeSeries.DATE) {
       if (params.size() > 2) {
