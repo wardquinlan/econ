@@ -17,6 +17,20 @@ assert(i++ + 1 == 1);
 assert(--i - 1 == -1);
 assert(i == 0);
 
+d = :Date('2023-11-17');
+assert(d == '2023-11-17');
+assert(d++ == '2023-11-17');
+assert(d == '2023-11-18');
+assert(++d == '2023-11-19');
+assert(d == '2023-11-19');
+
+d = :Date('2023-11-17');
+assert(d == '2023-11-17');
+assert(d-- == '2023-11-17');
+assert(d == '2023-11-16');
+assert(--d == '2023-11-15');
+assert(d == '2023-11-15');
+
 try {
   s = 'hello';
   s++;
@@ -44,31 +58,44 @@ try {
 function preIncr() {
   assert(++a == 1);
   assert(a == 1);
+  assert(++d == '2023-11-18');
+  assert(d == '2023-11-18');
 } 
 
 function postIncr() {
   assert(a++ == 0);
   assert(a == 1);
+  assert(d++ == '2023-11-17');
+  assert(d == '2023-11-18');
 } 
 
 function preDecr() {
   assert(--a == -1);
   assert(a == -1);
+  assert(--d == '2023-11-16');
+  assert(d == '2023-11-16');
 } 
 
 function postDecr() {
   assert(a-- == 0);
   assert(a == -1);
+  assert(d-- == '2023-11-17');
+  assert(d == '2023-11-16');
 } 
 
 a = 0;
+d = :Date('2023-11-17');
 preIncr();
 assert(a == 0);
+assert(d == '2023-11-17');
 postIncr();
 assert(a == 0);
+assert(d == '2023-11-17');
 preDecr();
 assert(a == 0);
+assert(d == '2023-11-17');
 postDecr();
 assert(a == 0);
+assert(d == '2023-11-17');
 
 :Print('PRE/POST TESTS PASSED');
