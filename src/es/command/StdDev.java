@@ -12,13 +12,13 @@ import es.parser.SymbolTable;
 public class StdDev implements Command {
   @Override
   public String getSummary() {
-    return "Series  " + Utils.ROOT_NAMESPACE + "Stdev(Series series, int n);";
+    return "Object  " + Utils.ROOT_NAMESPACE + "Stdev(Series series[, int n]);";
   }
   
   @Override
   public List<String> getDetails() {
     List<String> list = new ArrayList<>();
-    list.add("Calculates the 'n'-period (moving) standard deviation of 'series'");
+    list.add("If 'n' is present, calculates the n-period (moving) standard deviation of 'series'.  Otherwise, calculates the absolute standard deviation.");
     list.add("");
     list.add("Note that 1 < n <= size(series)");
     return list;
@@ -26,12 +26,12 @@ public class StdDev implements Command {
   
   @Override
   public String getReturns() {
-    return "'n'-period standard deviation of 'series'";
+    return "n-period moving standard deviation of 'series' (if 'n' is present), or the absolute standard deviation";
   }
   
   @Override
   public Object run(SymbolTable symbolTable, File file, List<Object> params) throws Exception {
-    Utils.validate(params, 2, 2);
+    Utils.validate(params, 1, 2);
     
     if (!(params.get(0) instanceof TimeSeries)) {
       throw new Exception(params.get(0) + " is not a Series");
@@ -40,7 +40,9 @@ public class StdDev implements Command {
     if (timeSeries.getType() != TimeSeries.FLOAT) {
       throw new Exception(params.get(0) + " is not a FLOAT series");
     }
-    
+    if (params.size() == 1) {
+      return stddev(timeSeries);
+    }
     if (!(params.get(1) instanceof Integer)) {
       throw new Exception(params.get(1) + " is not an int");
     }
@@ -71,5 +73,19 @@ public class StdDev implements Command {
     }
     
     return timeSeriesStdev;
+  }
+  
+  private float stddev(TimeSeries timeSeries) throws Exception {
+    if (timeSeries.size() < 2) {
+      throw new Exception("series must have at least 2 observations: " + timeSeries);
+    }
+    float xbar = Utils.average(timeSeries);
+    float sum = 0;
+    for (int i = 0; i < timeSeries.size(); i++) {
+      float xi = (float) timeSeries.get(i).getValue();
+      sum += (xi - xbar) * (xi - xbar);
+    }
+    float var = sum / (timeSeries.size() - 1);
+    return (float) Math.sqrt(var);
   }
 }

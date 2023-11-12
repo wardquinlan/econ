@@ -41,7 +41,7 @@ public class Average implements Command {
       throw new Exception(params.get(0) + " is not a FLOAT series");
     }
     if (params.size() == 1) {
-      return average(timeSeries);
+      return Utils.average(timeSeries);
     }
     if (!(params.get(1) instanceof Integer)) {
       throw new Exception(params.get(1) + " is not an int");
@@ -64,17 +64,5 @@ public class Average implements Command {
       timeSeriesAvg.add(timeSeriesData);
     }
     return timeSeriesAvg;
-  }
-  
-  private float average(TimeSeries timeSeries) throws Exception {
-    List<TimeSeriesData> list = timeSeries.getTimeSeriesDataList();
-    if (list.size() == 0) {
-      throw new Exception("series is empty: " + timeSeries);
-    }
-    float sum = 0;
-    for (int i = 0; i < list.size(); i++) {
-      sum += (float) list.get(i).getValue();
-    }
-    return sum / list.size();
   }
 }

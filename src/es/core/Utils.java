@@ -564,4 +564,18 @@ public class Utils {
       }
     }
   }
+  
+  public static float average(TimeSeries timeSeries) throws Exception {
+    if (timeSeries.getType() != TimeSeries.FLOAT) {
+      throw new Exception("not a FLOAT series: " + timeSeries);
+    }
+    if (timeSeries.size() == 0) {
+      throw new Exception("series is empty: " + timeSeries);
+    }
+    float sum = 0;
+    for (int i = 0; i < timeSeries.size(); i++) {
+      sum += (float) timeSeries.get(i).getValue();
+    }
+    return sum / timeSeries.size();
+  }
 }
