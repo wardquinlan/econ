@@ -40,6 +40,7 @@ public class Utils {
     MONTHS.put(11, "D");
   }
   public static final DateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd");
+  public static final long DATE_CONVERSION = 3600L * 24L * 1000L;
   
   public static final String ROOT_NAMESPACE = ":";
 
