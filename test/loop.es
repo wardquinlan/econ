@@ -44,6 +44,7 @@ try {
   :Print('exception thrown, as expected: ' + ex);
 }
 
+pfn3 = null;
 function fn3(N) {
   i = 0;
   while (i < N) {

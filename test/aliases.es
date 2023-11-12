@@ -10,10 +10,6 @@ function create(name, type) {
   }
 }
 
-function insert(series, date, value) {
-  :Insert(series, date, value);
-}
-
 function getSize(series) {
   return :GetSize(series);
 }
