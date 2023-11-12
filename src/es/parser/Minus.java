@@ -1,6 +1,9 @@
 package es.parser;
 
+import java.util.Date;
+
 import es.core.TimeSeries;
+import es.core.Utils;
 
 public class Minus implements BinaryOperator {
   @Override
@@ -13,8 +16,11 @@ public class Minus implements BinaryOperator {
       return ((Float) val1 - ((Integer) val2).floatValue());
     } else if (val1 instanceof Float && val2 instanceof Float) {
       return (Float) val1 - (Float) val2;
+    } else if (val1 instanceof Date && val2 instanceof Integer) {
+      long l = ((Date) val1).getTime() - (int) val2 * Utils.DATE_CONVERSION;
+      return new Date(l);
     } else {
-      throw new Exception("syntax error");
+      throw new Exception("syntax error: Minus");
     }
   }
 

@@ -28,7 +28,7 @@ public class Gte implements BinaryOperator {
       Date date = Utils.DATE_FORMAT.parse((String) val1);
       return date.compareTo((Date) val2) >= 0;
     } else {
-      throw new Exception("syntax error: GTE");
+      throw new Exception("syntax error: Gte");
     }
   }
 

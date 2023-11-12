@@ -25,7 +25,7 @@ public class Plus implements BinaryOperator {
     } else if (val1 instanceof String) {
       return (String) val1 + val2;
     } else {
-      throw new Exception("syntax error");
+      throw new Exception("syntax error: Plus");
     }
   }
 
