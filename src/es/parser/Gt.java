@@ -1,6 +1,9 @@
 package es.parser;
 
+import java.util.Date;
+
 import es.core.TimeSeries;
+import es.core.Utils;
 
 public class Gt implements BinaryOperator {
   @Override
@@ -16,8 +19,16 @@ public class Gt implements BinaryOperator {
       return ((Float) val1).compareTo((Float) val2) > 0;
     } else if (val1 instanceof String && val2 instanceof String) {
       return ((String) val1).compareTo((String) val2) > 0;
+    } else if (val1 instanceof Date && val2 instanceof Date) {
+      return ((Date) val1).compareTo((Date) val2) > 0;
+    } else if (val1 instanceof Date && val2 instanceof String) {
+      Date date = Utils.DATE_FORMAT.parse((String) val2);
+      return ((Date) val1).compareTo(date) > 0;
+    } else if (val1 instanceof String && val2 instanceof Date) {
+      Date date = Utils.DATE_FORMAT.parse((String) val1);
+      return date.compareTo((Date) val2) > 0;
     } else {
-      throw new Exception("syntax error");
+      throw new Exception("syntax error: Gt");
     }
   }
 
