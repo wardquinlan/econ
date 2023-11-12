@@ -1,5 +1,7 @@
 package es.parser;
 
+import java.util.Date;
+
 import es.core.TimeSeries;
 import es.core.Utils;
 
@@ -27,32 +29,48 @@ public class IncrDecr implements UnaryOperator {
       throw new Exception("unititalized: " + symbol.getName());
     }
     Symbol symbolExisting = symbolTable.get(symbol.getName());
-    if (!(symbolExisting.getValue() instanceof Integer)) {
-      throw new Exception("not integral: " + symbol.getName());
+    if (!(symbolExisting.getValue() instanceof Integer) && !(symbolExisting.getValue() instanceof Date)) {
+      throw new Exception(symbol.getName() + " is not an integer nor a Date");
     }
     if (symbolExisting.isConstant()) {
       throw new Exception("const: " + symbol.getName());
     }
-    int value = (Integer) symbolExisting.getValue();
+    Object value = symbolExisting.getValue();
     if (node.getType() == ESNode.INCR) {
       if (node.getLhs() != null) {
         // post-increment
-        symbol.setValue(value + 1);
+        if (value instanceof Integer) {
+          symbol.setValue((Integer) value + 1);
+        } else {
+          symbol.setValue(new Date(((Date) value).getTime() + Utils.DATE_CONVERSION));
+        }
         symbolTable.put(symbol.getName(), symbol);
       } else {
         // pre-increment
-        value++;
+        if (value instanceof Integer) {
+          value = (Integer) value + 1;
+        } else {
+          value = new Date(((Date) value).getTime() + Utils.DATE_CONVERSION);
+        }
         symbol.setValue(value);
         symbolTable.put(symbol.getName(), symbol);
       }
     } else if (node.getType() == ESNode.DECR) {
       if (node.getLhs() != null) {
         // post-decrement
-        symbol.setValue(value - 1);
+        if (value instanceof Integer) {
+          symbol.setValue((Integer) value - 1);
+        } else {
+          symbol.setValue(new Date(((Date) value).getTime() - Utils.DATE_CONVERSION));
+        }
         symbolTable.put(symbol.getName(), symbol);
       } else {
         // pre-decrement
-        value--;
+        if (value instanceof Integer) {
+          value = (Integer) value - 1;
+        } else {
+          value = new Date(((Date) value).getTime() - Utils.DATE_CONVERSION);
+        }
         symbol.setValue(value);
         symbolTable.put(symbol.getName(), symbol);
       }
