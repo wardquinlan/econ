@@ -42,7 +42,7 @@ public class IncrDecr implements UnaryOperator {
         if (value instanceof Integer) {
           symbol.setValue((Integer) value + 1);
         } else {
-          symbol.setValue(new Date(((Date) value).getTime() + Utils.DATE_CONVERSION));
+          symbol.setValue(Utils.addDays((Date) value, 1));
         }
         symbolTable.put(symbol.getName(), symbol);
       } else {
@@ -50,7 +50,7 @@ public class IncrDecr implements UnaryOperator {
         if (value instanceof Integer) {
           value = (Integer) value + 1;
         } else {
-          value = new Date(((Date) value).getTime() + Utils.DATE_CONVERSION);
+          value = Utils.addDays((Date) value, 1);
         }
         symbol.setValue(value);
         symbolTable.put(symbol.getName(), symbol);
@@ -61,7 +61,7 @@ public class IncrDecr implements UnaryOperator {
         if (value instanceof Integer) {
           symbol.setValue((Integer) value - 1);
         } else {
-          symbol.setValue(new Date(((Date) value).getTime() - Utils.DATE_CONVERSION));
+          symbol.setValue(Utils.addDays((Date) value, -1));
         }
         symbolTable.put(symbol.getName(), symbol);
       } else {
@@ -69,7 +69,7 @@ public class IncrDecr implements UnaryOperator {
         if (value instanceof Integer) {
           value = (Integer) value - 1;
         } else {
-          value = new Date(((Date) value).getTime() - Utils.DATE_CONVERSION);
+          value = Utils.addDays((Date) value, -1);
         }
         symbol.setValue(value);
         symbolTable.put(symbol.getName(), symbol);

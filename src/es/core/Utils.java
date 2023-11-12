@@ -5,6 +5,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -40,7 +41,6 @@ public class Utils {
     MONTHS.put(11, "D");
   }
   public static final DateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd");
-  public static final long DATE_CONVERSION = 3600L * 24L * 1000L;
   
   public static final String ROOT_NAMESPACE = ":";
 
@@ -52,6 +52,13 @@ public class Utils {
      100f,  200f,  300f,  400f,  500f,  600f,  700f,  800f,  900f,
     1000f, 2000f, 3000f, 4000f, 5000f, 6000f, 7000f, 8000f, 9000f
   };
+  
+  public static final Date addDays(Date date, int days) {
+    Calendar cal = new GregorianCalendar();
+    cal.setTime(date);
+    cal.add(Calendar.DAY_OF_MONTH, days);
+    return cal.getTime();
+  }
   
   public static void checkNameSpace(String symbol) throws Exception {
     int nLetters = 0;

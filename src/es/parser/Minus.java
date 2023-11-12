@@ -17,8 +17,7 @@ public class Minus implements BinaryOperator {
     } else if (val1 instanceof Float && val2 instanceof Float) {
       return (Float) val1 - (Float) val2;
     } else if (val1 instanceof Date && val2 instanceof Integer) {
-      long l = ((Date) val1).getTime() - (int) val2 * Utils.DATE_CONVERSION;
-      return new Date(l);
+      return Utils.addDays((Date) val1, -((int) val2));
     } else {
       throw new Exception("syntax error: Minus");
     }
