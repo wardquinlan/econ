@@ -31,7 +31,7 @@ public class Data implements Command {
     list.add("If the optional function parameter 'fn' is passed, that function is invoked for each data element.");
     list.add("");
     list.add("'fn' must have the signature:");
-    list.add("  function f(int idx, String date, Object value);");
+    list.add("  function f(int idx, Object date, Object value);");
     return list;
   }
   
