@@ -530,3 +530,19 @@ const function ES:Scale(series, scale) {
   }
   return S;
 }
+
+#################################################################################
+# ES:Sqrt(value)
+#
+# Calculates the Square Root of 'value'
+#
+# value: the value to take the square root of
+#
+# Returns: the square root of 'value'
+#################################################################################
+const function ES:Sqrt(value) {
+  if (value < 0) {
+    throw 'cannot take the square root of a negative value: ' + value;
+  }
+  return value ^ 0.5;
+}
