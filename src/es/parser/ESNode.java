@@ -136,9 +136,6 @@ public class ESNode implements Evaluable {
           // don't call the evaluator when adding the time series to a string
           return ((BinaryOperator) operator).exec(val1, val2);
         }
-        if (val1 instanceof TimeSeries && ((TimeSeries) val1).getType() != TimeSeries.FLOAT) {
-          throw new Exception("cannot add to a non-floating point time series: " + val1);
-        }
       }
       return executor.exec(val1, val2);
     }

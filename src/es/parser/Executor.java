@@ -145,7 +145,7 @@ public class Executor {
       if (timeSeriesData1.getValue() != null) {
         TimeSeriesData timeSeriesData = new TimeSeriesData();
         timeSeriesData.setDate(timeSeriesData1.getDate());
-        timeSeriesData.setValue(((BinaryOperator) operator).exec(timeSeriesData1.getValue(), val.floatValue()));
+        timeSeriesData.setValue(((BinaryOperator) operator).exec(timeSeriesData1.getValue(), val));
         timeSeries.add(timeSeriesData);
       }
     }
@@ -158,7 +158,7 @@ public class Executor {
       if (timeSeriesData1.getValue() != null) {
         TimeSeriesData timeSeriesData = new TimeSeriesData();
         timeSeriesData.setDate(timeSeriesData1.getDate());
-        timeSeriesData.setValue(((BinaryOperator) operator).exec(val.floatValue(), timeSeriesData1.getValue()));
+        timeSeriesData.setValue(((BinaryOperator) operator).exec(val, timeSeriesData1.getValue()));
         timeSeries.add(timeSeriesData);
       }
     }
