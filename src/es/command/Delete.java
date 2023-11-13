@@ -13,13 +13,13 @@ import es.parser.SymbolTable;
 public class Delete implements Command {
   @Override
   public String getSummary() {
-    return "void    " + Utils.ROOT_NAMESPACE + "Delete(Series series, String date);";
+    return "void    " + Utils.ROOT_NAMESPACE + "Delete(Series series, Object date);";
   }
   
   @Override
   public List<String> getDetails() {
     List<String> list = new ArrayList<>();
-    list.add("Deletes observation at 'date' from 'series'");
+    list.add("Deletes observation at 'date' from 'series', where 'date' is either a String (in the format 'yyyy-mm-dd') or a Date");
     return list;
   }
   
@@ -35,10 +35,14 @@ public class Delete implements Command {
       throw new Exception(params.get(0) + " is not a Series");
     }
     TimeSeries timeSeries = (TimeSeries) params.get(0);
-    if (!(params.get(1) instanceof String)) {
-      throw new Exception(params.get(1) + " is not a String");
+    Date date;
+    if (params.get(1) instanceof String) {
+      date = Utils.DATE_FORMAT.parse((String) params.get(1));
+    } else if (params.get(1) instanceof Date) {
+      date = (Date) params.get(1);
+    } else {
+      throw new Exception(params.get(1) + " is not a String nor a Date");
     }
-    Date date = Utils.DATE_FORMAT.parse((String) params.get(1));
     for(int i = 0; i < timeSeries.size(); i++) {
       TimeSeriesData timeSeriesData = timeSeries.get(i);
       if (timeSeriesData.getDate().equals(date)) {
