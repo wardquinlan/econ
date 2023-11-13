@@ -13,7 +13,7 @@ import es.parser.SymbolTable;
 public class Update implements Command {
   @Override
   public String getSummary() {
-    return "void    " + Utils.ROOT_NAMESPACE + "Update(Series series, String date[, Object value]);";
+    return "void    " + Utils.ROOT_NAMESPACE + "Update(Series series, Object date[, Object value]);";
   }
   
   @Override
@@ -22,8 +22,8 @@ public class Update implements Command {
     list.add("Updates data in a series, where:");
     list.add("");
     list.add("  - 'series' is the series in question");
-    list.add("  - 'date' is the date, in the format yyyy-mm-dd");
-    list.add("  - 'value' is the value (must be a boolean, an int or a float)");
+    list.add("  - 'date' is the date, as either a String (in the format 'yyyy-mm-dd'), or as a Date");
+    list.add("  - 'value' is the value (must be a, an int, a float, or a boolean)");
     return list;
   }
   
@@ -43,13 +43,14 @@ public class Update implements Command {
       throw new Exception("Series must be of type float or boolean");
     }
 
-    if (!(params.get(1) instanceof String)) {
-      throw new Exception(params.get(1) + " is not a string");
+    Date date;
+    if (params.get(1) instanceof String) {
+      date = Utils.DATE_FORMAT.parse((String) params.get(1));
+    } else if (params.get(1) instanceof Date) {
+      date = (Date) params.get(1);
+    } else {
+      throw new Exception(params.get(1) + " is not a String nor a Date");
     }
-    if (((String) params.get(1)).length() != 10) {
-      throw new Exception("date must be of the format YYYY-MM-DD");
-    }
-    Date date = Utils.DATE_FORMAT.parse((String) params.get(1));
     
     TimeSeriesData timeSeriesData = null;
     for(int i = 0; i < timeSeries.size(); i++) {
