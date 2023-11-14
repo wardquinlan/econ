@@ -20,10 +20,11 @@ public class SetLogLevel implements Command {
   public List<String> getDetails() {
     List<String> list = new ArrayList<>();
     list.add("Sets the logging level to 'level', where 'level' is one of:");
-    list.add("- DEBUG (0)");
-    list.add("- INFO  (1) (default)");
-    list.add("- WARN  (2)");
-    list.add("- ERROR (3)");
+    list.add("- TRACE (0)");
+    list.add("- DEBUG (1)");
+    list.add("- INFO  (2) (default)");
+    list.add("- WARN  (3)");
+    list.add("- ERROR (4)");
     return list;
   }
   
@@ -37,7 +38,7 @@ public class SetLogLevel implements Command {
     Utils.validate(params, 0, 1);
     int level;
     if (params.size() == 0) {
-      level = 1;
+      level = 2;
     } else {
       if (!(params.get(0) instanceof Integer)) {
         throw new Exception(params.get(0) + " is not an int");
@@ -46,15 +47,18 @@ public class SetLogLevel implements Command {
     }
     switch(level) {
       case 0:
-        Logger.getRootLogger().setLevel(Level.DEBUG);
+        Logger.getRootLogger().setLevel(Level.TRACE);
         break;
       case 1:
-        Logger.getRootLogger().setLevel(Level.INFO);
+        Logger.getRootLogger().setLevel(Level.DEBUG);
         break;
       case 2:
-        Logger.getRootLogger().setLevel(Level.WARN);
+        Logger.getRootLogger().setLevel(Level.INFO);
         break;
       case 3:
+        Logger.getRootLogger().setLevel(Level.WARN);
+        break;
+      case 4:
         Logger.getRootLogger().setLevel(Level.ERROR);
         break;
       default:

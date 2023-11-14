@@ -17,10 +17,11 @@ public class Log implements Command {
   public List<String> getDetails() {
     List<String> list = new ArrayList<>();
     list.add("Log the status message 'message' to the logging system, using logging level 'level', where level is one of:");
-    list.add("- DEBUG (0)");
-    list.add("- INFO  (1)");
-    list.add("- WARN  (2)");
-    list.add("- ERROR (3)");
+    list.add("- TRACE (0)");
+    list.add("- DEBUG (1)");
+    list.add("- INFO  (2)");
+    list.add("- WARN  (3)");
+    list.add("- ERROR (4)");
     return list;
   }
   
@@ -39,15 +40,18 @@ public class Log implements Command {
     String message = params.get(1).toString();
     switch(level) {
       case 0:
-        log.debug(message);
+        log.trace(message);
         break;
       case 1:
-        log.info(message);
+        log.debug(message);
         break;
       case 2:
-        log.warn(message);
+        log.info(message);
         break;
       case 3:
+        log.warn(message);
+        break;
+      case 4:
         log.error(message);
         break;
       default:

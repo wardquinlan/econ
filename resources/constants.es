@@ -153,10 +153,11 @@ const DATE = 3;
 
 const E = 2.718280;
 
-const DEBUG = 0;
-const INFO = 1;
-const WARN = 2;
-const ERROR = 3;
+const TRACE = 0;
+const DEBUG = 1;
+const INFO = 2;
+const WARN = 3;
+const ERROR = 4;
 
 const LINEAR = 0;
 const LOG = 1;
