@@ -541,8 +541,37 @@ const function ES:Scale(series, scale) {
 # Returns: the square root of 'value'
 #################################################################################
 const function ES:Sqrt(value) {
+  :Log(DEBUG, 'ES:Sqrt(' + value + ')');
   if (value < 0) {
     throw 'cannot take the square root of a negative value: ' + value;
   }
   return value ^ 0.5;
+}
+
+#################################################################################
+# Calculates the annualized yield of 'periodYield'
+#
+# periodYield : the period yield, expressed as a percentage (e.g. 3.25)
+# period      : the period, in days (e.g. 90)
+#
+# Returns: the annualized yield, expressed as a percentage
+#################################################################################
+const function ES:AnnualizedYield(periodYield, period) {
+  :Log(DEBUG, 'ES:AnnualizedYield(' + periodYield + ', ' + period + ')');
+  yield = (1 + (periodYield / 100)) ^ (365 / period) - 1;
+  return yield * 100; 
+}
+
+#################################################################################
+# Calculates the period yield of 'annualYield'
+#
+# annualYield : the annual yield, expressed as a percentage (e.g. 3.25)
+# period      : the period, in days (e.g. 90)
+#
+# Returns: the period yield, expressed as a percentage
+#################################################################################
+const function ES:PeriodYield(annualYield, period) {
+  :Log(DEBUG, 'ES:PeriodYield(' + annualYield + ', ' + period + ')');
+  yield = (1 + (annualYield / 100)) ^ (period / 365) - 1;
+  return yield * 100; 
 }
