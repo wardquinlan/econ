@@ -7,65 +7,65 @@ const ES:BACKUP_EXT = '.BAK';
 # Load / Exist functions
 #################################################################################
 const function ES:Load(object, fred) {
-  :Log(TRACE, 'ES:Load(' + object + ', ' + fred + ')');
+  ES:Log(TRACE, 'ES:Load(' + object + ', ' + fred + ')');
   if (:GetType(object) == 'String') {
     L = :Load(object);
     if (L != null) {
-      :Log(TRACE, 'loaded series = ' + L);
+      ES:Log(TRACE, 'loaded series = ' + L);
       return L;
     }
     if (fred != null and fred) {
-      :Log(TRACE, 'attempting to load series from FRED');
+      ES:Log(TRACE, 'attempting to load series from FRED');
       F = :Fred(object);
-      :Log(TRACE, 'downloaded series = ' + F);
+      ES:Log(TRACE, 'downloaded series = ' + F);
       return F;
     }
-    :Log(TRACE, 'fred flag not set, bypassing :Fred() call; returning null');
+    ES:Log(TRACE, 'fred flag not set, bypassing :Fred() call; returning null');
     return null;
   } else if (:GetType(object) == 'int') {
     L = :Load(object);
     if (L != null) {
-      :Log(TRACE, 'loaded series = ' + L);
+      ES:Log(TRACE, 'loaded series = ' + L);
       return L;
     }
-    :Log(TRACE, 'series not found; returning null');
+    ES:Log(TRACE, 'series not found; returning null');
     return null; 
   } else if (:GetType(object) == 'Series') {
     if (:GetId(object) != null) {
-      :Log(TRACE, 'attempting to reload series from the datastore: ' + object);
+      ES:Log(TRACE, 'attempting to reload series from the datastore: ' + object);
       return :Load(:GetId(object));
     }
-    :Log(TRACE, 'series does not exist in the datastore, returning series as is: ' + object);
+    ES:Log(TRACE, 'series does not exist in the datastore, returning series as is: ' + object);
     return object;
   } else {
-    :Log(TRACE, 'unable to load series: unsupported type: ' + :GetType(object));
+    ES:Log(TRACE, 'unable to load series: unsupported type: ' + :GetType(object));
     return null;
   }
 }
 
 const function ES:Exists(object) {
-  :Log(TRACE, 'ES:Exists(' + object + ')');
+  ES:Log(TRACE, 'ES:Exists(' + object + ')');
   try {
     return :Load(object) != null;
   } catch(ex) {
-    :Log(TRACE, 'object does not exist: ' + ex);
+    ES:Log(TRACE, 'object does not exist: ' + ex);
     return false;
   }
 }
 
 const function ES:AutoLoad(object) {
-  :Log(TRACE, 'ES:AutoLoad(' + object + ')');
+  ES:Log(TRACE, 'ES:AutoLoad(' + object + ')');
   series = ES:Load(object);
   if (series == null) {
-    :Log(TRACE, 'can\'t autoload series: not found (null)');
+    ES:Log(TRACE, 'can\'t autoload series: not found (null)');
     return;
   }
   if (:GetId(series) >= ES:BACKUP_BASE) {
-    :Log(TRACE, 'skipping autoload of series because it is a backup: ' + series);
+    ES:Log(TRACE, 'skipping autoload of series because it is a backup: ' + series);
     return;
   }
-  :Log(TRACE, 'id = ' + :GetId(series) + ' < ES:BACKUP_BASE; putting series into global scope'); 
-  :Log(TRACE, 'name = ' + :GetName(series));
+  ES:Log(TRACE, 'id = ' + :GetId(series) + ' < ES:BACKUP_BASE; putting series into global scope'); 
+  ES:Log(TRACE, 'name = ' + :GetName(series));
   :GPut(:GetName(series), series);
 }
 
@@ -73,39 +73,39 @@ const function ES:AutoLoad(object) {
 # Update functions
 #################################################################################
 const function ES:Update(object) {
-  :Log(TRACE, 'ES:Update(' + object + ')');
+  ES:Log(TRACE, 'ES:Update(' + object + ')');
   if (object == null) {
-    :Log(TRACE, 'setting MERGE.modified to false');
+    ES:Log(TRACE, 'setting MERGE.modified to false');
     :GPut('MERGE.modified', false);
-    :Log(TRACE, 'invoking :Ds()');
+    ES:Log(TRACE, 'invoking :Ds()');
     :Ds(ES:Update);
-    :Log(TRACE, 'result of overall merge is: ' + :GGet('MERGE.modified'));
+    ES:Log(TRACE, 'result of overall merge is: ' + :GGet('MERGE.modified'));
     return :GGet('MERGE.modified');
   }
   series = ES:Load(object);
   if (series == null) {
-    :Log(TRACE, 'series not found, returning false');
+    ES:Log(TRACE, 'series not found, returning false');
     return false;
   }
   flag = false;
   if (:GetSource(series) == 'FRED' and :GetId(series) < ES:BACKUP_BASE) {
-    :Log(TRACE, 'series is a candidate for update(s); proceeding');
+    ES:Log(TRACE, 'series is a candidate for update(s); proceeding');
     id = :GetId(series);
-    :Log(INFO, 'updating ' + id + ':' + :GetName(series) + '...');
+    ES:Log(INFO, 'updating ' + id + ':' + :GetName(series) + '...');
     series = :Fred(:GetName(series));
     :SetId(series, id);
     flag = :Merge(series, '--with-inserts');
-    :Log(TRACE, 'result of individual merge is: ' + flag);
+    ES:Log(TRACE, 'result of individual merge is: ' + flag);
     :GPut('MERGE.modified', flag);
   }
-  :Log(TRACE, 'returning individual merge result: ' + flag);
+  ES:Log(TRACE, 'returning individual merge result: ' + flag);
   return flag;
 }
 
 const function ES:LastUpdated(object) {
-  :Log(TRACE, 'ES:LastUpdated(' + object + ')');
+  ES:Log(TRACE, 'ES:LastUpdated(' + object + ')');
   if (object == null) {
-    :Log(TRACE, 'invoking :Ds()');
+    ES:Log(TRACE, 'invoking :Ds()');
     :Ds(ES:LastUpdated);
     return;
   }
@@ -115,12 +115,12 @@ const function ES:LastUpdated(object) {
 }
 
 const function ES:Refresh(object) {
-  :Log(TRACE, 'ES:Refresh(' + object + ')');
+  ES:Log(TRACE, 'ES:Refresh(' + object + ')');
   if (!:IsAdmin()) {
     throw 'you must be running in administrative mode to refresh';
   }
   if (object == null) {
-    :Log(TRACE, 'invoking :Ds()');
+    ES:Log(TRACE, 'invoking :Ds()');
     :Ds(ES:Refresh);
     return;
   }
@@ -132,11 +132,11 @@ const function ES:Refresh(object) {
     throw 'Series id does not exist: ' + object;
   }
   if (:GetId(series) >= ES:BACKUP_BASE) {
-    :Log(TRACE, 'ignoring series with id ' + :GetId(series));
+    ES:Log(TRACE, 'ignoring series with id ' + :GetId(series));
     return;
   }
   if (:GetSource(series) != 'FRED') {
-    :Log(TRACE, 'Series source is not FRED, nothing to do');
+    ES:Log(TRACE, 'Series source is not FRED, nothing to do');
     return;
   }
   F = :Fred(:GetSourceId(series));
@@ -145,29 +145,29 @@ const function ES:Refresh(object) {
   }
   changed = false;
   if (:GetTitle(series) != :GetTitle(F)) {
-    :Log(INFO, 'series ' + :GetId(series) + ' title has changed to: ' + :GetTitle(F));
+    ES:Log(INFO, 'series ' + :GetId(series) + ' title has changed to: ' + :GetTitle(F));
     :SetTitle(series, :GetTitle(F));
     changed = true;
   }
   if (:GetNotes(series) != :GetNotes(F)) {
-    :Log(INFO, 'series ' + :GetId(series) + ' notes has changed to: ' + :GetNotes(F));
+    ES:Log(INFO, 'series ' + :GetId(series) + ' notes has changed to: ' + :GetNotes(F));
     :SetNotes(series, :GetNotes(F));
     changed = true;
   }
   if (changed) {
-    :Log(TRACE, 'merging series: ' + series);
+    ES:Log(TRACE, 'merging series: ' + series);
     #:Meta(series);
     return :Merge(series, '--with-metadata');
   } else {
-    :Log(INFO, 'series metadata has not changed, nothing to do');
+    ES:Log(INFO, 'series metadata has not changed, nothing to do');
   }
   return false;
 }
 
 const function ES:CheckMetaData(object) {
-  :Log(TRACE, 'ES:CheckMetaData(' + object + ')');
+  ES:Log(TRACE, 'ES:CheckMetaData(' + object + ')');
   if (object == null) {
-    :Log(TRACE, 'invoking :Ds()');
+    ES:Log(TRACE, 'invoking :Ds()');
     :Ds(ES:CheckMetaData);
     return;
   }
@@ -179,11 +179,11 @@ const function ES:CheckMetaData(object) {
     throw 'Series id does not exist: ' + object;
   }
   if (:GetId(series) >= ES:BACKUP_BASE) {
-    :Log(TRACE, 'ignoring series with id ' + :GetId(series));
+    ES:Log(TRACE, 'ignoring series with id ' + :GetId(series));
     return;
   }
   if (:GetSource(series) != 'FRED') {
-    :Log(TRACE, 'Series source is not FRED, nothing to do');
+    ES:Log(TRACE, 'Series source is not FRED, nothing to do');
     return;
   }
   F = :Fred(:GetSourceId(series));
@@ -192,15 +192,15 @@ const function ES:CheckMetaData(object) {
   }
   changed = false;
   if (:GetTitle(series) != :GetTitle(F)) {
-    :Log(INFO, 'series ' + :GetId(series) + ' title has changed to: ' + :GetTitle(F));
+    ES:Log(INFO, 'series ' + :GetId(series) + ' title has changed to: ' + :GetTitle(F));
     changed = true;
   }
   if (:GetNotes(series) != :GetNotes(F)) {
-    :Log(INFO, 'series ' + :GetId(series) + ' notes has changed to: ' + :GetNotes(F));
+    ES:Log(INFO, 'series ' + :GetId(series) + ' notes has changed to: ' + :GetNotes(F));
     changed = true;
   }
   if (!changed) {
-    :Log(INFO, 'series ' + :GetId(series) + ' has not changed');
+    ES:Log(INFO, 'series ' + :GetId(series) + ' has not changed');
   }
 }
 
@@ -208,7 +208,7 @@ const function ES:CheckMetaData(object) {
 # Reset functions
 #################################################################################
 const function ES:ResetId(id, idNew) {
-  :Log(TRACE, 'ES:ResetId(' + id + ', ' + idNew + ')');
+  ES:Log(TRACE, 'ES:ResetId(' + id + ', ' + idNew + ')');
   try {
     if (!:IsAdmin()) {
       throw 'you must be running in administrative mode to reset ids';
@@ -232,7 +232,7 @@ const function ES:ResetId(id, idNew) {
 }
 
 const function ES:ResetName(name, nameNew) {
-  :Log(TRACE, 'ES:ResetName(' + name + ', ' + nameNew + ')');
+  ES:Log(TRACE, 'ES:ResetName(' + name + ', ' + nameNew + ')');
   try {
     if (!:IsAdmin()) {
       throw 'you must be running in administrative mode to reset names';
@@ -259,7 +259,7 @@ const function ES:ResetName(name, nameNew) {
 # Backup function
 #################################################################################
 const function ES:Backup(id) {
-  :Log(TRACE, 'ES:Backup(' + id + ')');
+  ES:Log(TRACE, 'ES:Backup(' + id + ')');
   try {
     if (!:IsAdmin()) {
       throw 'You must be running in administrative mode to do this';
@@ -291,7 +291,7 @@ const function ES:Backup(id) {
     if (!:DlgConfirm()) {
       throw 'Cancelled by user';
     }
-    :Log(TRACE, 'backing up series: ' + series);
+    ES:Log(TRACE, 'backing up series: ' + series);
     :SetName(series, :GetName(series) + ES:BACKUP_EXT);
     :SetId(series, :GetId(series) + ES:BACKUP_BASE);
     :Save(series);
@@ -305,65 +305,65 @@ const function ES:Backup(id) {
 # Highest / Lowest functions
 #################################################################################
 const function ES:Highest(object, withDate) {
-  :Log(TRACE, 'ES:Highest(' + object + ', ' + withDate + ')');
+  ES:Log(TRACE, 'ES:Highest(' + object + ', ' + withDate + ')');
   function fn(idx, d, v) {
     if (v > :GGet('METRICS.highest')) {
-      :Log(TRACE, 'found larger value: ' + d + ' => ' + v);
+      ES:Log(TRACE, 'found larger value: ' + d + ' => ' + v);
       :GPut('METRICS.date.highest', d);
       :GPut('METRICS.highest', v);
     }
   }
 
-  :Log(TRACE, 'loading series');
+  ES:Log(TRACE, 'loading series');
   series = ES:Load(object);
   if (series == null or :GetSize(series) == 0) {
-    :Log(TRACE, 'series is null or empty; returning null');
+    ES:Log(TRACE, 'series is null or empty; returning null');
     return null;
   }
   if (withDate == true) {
-    :Log(TRACE, 'initializing with date ' + :GetDate(series, 0));
+    ES:Log(TRACE, 'initializing with date ' + :GetDate(series, 0));
     :GPut('METRICS.date.highest', :GetDate(series, 0));
   }
-  :Log(TRACE, 'initializing with value ' + :Get(series, 0));
+  ES:Log(TRACE, 'initializing with value ' + :Get(series, 0));
   :GPut('METRICS.highest', :Get(series, 0));
   :Data(series, fn);
   if (withDate == true) {
-    :Log(TRACE, 'found highest value: ' + :GGet('METRICS.date.highest') + ' => ' + :GGet('METRICS.highest'));
+    ES:Log(TRACE, 'found highest value: ' + :GGet('METRICS.date.highest') + ' => ' + :GGet('METRICS.highest'));
     return '' + :GGet('METRICS.date.highest') + ' => ' + :GGet('METRICS.highest');
   } else {
-    :Log(TRACE, 'found highest value: ' + :GGet('METRICS.highest'));
+    ES:Log(TRACE, 'found highest value: ' + :GGet('METRICS.highest'));
     return :GGet('METRICS.highest');
   }
 }
 
 const function ES:Lowest(object, withDate) {
-  :Log(TRACE, 'ES:Lowest(' + object + ', ' + withDate + ')');
+  ES:Log(TRACE, 'ES:Lowest(' + object + ', ' + withDate + ')');
   function fn(idx, d, v) {
     if (v < :GGet('METRICS.lowest')) {
-      :Log(TRACE, 'found smaller value: ' + d + ' => ' + v);
+      ES:Log(TRACE, 'found smaller value: ' + d + ' => ' + v);
       :GPut('METRICS.date.lowest', d);
       :GPut('METRICS.lowest', v);
     }
   }
 
-  :Log(TRACE, 'loading series');
+  ES:Log(TRACE, 'loading series');
   series = ES:Load(object);
   if (series == null or :GetSize(series) == 0) {
-    :Log(TRACE, 'series is null or empty; returning null');
+    ES:Log(TRACE, 'series is null or empty; returning null');
     return null;
   }
   if (withDate == true) {
-    :Log(TRACE, 'initializing with date ' + :GetDate(series, 0));
+    ES:Log(TRACE, 'initializing with date ' + :GetDate(series, 0));
     :GPut('METRICS.date.lowest', :GetDate(series, 0));
   }
-  :Log(TRACE, 'initializing with value ' + :Get(series, 0));
+  ES:Log(TRACE, 'initializing with value ' + :Get(series, 0));
   :GPut('METRICS.lowest', :Get(series, 0));
   :Data(series, fn);
   if (withDate == true) {
-    :Log(TRACE, 'found lowest value: ' + :GGet('METRICS.date.lowest') + ' => ' + :GGet('METRICS.lowest'));
+    ES:Log(TRACE, 'found lowest value: ' + :GGet('METRICS.date.lowest') + ' => ' + :GGet('METRICS.lowest'));
     return '' + :GGet('METRICS.date.lowest') + ' => ' + :GGet('METRICS.lowest');
   } else {
-    :Log(TRACE, 'found lowest value: ' + :GGet('METRICS.lowest'));
+    ES:Log(TRACE, 'found lowest value: ' + :GGet('METRICS.lowest'));
     return :GGet('METRICS.lowest');
   }
 }
@@ -377,14 +377,14 @@ const function ES:Usage() {
     series = ES:Load(object);
     ES:Assert(series != null, 'series is unexpectedly null');
     if (:GetId(series) < ES:BACKUP_BASE) {
-      :Log(TRACE, 'series id < ES:BACKUP_BASE; is a candidate for metrics');
+      ES:Log(TRACE, 'series id < ES:BACKUP_BASE; is a candidate for metrics');
       :GPut('METRICS.numberOfSeries', METRICS.numberOfSeries + 1);
       :GPut('METRICS.numberOfRecords', METRICS.numberOfRecords + :GetSize(series));
       :Printf('%-20s%8d\n', :GetName(series), :GetSize(series));
     }
   }
   
-  :Log(TRACE, 'ES:Usage()');
+  ES:Log(TRACE, 'ES:Usage()');
   :GPut('METRICS.numberOfSeries', 0);
   :GPut('METRICS.numberOfRecords', 0);
   :Print('Series Metrics');
@@ -422,26 +422,26 @@ const function ES:Defaults() {
 # String functions
 #################################################################################
 const function ES:StartsWith(string, prefix) {
-  :Log(TRACE, 'ES:StartsWith(' + string + ', ' + prefix + ')');
+  ES:Log(TRACE, 'ES:StartsWith(' + string + ', ' + prefix + ')');
   if (:GetLength(prefix) > :GetLength(string)) {
     return false;
   }
   ss = :SubString(string, 0, :GetLength(prefix));
-  :Log(TRACE, 'substring = ' + ss);
+  ES:Log(TRACE, 'substring = ' + ss);
   return ss == prefix;
 }
 
 const function ES:EndsWith(string, suffix) {
-  :Log(TRACE, 'ES:EndsWith(' + string + ', ' + suffix + ')');
+  ES:Log(TRACE, 'ES:EndsWith(' + string + ', ' + suffix + ')');
   if (:GetLength(suffix) > :GetLength(string)) {
     return false;
   }
   if (:GetLength(suffix) == 0) {
-    :Log(TRACE, 'suffix length = 0, returning true');
+    ES:Log(TRACE, 'suffix length = 0, returning true');
     return true;
   }
   ss = :SubString(string, :GetLength(string) - :GetLength(suffix), :GetLength(string));
-  :Log(TRACE, 'substring = ' + ss);
+  ES:Log(TRACE, 'substring = ' + ss);
   return ss == suffix;
 }
 
@@ -453,7 +453,7 @@ const function ES:ToString(object) {
 # Assert
 #################################################################################
 const function ES:Assert(condition, message) {
-  :Log(TRACE, 'ES:Assert(' + condition + ', ' + message + ')');
+  ES:Log(TRACE, 'ES:Assert(' + condition + ', ' + message + ')');
   if (!condition) {
     if (message == null) {
       throw '*** ASSERTION FAILED ***';
@@ -475,7 +475,7 @@ const function ES:Assert(condition, message) {
 # Returns: the chopped series
 #################################################################################
 const function ES:Chop(series, date1, date2) {
-  :Log(TRACE, 'ES:Chop(' + series + ', ' + date1 + ', ' + date2 + ')');
+  ES:Log(TRACE, 'ES:Chop(' + series + ', ' + date1 + ', ' + date2 + ')');
   if (:GetType(series) != 'Series') {
     throw 'ES:Chop: not a Series: ' + series;
   }
@@ -511,7 +511,7 @@ const function ES:Chop(series, date1, date2) {
 # Returns: the scaled series
 #################################################################################
 const function ES:Scale(series, scale) {
-  :Log(TRACE, 'ES:Scale(' + series + ', ' + scale + ')');
+  ES:Log(TRACE, 'ES:Scale(' + series + ', ' + scale + ')');
   if (:GetType(series) != 'Series') {
     throw 'ES:Scale: not a Series: ' + series;
   }
@@ -543,7 +543,7 @@ const function ES:Scale(series, scale) {
 # Returns: the square root of 'value'
 #################################################################################
 const function ES:Sqrt(value) {
-  :Log(TRACE, 'ES:Sqrt(' + value + ')');
+  ES:Log(TRACE, 'ES:Sqrt(' + value + ')');
   if (value < 0) {
     throw 'cannot take the square root of a negative value: ' + value;
   }
@@ -559,7 +559,7 @@ const function ES:Sqrt(value) {
 # Returns: the annualized yield, expressed as a percentage
 #################################################################################
 const function ES:AnnualizedYield(periodYield, period) {
-  :Log(TRACE, 'ES:AnnualizedYield(' + periodYield + ', ' + period + ')');
+  ES:Log(TRACE, 'ES:AnnualizedYield(' + periodYield + ', ' + period + ')');
   yield = (1 + (periodYield / 100)) ^ (365 / period) - 1;
   return yield * 100; 
 }
@@ -573,7 +573,7 @@ const function ES:AnnualizedYield(periodYield, period) {
 # Returns: the period yield, expressed as a percentage
 #################################################################################
 const function ES:PeriodYield(annualYield, period) {
-  :Log(TRACE, 'ES:PeriodYield(' + annualYield + ', ' + period + ')');
+  ES:Log(TRACE, 'ES:PeriodYield(' + annualYield + ', ' + period + ')');
   yield = (1 + (annualYield / 100)) ^ (period / 365) - 1;
   return yield * 100; 
 }
