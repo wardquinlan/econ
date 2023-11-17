@@ -30,5 +30,6 @@ include 'const.es';
 include 'prepost.es';
 include 'loop.es';
 include 'date.es';
+include 'scopes.es';
 
 print("*** TESTS COMPLETED SUCCESSFULLY ***");

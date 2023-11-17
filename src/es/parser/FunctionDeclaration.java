@@ -11,6 +11,7 @@ public class FunctionDeclaration extends Statement {
   private List<String> params = new ArrayList<>();
   private List<Statement> statements = new ArrayList<>();
   private boolean constant = false;
+  private SymbolTable parentSymbolTable = null;
   
   public FunctionDeclaration(String name) throws Exception {
     Utils.validateRootNameSpaceWrite(name);
@@ -24,9 +25,14 @@ public class FunctionDeclaration extends Statement {
     Utils.symbolConstCheck(symbolTable, symbol);
     Utils.functionReferenceCheck(symbolTable, symbol);
     symbolTable.put(name, symbol);
+    this.parentSymbolTable = symbolTable;
     return null;
   }
   
+  public SymbolTable getParentSymbolTable() {
+    return parentSymbolTable;
+  }
+
   public String getName() {
     return name;
   }

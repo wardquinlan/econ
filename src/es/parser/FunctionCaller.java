@@ -221,14 +221,16 @@ public class FunctionCaller {
     while (params.size() < functionDeclaration.getParams().size()) {
       params.add(null);
     }
-    Utils.ASSERT(functionDeclaration.getParams().size() == params.size(), "function parmeters size mismatch");
-    SymbolTable childSymbolTable = new SymbolTable(symbolTable);
+    Utils.ASSERT(functionDeclaration.getParams().size() == params.size(), "function parameter size mismatch");
+    Utils.ASSERT(functionDeclaration.getParentSymbolTable() != null, "function declaration parent symbol table null");
+    // The symbol table comes from the declaration, not from the caller (we can throw away the old one).  But we have to add the parameters to it.
+    symbolTable = new SymbolTable(functionDeclaration.getParentSymbolTable());
     for (int i = 0; i < params.size(); i++) {
-      childSymbolTable.put(functionDeclaration.getParams().get(i), new Symbol(functionDeclaration.getParams().get(i), params.get(i)));
+      symbolTable.put(functionDeclaration.getParams().get(i), new Symbol(functionDeclaration.getParams().get(i), params.get(i)));
     }
     ESIterator<Statement> itr = new ESIterator<>(functionDeclaration.getStatements());
     if (itr.hasNext()) {
-      Evaluator e = new Evaluator(childSymbolTable);
+      Evaluator e = new Evaluator(symbolTable);
       Statement statement = itr.next();
       return e.evaluate(statement, itr);
     }
