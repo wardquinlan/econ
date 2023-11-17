@@ -73,6 +73,5 @@ ES:SystemAlias('ES:SubString', ':SubString');
 ES:SystemAlias('ES:Sum', ':Sum');
 ES:SystemAlias('ES:SystemAlias', ':SystemAlias');
 ES:SystemAlias('ES:Timestamp', ':Timestamp');
-ES:SystemAlias('ES:Update', ':Update');
 ES:SystemAlias('ES:UserAlias', ':UserAlias');
 ES:SystemAlias('ES:Version', ':Version');
