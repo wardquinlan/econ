@@ -1,3 +1,5 @@
+include 'aliases.es';
+
 const ES:BACKUP_BASE = 10000;
 const ES:BACKUP_EXT = '.BAK';
 
