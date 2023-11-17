@@ -8,7 +8,7 @@ const ES:BACKUP_EXT = '.BAK';
 #################################################################################
 const function ES:Load(object, fred) {
   ES:Log(TRACE, 'ES:Load(' + object + ', ' + fred + ')');
-  if (:GetType(object) == 'String') {
+  if (ES:GetType(object) == 'String') {
     L = :Load(object);
     if (L != null) {
       ES:Log(TRACE, 'loaded series = ' + L);
@@ -22,7 +22,7 @@ const function ES:Load(object, fred) {
     }
     ES:Log(TRACE, 'fred flag not set, bypassing :Fred() call; returning null');
     return null;
-  } else if (:GetType(object) == 'int') {
+  } else if (ES:GetType(object) == 'int') {
     L = :Load(object);
     if (L != null) {
       ES:Log(TRACE, 'loaded series = ' + L);
@@ -30,7 +30,7 @@ const function ES:Load(object, fred) {
     }
     ES:Log(TRACE, 'series not found; returning null');
     return null; 
-  } else if (:GetType(object) == 'Series') {
+  } else if (ES:GetType(object) == 'Series') {
     if (:GetId(object) != null) {
       ES:Log(TRACE, 'attempting to reload series from the datastore: ' + object);
       return :Load(:GetId(object));
@@ -38,7 +38,7 @@ const function ES:Load(object, fred) {
     ES:Log(TRACE, 'series does not exist in the datastore, returning series as is: ' + object);
     return object;
   } else {
-    ES:Log(TRACE, 'unable to load series: unsupported type: ' + :GetType(object));
+    ES:Log(TRACE, 'unable to load series: unsupported type: ' + ES:GetType(object));
     return null;
   }
 }
@@ -111,7 +111,7 @@ const function ES:LastUpdated(object) {
   }
   series = ES:Load(object);
   :Printf('%-6d%-22s%-5s%s\n', :GetId(series), :GetName(series), :GetFrequencyShort(series), 
-                               :GetDate(series, :GetSize(series) - 1));
+                               :GetDate(series, ES:GetSize(series) - 1));
 }
 
 const function ES:Refresh(object) {
@@ -213,7 +213,7 @@ const function ES:ResetId(id, idNew) {
     if (!:IsAdmin()) {
       throw 'you must be running in administrative mode to reset ids';
     }
-    if (:GetType(id) != 'int' or :GetType(idNew) != 'int') {
+    if (ES:GetType(id) != 'int' or ES:GetType(idNew) != 'int') {
       throw 'id and idNew must be int\'s';
     }
     if (ES:Exists(idNew)) {
@@ -237,7 +237,7 @@ const function ES:ResetName(name, nameNew) {
     if (!:IsAdmin()) {
       throw 'you must be running in administrative mode to reset names';
     }
-    if (:GetType(name) != 'String' or :GetType(nameNew) != 'String') {
+    if (ES:GetType(name) != 'String' or ES:GetType(nameNew) != 'String') {
       throw 'name and nameNew must be Strings';
     }
     if (ES:Exists(nameNew)) {
@@ -274,7 +274,7 @@ const function ES:Backup(id) {
         throw 'Invalid series id';
       }
     } else {
-      if (:GetType(id) != 'int') {
+      if (ES:GetType(id) != 'int') {
         throw 'Invalid series id';
       }
     }
@@ -316,7 +316,7 @@ const function ES:Highest(object, withDate) {
 
   ES:Log(TRACE, 'loading series');
   series = ES:Load(object);
-  if (series == null or :GetSize(series) == 0) {
+  if (series == null or ES:GetSize(series) == 0) {
     ES:Log(TRACE, 'series is null or empty; returning null');
     return null;
   }
@@ -348,7 +348,7 @@ const function ES:Lowest(object, withDate) {
 
   ES:Log(TRACE, 'loading series');
   series = ES:Load(object);
-  if (series == null or :GetSize(series) == 0) {
+  if (series == null or ES:GetSize(series) == 0) {
     ES:Log(TRACE, 'series is null or empty; returning null');
     return null;
   }
@@ -379,8 +379,8 @@ const function ES:Usage() {
     if (:GetId(series) < ES:BACKUP_BASE) {
       ES:Log(TRACE, 'series id < ES:BACKUP_BASE; is a candidate for metrics');
       :GPut('METRICS.numberOfSeries', METRICS.numberOfSeries + 1);
-      :GPut('METRICS.numberOfRecords', METRICS.numberOfRecords + :GetSize(series));
-      :Printf('%-20s%8d\n', :GetName(series), :GetSize(series));
+      :GPut('METRICS.numberOfRecords', METRICS.numberOfRecords + ES:GetSize(series));
+      :Printf('%-20s%8d\n', :GetName(series), ES:GetSize(series));
     }
   }
   
@@ -476,13 +476,13 @@ const function ES:Assert(condition, message) {
 #################################################################################
 const function ES:Chop(series, date1, date2) {
   ES:Log(TRACE, 'ES:Chop(' + series + ', ' + date1 + ', ' + date2 + ')');
-  if (:GetType(series) != 'Series') {
+  if (ES:GetType(series) != 'Series') {
     throw 'ES:Chop: not a Series: ' + series;
   }
-  if (:GetSeriesType(series) != 'float') {
-    throw 'ES:Chop: unsupported series type: ' + :GetSeriesType(series);
+  if (ES:GetSeriesType(series) != 'float') {
+    throw 'ES:Chop: unsupported series type: ' + ES:GetSeriesType(series);
   }
-  if (:GetSize(series) == 0) {
+  if (ES:GetSize(series) == 0) {
     throw 'ES:Chop: cannot chop an empty series: ' + series;
   }
   S = :Create(:GetName(series) + '-chopped');
@@ -490,9 +490,9 @@ const function ES:Chop(series, date1, date2) {
     date1 = :GetDate(series, 0);
   }
   if (date2 == null) {
-    date2 = :GetDate(series, :GetSize(series) - 1);
+    date2 = :GetDate(series, ES:GetSize(series) - 1);
   }
-  for (i = 0; i < :GetSize(series); i++) {
+  for (i = 0; i < ES:GetSize(series); i++) {
     if (:GetDate(series, i) >= date1 and :GetDate(series, i) <= date2) {
       :Insert(S, :GetDate(series, i), :Get(series, i));
     }
@@ -512,21 +512,21 @@ const function ES:Chop(series, date1, date2) {
 #################################################################################
 const function ES:Scale(series, scale) {
   ES:Log(TRACE, 'ES:Scale(' + series + ', ' + scale + ')');
-  if (:GetType(series) != 'Series') {
+  if (ES:GetType(series) != 'Series') {
     throw 'ES:Scale: not a Series: ' + series;
   }
-  if (:GetSeriesType(series) != 'float') {
-    throw 'ES:Scale: unsupported series type: ' + :GetSeriesType(series);
+  if (ES:GetSeriesType(series) != 'float') {
+    throw 'ES:Scale: unsupported series type: ' + ES:GetSeriesType(series);
   }
-  if (:GetSize(series) == 0) {
+  if (ES:GetSize(series) == 0) {
     throw 'ES:Scale: cannot scale an empty series: ' + series;
   }
-  if (:GetType(scale) != 'int' and :GetType(scale) != 'float') {
+  if (ES:GetType(scale) != 'int' and ES:GetType(scale) != 'float') {
     throw 'ES:Scale: unsupported scaling type: ' + scale;
   }
   S = :Create(:GetName(series) + '-scaled [x' + scale + ']');
   :Insert(S, :GetDate(series, 0), :Get(series, 0));
-  for (i = 1; i < :GetSize(series); i++) {
+  for (i = 1; i < ES:GetSize(series); i++) {
     totalScale = scale * (:Get(series, i) - :Get(series, i - 1)) / :Get(series, i - 1);
     :Insert(S, :GetDate(series, i), (1 + totalScale) * :Get(S, i - 1));
   }
