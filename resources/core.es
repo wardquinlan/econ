@@ -16,11 +16,11 @@ const function ES:Load(object, fred) {
     }
     if (fred != null and fred) {
       ES:Log(TRACE, 'attempting to load series from FRED');
-      F = :Fred(object);
+      F = ES:Fred(object);
       ES:Log(TRACE, 'downloaded series = ' + F);
       return F;
     }
-    ES:Log(TRACE, 'fred flag not set, bypassing :Fred() call; returning null');
+    ES:Log(TRACE, 'fred flag not set, bypassing ES:Fred() call; returning null');
     return null;
   } else if (ES:GetType(object) == 'int') {
     L = :Load(object);
@@ -94,7 +94,7 @@ const function ES:Update(object) {
     ES:Log(INFO, 'updating ' + id + ':' + ES:GetName(series) + '...');
     series = :Fred(ES:GetName(series));
     ES:SetId(series, id);
-    flag = :Merge(series, '--with-inserts');
+    flag = ES:Merge(series, '--with-inserts');
     ES:Log(TRACE, 'result of individual merge is: ' + flag);
     ES:GPut('MERGE.modified', flag);
   }
@@ -116,7 +116,7 @@ const function ES:LastUpdated(object) {
 
 const function ES:Refresh(object) {
   ES:Log(TRACE, 'ES:Refresh(' + object + ')');
-  if (!:IsAdmin()) {
+  if (!ES:IsAdmin()) {
     throw 'you must be running in administrative mode to refresh';
   }
   if (object == null) {
@@ -139,7 +139,7 @@ const function ES:Refresh(object) {
     ES:Log(TRACE, 'Series source is not FRED, nothing to do');
     return;
   }
-  F = :Fred(ES:GetSourceId(series));
+  F = ES:Fred(ES:GetSourceId(series));
   if (F == null) {
     throw 'Series not found in FRED database: ' + series;
   }
@@ -157,7 +157,7 @@ const function ES:Refresh(object) {
   if (changed) {
     ES:Log(TRACE, 'merging series: ' + series);
     #:Meta(series);
-    return :Merge(series, '--with-metadata');
+    return ES:Merge(series, '--with-metadata');
   } else {
     ES:Log(INFO, 'series metadata has not changed, nothing to do');
   }
@@ -186,7 +186,7 @@ const function ES:CheckMetaData(object) {
     ES:Log(TRACE, 'Series source is not FRED, nothing to do');
     return;
   }
-  F = :Fred(ES:GetSourceId(series));
+  F = ES:Fred(ES:GetSourceId(series));
   if (F == null) {
     throw 'Series not found in FRED database: ' + series;
   }
@@ -210,7 +210,7 @@ const function ES:CheckMetaData(object) {
 const function ES:ResetId(id, idNew) {
   ES:Log(TRACE, 'ES:ResetId(' + id + ', ' + idNew + ')');
   try {
-    if (!:IsAdmin()) {
+    if (!ES:IsAdmin()) {
       throw 'you must be running in administrative mode to reset ids';
     }
     if (ES:GetType(id) != 'int' or ES:GetType(idNew) != 'int') {
@@ -224,17 +224,17 @@ const function ES:ResetId(id, idNew) {
       throw 'unable to load id: ' + id;
     }
     ES:SetId(S, idNew);
-    :Drop(id);
-    :Save(S);
+    ES:Drop(id);
+    ES:Save(S);
   } catch(ex) {
-    :DlgMessage('Unable to Reset ID: ' + ex, ERROR);
+    ES:DlgMessage('Unable to Reset ID: ' + ex, ERROR);
   }
 }
 
 const function ES:ResetName(name, nameNew) {
   ES:Log(TRACE, 'ES:ResetName(' + name + ', ' + nameNew + ')');
   try {
-    if (!:IsAdmin()) {
+    if (!ES:IsAdmin()) {
       throw 'you must be running in administrative mode to reset names';
     }
     if (ES:GetType(name) != 'String' or ES:GetType(nameNew) != 'String') {
@@ -248,10 +248,10 @@ const function ES:ResetName(name, nameNew) {
       throw 'unable to load name: ' + name;
     }
     ES:SetName(S, nameNew);
-    :Drop(ES:GetId(S));
-    :Save(S);
+    ES:Drop(ES:GetId(S));
+    ES:Save(S);
   } catch(ex) {
-    :DlgMessage('Unable to Reset Name: ' + ex, ERROR);
+    ES:DlgMessage('Unable to Reset Name: ' + ex, ERROR);
   }
 }
 
@@ -261,15 +261,15 @@ const function ES:ResetName(name, nameNew) {
 const function ES:Backup(id) {
   ES:Log(TRACE, 'ES:Backup(' + id + ')');
   try {
-    if (!:IsAdmin()) {
+    if (!ES:IsAdmin()) {
       throw 'You must be running in administrative mode to do this';
     }
     if (id == null) {
-      id = :DlgInput('Enter series id');
+      id = ES:DlgInput('Enter series id');
       if (id == null) {
         throw 'Cancelled by user';
       }
-      id = :ParseInt(id);
+      id = ES:ParseInt(id);
       if (id == null) {
         throw 'Invalid series id';
       }
@@ -288,16 +288,16 @@ const function ES:Backup(id) {
     if (ES:Exists(ES:GetId(series) + ES:BACKUP_BASE)) {
       throw 'Cannot backup series: already exists: ' + (ES:GetId(series) + ES:BACKUP_BASE);
     }
-    if (!:DlgConfirm()) {
+    if (!ES:DlgConfirm()) {
       throw 'Cancelled by user';
     }
     ES:Log(TRACE, 'backing up series: ' + series);
     ES:SetName(series, ES:GetName(series) + ES:BACKUP_EXT);
     ES:SetId(series, ES:GetId(series) + ES:BACKUP_BASE);
-    :Save(series);
-    :DlgMessage('Backup complete for ' + id);
+    ES:Save(series);
+    ES:DlgMessage('Backup complete for ' + id);
   } catch(ex) {
-    :DlgMessage('Unable to perform backup: ' + ex, ERROR);
+    ES:DlgMessage('Unable to perform backup: ' + ex, ERROR);
   }
 }
 
@@ -326,7 +326,7 @@ const function ES:Highest(object, withDate) {
   }
   ES:Log(TRACE, 'initializing with value ' + ES:Get(series, 0));
   ES:GPut('METRICS.highest', ES:Get(series, 0));
-  :Data(series, fn);
+  ES:Data(series, fn);
   if (withDate == true) {
     ES:Log(TRACE, 'found highest value: ' + ES:GGet('METRICS.date.highest') + ' => ' + ES:GGet('METRICS.highest'));
     return '' + ES:GGet('METRICS.date.highest') + ' => ' + ES:GGet('METRICS.highest');
@@ -358,7 +358,7 @@ const function ES:Lowest(object, withDate) {
   }
   ES:Log(TRACE, 'initializing with value ' + ES:Get(series, 0));
   ES:GPut('METRICS.lowest', ES:Get(series, 0));
-  :Data(series, fn);
+  ES:Data(series, fn);
   if (withDate == true) {
     ES:Log(TRACE, 'found lowest value: ' + ES:GGet('METRICS.date.lowest') + ' => ' + ES:GGet('METRICS.lowest'));
     return '' + ES:GGet('METRICS.date.lowest') + ' => ' + ES:GGet('METRICS.lowest');
@@ -426,7 +426,7 @@ const function ES:StartsWith(string, prefix) {
   if (ES:GetLength(prefix) > ES:GetLength(string)) {
     return false;
   }
-  ss = :SubString(string, 0, ES:GetLength(prefix));
+  ss = ES:SubString(string, 0, ES:GetLength(prefix));
   ES:Log(TRACE, 'substring = ' + ss);
   return ss == prefix;
 }
@@ -440,7 +440,7 @@ const function ES:EndsWith(string, suffix) {
     ES:Log(TRACE, 'suffix length = 0, returning true');
     return true;
   }
-  ss = :SubString(string, ES:GetLength(string) - ES:GetLength(suffix), ES:GetLength(string));
+  ss = ES:SubString(string, ES:GetLength(string) - ES:GetLength(suffix), ES:GetLength(string));
   ES:Log(TRACE, 'substring = ' + ss);
   return ss == suffix;
 }
@@ -485,7 +485,7 @@ const function ES:Chop(series, date1, date2) {
   if (ES:GetSize(series) == 0) {
     throw 'ES:Chop: cannot chop an empty series: ' + series;
   }
-  S = :Create(ES:GetName(series) + '-chopped');
+  S = ES:Create(ES:GetName(series) + '-chopped');
   if (date1 == null) {
     date1 = ES:GetDate(series, 0);
   }
@@ -494,7 +494,7 @@ const function ES:Chop(series, date1, date2) {
   }
   for (i = 0; i < ES:GetSize(series); i++) {
     if (ES:GetDate(series, i) >= date1 and ES:GetDate(series, i) <= date2) {
-      :Insert(S, ES:GetDate(series, i), ES:Get(series, i));
+      ES:Insert(S, ES:GetDate(series, i), ES:Get(series, i));
     }
   }
   return S;
@@ -524,11 +524,11 @@ const function ES:Scale(series, scale) {
   if (ES:GetType(scale) != 'int' and ES:GetType(scale) != 'float') {
     throw 'ES:Scale: unsupported scaling type: ' + scale;
   }
-  S = :Create(ES:GetName(series) + '-scaled [x' + scale + ']');
-  :Insert(S, ES:GetDate(series, 0), ES:Get(series, 0));
+  S = ES:Create(ES:GetName(series) + '-scaled [x' + scale + ']');
+  ES:Insert(S, ES:GetDate(series, 0), ES:Get(series, 0));
   for (i = 1; i < ES:GetSize(series); i++) {
     totalScale = scale * (ES:Get(series, i) - ES:Get(series, i - 1)) / ES:Get(series, i - 1);
-    :Insert(S, ES:GetDate(series, i), (1 + totalScale) * ES:Get(S, i - 1));
+    ES:Insert(S, ES:GetDate(series, i), (1 + totalScale) * ES:Get(S, i - 1));
   }
   return S;
 }
