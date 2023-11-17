@@ -551,15 +551,15 @@ const function ES:Sqrt(value) {
 }
 
 #################################################################################
-# Calculates the annualized yield of 'periodYield'
+# Calculates the annual yield of 'periodYield'
 #
 # periodYield : the period yield, expressed as a percentage (e.g. 3.25)
 # period      : the period, in days (e.g. 90)
 #
-# Returns: the annualized yield, expressed as a percentage
+# Returns: the annual yield, expressed as a percentage
 #################################################################################
-const function ES:AnnualizedYield(periodYield, period) {
-  ES:Log(TRACE, 'ES:AnnualizedYield(' + periodYield + ', ' + period + ')');
+const function ES:AnnualYield(periodYield, period) {
+  ES:Log(TRACE, 'ES:AnnualYield(' + periodYield + ', ' + period + ')');
   yield = (1 + (periodYield / 100)) ^ (365 / period) - 1;
   return yield * 100; 
 }
