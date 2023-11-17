@@ -66,7 +66,7 @@ const function ES:AutoLoad(object) {
   }
   ES:Log(TRACE, 'id = ' + :GetId(series) + ' < ES:BACKUP_BASE; putting series into global scope'); 
   ES:Log(TRACE, 'name = ' + :GetName(series));
-  :GPut(:GetName(series), series);
+  ES:GPut(:GetName(series), series);
 }
 
 #################################################################################
@@ -76,11 +76,11 @@ const function ES:Update(object) {
   ES:Log(TRACE, 'ES:Update(' + object + ')');
   if (object == null) {
     ES:Log(TRACE, 'setting MERGE.modified to false');
-    :GPut('MERGE.modified', false);
-    ES:Log(TRACE, 'invoking :Ds()');
-    :Ds(ES:Update);
-    ES:Log(TRACE, 'result of overall merge is: ' + :GGet('MERGE.modified'));
-    return :GGet('MERGE.modified');
+    ES:GPut('MERGE.modified', false);
+    ES:Log(TRACE, 'invoking ES:Ds()');
+    ES:Ds(ES:Update);
+    ES:Log(TRACE, 'result of overall merge is: ' + ES:GGet('MERGE.modified'));
+    return ES:GGet('MERGE.modified');
   }
   series = ES:Load(object);
   if (series == null) {
@@ -96,7 +96,7 @@ const function ES:Update(object) {
     :SetId(series, id);
     flag = :Merge(series, '--with-inserts');
     ES:Log(TRACE, 'result of individual merge is: ' + flag);
-    :GPut('MERGE.modified', flag);
+    ES:GPut('MERGE.modified', flag);
   }
   ES:Log(TRACE, 'returning individual merge result: ' + flag);
   return flag;
@@ -105,12 +105,12 @@ const function ES:Update(object) {
 const function ES:LastUpdated(object) {
   ES:Log(TRACE, 'ES:LastUpdated(' + object + ')');
   if (object == null) {
-    ES:Log(TRACE, 'invoking :Ds()');
-    :Ds(ES:LastUpdated);
+    ES:Log(TRACE, 'invoking ES:Ds()');
+    ES:Ds(ES:LastUpdated);
     return;
   }
   series = ES:Load(object);
-  :Printf('%-6d%-22s%-5s%s\n', :GetId(series), :GetName(series), :GetFrequencyShort(series), 
+  ES:Printf('%-6d%-22s%-5s%s\n', :GetId(series), :GetName(series), :GetFrequencyShort(series), 
                                :GetDate(series, ES:GetSize(series) - 1));
 }
 
@@ -121,7 +121,7 @@ const function ES:Refresh(object) {
   }
   if (object == null) {
     ES:Log(TRACE, 'invoking :Ds()');
-    :Ds(ES:Refresh);
+    ES:Ds(ES:Refresh);
     return;
   }
   series = ES:Load(object);
@@ -167,8 +167,8 @@ const function ES:Refresh(object) {
 const function ES:CheckMetaData(object) {
   ES:Log(TRACE, 'ES:CheckMetaData(' + object + ')');
   if (object == null) {
-    ES:Log(TRACE, 'invoking :Ds()');
-    :Ds(ES:CheckMetaData);
+    ES:Log(TRACE, 'invoking ES:Ds()');
+    ES:Ds(ES:CheckMetaData);
     return;
   }
   series = ES:Load(object);
@@ -307,10 +307,10 @@ const function ES:Backup(id) {
 const function ES:Highest(object, withDate) {
   ES:Log(TRACE, 'ES:Highest(' + object + ', ' + withDate + ')');
   function fn(idx, d, v) {
-    if (v > :GGet('METRICS.highest')) {
+    if (v > ES:GGet('METRICS.highest')) {
       ES:Log(TRACE, 'found larger value: ' + d + ' => ' + v);
-      :GPut('METRICS.date.highest', d);
-      :GPut('METRICS.highest', v);
+      ES:GPut('METRICS.date.highest', d);
+      ES:GPut('METRICS.highest', v);
     }
   }
 
@@ -322,27 +322,27 @@ const function ES:Highest(object, withDate) {
   }
   if (withDate == true) {
     ES:Log(TRACE, 'initializing with date ' + :GetDate(series, 0));
-    :GPut('METRICS.date.highest', :GetDate(series, 0));
+    ES:GPut('METRICS.date.highest', :GetDate(series, 0));
   }
   ES:Log(TRACE, 'initializing with value ' + :Get(series, 0));
-  :GPut('METRICS.highest', :Get(series, 0));
+  ES:GPut('METRICS.highest', :Get(series, 0));
   :Data(series, fn);
   if (withDate == true) {
-    ES:Log(TRACE, 'found highest value: ' + :GGet('METRICS.date.highest') + ' => ' + :GGet('METRICS.highest'));
-    return '' + :GGet('METRICS.date.highest') + ' => ' + :GGet('METRICS.highest');
+    ES:Log(TRACE, 'found highest value: ' + ES:GGet('METRICS.date.highest') + ' => ' + ES:GGet('METRICS.highest'));
+    return '' + ES:GGet('METRICS.date.highest') + ' => ' + ES:GGet('METRICS.highest');
   } else {
-    ES:Log(TRACE, 'found highest value: ' + :GGet('METRICS.highest'));
-    return :GGet('METRICS.highest');
+    ES:Log(TRACE, 'found highest value: ' + ES:GGet('METRICS.highest'));
+    return ES:GGet('METRICS.highest');
   }
 }
 
 const function ES:Lowest(object, withDate) {
   ES:Log(TRACE, 'ES:Lowest(' + object + ', ' + withDate + ')');
   function fn(idx, d, v) {
-    if (v < :GGet('METRICS.lowest')) {
+    if (v < ES:GGet('METRICS.lowest')) {
       ES:Log(TRACE, 'found smaller value: ' + d + ' => ' + v);
-      :GPut('METRICS.date.lowest', d);
-      :GPut('METRICS.lowest', v);
+      ES:GPut('METRICS.date.lowest', d);
+      ES:GPut('METRICS.lowest', v);
     }
   }
 
@@ -354,17 +354,17 @@ const function ES:Lowest(object, withDate) {
   }
   if (withDate == true) {
     ES:Log(TRACE, 'initializing with date ' + :GetDate(series, 0));
-    :GPut('METRICS.date.lowest', :GetDate(series, 0));
+    ES:GPut('METRICS.date.lowest', :GetDate(series, 0));
   }
   ES:Log(TRACE, 'initializing with value ' + :Get(series, 0));
-  :GPut('METRICS.lowest', :Get(series, 0));
+  ES:GPut('METRICS.lowest', :Get(series, 0));
   :Data(series, fn);
   if (withDate == true) {
-    ES:Log(TRACE, 'found lowest value: ' + :GGet('METRICS.date.lowest') + ' => ' + :GGet('METRICS.lowest'));
-    return '' + :GGet('METRICS.date.lowest') + ' => ' + :GGet('METRICS.lowest');
+    ES:Log(TRACE, 'found lowest value: ' + ES:GGet('METRICS.date.lowest') + ' => ' + ES:GGet('METRICS.lowest'));
+    return '' + ES:GGet('METRICS.date.lowest') + ' => ' + ES:GGet('METRICS.lowest');
   } else {
-    ES:Log(TRACE, 'found lowest value: ' + :GGet('METRICS.lowest'));
-    return :GGet('METRICS.lowest');
+    ES:Log(TRACE, 'found lowest value: ' + ES:GGet('METRICS.lowest'));
+    return ES:GGet('METRICS.lowest');
   }
 }
 
@@ -378,44 +378,44 @@ const function ES:Usage() {
     ES:Assert(series != null, 'series is unexpectedly null');
     if (:GetId(series) < ES:BACKUP_BASE) {
       ES:Log(TRACE, 'series id < ES:BACKUP_BASE; is a candidate for metrics');
-      :GPut('METRICS.numberOfSeries', METRICS.numberOfSeries + 1);
-      :GPut('METRICS.numberOfRecords', METRICS.numberOfRecords + ES:GetSize(series));
-      :Printf('%-20s%8d\n', :GetName(series), ES:GetSize(series));
+      ES:GPut('METRICS.numberOfSeries', METRICS.numberOfSeries + 1);
+      ES:GPut('METRICS.numberOfRecords', METRICS.numberOfRecords + ES:GetSize(series));
+      ES:Printf('%-20s%8d\n', :GetName(series), ES:GetSize(series));
     }
   }
   
   ES:Log(TRACE, 'ES:Usage()');
-  :GPut('METRICS.numberOfSeries', 0);
-  :GPut('METRICS.numberOfRecords', 0);
-  :Print('Series Metrics');
-  :Print('----------------------------');
-  :Ds(m);
-  :Print();
-  :Print('Series stored in datastore: ' + METRICS.numberOfSeries + ' (excluding backup series)');
-  :Print('Number of records stored in datastore: ' + METRICS.numberOfRecords);
+  ES:GPut('METRICS.numberOfSeries', 0);
+  ES:GPut('METRICS.numberOfRecords', 0);
+  ES:Print('Series Metrics');
+  ES:Print('----------------------------');
+  ES:Ds(m);
+  ES:Print();
+  ES:Print('Series stored in datastore: ' + METRICS.numberOfSeries + ' (excluding backup series)');
+  ES:Print('Number of records stored in datastore: ' + METRICS.numberOfRecords);
 }
 
 const function ES:Defaults() {
-  :Print('defaults.panel.backgroundcolor = Color');
-  :Print('defaults.panel.dxincr = int');
-  :Print('defaults.panel.gridlinetextwidth = int');
-  :Print('defaults.panel.fontname = String');
-  :Print('defaults.panel.fontcolor = Color');
-  :Print('defaults.panel.fontsize = int');
-  :Print('defaults.panel.frequency = NONE | DAYS | MONTHS | YEARS');
-  :Print('defaults.panel.label = String');
-  :Print('defaults.chart.backgroundcolor = Color');
-  :Print('defaults.chart.linecolor = Color');
-  :Print('defaults.chart.rectcolor = Color');
-  :Print('defaults.chart.ngridlines = int');
-  :Print('defaults.chart.label = String');
-  :Print('defaults.chart.scaletype = LINEAR | LOG');
-  :Print('defaults.series.linecolor0 = Color');
-  :Print('defaults.series.linecolor1 = Color');
-  :Print('defaults.series.linecolor2 = Color');
-  :Print('defaults.series.linecolor3 = Color');
-  :Print('defaults.panel.decorations.color = Color');
-  :Print('defaults.panel.decorations.stroke = int');
+  ES:Print('defaults.panel.backgroundcolor = Color');
+  ES:Print('defaults.panel.dxincr = int');
+  ES:Print('defaults.panel.gridlinetextwidth = int');
+  ES:Print('defaults.panel.fontname = String');
+  ES:Print('defaults.panel.fontcolor = Color');
+  ES:Print('defaults.panel.fontsize = int');
+  ES:Print('defaults.panel.frequency = NONE | DAYS | MONTHS | YEARS');
+  ES:Print('defaults.panel.label = String');
+  ES:Print('defaults.chart.backgroundcolor = Color');
+  ES:Print('defaults.chart.linecolor = Color');
+  ES:Print('defaults.chart.rectcolor = Color');
+  ES:Print('defaults.chart.ngridlines = int');
+  ES:Print('defaults.chart.label = String');
+  ES:Print('defaults.chart.scaletype = LINEAR | LOG');
+  ES:Print('defaults.series.linecolor0 = Color');
+  ES:Print('defaults.series.linecolor1 = Color');
+  ES:Print('defaults.series.linecolor2 = Color');
+  ES:Print('defaults.series.linecolor3 = Color');
+  ES:Print('defaults.panel.decorations.color = Color');
+  ES:Print('defaults.panel.decorations.stroke = int');
 }
 
 #################################################################################
