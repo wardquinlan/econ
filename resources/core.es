@@ -577,3 +577,25 @@ const function ES:PeriodYield(annualYield, period) {
   yield = (1 + (annualYield / 100)) ^ (period / 365) - 1;
   return yield * 100; 
 }
+
+#################################################################################
+# Transforms a s1..s2 space into a y1..y2 space.
+# Note that s is force-bounded into s1..s2.
+#
+# s  : value to transform from s1..s2 into y1..y2
+# s1 : lower bound of s1..s2 space
+# s2 : upper bound of s1..s2 space
+# y1 : lower bound of y1..y2 space
+# y2 : upper bound of y1..y2 space
+#
+# Returns: transformation of s into y1..y2 space
+#################################################################################
+const function ES:Transform(s, s1, s2, y1, y2) {
+  # bound s to within s1..s2
+  s = :Min(s, s2); 
+  s = :Max(s, s1);
+
+  # transformation constant
+  S = (y2 - y1) / (s2 - s1);
+  return S * (s - s1) + y1;
+} 
