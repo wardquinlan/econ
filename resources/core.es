@@ -485,7 +485,7 @@ const function ES:Chop(series, date1, date2) {
   if (ES:GetSize(series) == 0) {
     throw 'ES:Chop: cannot chop an empty series: ' + series;
   }
-  S = ES:Create(ES:GetName(series) + '-chopped');
+  S = ES:Create(ES:ToString(ES:GetName(series)) + '-chopped');
   if (date1 == null) {
     date1 = ES:GetDate(series, 0);
   }
@@ -599,3 +599,15 @@ const function ES:Transform(s, s1, s2, y1, y2) {
   S = (y2 - y1) / (s2 - s1);
   return S * (s - s1) + y1;
 } 
+
+#################################################################################
+# Calculates the Percent Change between 'value1' and 'value2'.
+#
+# value1 : the first value
+# value2 : the second value
+#
+# Returns: the percent change between value1 and value2
+#################################################################################
+const function ES:PercentChange(value1, value2) {
+  return 100 * (value2 - value1) / value1;
+}
