@@ -611,3 +611,15 @@ const function ES:Transform(s, s1, s2, y1, y2) {
 const function ES:PercentChange(value1, value2) {
   return 100 * (value2 - value1) / value1;
 }
+
+#################################################################################
+# Calculates the Inverse Percent Change of 'value'
+#
+# value : the value to take the inverse of, as a percentage
+#
+# Returns: the inverse percent change
+#################################################################################
+const function ES:PercentInverse(value) {
+  return 100 * (100 / (100 + value) - 1);
+}
+
