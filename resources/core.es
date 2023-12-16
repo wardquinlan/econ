@@ -551,6 +551,8 @@ const function ES:Sqrt(value) {
 }
 
 #################################################################################
+# ES:AnnualYield(periodYield, period)
+#
 # Calculates the annual yield of 'periodYield'
 #
 # periodYield : the period yield, expressed as a percentage (e.g. 3.25)
@@ -565,6 +567,8 @@ const function ES:AnnualYield(periodYield, period) {
 }
 
 #################################################################################
+# ES:PeriodYield(annualYield, period)
+#
 # Calculates the period yield of 'annualYield'
 #
 # annualYield : the annual yield, expressed as a percentage (e.g. 3.25)
@@ -579,6 +583,8 @@ const function ES:PeriodYield(annualYield, period) {
 }
 
 #################################################################################
+# ES:Transform(s, s1, s2, y1, y2)
+#
 # Transforms a s1..s2 space into a y1..y2 space.
 # Note that s is force-bounded into s1..s2.
 #
@@ -601,6 +607,8 @@ const function ES:Transform(s, s1, s2, y1, y2) {
 } 
 
 #################################################################################
+# ES:PercentChange(value1, value2)
+#
 # Calculates the Percent Change between 'value1' and 'value2'.
 #
 # value1 : the first value
@@ -613,6 +621,8 @@ const function ES:PercentChange(value1, value2) {
 }
 
 #################################################################################
+# ES:PercentInverse(value)
+#
 # Calculates the Inverse Percent Change of 'value'
 #
 # value : the value to take the inverse of, as a percentage
@@ -621,5 +631,113 @@ const function ES:PercentChange(value1, value2) {
 #################################################################################
 const function ES:PercentInverse(value) {
   return 100 * (100 / (100 + value) - 1);
+}
+
+#################################################################################
+# ES:GenerateId()
+#
+# Generates a new id which does not conflict with an existing id
+#
+# Returns: the new id
+#################################################################################
+const function ES:GenerateId() {
+  while (true) {
+    id = ES:Random(1000) + 1;
+    if (!ES:Exists(id)) {
+      break;
+    }
+    ES:Log(DEBUG, 'id already exists: ' + id);
+  }
+  ES:Log(DEBUG, 'generated id=' + id);
+  return id;
+}
+
+#################################################################################
+# ES:Plot(arg1, arg2, arg3, arg4)
+#
+# Plots up to 4 series, passed as arg1, arg2, arg3, and arg4.  Uses ES:Load()
+# and as such, these arguments may be integers, Strings, or actual series.
+# Also, attempts to scale the series logarithmically, though falls back to
+# linear scaling if needed.  Finally, automatically determines the frequency
+# and the chart label.
+#
+# arg1 : the first series
+# arg2 : the second series (may be null)
+# arg3 : the third series (may be null)
+# arg4 : the fourth series (may be null)
+#################################################################################
+const function ES:Plot(arg1, arg2, arg3, arg4) {
+  function dxincr(series) {
+    if (series == null) {
+      return 18;
+    }
+    if (:GetFrequencyShort(series) == 'D') {
+      return 1;
+    } else if (:GetFrequencyShort(series) == 'W') {
+      return 8;
+    } else {
+      return 18;
+    }
+  }
+
+  if (arg1 == null) {
+    :Log(INFO, 'no series passed, nothing to do');
+    return;
+  }
+
+  ES:Log(DEBUG, 'loading series...');
+  arg1 = ES:Load(arg1);
+  arg2 = ES:Load(arg2);
+  arg3 = ES:Load(arg3);
+  arg4 = ES:Load(arg4);
+
+  ES:Log(DEBUG, 'computing lowest values...');
+  l1 = l2 = l3 = l4 = 0.01;
+  if (arg1 != null and :GetSeriesType(arg1) == 'float') {
+    l1 = ES:Lowest(arg1);
+  }
+  if (arg2 != null and :GetSeriesType(arg2) == 'float') {
+    l2 = ES:Lowest(arg2);
+  }
+  if (arg3 != null and :GetSeriesType(arg3) == 'float') {
+    l3 = ES:Lowest(arg3);
+  }
+  if (arg4 != null and :GetSeriesType(arg4) == 'float') {
+    l4 = ES:Lowest(arg4);
+  }
+
+  ES:Log(DEBUG, 'computing scaling type...');
+  if (l1 > 0 and l2 > 0 and l3 > 0 and l4 > 0) {
+    :Log(DEBUG, 'LOG scaling detected');
+    defaults.chart.scaletype = LOG;
+  } else {
+    :Log(DEBUG, 'LINEAR scaling detected');
+    defaults.chart.scaletype = LINEAR;
+  }
+
+  ES:Log(DEBUG, 'computing dxincr...');
+  defaults.panel.frequency = MONTHS;
+  dx = dxincr(arg1);
+  dx = :Min(dx, dxincr(arg2));
+  dx = :Min(dx, dxincr(arg3));
+  dx = :Min(dx, dxincr(arg4));
+  :Log(DEBUG, 'detected dxincr = ' + dx);
+  defaults.panel.dxincr = dx;
+
+  defaults.panel.label = 'Consolidated Panel';
+
+  if (:GetTitle(arg1) != null) {
+    defaults.chart.label = :GetTitle(arg1);
+  }
+  if (arg2 != null and :GetTitle(arg2) != null) {
+    defaults.chart.label = defaults.chart.label + ' / ' + :GetTitle(arg2);
+  }
+  if (arg3 != null and :GetTitle(arg3) != null) {
+    defaults.chart.label = defaults.chart.label + ' / ' + :GetTitle(arg3);
+  }
+  if (arg4 != null and :GetTitle(arg4) != null) {
+    defaults.chart.label = defaults.chart.label + ' / ' + :GetTitle(arg4);
+  }
+  :Plot(arg1, arg2, arg3, arg4);
 }
 

@@ -51,7 +51,6 @@ ES:SystemAlias('ES:NotEquals', ':NotEquals');
 ES:SystemAlias('ES:PChange', ':PChange');
 ES:SystemAlias('ES:ParseFloat', ':ParseFloat');
 ES:SystemAlias('ES:ParseInt', ':ParseInt');
-ES:SystemAlias('ES:Plot', ':Plot');
 ES:SystemAlias('ES:Print', ':Print');
 ES:SystemAlias('ES:Printf', ':Printf');
 ES:SystemAlias('ES:Random', ':Random');
