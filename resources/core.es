@@ -109,7 +109,7 @@ const function ES:Revise(object) {
       :Update(series, d, fval);
     }
     ES:Log(INFO, 'merging updated series: ' + ES:GetName(series));
-    ES:Merge(series, '--with-updates', '--dry-run');
+    ES:Merge(series, '--with-updates');
   }
 }
 
