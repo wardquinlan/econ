@@ -74,6 +74,9 @@ const function ES:AutoLoad(object) {
 #################################################################################
 const function ES:Revise(object) {
   ES:Log(TRACE, 'ES:Revise(' + object + ')');
+  if (!ES:IsAdmin()) {
+    throw 'You must be running in administrative mode to do this';
+  }
   if (object == null) {
     ES:Log(TRACE, 'invoking ES:Ds()');
     ES:Ds(ES:Revise);
@@ -105,8 +108,8 @@ const function ES:Revise(object) {
       ES:Log(INFO, 'updating series: ' + ES:GetName(series) + ' :' + d + ': ' + val + ' => ' + fval);
       :Update(series, d, fval);
     }
-    ES:Log(INFO, 'saving updated series: ' + ES:GetName(series));
-    :Save(series);
+    ES:Log(INFO, 'merging updated series: ' + ES:GetName(series));
+    ES:Merge(series, '--with-updates', '--dry-run');
   }
 }
 
