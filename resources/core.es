@@ -72,6 +72,43 @@ const function ES:AutoLoad(object) {
 #################################################################################
 # Update functions
 #################################################################################
+const function ES:Revise(object) {
+  ES:Log(TRACE, 'ES:Revise(' + object + ')');
+  if (object == null) {
+    ES:Log(TRACE, 'invoking ES:Ds()');
+    ES:Ds(ES:Revise);
+    return;
+  }
+  series = ES:Load(object);
+  if (series == null) {
+    throw 'series not found: ' + object;
+  }
+  if (ES:GetSource(series) == 'FRED' and ES:GetId(series) < ES:BACKUP_BASE) {
+    id = ES:GetId(series);
+    ES:Log(INFO, 'revising ' + id + ':' + ES:GetName(series) + '...');
+    fseries = :Fred(ES:GetName(series));
+    ES:SetId(fseries, id);
+    for (i = 0; i < REVISIONS; i++) {
+      idx = :GetSize(series) - i - 1;
+      fidx = :GetSize(fseries) - i - 1;
+      d = :GetDate(series, idx);
+      fd = :GetDate(fseries, fidx);
+      if (d != fd) {
+        throw 'series dates do not match to that in FRED; synchronize the series and try again';
+      }
+      val = :Get(series, d);
+      fval = :Get(fseries, fd);
+      if (val == fval) {
+        ES:Log(INFO, 'series values match, nothing to do: ' + d);
+        continue;
+      }
+      ES:Log(INFO, 'updating series: ' + ES:GetName(series) + ' :' + d + ': ' + val + ' => ' + fval);
+      :Update(series, d, fval);
+    }
+    #:Save(series);
+  }
+}
+
 const function ES:Update(object) {
   ES:Log(TRACE, 'ES:Update(' + object + ')');
   if (object == null) {
