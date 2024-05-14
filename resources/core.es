@@ -105,7 +105,8 @@ const function ES:Revise(object) {
       ES:Log(INFO, 'updating series: ' + ES:GetName(series) + ' :' + d + ': ' + val + ' => ' + fval);
       :Update(series, d, fval);
     }
-    #:Save(series);
+    ES:Log(INFO, 'saving updated series: ' + ES:GetName(series));
+    :Save(series);
   }
 }
 

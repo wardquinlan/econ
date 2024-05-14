@@ -162,5 +162,5 @@ const ERROR = 4;
 const LINEAR = 0;
 const LOG = 1;
 
-const REVISIONS = 5;
+const REVISIONS = 8;
 
