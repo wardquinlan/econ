@@ -43,11 +43,11 @@ public class DlgMessage implements Command {
         throw new Exception("invalid message type");
       }
       int tmp = (int) params.get(1);
-      if (tmp == 1) {
+      if (tmp == 0 || tmp == 1 || tmp == 2) {
         messageType = JOptionPane.INFORMATION_MESSAGE;
-      } else if (tmp == 2) {
-        messageType = JOptionPane.WARNING_MESSAGE;
       } else if (tmp == 3) {
+        messageType = JOptionPane.WARNING_MESSAGE;
+      } else if (tmp == 4) {
         messageType = JOptionPane.ERROR_MESSAGE;
       } else {
         throw new Exception("invalid message type");
